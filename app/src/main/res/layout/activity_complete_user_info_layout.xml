@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@mipmap/ic_lanuch_bg"
+    android:layout_height="match_parent">
+
+    <com.hjq.bar.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_20"
+        app:leftIcon="@null"
+        app:lineVisible="false"
+        android:background="@color/transparent"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gender"
+        android:textColor="#ff191919"
+        android:textSize="28sp"
+        android:layout_gravity="center"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:orientation="horizontal">
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/completeWomenImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/ic_women_normal"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+        <ImageView
+            android:id="@+id/completeMenImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/ic_men_normal"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Birthday"
+        android:textColor="#ff2f2f33"
+        android:textSize="28sp"
+        android:layout_gravity="center"/>
+
+
+    <TextView
+        android:id="@+id/completeBirthdayTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2000 October 31"
+        android:gravity="center"
+        android:padding="@dimen/dp_5"
+        android:textColor="#ff2f2f33"
+        android:layout_marginTop="@dimen/dp_25"
+        android:textSize="20sp"
+        android:layout_gravity="center"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:background="#4A4A4A"
+        android:layout_marginStart="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_3"
+        android:layout_marginEnd="@dimen/dp_50"
+        android:layout_height="@dimen/dp_0_1"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Height"
+        android:textColor="#ff2f2f33"
+        android:layout_marginTop="@dimen/dp_15"
+        android:textSize="28sp"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/completeHeightTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_5"
+        android:gravity="center"
+        android:text="175 cm"
+        android:textColor="#ff2f2f33"
+        android:textSize="20sp"
+        android:layout_marginTop="@dimen/dp_25"
+        android:layout_gravity="center"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:background="#4A4A4A"
+        android:layout_marginStart="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_3"
+        android:layout_marginEnd="@dimen/dp_50"
+        android:layout_height="@dimen/dp_0_1"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Weight"
+        android:textColor="#ff2f2f33"
+        android:textSize="28sp"
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_gravity="center"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:padding="@dimen/dp_5"
+        android:id="@+id/completeWeightTv"
+        android:layout_height="wrap_content"
+        android:text="68 kg"
+        android:textColor="#ff2f2f33"
+        android:layout_marginTop="@dimen/dp_25"
+        android:textSize="20sp"
+        android:layout_gravity="center"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:background="#4A4A4A"
+        android:layout_marginStart="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_3"
+        android:layout_marginEnd="@dimen/dp_50"
+        android:layout_height="@dimen/dp_0_1"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Common units"
+        android:layout_marginTop="@dimen/dp_15"
+        android:textColor="#ff2f2f33"
+        android:textSize="28sp"
+        android:layout_gravity="center"/>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        app:cardCornerRadius="@dimen/dp_5"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dp_20"
+        app:cardMaxElevation="@dimen/dp_5"
+        android:layout_height="wrap_content">
+
+
+    <com.hjq.shape.layout.ShapeLinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.hjq.shape.view.ShapeTextView
+            android:id="@+id/completeKmTv"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_5"
+            android:text="Metric"
+            android:textColor="#ff2f2f33"
+            android:textSize="22sp"
+            app:shape_solidColor="#BABABA"
+            android:gravity="center"
+            android:layout_gravity="center"/>
+
+
+        <com.hjq.shape.view.ShapeTextView
+            android:id="@+id/completeMiTv"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="wrap_content"
+            android:text="Imperial"
+            android:textColor="#ff2f2f33"
+            android:padding="@dimen/dp_5"
+            android:textSize="22sp"
+            app:shape_solidColor="@color/white"
+            android:gravity="center"
+            android:layout_gravity="center"/>
+
+    </com.hjq.shape.layout.ShapeLinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/completeFinishTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Finish"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="#2F2F33"
+        android:layout_marginTop="@dimen/dp_30"
+        android:paddingTop="@dimen/dp_3"
+        android:paddingBottom="@dimen/dp_3"
+        android:textSize="@dimen/sp_22"
+        app:shape_radius="@dimen/dp_5"
+        android:paddingStart="@dimen/dp_30"
+        android:paddingEnd="@dimen/dp_30"
+        app:shape_solidColor="#4EDD7D"/>
+</LinearLayout>

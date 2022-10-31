@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    tools:ignore="MissingDefaultResource">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <com.bonlala.fitalent.view.CusLineGridView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_180"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/testRy"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_180"/>
+
+
+    </FrameLayout>
+
+
+
+
+    <com.bonlala.fitalent.view.ChartView
+        android:id="@+id/chartView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_120"/>
+
+    <com.bonlala.widget.view.CompletedView
+        android:id="@+id/testCompleteView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_180"/>
+
+</LinearLayout>

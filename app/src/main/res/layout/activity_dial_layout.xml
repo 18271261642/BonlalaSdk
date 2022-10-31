@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <com.hjq.bar.TitleBar
+        app:title="@string/string_dial"
+        app:leftIcon="@drawable/ic_black_back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <com.bonlala.widget.layout.WrapRecyclerView
+        android:layout_margin="@dimen/dp_10"
+        android:id="@+id/dialRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

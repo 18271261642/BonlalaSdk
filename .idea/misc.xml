@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/StudioSDK/platforms/android-32/data/res/layout/simple_spinner_item.xml" value="0.24114583333333334" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/drawable/bottom_radius_shap.xml" value="0.1255" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/drawable/check_check.xml" value="0.12" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/drawable/check_normal.xml" value="0.12" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/drawable/checkbox_checked_ic.xml" value="0.1555" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/drawable/checkbox_disable_ic.xml" value="0.1555" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/drawable/checkbox_selector.xml" value="0.1555" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/drawable/compound_normal_ic.xml" value="0.1555" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/drawable/home_device_selector.xml" value="0.157" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/drawable/home_home_selector.xml" value="0.157" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/drawable/hr_chart_shap.xml" value="0.1635" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/drawable/ic_black_back.xml" value="0.193" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/drawable/ic_check_on.xml" value="0.193" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.129" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/drawable/ic_gray_right_back.xml" value="0.1525" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.193" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/drawable/ic_home_home_img.xml" value="0.134" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/drawable/ic_home_mine_selector.xml" value="0.157" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/drawable/ic_left_back.xml" value="0.1795" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/drawable/ic_men_selector.xml" value="0.12" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/drawable/ic_women_selector.xml" value="0.12" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/drawable/normal_selector.xml" value="0.158" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/drawable/white_shap.xml" value="0.1485" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout-land/layout_calendar_layout.xml" value="0.264" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_about_layout.xml" value="0.264" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_alarm_list_layout.xml" value="0.22604166666666667" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_camara2.xml" value="0.176" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_complete_user_info_layout.xml" value="0.4" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_dfu_layout.xml" value="0.2" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_dial_layout.xml" value="0.17083333333333334" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_exercise_detail_layout.xml" value="0.176" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_feedback_layout.xml" value="0.4" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_home.xml" value="0.18489583333333334" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_launch_layout.xml" value="0.19791666666666666" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_main.xml" value="0.2265625" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_msg_notify_layout.xml" value="0.2" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_operate_layout.xml" value="0.264" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_personal_layout.xml" value="0.264" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_record_history_layout.xml" value="0.3757894736842105" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_show_permission_layout.xml" value="0.264" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_show_web_layout.xml" value="0.15177426250534418" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_sport_record_layout.xml" value="0.4" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_trun_wrist_layout.xml" value="0.4" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_weather_layout.xml" value="0.4" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/common_history_bot_date_layout.xml" value="0.536" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/custom_marker_view.xml" value="0.536" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/dialog_date_select_layout.xml" value="0.15177426250534418" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/dialog_exercise_filter_layout.xml" value="0.264" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/dialog_guide_detail_msg.xml" value="0.4" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/dialog_height_layout.xml" value="0.264" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/dialog_history_heart_layout.xml" value="0.264" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/dialog_hr_desc_layout.xml" value="0.49038461538461536" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/dialog_measure_layout.xml" value="0.4" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/dialog_select_layout.xml" value="0.19895833333333332" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/dialog_sleep_desc_layout.xml" value="0.264" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/fragment_dashboard.xml" value="0.2519201228878648" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/fragment_history_bp_layout.xml" value="0.264" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/fragment_history_heart_layout.xml" value="0.264" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/fragment_history_sleep_layout.xml" value="0.264" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/fragment_history_spo2_layout.xml" value="0.264" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/fragment_history_step_layout.xml" value="0.264" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/fragment_home.xml" value="0.2" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/fragment_notifications.xml" value="0.2" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_alarm_layout.xml" value="0.2" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_bp_layout.xml" value="0.4" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_bp_shedule_layout.xml" value="0.536" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_default_spinner_layout.xml" value="0.264" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_device_top_layout.xml" value="0.4" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_dial_layout.xml" value="0.15677083333333333" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_diastolic_bp_layout.xml" value="0.4" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_diastolic_bp_schedule_layout.xml" value="0.18489583333333334" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_exercise_filter_layout.xml" value="0.6" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_exercise_hr_chart_layout.xml" value="0.4" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_exercise_layout.xml" value="0.6" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_exercise_type_layout.xml" value="0.264" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_history_single_ht_layout.xml" value="0.16979166666666667" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_home_add_device.xml" value="0.19895833333333332" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_home_heart_layout.xml" value="0.264" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_home_menu_layout.xml" value="0.4" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_home_recyclerview_layout.xml" value="0.15572916666666667" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_home_top_device_layout.xml" value="0.6" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_hr_desc_by_age_layout.xml" value="0.4" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_hr_schedule_layout.xml" value="0.8800000000000001" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_notify_item_layout.xml" value="0.11628901239846089" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_real_time_hr_layout.xml" value="0.4" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_record_weather_layout.xml" value="0.2" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_scan_device.xml" value="0.4" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_single_bp_chart_layout.xml" value="0.16979166666666667" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_single_spo2_layout.xml" value="0.16979166666666667" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_sleep_layout.xml" value="0.536" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_spinner_item_layout.xml" value="0.18385416666666668" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_spo2_layout.xml" value="0.4" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_sport_record_item_layout.xml" value="0.4" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_sport_record_layout.xml" value="0.3831494483450351" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_step_layout.xml" value="0.4" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_sys_bp_shedule_layout.xml" value="0.21302083333333333" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_weather_quality.xml" value="0.6" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/layout_app_update_dialog.xml" value="0.264" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/layout_calendar_layout.xml" value="0.264" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/layout_check_btn_layout.xml" value="0.536" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/layout_device_empty_layout.xml" value="0.4" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/layout_empty_layout.xml" value="0.17083333333333334" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/layout_help_layout.xml" value="0.2" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/layout_sleep_desc_layout.xml" value="0.264" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/layout_sleep_scanl_view.xml" value="0.536" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/mpchart_mark_view_layout.xml" value="0.15677083333333333" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/picker_item.xml" value="0.18489583333333334" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/select_dialog.xml" value="0.4" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/select_item.xml" value="0.4" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/show_privacy_dialog_view.xml" value="0.3940066592674806" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/sync_user_info_layout.xml" value="0.19895833333333332" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/test.xml" value="0.264" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/test_view_layout.xml" value="0.18385416666666668" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/time_dialog.xml" value="0.18489583333333334" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/ui_dialog.xml" value="0.4" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/wait_dialog.xml" value="0.14270833333333333" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/menu/bottom_nav_menu.xml" value="0.19895833333333332" />
+        <entry key="..\:/Works/BonlalaSdk/widget/src/main/res/drawable/gray_shap.xml" value="0.1485" />
+        <entry key="..\:/Works/BonlalaSdk/widget/src/main/res/drawable/ic_check_off.xml" value="0.1005" />
+        <entry key="..\:/Works/BonlalaSdk/widget/src/main/res/drawable/ic_check_on.xml" value="0.166" />
+        <entry key="..\:/Works/BonlalaSdk/widget/src/main/res/drawable/white_selector.xml" value="0.141" />
+        <entry key="..\:/Works/BonlalaSdk/widget/src/main/res/drawable/white_shap.xml" value="0.141" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

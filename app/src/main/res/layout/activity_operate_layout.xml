@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:padding="3dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/showConnStatus"/>
+
+
+    <TextView
+        app:layout_constraintTop_toBottomOf="@+id/showConnStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:id="@+id/showSendTv"/>
+
+    <TextView
+        android:id="@+id/showMCUStatusTv"
+        android:layout_width="match_parent"
+        android:padding="3dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/showSendTv"/>
+
+
+
+    <Button
+        android:id="@+id/connBtn"
+        android:onClick="connDevice"
+        app:layout_constraintTop_toBottomOf="@id/showMCUStatusTv"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content"
+        android:text="连接手表"/>
+
+    <Button
+        android:id="@+id/disConnBtn"
+        android:onClick="disConnDevice"
+        app:layout_constraintTop_toBottomOf="@id/showMCUStatusTv"
+        app:layout_constraintLeft_toRightOf="@id/connBtn"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="断开连接"/>
+
+    <Button
+        android:id="@+id/powerOffBtn"
+        android:onClick="powerOffDevice"
+        app:layout_constraintTop_toBottomOf="@id/showMCUStatusTv"
+        app:layout_constraintLeft_toRightOf="@id/disConnBtn"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="使手表关机/复位"/>
+
+
+
+
+    <Button
+        android:visibility="gone"
+        android:onClick="checkConnStatus"
+        app:layout_constraintTop_toBottomOf="@id/showConnStatus"
+        app:layout_constraintLeft_toRightOf="@id/disConnBtn"
+        android:layout_margin="10dp"
+        android:id="@+id/checkConnStatusBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="查看连接状态"/>
+
+    <androidx.core.widget.NestedScrollView
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/connBtn"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_margin="10dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="查找手表"
+                    android:onClick="findWatch"
+                    android:id="@+id/findWatchBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <Button
+                    android:id="@+id/syncTimeBtn"
+                    android:onClick="syncDeviceTime"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/findWatchBtn"
+                    android:layout_margin="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="同步时间"/>
+
+
+
+                <Button
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/syncTimeBtn"
+                    android:id="@+id/getDeviceTime"
+                    android:layout_margin="10dp"
+                    android:onClick="getDeviceTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="获取时间"/>
+
+
+
+
+
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_margin="10dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="同步用户信息"
+                    android:onClick="syncUserInfoData"
+                    android:id="@+id/syncUserInfoBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+
+                <Button
+                    android:id="@+id/getCommBtn"
+                    android:onClick="getCommonSetting"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/syncUserInfoBtn"
+                    android:layout_margin="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="获取通用设置"/>
+
+                <Button
+                    android:onClick="setCommonSetting"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/getCommBtn"
+                    android:layout_margin="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="设置通用"/>
+
+
+                <Button
+                    android:id="@+id/getVersionBtn"
+                    app:layout_constraintTop_toBottomOf="@+id/syncUserInfoBtn"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_margin="10dp"
+                    android:onClick="getDeviceVersionInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="获取版本信息"/>
+
+
+                <Button
+                    android:id="@+id/getBackLightBtn"
+                    app:layout_constraintTop_toBottomOf="@+id/syncUserInfoBtn"
+                    app:layout_constraintLeft_toRightOf="@+id/getVersionBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_margin="10dp"
+                    android:onClick="getBackLightData"
+                    android:layout_height="wrap_content"
+                    android:text="获取背光"/>
+
+
+                <Button
+                    android:id="@+id/setBackLightBtn"
+                    app:layout_constraintTop_toBottomOf="@+id/syncUserInfoBtn"
+                    app:layout_constraintLeft_toRightOf="@+id/getBackLightBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_margin="10dp"
+                    android:onClick="setBackLightData"
+                    android:layout_height="wrap_content"
+                    android:text="设置背光"/>
+
+
+
+                <Button
+                    android:id="@+id/getBatteryBtn"
+                    android:onClick="getDeviceBattery"
+                    app:layout_constraintTop_toBottomOf="@+id/getVersionBtn"
+                    android:layout_margin="10dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="获取电量"/>
+
+                <Button
+                    android:id="@+id/getUserInfoBtn"
+                    app:layout_constraintTop_toBottomOf="@+id/getVersionBtn"
+                    app:layout_constraintLeft_toRightOf="@+id/getBatteryBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_margin="10dp"
+                    android:onClick="getUerInfoData"
+                    android:layout_height="wrap_content"
+                    android:text="获取用户信息"/>
+
+
+                <Button
+                    android:onClick="sendWeatherData"
+                    app:layout_constraintLeft_toRightOf="@+id/getUserInfoBtn"
+                    app:layout_constraintTop_toBottomOf="@+id/getVersionBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="发送天气"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/wristLightSwitch"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_margin="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="转腕亮屏"/>
+
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/heartSwitch"
+                    app:layout_constraintTop_toBottomOf="@+id/wristLightSwitch"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_margin="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="心率开关"/>
+
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/dndSwitch"
+                    app:layout_constraintLeft_toRightOf="@+id/heartSwitch"
+                    app:layout_constraintTop_toBottomOf="@+id/wristLightSwitch"
+                    android:layout_margin="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="勿扰模式"/>
+
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/takePhotoSwitch"
+                    app:layout_constraintLeft_toRightOf="@+id/dndSwitch"
+                    app:layout_constraintTop_toBottomOf="@+id/wristLightSwitch"
+                    android:layout_margin="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="拍照"/>
+
+
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/measureHeartSwitch"
+                    app:layout_constraintTop_toBottomOf="@+id/heartSwitch"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_height="wrap_content"
+                    android:text="测量心率"/>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/measureBloodSwitch"
+                    app:layout_constraintTop_toBottomOf="@+id/heartSwitch"
+                    app:layout_constraintLeft_toRightOf="@+id/measureHeartSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_height="wrap_content"
+                    android:text="测量血压"/>
+
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/measureSpo2Switch"
+                    app:layout_constraintTop_toBottomOf="@+id/heartSwitch"
+                    app:layout_constraintLeft_toRightOf="@+id/measureBloodSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_height="wrap_content"
+                    android:text="测量血氧"/>
+
+
+                <Button
+                    android:id="@+id/readSwitchLightBtn"
+                    android:onClick="readSwitchLightStatus"
+                    app:layout_constraintTop_toBottomOf="@+id/measureHeartSwitch"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_margin="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="转腕亮屏状态"/>
+
+
+                <Button
+                    android:id="@+id/readHeartSwitchBtn"
+                    android:onClick="readHeartSwitchStatus"
+                    app:layout_constraintTop_toBottomOf="@+id/measureHeartSwitch"
+                    app:layout_constraintLeft_toRightOf="@+id/readSwitchLightBtn"
+                    android:layout_margin="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="心率开关状态"/>
+
+
+
+                <Button
+                    android:id="@+id/readDntSwitchBtn"
+                    android:onClick="readDNTStatus"
+                    app:layout_constraintTop_toBottomOf="@+id/readHeartSwitchBtn"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_margin="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="勿扰模式状态"/>
+
+
+                <Button
+                    app:layout_constraintLeft_toRightOf="@+id/readDntSwitchBtn"
+                    app:layout_constraintTop_toBottomOf="@+id/readHeartSwitchBtn"
+                    android:layout_margin="10dp"
+                    android:onClick="openPhoneNotice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="打开通知开关"/>
+
+
+                <EditText
+                    android:id="@+id/inputMsgEdit"
+                    app:layout_constraintTop_toBottomOf="@+id/readDntSwitchBtn"
+                    android:layout_margin="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="输入推送序号，1~30"/>
+
+                <Button
+                    android:id="@+id/msgTypePushBtn"
+                    app:layout_constraintTop_toBottomOf="@+id/inputMsgEdit"
+                    android:layout_width="match_parent"
+                    android:layout_margin="8dp"
+                    android:onClick="sendMsgTypeData"
+                    android:layout_height="wrap_content"
+                    android:text="消息推送"/>
+
+
+                <Button
+                    android:id="@+id/getCountStepBtn"
+                    android:onClick="getCurrDayData"
+                    app:layout_constraintTop_toBottomOf="@+id/msgTypePushBtn"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_margin="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="获取当天数据"/>
+
+                <Button
+                    app:layout_constraintTop_toBottomOf="@+id/msgTypePushBtn"
+                    app:layout_constraintLeft_toRightOf="@+id/getCountStepBtn"
+                    android:layout_margin="10dp"
+                    android:onClick="getCountStepData"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="获取汇总数据"/>
+
+
+
+
+                <Button
+                    android:id="@+id/readLongSiwBtn"
+                    app:layout_constraintTop_toBottomOf="@+id/getCountStepBtn"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_margin="10dp"
+                    android:onClick="readLongSitData"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="读取久坐提醒"/>
+
+                <Button
+                    app:layout_constraintTop_toBottomOf="@+id/getCountStepBtn"
+                    app:layout_constraintLeft_toRightOf="@+id/readLongSiwBtn"
+                    android:layout_margin="10dp"
+                    android:onClick="setLongSitData"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="设置久坐提醒"/>
+
+                <Button
+                    android:id="@+id/readAlarmBtn"
+                    app:layout_constraintTop_toBottomOf="@+id/readLongSiwBtn"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_margin="10dp"
+                    android:onClick="readDeviceAlarmData"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="读取闹钟"/>
+
+                <Button
+                    android:id="@+id/addAlarmBtn"
+                    app:layout_constraintTop_toBottomOf="@+id/readLongSiwBtn"
+                    app:layout_constraintLeft_toRightOf="@+id/readAlarmBtn"
+                    android:layout_margin="10dp"
+                    android:onClick="addAlarmData"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="添加闹钟"/>
+
+                <Button
+                    app:layout_constraintTop_toBottomOf="@+id/readLongSiwBtn"
+                    app:layout_constraintLeft_toRightOf="@+id/addAlarmBtn"
+                    android:layout_margin="10dp"
+                    android:onClick="deleteAlarmData"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="删除闹钟"/>
+
+
+                <Button
+                    android:id="@+id/readSetThemeBtn"
+                    app:layout_constraintTop_toBottomOf="@+id/readAlarmBtn"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:onClick="readSetThemeData"
+                    android:layout_margin="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="手表内置表盘"/>
+
+
+                <Button
+                    android:layout_margin="10dp"
+                    android:onClick="sendWatchFace"
+                    app:layout_constraintLeft_toRightOf="@+id/readSetThemeBtn"
+                    app:layout_constraintTop_toBottomOf="@+id/readAlarmBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="发送表盘"/>
+
+
+
+            <EditText
+                android:id="@+id/exerciseEdit"
+                app:layout_constraintTop_toBottomOf="@+id/readSetThemeBtn"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="输入序号"/>
+
+
+                <Button
+                    android:id="@+id/getExerciseBtn"
+                    android:onClick="getDeviceExercise"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/exerciseEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="锻炼数据"/>
+
+
+                <Button
+                    android:onClick="clearDeviceExercise"
+                    app:layout_constraintLeft_toRightOf="@+id/getExerciseBtn"
+                    app:layout_constraintTop_toBottomOf="@+id/exerciseEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="清除锻炼数据"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

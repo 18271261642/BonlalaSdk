@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/dp_280"
+    android:id="@+id/parentBgLayout"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardCornerRadius="@dimen/dp_10"
+    app:cardElevation="0px">
+
+    <LinearLayout
+        android:id="@+id/ll_ui_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/dp_20">
+
+        <com.bonlala.widget.view.SmartTextView
+            android:id="@+id/tv_ui_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#2F2F33"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold"
+            tools:text="" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/dp_10"
+            android:visibility="invisible"
+            android:background="#ECECEC" />
+
+        <LinearLayout
+            android:id="@+id/commBtnLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <com.hjq.shape.view.ShapeTextView
+                app:shape_radius="8dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:textColor="#2F2F33"
+                android:padding="8dp"
+                android:id="@+id/tv_ui_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="@string/string_cancel"
+                android:textSize="@dimen/sp_14" />
+
+            <View
+                android:id="@+id/v_ui_line"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                android:background="#D8D8D8" />
+
+
+            <com.hjq.shape.view.ShapeTextView
+                app:shape_radius="8dp"
+                android:id="@+id/tv_ui_confirm"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+                android:focusable="true"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/string_confirm"
+                android:textColor="#22FC7A"
+                android:textSize="@dimen/sp_14" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

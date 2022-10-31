@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="#F4F6FA"
+    tools:context=".MainActivity">
+
+    <com.hjq.bar.TitleBar
+        android:layout_width="match_parent"
+        app:title="@string/string_scan_device"
+        app:leftIcon="@drawable/ic_black_back"
+        android:layout_height="wrap_content"/>
+
+
+
+    <ImageView
+        android:id="@+id/scanImgView"
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="@dimen/dp_150"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/dp_20"
+        android:src="@mipmap/ic_launcher"/>
+
+
+    <TextView
+        android:id="@+id/scanStatusTv"
+        android:layout_width="match_parent"
+        android:textSize="@dimen/sp_18"
+        android:layout_marginTop="@dimen/dp_25"
+        android:text="Searching for devices…"
+        android:layout_height="wrap_content"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:text="Keep your phone close
+to the device"
+        android:textColor="#ff000000"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:layout_marginTop="@dimen/dp_8"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="* Unable to search after the device is unbound?"
+        android:textColor="#ff4edd7d"
+        android:textSize="12sp"
+        android:padding="5dp"
+        android:gravity="center"
+        android:layout_gravity="center"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/scanRecyclerView"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+</LinearLayout>

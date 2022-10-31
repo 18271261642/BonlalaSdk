@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/dp_5">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.hjq.shape.view.ShapeView
+                android:layout_width="@dimen/dp_10"
+                android:layout_height="@dimen/dp_10"
+                android:layout_gravity="center"
+                app:shape_radius="@dimen/dp_5"
+                app:shape_solidColor="@color/hr_color_6" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:text="@string/string_hr_6_desc"
+                android:textColor="#ff6e6e77"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/hr6ValueTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ff6e6e77"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_3"
+            android:orientation="horizontal">
+
+            <com.hjq.shape.view.ShapeView
+                android:layout_width="@dimen/dp_10"
+                android:layout_height="@dimen/dp_10"
+                android:layout_gravity="center"
+                app:shape_radius="@dimen/dp_5"
+                app:shape_solidColor="@color/hr_color_5" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:text="@string/string_hr_5_desc"
+                android:textColor="#ff6e6e77"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/hr5ValueTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ff6e6e77"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_3"
+            android:orientation="horizontal">
+
+            <com.hjq.shape.view.ShapeView
+                android:layout_width="@dimen/dp_10"
+                android:layout_height="@dimen/dp_10"
+                android:layout_gravity="center"
+                app:shape_radius="@dimen/dp_5"
+                app:shape_solidColor="@color/hr_color_4" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:text="@string/string_hr_4_desc"
+                android:textColor="#ff6e6e77"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/hr4ValueTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ff6e6e77"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.hjq.shape.view.ShapeView
+                android:layout_width="@dimen/dp_10"
+                android:layout_height="@dimen/dp_10"
+                android:layout_gravity="center"
+                app:shape_radius="@dimen/dp_5"
+                app:shape_solidColor="@color/hr_color_3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:text="@string/string_hr_3_desc"
+                android:textColor="#ff6e6e77"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/hr3ValueTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ff6e6e77"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_3"
+            android:orientation="horizontal">
+
+            <com.hjq.shape.view.ShapeView
+                android:layout_width="@dimen/dp_10"
+                android:layout_height="@dimen/dp_10"
+                android:layout_gravity="center"
+                app:shape_radius="@dimen/dp_5"
+                app:shape_solidColor="@color/hr_color_2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:text="@string/string_hr_2_desc"
+                android:textColor="#ff6e6e77"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/hr2ValueTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ff6e6e77"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_3"
+            android:orientation="horizontal">
+
+            <com.hjq.shape.view.ShapeView
+                android:layout_width="@dimen/dp_10"
+                android:layout_height="@dimen/dp_10"
+                android:layout_gravity="center"
+                app:shape_radius="@dimen/dp_5"
+                app:shape_solidColor="@color/hr_color_1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:text="@string/strign_hr_1_desc"
+                android:textColor="#ff6e6e77"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/hr1ValueTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ff6e6e77"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

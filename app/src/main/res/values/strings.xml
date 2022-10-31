@@ -1,0 +1,207 @@
+<resources>
+    <string name="app_name">Fitalent</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_home">data</string>
+    <string name="title_dashboard">device</string>
+    <string name="title_notifications">mine</string>
+
+    <string name="string_sport_detail">Sport detail</string>
+    <string name="string_history">history</string>
+    <string name="string_hr_txt_desc">HRrest: The number of heartbeats per minute in a normal person is generally 60 to 100 in a quiet state. Exercise Heart Rate: During exercise, the body\'s exercise state can be judged according to the heart rate interval. Only by selecting an appropriate heart rate interval can a better exercise state be achieved, and an appropriate heart rate interval can be used to achieve a better exercise effect. \n*The data and suggestions provided are for reference only and cannot be used as a basis for clinical diagnosis and treatment</string>
+    <string name="string_bp_txt_desc">Normal Range: \n Systolic blood pressure: 90-139 mmHg\n/ diastolic blood pressure: 60-89 mmHg"\n * The data and recommendations provided are for reference only and cannot be used as a basis for clinical diagnosis and treatment</string>
+    <string name="string_sleep_txt_desc">Sleep is one of the important life-sustaining behaviors of beings. The hardware device records your sleep status, analyzes the sleep quality, and helps you understand and adjust your sleep habits. \n*The data suggestions provided are for reference only and cannot be used as a basis for clinical diagnosis and treatment</string>
+    <string name="string_spo2_txt_desc">About blood oxygen saturation data: Blood oxygen saturation is the percentage of the capacity of oxygen-bound oxyhemoglobin in the blood to the total bound hemoglobin capacity, that is, the concentration of blood oxygen in the blood, which is an important biological parameter of breathing and circulation. The oxygen saturation of normal arteries is about 95% to 99%. \n*The data and suggestions provided are for reference only and cannot be used as a basis for clinical diagnosis and treatment</string>
+
+
+
+    <string name="string_about">About</string>
+    <string name="string_measure">measure</string>
+    <string name="string_scan_ing">scan..</string>
+    <string name="string_personal_data">Personal information</string>
+    <string name="string_last_version">Last Version</string>
+    <string name="string_version_desc">Imprint:</string>
+
+    <string name="string_msg_notify">Message Notify</string>
+    <string name="string_one_key_open">One key to open</string>
+    <string name="string_one_key_close">On key to close</string>
+    <string name="string_message">Message</string>
+    <string name="string_mail">Mail</string>
+    <string name="string_wechat">Wechat</string>
+
+    <string name="string_distance">distance</string>
+    <string name="string_consumption">consumption</string>
+    <string name="string_count_step">step count</string>
+    <string name="string_avg_hr">avg HR</string>
+    <string name="string_place">pace</string>
+    <string name="string_speed">speed</string>
+
+    <string name="string_hr_6_desc">LTHR</string>
+    <string name="string_hr_5_desc">Heart Rate Anaerobic Threshold</string>
+    <string name="string_hr_4_desc">Heart Rate Aerobic Threshold</string>
+    <string name="string_hr_3_desc">Heart Rate Fat Burning Threshold</string>
+    <string name="string_hr_2_desc">Heart Rate Warm Up Threshold</string>
+    <string name="strign_hr_1_desc">HRrest</string>
+
+
+    <string name="string_double_click_exit">Double click to exit!</string>
+    <string name="string_string_level">Level %1$d</string>
+    <string name="string_second">s</string>
+    <string name="string_hour">hour</string>
+    <string name="string_minute">min</string>
+    <string name="string_time_interval">Time interval</string>
+    <string name="string_dnt_desc">In Do Not Disturb mode, sedentary reminder, SMS reminder, phone call reminder, and APP reminder are turned off</string>
+    <string name="string_turn_wrist_desc">During the set time, raise your wrist and point the watch screen towards you to light up the screen</string>
+
+    <string name="string_last_txt">latest</string>
+    <string name="string_and">&#160;and&#160;</string>
+
+    <string name="string_guide_detail_tips1">In order to provide you with more accurate data services</string>
+    <string name="string_guide_detail_tips2">Please fill in real personal information</string>
+
+
+    <string name="string_gender">Gender</string>
+    <string name="string_birthday">Birthday</string>
+    <string name="string_height">Height</string>
+    <string name="string_weight">Weight</string>
+    <string name="string_men">Men</string>
+    <string name="string_women">Women</string>
+
+    <string name="string_all_sport">All sports</string>
+    <string name="string_exericse_walk">Walk</string>
+    <string name="string_exercise_run">Run</string>
+    <string name="string_exercise_ride">Ride</string>
+    <string name="string_exercise_badminton">Badminton</string>
+    <string name="string_exercise_basketball">Basketball</string>
+    <string name="string_exercise_football">Football</string>
+    <string name="string_exercise_mountaineering">Mountaineering</string>
+    <string name="string_exercise_pingpang">Pingpong</string>
+
+    <string name="string_unauthorized">unauthorized</string>
+    <string name="string_authorized">authorized</string>
+    <string name="string_sms_desc">Push SMS messages to the watch for display</string>
+    <string name="string_title_permissiono">Permission description</string>
+    <string name="string_permiss_title">Fitalent permissions instructions</string>
+    <string name="string_permiss_desc">To ensure the normal use of the APP, please enable the following permissions</string>
+    <string name="string_permiss_ble">ACCESS_BLUETOOTH</string>
+    <string name="string_permiss_ble_desc">Need to use the phone\'s Bluetooth function to connect to the Bluetooth watch</string>
+    <string name="string_permiss_gps">Use Location</string>
+    <string name="string_permiss_gps_desc">Map running track record and search Bluetooth watch need to turn on the phone GPS switch</string>
+    <string name="string_permiss_local">ACCESS_LOCAL</string>
+    <string name="string_permiss_local_desc">Get high-precision position information for running</string>
+    <string name="string_permiss_camera">Camera permission use</string>
+    <string name="string_permiss_camera_desc">Use the camera to take a picture as an avatar</string>
+    <string name="string_permiss_file">ACCESS_WRITE</string>
+    <string name="string_permiss_file_desc">The camera takes a picture and saves, select a picture from the album as the avatar</string>
+    <string name="string_permiss_phone">ACCESS_CAMERA</string>
+    <string name="string_permiss_phone_desc">Message reminder function, incoming call reminds the watch to check the current incoming call status</string>
+    <string name="string_permiss_contact">ACCESS_CONTACTS</string>
+    <string name="string_permiss_contact_desc">When a call comes in, the watch can display the name and phone number</string>
+
+
+    <string name="user_agreement_tips">User Agreement</string>//用户协议
+    <string name="privacy_agreement_tips">Privacy Policy</string>//用户协议
+
+    <string name="privacy_agreement_2">Clicking "Agree" means that you agree to the latest "Service Agreement" and the statement about "Privacy Policy".</string>
+
+    <string-array name="arr_week">
+        <item>Sun</item>
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+        <item>Sat</item>
+    </string-array>
+
+    <string name="string_number_month">%1$d月</string>
+
+    <string name="string_spo2">Oxygenation</string>
+    <string name="string_bp">Blood pressure</string>
+    <string name="string_heart">Heart rate</string>
+    <string name="string_sleep">Sleep</string>
+    <string name="string_no_data">No data</string>
+    <string name="string_sleep_desc1">Ensuring adequate sleep every day is very beneficial for maintaining physical and mental health. From 10:00 at night to 6:00 in the morning, it is the quality sleep time The National Sleep Foundation recommends that adults sleep for 6-10 hours.</string>
+    <string name="string_sleep_desc2">* The data and suggestions provided are for reference only and cannot be used as a basis for clinical diagnosis and treatment</string>
+
+
+    <string name="string_deep">Deep sleep</string>
+    <string name="string_light_sleep">Light sleep</string>
+    <string name="string_awake">Wide awake</string>
+    <string name="string_rem">REM</string>
+
+    <string name="string_day">Day</string>
+    <string name="string_week">Week</string>
+    <string name="string_month">Month</string>
+    <string name="string_year">Year</string>
+
+    <string name="string_metric_unit">Unit</string>
+    <string name="string_metric">metric</string>
+    <string name="string_imperial">imperial</string>
+
+    <string name="string_alarm">Alarm</string>
+    <string name="string_alarm_desc">During the vibration process, touch the button of the bracelet to stop the vibration</string>
+    <string name="string_repeat">repeat</string>
+    <string name="sun">Sun</string>
+    <string name="mon">Mon</string>
+
+    <string name="tue">Tue</string>
+    <string name="wed">Wed</string>
+    <string name="thu">Thu</string>
+    <string name="fri">Fri</string>
+    <string name="sat">Sat</string>
+    <string name="every_day">Everyday</string>
+    <string name="work_day">Monday to Friday</string>
+    <string name="wenkend_day">Weekend</string>
+    <string name="string_common_week">week</string>
+    <string name="once">Once</string>
+    <string name="frequently_tip">Do not operate frequently</string>
+
+    <string name="string_scan_device">search device</string>
+    <string name="string_not_connect">not connected</string>
+    <string name="string_connected">connected</string>
+    <string name="string_conning">connecting</string>
+    <string name="string_reconnect">reconnect</string>
+    <string name="string_battery">battery</string>
+    <string name="string_unbind">Unbind</string>
+    <string name="string_find_device">Find device</string>
+    <string name="string_take_phone">Shutter</string>
+    <string name="string_alarm_set">Alarms</string>
+    <string name="string_dial">Watch face</string>
+    <string name="string_weather">Weather</string>
+    <string name="string_real_heart">Real time HR</string>
+    <string name="string_bright_screen_time">Bright screen time</string>
+    <string name="string_bright_level">Screen brightness</string>
+    <string name="string_rasie_to_wake">Raise to wake</string>
+    <string name="string_long_sit">Sedentary reminder</string>
+    <string name="string_phone_call">Incoming call</string>
+    <string name="string_message_notify">Message notification</string>
+    <string name="string_dnt">DNT</string>
+    <string name="string_temp_unit">Temperature unit</string>
+    <string name="string_firmware">Firmware version</string>
+    <string name="string_funcion_setting">Function settings</string>
+    <string name="string_general_setting">Common tools</string>
+    <string name="string_reminder_setting">Reminder settings</string>
+
+    <string name="string_switch">status</string>
+    <string name="string_start_time">start time</string>
+    <string name="string_end_time">end time</string>
+    <string name="string_save">Save</string>
+
+    <string name="string_step">step</string>
+    <string name="string_steps">steps</string>
+    <string name="string_step_target">Step target</string>
+    <string name="string_confirm">confirm</string>
+    <string name="string_cancel">cancel</string>
+    <string name="string_prompt">prompt</string>
+
+    <string name="http_loading">Loading&#8230;</string>
+
+    <string name="http_unknown_error">request failed,unknown error</string>
+    <string name="http_token_error">login failed,please try again</string>
+    <string name="http_data_explain_error">Data parsing exception,please wait</string>
+    <string name="http_server_out_time">timeout error ,please wait and try again</string>
+    <string name="http_network_error">request failed,check net</string>
+    <string name="http_response_error">response error,please wait and try again</string>
+    <string name="http_server_error">Connect server error</string>
+    <string name="http_request_cancel">request interrupt</string>
+</resources>

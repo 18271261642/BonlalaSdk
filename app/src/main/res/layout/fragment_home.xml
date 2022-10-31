@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F6FA"
+    android:orientation="vertical"
+    tools:context=".ui.home.HomeFragment">
+
+    <com.hjq.bar.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"
+        android:background="@color/transparent"
+        app:leftIcon="@null" />
+
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/homeRefreshLayout"
+        android:layout_width="match_parent"
+        app:srlEnablePreviewInEditMode="false"
+        android:layout_height="match_parent">
+
+
+
+        <com.scwang.smart.refresh.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.bonlala.fitalent.view.HomeDeviceStatusView
+                android:id="@+id/homeDeviceStatusView"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_height="wrap_content"/>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/homeRecyclerView"
+                android:layout_width="match_parent"
+                android:nestedScrollingEnabled="false"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+</LinearLayout>

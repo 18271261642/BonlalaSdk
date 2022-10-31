@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/common_bg_color"
+    android:layout_height="match_parent">
+
+    <com.hjq.bar.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/string_personal_data"
+        app:lineVisible="true"
+        app:leftIcon="@drawable/ic_black_back"
+        app:titleColor="#000000" />
+
+
+    <com.hjq.shape.layout.ShapeLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:shape_radius="@dimen/dp_10"
+        android:layout_margin="@dimen/dp_5"
+        android:padding="@dimen/dp_8"
+        app:shape_solidColor="@color/white">
+
+
+        <com.bonlala.widget.layout.SettingBar
+            android:id="@+id/personalSexBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:bar_leftText="@string/string_gender"
+            app:bar_lineVisible="true"
+            app:bar_leftTextSize="18sp"
+            app:bar_lineDrawable="#D3D3D3"
+            app:bar_rightDrawable="@drawable/ic_gray_right_back"
+            app:bar_rightText="--" />
+
+        <com.bonlala.widget.layout.SettingBar
+            android:id="@+id/personalBirthdayBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:bar_leftText="@string/string_birthday"
+            app:bar_lineVisible="true"
+            app:bar_leftTextSize="18sp"
+            app:bar_lineDrawable="#D3D3D3"
+            app:bar_rightDrawable="@drawable/ic_gray_right_back"
+            app:bar_rightText="--" />
+
+        <com.bonlala.widget.layout.SettingBar
+            android:id="@+id/personalHeightBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:bar_leftText="@string/string_height"
+            app:bar_lineVisible="true"
+            app:bar_leftTextSize="18sp"
+            app:bar_lineDrawable="#D3D3D3"
+            app:bar_rightDrawable="@drawable/ic_gray_right_back"
+            app:bar_rightText="--" />
+
+
+        <com.bonlala.widget.layout.SettingBar
+            android:id="@+id/personalWeightBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:bar_leftText="@string/string_weight"
+            app:bar_leftTextSize="18sp"
+            app:bar_lineVisible="false"
+            app:bar_rightDrawable="@drawable/ic_gray_right_back"
+            app:bar_rightText="--" />
+
+    </com.hjq.shape.layout.ShapeLinearLayout>
+
+</LinearLayout>

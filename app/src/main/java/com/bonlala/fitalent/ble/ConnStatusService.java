@@ -1,0 +1,180 @@
+package com.bonlala.fitalent.ble;
+
+import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Binder;
+import android.os.IBinder;
+import android.text.TextUtils;
+
+import com.blala.blalable.BleConstant;
+import com.blala.blalable.BleOperateManager;
+import com.blala.blalable.listener.BleConnStatusListener;
+import com.blala.blalable.listener.ConnStatusListener;
+import com.blala.blalable.listener.WriteBackDataListener;
+import com.bonlala.fitalent.BaseApplication;
+import com.bonlala.fitalent.emu.ConnStatus;
+import com.bonlala.fitalent.utils.MmkvUtils;
+import com.inuker.bluetooth.library.Constants;
+import com.inuker.bluetooth.library.search.SearchResult;
+import com.inuker.bluetooth.library.search.response.SearchResponse;
+
+import androidx.annotation.Nullable;
+import timber.log.Timber;
+
+/**
+ * Created by Admin
+ * Date 2022/8/15
+ */
+public class ConnStatusService extends Service {
+
+
+    public IBinder iBinder = new ConnBinder();
+
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(BleConstant.BLE_CONNECTED_ACTION);
+        intentFilter.addAction(BleConstant.BLE_DIS_CONNECT_ACTION);
+        intentFilter.addAction(BleConstant.COMM_BROADCAST_ACTION);
+        intentFilter.addAction(BleConstant.BLE_COMPLETE_EXERCISE_ACTION);
+        registerReceiver(broadcastReceiver,intentFilter);
+
+    }
+
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return iBinder;
+    }
+
+
+    public class ConnBinder extends Binder{
+        public ConnStatusService getService(){
+            return ConnStatusService.this;
+        }
+    }
+
+
+    //重新连接设备，扫描连接
+    public void autoConnDevice(String mac){
+        BleOperateManager.getInstance().scanBleDevice(new SearchResponse() {
+            @Override
+            public void onSearchStarted() {
+                Timber.e("----onSearchStarted--");
+                BaseApplication.getInstance().setConnStatus(ConnStatus.CONNECTING);
+                sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
+            }
+
+            @Override
+            public void onDeviceFounded(SearchResult searchResult) {
+                String bleName = searchResult.getName();
+                if(TextUtils.isEmpty(bleName) || bleName.equals("NULL"))
+                    return;
+                if(searchResult.getAddress().equals(mac)){
+                    BleOperateManager.getInstance().stopScanDevice();
+
+                    connDevice(bleName,mac);
+                }
+            }
+
+            @Override
+            public void onSearchStopped() {
+                Timber.e("----onSearchStopped--");
+            }
+
+            @Override
+            public void onSearchCanceled() {
+                Timber.e("----onSearchCanceled--");
+            }
+        },20 * 1000,1);
+    }
+
+    //连接
+    public void connDevice(String name,String bleMac){
+        BleOperateManager.getInstance().setBleConnStatusListener(new BleConnStatusListener() {
+            @Override
+            public void onConnectStatusChanged(String mac, int status) {
+                Timber.e("------连接状态="+mac+" status="+status+" "+Constants.STATUS_DISCONNECTED);
+                // Constants.STATUS_DISCONNECTED
+                //连接失败
+                if(status == Constants.STATUS_DISCONNECTED){
+                    BaseApplication.getInstance().setConnStatus(ConnStatus.NOT_CONNECTED);
+                    sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
+                }
+            }
+        });
+        BleOperateManager.getInstance().connYakDevice(name, bleMac, new ConnStatusListener() {
+            @Override
+            public void connStatus(int status) {
+
+            }
+
+            @Override
+            public void setNoticeStatus(int code) {
+
+                Timber.e("-------连接成功="+code);
+                //连接成功
+                BaseApplication.getInstance().setConnStatus(ConnStatus.CONNECTED);
+                BaseApplication.getInstance().setConnBleName(name);
+                MmkvUtils.saveConnDeviceMac(bleMac);
+                MmkvUtils.saveConnDeviceName(name);
+
+                //同步时间
+                BleOperateManager.getInstance().syncDeviceTime(new WriteBackDataListener() {
+                    @Override
+                    public void backWriteData(byte[] data) {
+                        sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
+                        BleOperateManager.getInstance().setClearListener();
+                    }
+                });
+
+                DataOperateManager.getInstance(ConnStatusService.this).setMeasureDataSave(BleOperateManager.getInstance());
+
+//                DataOperateManager.getInstance(ConnStatusService.this).setExerciseListener(BleOperateManager.getInstance());
+            }
+        });
+    }
+
+
+
+
+
+    private void sendActionBroad(String action,String...params){
+        Intent intent = new Intent();
+        intent.setAction(action);
+        intent.putExtra("ble_key",params);
+        sendBroadcast(intent);
+    }
+
+
+    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if(action == null)
+                return;
+            if(action.equals(BleConstant.COMM_BROADCAST_ACTION)){
+                int[] valueArray = intent.getIntArrayExtra(BleConstant.COMM_BROADCAST_KEY);
+                if(valueArray[0] == BleConstant.MEASURE_COMPLETE_VALUE){
+                    DataOperateManager.getInstance(ConnStatusService.this).setMeasureDataSave(BleOperateManager.getInstance());
+                }
+            }
+
+            //锻炼结束了，获取一次锻炼数据
+            if(action.equals(BleConstant.BLE_COMPLETE_EXERCISE_ACTION)){
+                DataOperateManager.getInstance(ConnStatusService.this).getExerciseData();
+            }
+        }
+    };
+}

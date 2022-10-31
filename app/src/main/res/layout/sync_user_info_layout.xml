@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:padding="5dp"
+        android:textStyle="bold"
+        android:text="同步用户信息"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="生日:"/>
+
+
+        <EditText
+            android:id="@+id/syncUserInfoYearEdit"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:layout_height="wrap_content"
+            android:hint="年"/>
+
+        <EditText
+            android:id="@+id/syncUserInfoMonthEdit"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:layout_height="wrap_content"
+            android:hint="月"/>
+
+        <EditText
+            android:id="@+id/syncUserInfoDayEdit"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:layout_height="wrap_content"
+            android:hint="日"/>
+
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="5dp"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dp"
+            android:layout_gravity="center"
+            android:text="性别:"/>
+
+
+        <RadioGroup
+            android:id="@+id/sexRG"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/sexManRB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="男"/>
+
+
+            <RadioButton
+                android:id="@+id/sexWomenRB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="女"/>
+
+        </RadioGroup>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="5dp"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dp"
+            android:layout_gravity="center"
+            android:text="体重:"/>
+
+
+        <EditText
+            android:id="@+id/weightEdit"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:layout_height="wrap_content"
+            android:hint="单位kg"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dp"
+            android:layout_gravity="center"
+            android:text="身高:"/>
+
+        <EditText
+            android:id="@+id/heightEdit"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:layout_height="wrap_content"
+            android:hint="单位cm"/>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="5dp"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dp"
+            android:layout_gravity="center"
+            android:text="最大心率:"/>
+
+
+        <EditText
+            android:id="@+id/maxHeartEdit"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:layout_height="wrap_content"
+            android:hint="单位bpm"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dp"
+            android:layout_gravity="center"
+            android:text="最小心率:"/>
+
+        <EditText
+            android:id="@+id/minHeartEdit"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:layout_height="wrap_content"
+            android:hint="单位bpm"/>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="5dp"
+        android:orientation="horizontal">
+
+
+   <Button
+       android:id="@+id/syncCancelBtn"
+       android:layout_width="0dp"
+       android:layout_weight="1"
+       android:layout_margin="5dp"
+       android:layout_height="wrap_content"
+       android:text="取消"/>
+
+
+
+        <Button
+            android:id="@+id/syncConfirmBtn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:layout_height="wrap_content"
+            android:text="确定"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

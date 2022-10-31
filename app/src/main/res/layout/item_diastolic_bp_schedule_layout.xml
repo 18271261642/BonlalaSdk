@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@+id/bpScheduleLBpTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_5"
+        android:text="80"
+        android:textColor="#ff000000"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+    <ImageView
+        android:id="@+id/bpScheduleLbpImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="@dimen/dp_10"
+        android:src="@mipmap/ic_low_bp_shedule_img"
+        android:layout_marginEnd="@dimen/dp_10"
+        app:layout_constraintBottom_toBottomOf="@id/bpScheduleLBpTv"
+        app:layout_constraintTop_toTopOf="@id/bpScheduleLBpTv" />
+
+    <ImageView
+        android:id="@+id/bpScheduleLScaleImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/ic_bp_scale_img"
+        app:layout_constraintLeft_toLeftOf="@id/bpScheduleLbpImg"
+        app:layout_constraintTop_toBottomOf="@id/bpScheduleLbpImg" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname  value = "bonlala_single_db"/>
+    <version value="5"/>
+
+    <list>
+        <mapping class="com.bonlala.fitalent.db.model.DeviceSetModel"/>
+
+        <mapping class="com.bonlala.fitalent.db.model.DataRecordModel"/>
+        <mapping class="com.bonlala.fitalent.db.model.OneDayHeartModel"/>
+        <mapping class="com.bonlala.fitalent.db.model.OneDayStepModel"/>
+        <mapping class="com.bonlala.fitalent.db.model.SleepModel"/>
+        <mapping  class="com.bonlala.fitalent.db.model.SingleHeartModel"/>
+        <mapping class="com.bonlala.fitalent.db.model.SingleSpo2Model"/>
+        <mapping class="com.bonlala.fitalent.db.model.SumSportModel"/>
+        <mapping class="com.bonlala.fitalent.db.model.UserInfoModel"/>
+        <mapping class="com.bonlala.fitalent.db.model.SingleBpModel"/>
+
+        <mapping class="com.bonlala.fitalent.db.model.ExerciseModel"/>
+
+    </list>
+    <storage value="external" />
+</litepal>

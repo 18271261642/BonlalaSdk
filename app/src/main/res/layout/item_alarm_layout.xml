@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hjq.shape.layout.ShapeConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/dp_8"
+    android:layout_margin="@dimen/dp_5"
+    app:shape_radius="@dimen/dp_5"
+    app:shape_solidColor="@color/white"
+    app:shape_solidPressedColor="@color/gray"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@+id/itemAlarmTimeTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_15"
+        android:layout_marginTop="5dp"
+        android:textStyle="bold"
+        android:text="08:00"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="#2F2F33"
+        android:textSize="@dimen/dp_35" />
+
+
+
+    <TextView
+        android:id="@+id/itemAlarmWeekTv"
+        app:layout_constraintTop_toBottomOf="@id/itemAlarmTimeTv"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/dp_17"
+        android:padding="@dimen/dp_3"
+        android:layout_marginStart="@dimen/dp_15"
+        android:text="周一"/>
+
+    <com.bonlala.widget.view.SwitchButton
+        android:id="@+id/itemAlarmSwitch"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_height="wrap_content"/>
+
+
+
+
+</com.hjq.shape.layout.ShapeConstraintLayout>

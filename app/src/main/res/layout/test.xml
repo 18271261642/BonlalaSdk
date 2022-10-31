@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent">
+
+
+
+    <com.hjq.shape.view.ShapeView
+        android:layout_width="80dp"
+        android:background="@color/black"
+        android:layout_margin="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="30dp"
+        android:textSize="20sp"
+        android:text="默认"/>
+
+    <TextView
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="             djfalkjfdsal几个开发商借款多少积分卡拉三等奖法兰克福见识到了可个哦我金佛爱神的箭发送电量风巨大税率扣风巨大税率扣交房抵抗力散附近都是了"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

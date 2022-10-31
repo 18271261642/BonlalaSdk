@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/common_bg_color"
+    android:orientation="vertical">
+
+    <com.hjq.bar.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:leftIcon="@drawable/ic_black_back"
+        app:title="@string/string_msg_notify" />
+
+
+    <com.hjq.shape.layout.ShapeLinearLayout
+        android:id="@+id/notifyOpenNotifyLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_5"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_10"
+        app:shape_radius="@dimen/dp_10"
+        app:shape_solidColor="@color/white"
+        app:shape_solidPressedColor="@color/common_bg_color">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Turn on phone permissions"
+            android:textColor="#ff3f3f3f"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/dp_5"
+            android:background="@drawable/ic_gray_right_back" />
+    </com.hjq.shape.layout.ShapeLinearLayout>
+
+    <com.hjq.shape.layout.ShapeLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_5"
+        android:orientation="vertical"
+        app:shape_solidColor="@color/white">
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/dp_10"
+            app:cardMaxElevation="@dimen/dp_5">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="One key to open"
+                    android:textColor="#ff2f2f33"
+                    android:textSize="16sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+
+                <com.bonlala.widget.view.SwitchButton
+                    android:id="@+id/notifyAllSwitchBtn"
+                    android:layout_width="@dimen/dp_60"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <EditText
+                    android:id="@+id/notifyTypeEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="类型"/>
+
+                <Button
+                    android:id="@+id/testNotifyBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="发送"/>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/notifyRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    tools:listitem="@layout/item_notify_item_layout"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+    </com.hjq.shape.layout.ShapeLinearLayout>
+</LinearLayout>

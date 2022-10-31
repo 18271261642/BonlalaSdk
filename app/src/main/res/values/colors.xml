@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!--通用的页面背景颜色-->
+    <color name="common_bg_color">#F4F6FA</color>
+
+    <!--不能点击时字体的颜色-->
+    <color name="not_conn_txt_color">#FFB8B8B9</color>
+
+    <color name="common_text_color">#2F2F33</color>
+
+    <color name="wx_gray">#EBEBEB</color>
+
+    <color name="btn_color">#4EDD7D</color>
+
+    <color name="checked_color">#E8E9ED</color>
+
+    <!--睡眠，深睡颜色值-->
+    <color name="sleep_deep_color">#985EFF</color>
+    <!--睡眠，浅睡颜色值-->
+    <color name="sleep_light_color">#B3A3FF</color>
+    <!--睡眠，清醒颜色值-->
+    <color name="sleep_awake_color">#F9E564</color>
+    <!--快速眼动-->
+    <color name="sleep_rem_color">#FBA76E</color>
+
+
+    <!--心率区间的颜色值-->
+    <color name="hr_color_1">#FFB8B8B8</color>
+    <color name="hr_color_2">#FF757779</color>
+    <color name="hr_color_3">#FF0330F9</color>
+    <color name="hr_color_4">#FF73D13D</color>
+    <color name="hr_color_5">#FFFECD01</color>
+    <color name="hr_color_6">#FFF5222D</color>
+
+    <color name="common_item_line_color">#E7E8EB</color>
+    <color name="common_view_color">#4DDA64</color>
+
+</resources>

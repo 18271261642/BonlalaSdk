@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/dp_3"
+    android:padding="@dimen/dp_5">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_2"
+        android:orientation="horizontal">
+
+        <com.hjq.shape.view.ShapeView
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_gravity="center"
+            app:shape_solidColor="@color/hr_color_6"
+            app:shape_radius="3dp"/>
+
+
+        <com.bonlala.fitalent.view.CusScheduleView
+            android:id="@+id/hrColor6View"
+            android:layout_width="@dimen/dp_88"
+            android:layout_height="@dimen/dp_11"
+            android:layout_marginEnd="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_5"
+            app:cus_all_schedule_color="#E8E9ED"
+            android:layout_gravity="center"
+            app:cus_curr_schedule_color="@color/hr_color_6"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/hr6TimeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_5"
+            android:text="999min"
+            android:textColor="#ff676767"
+            android:paddingEnd="5dp"
+            android:layout_gravity="center"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/hrColor6View"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_2"
+        android:orientation="horizontal">
+
+
+        <com.hjq.shape.view.ShapeView
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_gravity="center"
+            app:shape_solidColor="@color/hr_color_5"
+            app:shape_radius="3dp"/>
+
+        <com.bonlala.fitalent.view.CusScheduleView
+            android:id="@+id/hrColor5View"
+            android:layout_width="@dimen/dp_88"
+            android:layout_height="@dimen/dp_11"
+            android:layout_marginEnd="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_5"
+            app:cus_all_schedule_color="#E8E9ED"
+            android:layout_gravity="center"
+            app:cus_curr_schedule_color="@color/hr_color_5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/hr5TimeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_5"
+            android:text="999min"
+            android:textColor="#ff676767"
+            android:layout_gravity="center"
+            android:textSize="12sp"
+            android:paddingEnd="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/hrColor5View"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_2">
+
+        <com.hjq.shape.view.ShapeView
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_gravity="center"
+            app:shape_solidColor="@color/hr_color_4"
+            app:shape_radius="3dp"/>
+        <com.bonlala.fitalent.view.CusScheduleView
+            android:id="@+id/hrColor4View"
+            android:layout_width="@dimen/dp_88"
+            android:layout_height="@dimen/dp_11"
+            android:layout_marginEnd="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_5"
+            android:layout_gravity="center"
+            app:cus_all_schedule_color="#E8E9ED"
+            app:cus_curr_schedule_color="@color/hr_color_4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/hr4TimeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_5"
+            android:text="9分钟"
+            android:textColor="#ff676767"
+            android:textSize="12sp"
+            android:layout_gravity="center"
+            android:paddingEnd="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/hrColor4View"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_2">
+        <com.hjq.shape.view.ShapeView
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_gravity="center"
+            app:shape_solidColor="@color/hr_color_3"
+            app:shape_radius="3dp"/>
+
+        <com.bonlala.fitalent.view.CusScheduleView
+            android:id="@+id/hrColor3View"
+            android:layout_width="@dimen/dp_88"
+            android:layout_height="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_5"
+            app:cus_all_schedule_color="#E8E9ED"
+            android:layout_gravity="center"
+            app:cus_curr_schedule_color="@color/hr_color_3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/hr3TimeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_5"
+            android:text="999min"
+            android:textColor="#ff676767"
+            android:layout_gravity="center"
+            android:textSize="12sp"
+            android:paddingEnd="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/hrColor3View"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_2">
+
+        <com.hjq.shape.view.ShapeView
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_gravity="center"
+            app:shape_solidColor="@color/hr_color_5"
+            app:shape_radius="3dp"/>
+
+
+        <com.bonlala.fitalent.view.CusScheduleView
+            android:id="@+id/hrColor2View"
+            android:layout_width="@dimen/dp_88"
+            android:layout_marginStart="@dimen/dp_5"
+            android:layout_height="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_5"
+            android:layout_gravity="center"
+            app:cus_all_schedule_color="#E8E9ED"
+            app:cus_curr_schedule_color="@color/hr_color_2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/hr2TimeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_5"
+            android:text="999min"
+            android:textColor="#ff676767"
+            android:layout_gravity="center"
+            android:textSize="12sp"
+            android:paddingEnd="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/hrColor2View"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_2">
+
+        <com.hjq.shape.view.ShapeView
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_gravity="center"
+            app:shape_solidColor="@color/hr_color_1"
+            app:shape_radius="3dp"/>
+        <com.bonlala.fitalent.view.CusScheduleView
+            android:id="@+id/hrColor1View"
+            android:layout_width="@dimen/dp_88"
+            android:layout_height="@dimen/dp_11"
+            android:layout_marginEnd="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_5"
+            app:cus_all_schedule_color="#E8E9ED"
+            android:layout_gravity="center"
+            app:cus_curr_schedule_color="@color/hr_color_1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/hr1TimeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_5"
+            android:text="999分钟"
+            android:textColor="#ff676767"
+            android:textSize="12sp"
+            android:paddingEnd="5dp"
+            android:layout_gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/hrColor1View"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </LinearLayout>
+
+</LinearLayout>
+

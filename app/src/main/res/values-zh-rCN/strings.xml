@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Fitalent</string>
+    <string name="string_metric_unit">公英制</string>
+    <string name="string_metric">公制</string>
+    <string name="string_imperial">英制</string>
+
+    <string name="string_sport_detail">运动详情</string>
+
+    <string name="string_history">历史</string>
+    <string name="string_hr_txt_desc">安静心率：正常人在安静状态下每分钟心跳次数一般为60~100次。运动心率：运动过程中根据心率区间可以判断身体的运动状态，选择合适的心率区间才能达到较佳的运动状态，选择合适的心率区间才能达到较佳的运动效果。*所提供的数据及建议仅供参考，不可作为临床诊断和治疗依据</string>
+    <string name="string_bp_txt_desc">血压正常值：\n收缩压：90~139 mmHg\n/舒张压： 60~89 mmHg"\n *所提供的数据及建议仅供参考，不可作为临床诊断和治疗依据</string>
+    <string name="string_sleep_txt_desc">睡眠是生物维持生命的重要行为之一，通过硬件设备记录您的睡眠状况，对睡眠质量进行分析，帮助您了解和调整睡眠习惯。\n*所提供的数据建议仅供参考，不可作为临床诊断和治疗依据。</string>
+    <string name="string_spo2_txt_desc">了解血氧饱和度数据：血氧饱和度是血液中被氧结合的氧合血红蛋白的容量占全部可结合的血红蛋白容量的百分比，即血液中血氧的浓度，它是呼吸循环的重要生物参数。正常动脉的血氧饱和度约为95%~99%。\n*所提供的数据及建议仅供参考，不可作为临床诊断和治疗依据</string>
+    
+    
+    
+    <string name="string_about">关于</string>
+    <string name="string_measure">测量</string>
+    <string name="string_scan_ing">扫描中..</string>
+    <string name="string_personal_data">个人信息</string>
+
+
+
+    <string name="string_last_version">最新版本</string>
+    <string name="string_version_desc">版本说明:</string>
+    <string name="string_msg_notify">消息提醒</string>
+    <string name="string_one_key_open">一键开启</string>
+    <string name="string_one_key_close">一键关闭</string>
+    <string name="string_message">短信</string>
+    <string name="string_mail">邮件</string>
+    <string name="string_wechat">微信</string>
+
+    
+    
+
+    <string name="string_distance">距离</string>
+    <string name="string_consumption">能量消耗</string>
+    <string name="string_count_step">步数</string>
+    <string name="string_avg_hr">平均心率</string>
+    <string name="string_place">配速</string>
+    <string name="string_speed">速度</string>
+
+    <string name="string_string_level">%1$d级</string>
+    <string name="string_second">秒</string>
+    <string name="string_hour">小时</string>
+    <string name="string_minute">分钟</string>
+    <string name="string_time_interval">间隔</string>
+    <string name="string_dnt_desc">勿扰模式下，久坐提醒、短信提醒、来电提醒、APP提醒关闭</string>
+    <string name="string_turn_wrist_desc">在设定的时间内，抬起手腕，将手表屏幕指向自己，屏幕亮起</string>
+
+    <string name="string_last_txt">最新的</string>
+    <string name="string_and">和</string>
+
+    <string name="string_guide_detail_tips1">为了给您提供更准确的数据服务</string>
+    <string name="string_guide_detail_tips2">请填写真实的个人信息</string>
+
+    <string name="string_gender">性别</string>
+    <string name="string_birthday">生日</string>
+    <string name="string_height">身高</string>
+    <string name="string_weight">体重</string>
+    <string name="string_men">男</string>
+    <string name="string_women">女</string>
+    
+
+    
+    <string name="string_all_sport">所有</string>
+    <string name="string_exericse_walk">走路</string>
+    <string name="string_exercise_run">跑步</string>
+    <string name="string_exercise_ride">骑行</string>
+    <string name="string_exercise_badminton">羽毛球</string>
+    <string name="string_exercise_basketball">篮球</string>
+    <string name="string_exercise_football">足球</string>
+    <string name="string_exercise_mountaineering">登山</string>
+    <string name="string_exercise_pingpang">乒乓球</string>
+
+    <string name="string_sms_desc">将短信信息推送到手表上显示</string>
+     <string name="string_title_permissiono">权限说明</string>
+    <string name="string_unauthorized">未授权</string>
+    <string name="string_authorized">已授权</string>
+    <string name="string_permiss_title">Fitalent权限使用说明</string>
+    <string name="string_permiss_desc">为保证APP的正常使用,请开启以下权限</string>
+    <string name="string_permiss_ble">使用蓝牙功能</string>
+    <string name="string_permiss_ble_desc">需要使用手机蓝牙功能连接蓝牙手表</string>
+    <string name="string_permiss_gps">使用GPS功能</string>
+    <string name="string_permiss_gps_desc">地图跑步轨迹记录和搜索蓝牙手表需要打开手机GPS开关</string>
+    <string name="string_permiss_local">位置权限使用</string>
+    <string name="string_permiss_local_desc">此权限允许APP获取手机位置信息，以保证蓝牙连接及基础等功能的使用。如设备绑定、户外运动功能等。</string>
+    <string name="string_permiss_camera">相机权限</string>
+    <string name="string_permiss_camera_desc">此权限允许APP调用手机的摄像头，以保证拍照上传头像、发布动态等功能的使用。</string>
+    <string name="string_permiss_file">存储</string>
+    <string name="string_permiss_file_desc">此权限允许APP将数据存入或读取，以保证基础功能的使用，如APP离线文件、图片缓存文件、APP日志文件、上传图片等。</string>
+    <string name="string_permiss_phone">电话权限</string>
+    <string name="string_permiss_phone_desc">此权限允许APP访问手机来电状态，以保证手机来电时，设备可控制接听或挂断电话。</string>
+    <string name="string_permiss_contact">联系人、通讯录权限</string>
+    <string name="string_permiss_contact_desc">此权限允许APP访问手机通讯录，以保证设备常用联系人、设备来电提醒、拨打电话等功能的使用。</string>
+
+
+
+    <string name="user_agreement_tips">用户协议</string>//用户协议
+    <string name="privacy_agreement_tips">隐私政策</string>//用户协议
+    <string name="privacy_agreement_2">点击“同意”，即标识您同意最新的“服务协议”和关于“隐私政策”的声明。</string>
+
+    <string-array name="arr_week">
+        <item>周日</item>
+        <item>周一</item>
+        <item>周二</item>
+        <item>周三</item>
+        <item>周四</item>
+        <item>周五</item>
+        <item>周六</item>
+    </string-array>
+
+    <string name="string_number_month">%1$d月</string>
+
+    <string name="string_spo2">血氧</string>
+    <string name="string_bp">血压</string>
+    <string name="string_heart">心率</string>
+    <string name="string_sleep">睡眠</string>
+    <string name="string_no_data">无数据</string>
+    <string name="string_sleep_desc1">Ensuring adequate sleep every day is very beneficial for maintaining physical and mental health. From 10:00 at night to 6:00 in the morning, it is the quality sleep time The National Sleep Foundation recommends that adults sleep for 6-10 hours.</string>
+    <string name="string_sleep_desc2">* The data and suggestions provided are for reference only and cannot be used as a basis for clinical diagnosis and treatment</string>
+
+
+    <string name="string_deep">深睡</string>
+    <string name="string_light_sleep">浅睡</string>
+    <string name="string_awake">清醒</string>
+    <string name="string_rem">快速眼动</string>
+    
+    
+    <string name="string_day">日</string>
+    <string name="string_week">周</string>
+    <string name="string_month">月</string>
+    <string name="string_year">年</string>
+    
+
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_home">数据</string>
+    <string name="title_dashboard">设备</string>
+    <string name="title_notifications">我的</string>
+
+    <string name="string_alarm">闹钟设置</string>
+    <string name="string_alarm_desc">震动过程中，触摸手环按键即可停止震动</string>
+    <string name="string_repeat">重复</string>
+    <string name="string_common_week">周</string>
+    <string name="sun">周日</string>
+    <string name="mon">周一</string>
+    <string name="tue">周二</string>
+    <string name="wed">周三</string>
+    <string name="thu">周四</string>
+    <string name="fri">周五</string>
+    <string name="sat">周六</string>
+    <string name="once">只提醒一次</string>
+    <string name="every_day">每天</string>
+    <string name="work_day">工作日</string>
+    <string name="wenkend_day">周末</string>
+    <string name="frequently_tip">请勿频繁操作</string>
+
+
+    <string name="string_hr_6_desc">极限</string>
+    <string name="string_hr_5_desc">无氧运动</string>
+    <string name="string_hr_4_desc">有氧运动</string>
+    <string name="string_hr_3_desc">燃脂运动</string>
+    <string name="string_hr_2_desc">热身</string>
+    <string name="strign_hr_1_desc">休闲</string>
+
+    <string name="string_double_click_exit">再按一次退出程序!</string>
+    <string name="string_scan_device">搜索设备</string>
+    <string name="string_not_connect">未连接</string>
+    <string name="string_connected">已连接</string>
+    <string name="string_conning">连接中</string>
+    <string name="string_reconnect">重新连接</string>
+    <string name="string_battery">电量</string>
+    <string name="string_unbind">解绑</string>
+    <string name="string_find_device">查找手表</string>
+    <string name="string_take_phone">遥控拍照</string>
+    <string name="string_alarm_set">闹钟设置</string>
+    <string name="string_dial">表盘中心</string>
+    <string name="string_weather">天气设置</string>
+    <string name="string_real_heart">24小时心率</string>
+    <string name="string_bright_screen_time">亮屏时间</string>
+    <string name="string_bright_level">亮度等级</string>
+    <string name="string_rasie_to_wake">转腕亮屏</string>
+    <string name="string_long_sit">久坐提醒</string>
+    <string name="string_phone_call">来电提醒</string>
+    <string name="string_message_notify">消息提醒</string>
+    <string name="string_dnt">勿扰模式</string>
+    <string name="string_temp_unit">温度单位</string>
+    <string name="string_firmware">固件版本</string>
+    <string name="string_funcion_setting">功能设置</string>
+    <string name="string_general_setting">常用设置</string>
+    <string name="string_reminder_setting">提醒设置</string>
+
+    <string name="string_switch">开关</string>
+    <string name="string_start_time">开始时间</string>
+    <string name="string_end_time">结束时间</string>
+    <string name="string_save">保存</string>
+
+    <string name="string_step">步</string>
+    <string name="string_steps">步数</string>
+    <string name="string_step_target">步数目标</string>
+    <string name="string_confirm">确定</string>
+    <string name="string_cancel">取消</string>
+    <string name="string_prompt">提醒</string>
+
+    <string name="http_loading">加载中&#8230;</string>
+
+    <string name="http_unknown_error">请求出错，未知错误</string>
+    <string name="http_token_error">登录失效，请重新登录</string>
+    <string name="http_data_explain_error">数据解析异常，请稍后</string>
+    <string name="http_server_out_time">服务器请求超时，请稍后再试</string>
+    <string name="http_network_error">请求失败，请检查网络设置</string>
+    <string name="http_response_error">服务器响应异常，请稍后再试</string>
+    <string name="http_server_error">服务器连接异常，请稍后再试</string>
+    <string name="http_request_cancel">请求被中断，请重试</string>
+
+
+</resources>

@@ -1,0 +1,41 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        // 阿里云云效仓库：https://maven.aliyun.com/mvn/guide
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        // 华为开源镜像：https://mirrors.huaweicloud.com/
+        maven { url 'https://repo.huaweicloud.com/repository/maven/' }
+        // JitPack 远程仓库：https://jitpack.io
+        maven { url 'https://jitpack.io' }
+
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        // 阿里云云效仓库：https://maven.aliyun.com/mvn/guide
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        // 华为开源镜像：https://mirrors.huaweicloud.com/
+        maven { url 'https://repo.huaweicloud.com/repository/maven/' }
+        // JitPack 远程仓库：https://jitpack.io
+        maven { url 'https://jitpack.io' }
+    }
+}
+rootProject.name = "BonlalaSdk"
+include ':app'
+include ':blalable'
+//include ':thirdlibrary'
+//include ':thirdlibrary:base'
+//include ':thirdlibrary:widget'
+
+
+include 'widget'
+include 'base'
+include ':MPChartLib'
+include ':calendarview'

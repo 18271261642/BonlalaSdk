@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/dp_5"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/commonHistoryCalendarImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_20"
+        android:src="@mipmap/ic_bot_calendar_img"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/commonHistoryDateTv"
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="Aug 30,2022"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shape_radius="@dimen/dp_15"
+        app:shape_solidColor="#4EDD7D" />
+
+    <ImageView
+        android:id="@+id/commonHistoryLeftImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_25"
+        android:src="@mipmap/ic_date_check_left"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/commonHistoryDateTv"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/commonHistoryRightImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_25"
+        android:src="@mipmap/ic_date_check_right"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/commonHistoryDateTv"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/commonHistoryCurrentTv"
+        app:shape_radius="@dimen/dp_13"
+        app:shape_solidColor="@color/white"
+        app:shape_strokeWidth="1dp"
+        app:shape_strokeColor="#4EDD7D"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_3"
+        android:paddingBottom="@dimen/dp_3"
+        android:textColor="#4EDD7D"
+        android:layout_marginEnd="@dimen/dp_15"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Return current"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

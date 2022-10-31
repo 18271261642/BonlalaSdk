@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/deviceHolderLayout"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/deviceHolderImgView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_device_holder_img"/>
+
+
+    <TextView
+        app:layout_constraintTop_toBottomOf="@id/deviceHolderImgView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Device not yet bound"
+        android:textColor="#ff6e6e77"
+        android:textSize="14sp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/deviceAddDeviceTv"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="@dimen/dp_25"
+        app:layout_constraintTop_toBottomOf="@id/deviceHolderImgView"
+        android:layout_width="wrap_content"
+        app:shape_solidColor="#4EDD7D"
+        app:shape_solidPressedColor="#504EDD7D"
+        app:shape_radius="@dimen/dp_5"
+        android:paddingStart="@dimen/dp_30"
+        android:paddingEnd="@dimen/dp_30"
+        android:textColor="@color/white"
+        android:paddingTop="@dimen/dp_5"
+        android:paddingBottom="@dimen/dp_5"
+        android:layout_height="wrap_content"
+        android:text="Add device"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

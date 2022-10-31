@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/dialogHeightBorderTv"
+        app:shape_strokeWidth="1dp"
+        app:shape_strokeColor="@color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:shape_radius="8dp"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        android:layout_width="60dp"
+        android:layout_height="50dp"/>
+
+    <com.bonlala.widget.view.StringScrollPicker
+        android:id="@+id/dialogHeightPick"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="80dp"
+        app:spv_max_text_size="20sp"
+        app:spv_end_color="#2F2F33"
+        app:spv_start_color="#2F2F33"
+        app:spv_min_text_size="17sp"
+        android:layout_height="200dp"/>
+
+    <View
+        android:id="@+id/midView"
+        app:layout_constraintBottom_toBottomOf="@+id/dialogHeightPick"
+        app:layout_constraintTop_toTopOf="@+id/dialogHeightPick"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0_1" />
+
+    <View
+        app:layout_constraintBottom_toTopOf="@id/midView"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginBottom="@dimen/dp_25"
+        android:background="#ABA9A2"/>
+
+
+    <View
+        app:layout_constraintTop_toBottomOf="@id/midView"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="@dimen/dp_25"
+        android:background="#ABA9A2"/>
+
+    <TextView
+        android:id="@+id/dialogHeightUnitTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#2F2F33"
+        android:textSize="18sp"
+        android:text="cm"
+        android:layout_marginTop="20dp"
+        android:padding="@dimen/dp_0_5"
+        app:layout_constraintLeft_toRightOf="@id/dialogHeightPick"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

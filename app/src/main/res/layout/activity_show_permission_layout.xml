@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+
+    <com.hjq.bar.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/string_title_permissiono"
+        app:leftIcon="@drawable/ic_black_back"/>
+
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:layout_constraintTop_toBottomOf="@+id/commTmpV">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:padding="3dp"
+                android:text="@string/string_permiss_title"
+                android:textSize="23sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:padding="3dp"
+                android:text="@string/string_permiss_desc" />
+
+
+            <com.hjq.shape.layout.ShapeConstraintLayout
+                android:id="@+id/permissionReadWriteLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                app:shape_radius="@dimen/dp_15"
+                app:shape_solidColor="@color/white">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:text="@string/string_permiss_file"
+                    android:textColor="#ff2f2f33"
+                    android:textSize="18sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <ImageView
+                    android:id="@+id/oneImgView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/storageStatusTv"
+                    app:srcCompat="@mipmap/ic_p_back" />
+
+
+                <TextView
+                    android:id="@+id/storageStatusTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="未授权"
+                    android:textColor="#ff2f2f33"
+                    android:textSize="16sp"
+                    android:layout_marginEnd="@dimen/dp_5"
+                    app:layout_constraintRight_toLeftOf="@+id/oneImgView" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:text="@string/string_permiss_file_desc"
+                    android:textColor="#ff6e6e77"
+                    android:textSize="14sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/storageStatusTv" />
+
+
+            </com.hjq.shape.layout.ShapeConstraintLayout>
+
+            <com.hjq.shape.layout.ShapeConstraintLayout
+                android:id="@+id/permissionLocalLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                app:shape_radius="@dimen/dp_15"
+                app:shape_solidColor="@color/white">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:text="@string/string_permiss_local"
+                    android:textColor="#ff2f2f33"
+                    android:textSize="18sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <ImageView
+                    android:id="@+id/twoImgView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/locationStatusTv"
+                    app:srcCompat="@mipmap/ic_p_back" />
+
+
+                <TextView
+                    android:id="@+id/locationStatusTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="未授权"
+                    android:textColor="#ff2f2f33"
+                    android:textSize="16sp"
+                    android:layout_marginEnd="@dimen/dp_5"
+                    app:layout_constraintRight_toLeftOf="@+id/twoImgView" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:text="@string/string_permiss_local_desc"
+                    android:textColor="#ff6e6e77"
+                    android:textSize="14sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/locationStatusTv" />
+
+
+            </com.hjq.shape.layout.ShapeConstraintLayout>
+
+            <com.hjq.shape.layout.ShapeConstraintLayout
+                android:id="@+id/permissionCameraLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                app:shape_radius="@dimen/dp_15"
+                app:shape_solidColor="@color/white">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:text="@string/string_permiss_camera"
+                    android:textColor="#ff2f2f33"
+                    android:textSize="18sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <ImageView
+                    android:id="@+id/thirdImgView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/cameraStatusTv"
+                    app:srcCompat="@mipmap/ic_p_back" />
+
+
+                <TextView
+                    android:id="@+id/cameraStatusTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="未授权"
+                    android:layout_marginEnd="@dimen/dp_5"
+                    android:textColor="#ff2f2f33"
+                    android:textSize="16sp"
+                    app:layout_constraintRight_toLeftOf="@+id/thirdImgView" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:text="@string/string_permiss_camera_desc"
+                    android:textColor="#ff6e6e77"
+                    android:textSize="14sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cameraStatusTv" />
+
+
+            </com.hjq.shape.layout.ShapeConstraintLayout>
+
+            <com.hjq.shape.layout.ShapeConstraintLayout
+                android:id="@+id/permissionPhoneStatusLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                app:shape_radius="15dp"
+                app:shape_solidColor="@color/white">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:text="@string/string_permiss_phone"
+                    android:textColor="#ff2f2f33"
+                    android:textSize="18sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <ImageView
+                    android:id="@+id/fourthImgView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/phoneStatusTv"
+                    app:srcCompat="@mipmap/ic_p_back" />
+
+
+                <TextView
+                    android:id="@+id/phoneStatusTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="未授权"
+                    android:textColor="#ff2f2f33"
+                    android:textSize="16sp"
+                    android:layout_marginEnd="@dimen/dp_5"
+                    app:layout_constraintRight_toLeftOf="@+id/fourthImgView" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:text="@string/string_permiss_phone_desc"
+                    android:textColor="#ff6e6e77"
+                    android:textSize="14sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/phoneStatusTv" />
+
+
+            </com.hjq.shape.layout.ShapeConstraintLayout>
+
+            <com.hjq.shape.layout.ShapeConstraintLayout
+                android:id="@+id/audioLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                app:shape_radius="15dp"
+                app:shape_solidColor="@color/white">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:text="@string/string_message"
+                    android:textColor="#ff2f2f33"
+                    android:textSize="18sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <ImageView
+                    android:id="@+id/fifthImgView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/audioLayout"
+                    app:srcCompat="@mipmap/ic_p_back" />
+
+
+                <TextView
+                    android:id="@+id/audioStatusTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="未授权"
+                    android:layout_marginEnd="@dimen/dp_5"
+                    android:textColor="#ff2f2f33"
+                    android:textSize="16sp"
+                    app:layout_constraintRight_toLeftOf="@+id/fifthImgView" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:text="@string/string_sms_desc"
+                    android:textColor="#ff6e6e77"
+                    android:textSize="14sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/audioStatusTv" />
+
+
+            </com.hjq.shape.layout.ShapeConstraintLayout>
+
+
+            <com.hjq.shape.layout.ShapeConstraintLayout
+                android:id="@+id/permissionContactLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                app:shape_radius="15dp"
+                app:shape_solidColor="@color/white">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:text="@string/string_permiss_contact"
+                    android:textColor="#ff2f2f33"
+                    android:textSize="18sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <ImageView
+                    android:id="@+id/sixthImgView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/contactStatusTv"
+                    app:srcCompat="@mipmap/ic_p_back" />
+
+
+                <TextView
+                    android:id="@+id/contactStatusTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="未授权"
+                    android:layout_marginEnd="@dimen/dp_5"
+                    android:textColor="#ff2f2f33"
+                    android:textSize="16sp"
+                    app:layout_constraintRight_toLeftOf="@+id/sixthImgView" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:text="@string/string_permiss_contact_desc"
+                    android:textColor="#ff6e6e77"
+                    android:textSize="14sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/contactStatusTv" />
+
+
+            </com.hjq.shape.layout.ShapeConstraintLayout>
+
+
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</LinearLayout>
