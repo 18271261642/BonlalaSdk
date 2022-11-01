@@ -159,7 +159,7 @@ public class SleepChartView extends View {
 
 
         //屏幕的宽度/总的时间长=单位每分钟的睡眠所占屏幕宽度
-         mSingleWidth = (mWidth -(isNeedClick ? txtWidth : 0)) / allSleepTime;
+         mSingleWidth = (mWidth -(isNeedClick ? txtWidth*2 : 0)) / allSleepTime;
 
          Timber.e("------sWidth="+mSingleWidth+" "+mWidth+" "+allSleepTime);
         String listStr = sleepModel.getSleepSource();
@@ -176,6 +176,7 @@ public class SleepChartView extends View {
 
         for(int i = 0;i<sleepItemList.size();i++){
             SleepItem sleepItem = sleepItemList.get(i);
+           // Timber.e("-------sleepItem="+sleepItem.toString());
             //单个的长度
             int itemLength = sleepItem.getSleepLength();
 
@@ -199,10 +200,17 @@ public class SleepChartView extends View {
                 sleepPaint.setColor(getResources().getColor(R.color.sleep_rem_color));
             }
 
-            RectF rectF = new RectF(itemTotalAllTime-itemLength*mSingleWidth,  MiscUtil.dipToPx(getContext(),isNeedClick ? 75f : 10f) ,isNeedClick ? (i ==sleepItemList.size()-1 ? itemTotalAllTime - txtWidth :  itemTotalAllTime) : itemTotalAllTime,mHeight-(isCanvasStartTime ? txtHeight : 0));
+          //  RectF rectF = new RectF(itemTotalAllTime-itemLength*mSingleWidth,  MiscUtil.dipToPx(getContext(),isNeedClick ? 75f : 10f) ,isNeedClick ? (i ==sleepItemList.size()-1 ? itemTotalAllTime - txtWidth :  itemTotalAllTime) : itemTotalAllTime,mHeight-(isCanvasStartTime ? txtHeight : 0));
+
+            RectF rectF = new RectF(itemTotalAllTime-itemLength*mSingleWidth,  MiscUtil.dipToPx(getContext(),isNeedClick ? 75f : 10f) ,isNeedClick ? ( itemTotalAllTime) : itemTotalAllTime,mHeight-(isCanvasStartTime ? txtHeight : 0));
+
             canvas.drawRect(rectF,sleepPaint);
 
-            if(sleepItem.isClick()  && isNeedClick()){
+            if(isNeedClick() && sleepItem.isClick()){
+                if(sleepItem.getPoint() == null){
+                    float x = itemTotalAllTime-itemLength*mSingleWidth+itemTotalAllTime - txtWidth;
+                    sleepItem.setPoint(new Point((int) (x/2),0));
+                }
                 canvasClickBg(canvas,sleepItem);
             }
         }
@@ -213,7 +221,8 @@ public class SleepChartView extends View {
     //绘制点击的效果气泡
     private void canvasClickBg(Canvas canvas,SleepItem sleepItem){
         Point point = sleepItem.getPoint();
-
+        if(point == null)
+            return;
         float txtWidth = MiscUtil.getTextWidth(clickTxtPaint,"23:30~23:59");
         float txtHeight = MiscUtil.measureTextHeight(clickTxtPaint);
         RectF rectF = new RectF(point.x-txtWidth/2 -paddingWidth,0,point.x+txtWidth/2+paddingWidth,txtHeight*4f+paddingWidth);

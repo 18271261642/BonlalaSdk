@@ -225,6 +225,9 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
             val sunDay = BikeUtils.getWeekSunToSta(BikeUtils.transToDate(dayStr))
             commonHistoryDateTv.text = sunDay
         }
+//        else if(type == StepType.MONTH){
+//            commonHistoryDateTv.text = BikeUtils.getDayByMonth(dayStr)
+//        }
 
         else if(type == StepType.YEAR){
             val yearStr = BikeUtils.getDayOfYear(dayStr)
@@ -260,9 +263,15 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
 
     //组装月的数据，自然月
     private fun getMonthData(){
-        if(BikeUtils.daySize(dayStr,BikeUtils.getCurrDate())){
+        if(BikeUtils.daySize("yyyy-MM",dayStr,BikeUtils.getDayByMonth(BikeUtils.getCurrDate()))){
             commonHistoryCurrentTv.visibility = View.GONE
             return
+        }
+
+        if(!BikeUtils.isEqualDay("yyyy-MM",dayStr,BikeUtils.getDayByMonth(BikeUtils.getCurrDate()))){
+            commonHistoryCurrentTv.visibility = View.VISIBLE
+        }else{
+            commonHistoryCurrentTv.visibility = View.GONE
         }
         viewModel.oneMonthStepList.observe(viewLifecycleOwner){
             val stepStr = it.detailStep
@@ -433,6 +442,7 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
         }
 
         if(dataType == StepType.MONTH){
+            dayStr = BikeUtils.getDayByMonth(dayStr)
             getMonthData()
         }
 

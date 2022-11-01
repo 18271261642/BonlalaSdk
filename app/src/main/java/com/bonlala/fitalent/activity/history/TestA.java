@@ -12,7 +12,9 @@ import com.bonlala.fitalent.view.CustomizeSingleBpView;
 import com.bonlala.widget.view.CompletedView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -21,6 +23,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.angmarch.views.NiceSpinner;
 
 /**
  * Created by Admin
@@ -45,6 +49,18 @@ public class TestA extends AppCompatActivity {
 //
 //        }
         setContentView(R.layout.test_view_layout);
+
+
+
+        NiceSpinner niceSpinner = findViewById(R.id.niceSpinner);
+        List<String> dataset = new LinkedList<>(Arrays.asList("One", "Two", "Three", "Four", "Five"));
+        niceSpinner.attachDataSource(dataset);
+
+
+
+
+
+
 
 
         chartView = findViewById(R.id.chartView);

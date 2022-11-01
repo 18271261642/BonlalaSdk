@@ -5,14 +5,15 @@
     <string name="title_dashboard">device</string>
     <string name="title_notifications">mine</string>
 
-    <string name="string_string_download">下载</string>
-    <string name="string_i_konw">我已了解</string>
-    <string name="string_download_ing">下载中</string>
-    <string name="string_upgrade_ing">升级中</string>
+    <string name="string_time_ratio">Time ratio</string>
+    <string name="string_string_download">Download</string>
+    <string name="string_i_konw">I know</string>
+    <string name="string_download_ing">Downloading</string>
+    <string name="string_upgrade_ing">Upgrading</string>
 
     <string name="string_has_last_version">Currently the last version</string>
     <string name="string_version_file_size">size:</string>
-    <string name="string_save_success">保存成功</string>
+    <string name="string_save_success">save success</string>
     <string name="string_share">Share</string>
     <string name="string_sport_detail">Sport detail</string>
     <string name="string_history">history</string>

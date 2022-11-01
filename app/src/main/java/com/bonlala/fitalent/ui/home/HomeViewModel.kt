@@ -152,6 +152,18 @@ class HomeViewModel : HistorySleepViewModel() {
 
     }
 
+
+    fun getHomeLastSleep(mac: String){
+        var sleepRecord = DBManager.dbManager.getLastDayOfType("user_1001",mac,DbType.DB_TYPE_SLEEP)
+        if(sleepRecord == null)
+            sleepRecord = BikeUtils.getCurrDate()
+
+
+    }
+
+
+
+
     private val _text = MutableLiveData<String>().apply {
         value = "This is home Fragment"
     }

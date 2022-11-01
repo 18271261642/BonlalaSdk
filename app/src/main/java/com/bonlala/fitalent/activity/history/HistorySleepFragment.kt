@@ -170,15 +170,15 @@ class HistorySleepFragment : TitleBarFragment<RecordHistoryActivity>(),OnRecordH
         val sleepDialog = activity?.let { HistorySleepDescDialog(it, com.bonlala.base.R.style.BaseDialogTheme) }
         sleepDialog?.show()
         (if(sleepModel == null) SleepModel() else sleepModel)?.let { sleepDialog?.setSleepModel(it) }
-        val windowM = sleepDialog?.window?.windowManager
-        val layoutP = sleepDialog?.window?.attributes
-        layoutP?.gravity = Gravity.CENTER
-        val width = ViewGroup.LayoutParams.MATCH_PARENT
-
-        val metrics2: DisplayMetrics = resources.displayMetrics
-        val widthW: Int = metrics2.widthPixels
-        layoutP?.width = width
-        sleepDialog?.window?.attributes = layoutP
+//        val windowM = sleepDialog?.window?.windowManager
+//        val layoutP = sleepDialog?.window?.attributes
+//        layoutP?.gravity = Gravity.CENTER
+//        val width = ViewGroup.LayoutParams.MATCH_PARENT
+//
+//        val metrics2: DisplayMetrics = resources.displayMetrics
+//        val widthW: Int = metrics2.widthPixels
+//        layoutP?.width = width
+//        sleepDialog?.window?.attributes = layoutP
     }
 
 

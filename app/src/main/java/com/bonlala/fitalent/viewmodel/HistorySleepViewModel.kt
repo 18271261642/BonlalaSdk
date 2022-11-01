@@ -27,6 +27,10 @@ open class HistorySleepViewModel : ViewModel() {
     //记录的睡眠日期
     var recordSleep = MutableLiveData<List<String>>()
 
+    //最近一次的睡眠数据
+    val lastRecordSleep = MutableLiveData<SleepModel?>()
+
+
 
     //获取睡眠的记录
     fun getSleepRecord(mac: String){
@@ -34,7 +38,53 @@ open class HistorySleepViewModel : ViewModel() {
         recordSleep.postValue(sleepRecord)
     }
 
+    /**
+     * 获取睡眠数据
+     */
+    fun getSleepForLastDay(mac : String) {
 
+        var sleepRecord = DBManager.dbManager.getLastDayOfType("user_1001",mac,DbType.DB_TYPE_SLEEP)
+        if(sleepRecord == null)
+            sleepRecord = BikeUtils.getCurrDate()
+
+        val sleepB = DBManager.dbManager.getDaySleepData("user_1001",mac,sleepRecord)
+
+        Timber.e("----ss="+Gson().toJson(sleepB))
+        //再查询上一天的
+        val sleepPreviewB = DBManager.dbManager.getDaySleepData("user_1001",mac,BikeUtils.getBeforeOrAfterDayStr(sleepRecord,true))
+        Timber.e("----222ss="+Gson().toJson(sleepPreviewB))
+        //上午的str
+        var morningStr : String ?= null
+        //晚上的str
+        var nightStr : String ?= null
+
+        if(sleepB != null){
+            //上午的str
+            morningStr = sleepB.morningSleepStr
+        }
+
+        if(sleepPreviewB != null){
+            nightStr = sleepPreviewB.nightSleepStr
+        }
+        val morList = morningStr?.let { GsonUtils.getGsonObject<List<Int>>(it) }
+        val nigList = nightStr?.let { GsonUtils.getGsonObject<List<Int>>(it) }
+        Timber.e("------今天上午的睡眠="+morList?.size+" "+morningStr)
+        Timber.e("-----昨天晚上的睡眠="+nigList?.size+" "+nightStr)
+
+        if(morningStr == null && nightStr == null){
+            lastRecordSleep.postValue(null)
+            return
+        }
+
+        if(morningStr == null)
+            morningStr = dealWithMorningData()
+        if(nightStr == null)
+            nightStr = dealWithNightData()
+
+        val result = mergeSleepData(morningStr,nightStr,mac,sleepRecord)
+
+        lastRecordSleep.postValue(result)
+    }
 
 
     /**
@@ -134,6 +184,7 @@ open class HistorySleepViewModel : ViewModel() {
         //开始时间
         val resultStartTime = 20 * 60 + startTime
 
+        //结束的下标
         var endTime = 0
 
 
@@ -158,7 +209,11 @@ open class HistorySleepViewModel : ViewModel() {
         var lightTime = 0
         //清醒
         var awakeTime = 0
-
+        allSleepList.forEachIndexed { index, i ->
+            if(index in startTime until endTime){
+                resultSleepList.add(i)
+            }
+        }
 
         val sleepSource = getTest(resultSleepList,resultStartTime)
         Timber.e("--stt="+Gson().toJson(sleepSource))
@@ -178,7 +233,7 @@ open class HistorySleepViewModel : ViewModel() {
 
         Timber.e("----清醒时间="+resultAwakeTime)
 
-       // sleepSource?.get(sleepSource.size -1)?.isClick = true
+        sleepSource?.get(sleepSource.size -1)?.isClick = true
         sleepModel.lightTime = lightTime
         sleepModel.deepTime = deepTime
         sleepModel.awakeTime = resultAwakeTime
@@ -204,7 +259,7 @@ open class HistorySleepViewModel : ViewModel() {
 
     private fun dealWithNightData() : String{
         val list = mutableListOf<Int>()
-        for(i in 0 until 320){
+        for(i in 0 until 240){
             list.add(2)
         }
         return Gson().toJson(list)

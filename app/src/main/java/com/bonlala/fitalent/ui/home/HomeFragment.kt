@@ -18,6 +18,7 @@ import com.bonlala.fitalent.MainActivity
 import com.bonlala.fitalent.R
 import com.bonlala.fitalent.activity.RecordHistoryActivity
 import com.bonlala.fitalent.activity.history.ExerciseRecordActivity
+import com.bonlala.fitalent.activity.history.TestA
 import com.bonlala.fitalent.adapter.HomeUiAdapter
 import com.bonlala.fitalent.bean.HomeHeartBean
 import com.bonlala.fitalent.bean.HomeRealtimeBean
@@ -92,6 +93,11 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
         homeUiAdapter = HomeUiAdapter(activity,sourceList)
         homeRecyclerView?.adapter = homeUiAdapter
         homeUiAdapter?.setOnItemClickListener {
+
+//            startActivity(TestA::class.java)
+//            return@setOnItemClickListener
+
+
             if(BikeUtils.isEmpty(MmkvUtils.getConnDeviceMac())){
 
                 ToastUtils.show("请连接设备!")
@@ -318,7 +324,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
         }
 
         //睡眠数据
-        viewModel.onDaySleep.observe(viewLifecycleOwner){
+        viewModel.lastRecordSleep.observe(viewLifecycleOwner){
             if(it == null){
                 return@observe
             }
@@ -350,8 +356,10 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
 
         //锻炼数据
         viewModel.getTodayExerciseData(mac)
-        //睡眠数据
-        viewModel.getSleepForDay(mac,BikeUtils.getCurrDate())
+        /**
+         * 获取最近一次的睡眠数据
+         */
+        viewModel.getSleepForLastDay(mac)
     }
 
 

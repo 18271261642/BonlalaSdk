@@ -1,5 +1,6 @@
 package com.bonlala.fitalent.ui.dashboard
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,7 +9,9 @@ import com.blala.blalable.BleOperateManager
 import com.blala.blalable.Utils
 import com.blala.blalable.blebean.CommBleSetBean
 import com.blala.blalable.listener.OnCommBackDataListener
+import com.blala.blalable.listener.WriteBack24HourDataListener
 import com.blala.blalable.listener.WriteBackDataListener
+import com.bonlala.fitalent.ble.DataOperateManager
 import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.db.model.DeviceSetModel
 import com.google.gson.Gson
@@ -195,66 +198,14 @@ class DashboardViewModel : ViewModel() {
 
     private val stringBuffer = StringBuffer()
     //获取当日运动数据
-    fun getCurrentDaySport(bleOperateManager: BleOperateManager){
+    fun getCurrentDaySport(context: Context,bleOperateManager: BleOperateManager){
         stringBuffer.delete(0,stringBuffer.length)
-     /*   bleOperateManager.getDayForData(0) {
-            Log.e("汇总数据","----="+Utils.formatBtArrayToString(it)+" "+(it[1].toInt()))
-
-            val btArray  = it
-            //如果是第一包，
-            if(btArray[0].toInt() == 0 &&  btArray[1].toInt() == -118){
-                //年月日
-                val year = Utils.getIntFromBytes(btArray[6],btArray[5])
-                val month = btArray[7].toInt()
-                val day = btArray[8].toInt()
-                //当天的总步数
-                val countStep = Utils.getIntFromBytes(0x00,btArray[11],btArray[10],btArray[9])
-                //卡路里
-                val countKcal = Utils.getIntFromBytes(0x00,btArray[14],btArray[13],btArray[12])
-                //距离
-                val countDistance = Utils.getIntFromBytes(0x00,btArray[17],btArray[16],btArray[15])
-                Log.e("步数","---步数="+year+" "+month+" "+day+" "+countStep+" "+countKcal+" "+countDistance)
-
-            }else{
-                //去除第一个byte，剩下的添加到数组中
-                val tempArray = ByteArray(19)
-                System.arraycopy(it,1,tempArray,0,19)
-
-                Log.e("SSS","-----arr="+ Arrays.toString(tempArray)+"\n"+((btArray[0] and 0xff.toByte()).toInt()))
-                //转换为字符串，全部拼接起来
-                val tmpStr = Utils.getHexString(tempArray)
-                stringBuffer.append(tmpStr)
-                //判断是否是最后一包
-
-                //判断是否是最后一包，最后一包0x81开头
-                if((btArray[0] and 0xff.toByte()).toInt() == -127){   //最后一包
-                    //转为byte数组，解析
-                    val resultBtArray = Utils.hexStringToByte(stringBuffer.toString())
-                        var i: Int = 0
-                        while (i < resultBtArray.size) {
-                            i += 2
-                            Log.e("BBB","----i="+i)
-                            if(i+1<resultBtArray.size){
-                                //第一个包 步数 BYTE0 - 该时间段步数，若>=250则为睡眠(250为深睡\251为浅睡\253为清醒\254为未佩戴)
-                                val itemStep = resultBtArray[i] and 0xFF.toByte()
-                                //第二个包 BYTE1 - 该时间段平均心率，若为0，表示没有开启心率功能，若为大于等于1，小于30，表示心率开启了，但是手表不在手腕上
-                                val itemHeart = resultBtArray[i+1] and 0xFF.toByte()
-
-                                Log.e("结果","-----itemStep="+itemStep+" "+itemHeart)
-                            }
+        bleOperateManager.setClearExercisListener()
+        DataOperateManager.getInstance(context).get24HourData(bleOperateManager,4)
 
 
-                        }
 
-                    bleOperateManager.setClearListener()
-                    }
-
-                }
-
-            }*/
-
-
-        }
+    }
     private val writeBackDataListener = WriteBackDataListener { }
 
 }

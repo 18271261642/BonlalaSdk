@@ -26,7 +26,7 @@
 
         <com.bonlala.fitalent.view.CusScheduleView
             android:id="@+id/sleepDeepScheduleView"
-            android:layout_width="150dp"
+            android:layout_width="120dp"
             android:layout_height="@dimen/dp_15"
             app:cus_all_schedule_color="#E8E9ED"
             app:cus_curr_schedule_color="#985EFF"
@@ -69,7 +69,7 @@
 
         <com.bonlala.fitalent.view.CusScheduleView
             android:id="@+id/sleepLightScheduleView"
-            android:layout_width="150dp"
+            android:layout_width="120dp"
             android:layout_height="@dimen/dp_15"
             app:cus_all_schedule_color="#E8E9ED"
             app:cus_curr_schedule_color="#B3A3FF"
@@ -113,7 +113,7 @@
 
         <com.bonlala.fitalent.view.CusScheduleView
             android:id="@+id/sleepRemScheduleView"
-            android:layout_width="150dp"
+            android:layout_width="120dp"
             android:layout_height="@dimen/dp_15"
             app:cus_all_schedule_color="#E8E9ED"
             app:cus_curr_schedule_color="#FBA76E"
@@ -156,7 +156,7 @@
 
         <com.bonlala.fitalent.view.CusScheduleView
             android:id="@+id/sleepAwakeScheduleView"
-            android:layout_width="150dp"
+            android:layout_width="120dp"
             android:layout_height="@dimen/dp_15"
             app:cus_all_schedule_color="#E8E9ED"
             app:cus_curr_schedule_color="#F9E564"

@@ -245,6 +245,25 @@ public class BikeUtils {
 
 
     /**
+     * 获取日期的月
+     * @param dayStr yyyy-MM-dd格式
+     * @return yyyy-MM
+     */
+    public static String getDayByMonth(String dayStr){
+        try {
+            long time = simpleDateFormat.parse(dayStr).getTime();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(time);
+            long monthTime = calendar.getTimeInMillis();
+            return getFormatDate(monthTime,"yyyy-MM");
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return getFormatDate(System.currentTimeMillis(),"yyyy-MM");
+        }
+    }
+
+    /**
      * 获取上一个月或下一个月
      * @param month 当前的月份，传入 yyyy-MM格式
      * @param  isLast 是否是上个月，true上个月，false下个月
@@ -336,6 +355,46 @@ public class BikeUtils {
         }
     }
 
+
+    /**
+     * 比较两个日期是否相等，日期1和日期2的格式必须相同
+     * @param format 格式
+     * @param day1 日期1
+     * @param day2 日期2
+     * @return 是否相等
+     */
+    public static boolean isEqualDay(String format,String day1,String day2){
+        SimpleDateFormat sdf = new SimpleDateFormat(format,Locale.CHINA);
+
+        try {
+            long time1 = sdf.parse(day1).getTime();
+            long time2 = sdf.parse(day2).getTime();
+            return time1 == time2;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    /**
+     * 比较两个日期大小
+     * @param  format 格式化
+     * @param leftDay yyyy-MM
+     * @param rightDay yyyy-MM
+     * @return
+     */
+    public static boolean daySize(String format,String leftDay,String rightDay){
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat(format,Locale.CHINA);
+            long left = sdf.parse(leftDay).getTime();
+            long right = sdf.parse(rightDay).getTime();
+            return left > right;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     /**
      * 比较两个日期大小

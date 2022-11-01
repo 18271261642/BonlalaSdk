@@ -577,7 +577,7 @@ public class DataOperateManager {
                 }
 
                 Timber.e("-------结果="+stepList.size()+"   "+sleepList.size()+"  "+heartList.size());
-                Timber.e("-------睡眠="+new Gson().toJson(morningSleep)+" "+morningSleep.size());
+                Timber.e("-------睡眠="+new Gson().toJson(morningSleep)+" "+morningSleep.size()+"\n"+nightSleep.size()+" "+new Gson().toJson(nightSleep));
                 //日期
                 String dateStr = yearStr+"-"+String.format("%02d",monthStr)+"-"+String.format("%02d",dayStr);
                 //存储计步

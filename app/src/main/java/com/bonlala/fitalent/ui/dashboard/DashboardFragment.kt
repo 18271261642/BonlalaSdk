@@ -270,7 +270,8 @@ import timber.log.Timber
             }
 
             R.id.deviceFindDeviceLayout -> {    //查找手机
-                bleOperateManager?.findDevice()
+              //  bleOperateManager?.findDevice()
+                bleOperateManager?.let { viewModel.getCurrentDaySport(attachActivity,it) }
 
             }
 

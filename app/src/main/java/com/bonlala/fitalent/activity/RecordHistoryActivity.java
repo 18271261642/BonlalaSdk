@@ -99,7 +99,7 @@ public class RecordHistoryActivity extends AppActivity implements View.OnClickLi
     protected void initView() {
         historyBackImg = findViewById(R.id.historyBackImg);
         spinner = findViewById(R.id.historySpinner);
-
+        spinner.setDropDownVerticalOffset(100);
         recordMeasureLayout = findViewById(R.id.recordMeasureLayout);
         recordStepGoalLayout = findViewById(R.id.recordStepGoalLayout);
         recordHistoryRightImg = findViewById(R.id.recordHistoryRightImg);

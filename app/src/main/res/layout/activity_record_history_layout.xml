@@ -26,6 +26,7 @@
             android:id="@+id/historySpinner"
             android:layout_width="wrap_content"
             android:gravity="center"
+            android:theme="@style/SpinnerStyle"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/dp_5"
             android:layout_height="wrap_content"/>
