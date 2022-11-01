@@ -1,5 +1,7 @@
 package com.bonlala.fitalent.db.model;
 
+import com.bonlala.fitalent.utils.CalculateUtils;
+
 import org.apache.commons.lang.StringUtils;
 import org.litepal.crud.LitePalSupport;
 
@@ -95,9 +97,23 @@ public class ExerciseModel extends LitePalSupport {
 
     /**获取锻炼的时长**/
     public int getExerciseTime(){
-        return sportHour*60 + sportMinute;
+        return sportHour*60 + sportMinute+(sportSecond/60);
     }
 
+    /**获取锻炼的时间，秒**/
+    public float getExerciseMinute(){
+        return (float) (sportHour*60 + sportMinute+(CalculateUtils.div(sportSecond,60,3)));
+    }
+
+
+//    /**
+//     * 计算平均速度
+//     * @param distance 米
+//     * @return
+//     */
+//    public float calculateSpeed(int distance){
+//         int allDistance =
+//    }
 
 
     public String getHrArray() {

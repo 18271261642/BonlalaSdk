@@ -1,5 +1,7 @@
 package com.bonlala.fitalent.utils;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
@@ -260,4 +262,15 @@ public class CalculateUtils {
         return minute+"'"+se+"''";
     }
 
+    public static String getFloatPace(float pace){
+        if(pace == 0.0f){
+            return "--";
+        }
+
+        //保留两位小数
+        String temp = decimalFormat.format(pace);
+        String beforeStr = StringUtils.substringBefore(temp,".");
+        String afterStr = StringUtils.substringAfter(temp,".");
+        return beforeStr+"'"+afterStr+"''";
+    }
 }

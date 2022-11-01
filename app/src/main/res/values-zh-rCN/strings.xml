@@ -5,6 +5,16 @@
     <string name="string_metric">公制</string>
     <string name="string_imperial">英制</string>
 
+    <string name="string_string_download">下载</string>
+    <string name="string_i_konw">我已了解</string>
+    <string name="string_download_ing">下载中</string>
+    <string name="string_upgrade_ing">升级中</string>
+
+
+    <string name="string_has_last_version">已经是最新版本</string>
+    <string name="string_version_file_size">版本大小:</string>
+    <string name="string_save_success">保存成功</string>
+    <string name="string_share">分享</string>
     <string name="string_sport_detail">运动详情</string>
 
     <string name="string_history">历史</string>
@@ -40,7 +50,7 @@
     <string name="string_avg_hr">平均心率</string>
     <string name="string_place">配速</string>
     <string name="string_speed">速度</string>
-
+    <string name="string_string_level_str">级</string>
     <string name="string_string_level">%1$d级</string>
     <string name="string_second">秒</string>
     <string name="string_hour">小时</string>

@@ -108,7 +108,7 @@ class HistoryStepViewModel : ViewModel() {
         val weekLastDay = BikeUtils.getWeekLastDateStr(calendar)
 
         val weekList = DBManager.getInstance().getStartAndEndTimeStepData("user_1001",mac,weekFirstDay,weekLastDay)
-
+        Timber.e("----周="+weekFirstDay+" "+weekLastDay+" "+Gson().toJson(weekList))
         val stepIteList = mutableListOf<StepItem>()
         var countDistance  = 0
         var countKcal = 0

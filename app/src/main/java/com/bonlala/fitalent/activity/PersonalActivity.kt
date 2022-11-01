@@ -2,12 +2,15 @@ package com.bonlala.fitalent.activity
 
 import android.view.View
 import com.bonlala.action.AppActivity
+import com.bonlala.action.SingleClick
 import com.bonlala.fitalent.R
 import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.db.model.UserInfoModel
 import com.bonlala.fitalent.dialog.DateDialog
 import com.bonlala.fitalent.dialog.HeightSelectDialog
 import com.bonlala.fitalent.utils.BikeUtils
+import com.bonlala.fitalent.utils.CalculateUtils
+import com.bonlala.fitalent.utils.MmkvUtils
 import kotlinx.android.synthetic.main.activity_personal_layout.*
 
 /**
@@ -19,6 +22,9 @@ class PersonalActivity : AppActivity() {
 
     private var userInfo : UserInfoModel ?= null
 
+    //公英制
+    private var isKmUnit = true
+
     override fun getLayoutId(): Int {
         return R.layout.activity_personal_layout
     }
@@ -29,23 +35,31 @@ class PersonalActivity : AppActivity() {
     }
 
     override fun initData() {
+        isKmUnit = MmkvUtils.getUnit()
         showPersonalData()
     }
 
     //展示个人信息，数据库中查询
-    fun showPersonalData(){
+    private fun showPersonalData(){
        userInfo = DBManager.getUserInfo()
         if(userInfo == null)
             return
 
         personalSexBar.rightText = if(userInfo?.sex==0) resources.getString(R.string.string_men) else resources.getString(R.string.string_women)
         personalBirthdayBar.rightText = userInfo?.userBirthday
-        personalHeightBar.rightText = userInfo?.userHeight.toString() +" cm"
-        personalWeightBar.rightText = userInfo?.userWeight.toString()+" kg"
+        val height = if(isKmUnit) userInfo?.userHeight else userInfo?.userHeight?.let {
+            CalculateUtils.cmToInchValue(
+                it
+            )
+        }
+        val weight = if(isKmUnit) userInfo?.userWeight.toString()+" kg" else CalculateUtils.kgToLbValue(userInfo!!.userWeight).toString()+" lb"
+        personalHeightBar.rightText = height.toString() +(if(isKmUnit)" cm" else " inch")
+        personalWeightBar.rightText = weight
 
 
     }
 
+    @SingleClick
     override fun onClick(view: View?) {
         super.onClick(view)
         val id = view?.id
@@ -63,18 +77,44 @@ class PersonalActivity : AppActivity() {
             }
             R.id.personalHeightBar->{
                 val list = mutableListOf<String>()
-                for(i in 80..260){
-                    list.add(i.toString())
+                if(!isKmUnit){
+                    for(i in CalculateUtils.cmToInchValue(80)..CalculateUtils.cmToInchValue(250)){
+                        list.add(i.toString())
+                    }
+                }else{
+                    for(i in 80..260){
+                        list.add(i.toString())
+                    }
                 }
-                showSelectDialog(0x01,resources.getString(R.string.string_height),list,userInfo?.userHeight.toString(),"cm")
+                val height = if(isKmUnit) userInfo?.userHeight.toString() else userInfo?.let {
+                    CalculateUtils.cmToInchValue(
+                        it.userHeight).toString()
+                }
+                if (height != null) {
+                    showSelectDialog(0x01,resources.getString(R.string.string_height),list,height,if(isKmUnit)"cm" else "inch")
+                }
             }
 
             R.id.personalWeightBar->{
                 val list = mutableListOf<String>()
-                for(i in 30..150){
-                    list.add(i.toString())
+                if(isKmUnit){
+                    for(i in 30..150){
+                        list.add(i.toString())
+                    }
+                }else{
+                    for(i in CalculateUtils.kgToLbValue(30)..CalculateUtils.kgToLbValue(150)){
+                        list.add(i.toString())
+                    }
                 }
-                showSelectDialog(0x02,resources.getString(R.string.string_weight),list,userInfo?.userWeight.toString(),"kg")
+                val weight = if(isKmUnit) userInfo?.userWeight.toString() else userInfo?.userWeight?.let {
+                    CalculateUtils.kgToLbValue(
+                        it
+                    ).toString()
+                }
+                if (weight != null) {
+                    showSelectDialog(0x02,resources.getString(R.string.string_weight),list,
+                        weight ,if(isKmUnit)" kg" else " lb")
+                }
             }
         }
     }
@@ -101,12 +141,12 @@ class PersonalActivity : AppActivity() {
                     userInfo?.sex = if(it.equals(resources.getString(R.string.string_men))) 0 else 1
                 }
                 if(code == 1){
-                    personalHeightBar.rightText = it+" cm"
-                    userInfo?.userHeight = it.toInt()
+                    personalHeightBar.rightText = it+unitStr
+                    userInfo?.userHeight = if(isKmUnit)it.toInt()else CalculateUtils.footToCm(it.toDouble())
                 }
                 if(code == 0x02){
-                    personalWeightBar.rightText = it+" kg"
-                    userInfo?.userWeight = it.toInt()
+                    personalWeightBar.rightText = it+unitStr
+                    userInfo?.userWeight = if(isKmUnit)it.toInt() else CalculateUtils.lbToKg(it.toFloat())
                 }
                 saveUserInfo()
             }
@@ -120,7 +160,7 @@ class PersonalActivity : AppActivity() {
         val birth = userInfo?.userBirthday
         val yearArr = BikeUtils.getDayArrayOfStr(birth)
 
-        val birthdayDialog = DateDialog.Builder(this@PersonalActivity)
+         val birthdayDialog = DateDialog.Builder(this@PersonalActivity)
             .setYear(yearArr[0])
             .setMonth(yearArr[1])
             .setTitle(resources.getString(R.string.string_birthday))

@@ -17,6 +17,7 @@ import androidx.fragment.app.viewModels
 import com.blala.blalable.BleConstant
 import com.blala.blalable.BleOperateManager
 import com.blala.blalable.blebean.CommBleSetBean
+import com.bonlala.action.SingleClick
 import com.bonlala.action.TitleBarFragment
 import com.bonlala.fitalent.BaseApplication
 import com.bonlala.fitalent.HomeActivity
@@ -33,6 +34,7 @@ import com.bonlala.fitalent.utils.BikeUtils
 import com.bonlala.fitalent.utils.ClickUtils
 import com.bonlala.fitalent.utils.MmkvUtils
 import com.google.gson.Gson
+import com.hjq.toast.ToastUtils
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.item_device_top_layout.*
 import kotlinx.android.synthetic.main.layout_device_empty_layout.*
@@ -238,9 +240,10 @@ import timber.log.Timber
         activity?.unregisterReceiver(broadcastReceiver)
     }
 
-
+    @SingleClick
     override fun onClick(p0: View?) {
         val id = p0?.id
+
         when (id) {
             R.id.deviceGuideImg->{  //引导
                 showHelpDialog()
@@ -268,6 +271,7 @@ import timber.log.Timber
 
             R.id.deviceFindDeviceLayout -> {    //查找手机
                 bleOperateManager?.findDevice()
+
             }
 
             //闹钟
@@ -312,7 +316,7 @@ import timber.log.Timber
                 if(deviceSetModel != null){
                     chooseData = deviceSetModel!!.lightLevel
                 }
-                showChooseItem(0x2,resources.getString(R.string.string_bright_level),resources.getString(R.string.string_string_level),true,chooseData)
+                showChooseItem(0x2,resources.getString(R.string.string_bright_level),resources.getString(R.string.string_string_level_str),true,chooseData)
             }
             //久坐提醒
             R.id.menuLongSitBar -> {
@@ -483,6 +487,7 @@ import timber.log.Timber
             if(code == 0x04){   //公英制
                 menuUnitBar.rightText = it
                 deviceSetModel?.isKmUnit = if(it.equals(resources.getString(R.string.string_metric))) 0 else 1
+                MmkvUtils.saveUnit(it.equals(resources.getString(R.string.string_metric)))
                 setCommSet()
             }
             saveSetData()

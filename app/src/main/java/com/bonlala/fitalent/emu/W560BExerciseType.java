@@ -67,4 +67,38 @@ public class W560BExerciseType {
 
 
     }
+
+
+    public static int getTypeResource(int type){
+        if(type == W560BExerciseType.TYPE_WALK){
+            return R.mipmap.ic_sport_walk;
+        }
+        if(type == W560BExerciseType.TYPE_RUN) {
+            return R.mipmap.ic_sport_run;
+        }
+        if(type == W560BExerciseType.TYPE_RIDE) {
+            return R.mipmap.ic_sport_ride;
+        }
+        if(type == W560BExerciseType.TYPE_MOUNTAINEERING){
+            return R.mipmap.ic_sport_mountaineering;
+        }
+
+        if(type == W560BExerciseType.TYPE_FOOTBALL){
+            return R.mipmap.ic_sport_football;
+        }
+
+        if(type == W560BExerciseType.TYPE_BASKETBALL){
+            return R.mipmap.ic_sport_basketball;
+        }
+
+        if(type == W560BExerciseType.TYPE_PINGPONG){
+            return R.mipmap.ic_sport_pingpong;
+        }
+
+        if(type == W560BExerciseType.TYPE_BADMINTON){
+            return R.mipmap.ic_sport_badmination;
+        }
+
+        return R.mipmap.ic_sport_walk;
+    }
 }

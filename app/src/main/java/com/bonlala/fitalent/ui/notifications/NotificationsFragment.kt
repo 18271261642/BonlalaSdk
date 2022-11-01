@@ -1,6 +1,7 @@
 package com.bonlala.fitalent.ui.notifications
 
 import android.view.View
+import com.bonlala.action.SingleClick
 import com.bonlala.action.TitleBarFragment
 import com.bonlala.fitalent.HomeActivity
 import com.bonlala.fitalent.R
@@ -39,6 +40,7 @@ class NotificationsFragment : TitleBarFragment<HomeActivity>() {
     }
 
 
+    @SingleClick
     override fun onClick(view: View?) {
         super.onClick(view)
         val id = view?.id

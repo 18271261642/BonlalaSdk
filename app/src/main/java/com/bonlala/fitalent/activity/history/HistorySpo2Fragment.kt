@@ -136,15 +136,15 @@ class HistorySpo2Fragment : TitleBarFragment<RecordHistoryActivity>(),OnItemClic
         val desc = SleepTxtDescDialogView(activity, com.bonlala.base.R.style.BaseDialogTheme)
         desc.show()
         desc.setDesc(resources.getString(R.string.string_spo2_txt_desc))
-        val windowM = desc.window?.windowManager
-        val layoutP = desc.window?.attributes
-        layoutP?.gravity = Gravity.CENTER
-        val width = ViewGroup.LayoutParams.MATCH_PARENT
-
-        val metrics2: DisplayMetrics = resources.displayMetrics
-        val widthW: Int = metrics2.widthPixels
-
-        layoutP?.width = widthW/2
-        desc.window?.attributes = layoutP
+//        val windowM = desc.window?.windowManager
+//        val layoutP = desc.window?.attributes
+//        layoutP?.gravity = Gravity.CENTER
+//        val width = ViewGroup.LayoutParams.MATCH_PARENT
+//
+//        val metrics2: DisplayMetrics = resources.displayMetrics
+//        val widthW: Int = metrics2.widthPixels
+//
+//        layoutP?.width = widthW/2
+//        desc.window?.attributes = layoutP
     }
 }

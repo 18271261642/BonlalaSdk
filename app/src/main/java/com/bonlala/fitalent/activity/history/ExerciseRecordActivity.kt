@@ -47,6 +47,9 @@ class ExerciseRecordActivity : AppActivity(){
 
         adapter = ExerciseAdapter(this)
         exerciseRy.adapter = adapter
+
+        val isKm = MmkvUtils.getUnit()
+        exerciseUnitTv.text = if(isKm) "km" else "mi"
     }
 
 
@@ -130,7 +133,7 @@ class ExerciseRecordActivity : AppActivity(){
     }
 
     //展示空的
-    fun showEmptyData(){
+    private fun showEmptyData(){
         emptyLayout.visibility = View.VISIBLE
 
         exerciseTotalKmTv.text = "--"
@@ -158,8 +161,11 @@ class ExerciseRecordActivity : AppActivity(){
         }
 
         val disStr = CalculateUtils.mToKm(distance)
+        val isKm = MmkvUtils.getUnit()
 
-        exerciseTotalKmTv.text = disStr.toString()
+
+        exerciseTotalKmTv.text = if(isKm) disStr.toString() else CalculateUtils.kmToMiValue(disStr).toString()
+
         exerciseTotalTimeTv.text = getTargetType(totalTime.toString(),"times")
         exerciseTotalTimesTv.text = getTargetType(count.toString(),"times")
         exerciseTotalKcalTv.text = getTargetType(kcal.toString(),"kcal")

@@ -23,7 +23,10 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
+
+import timber.log.Timber;
 
 /**
  * 提醒服务  MyNotificationListenerService
@@ -131,13 +134,12 @@ public class AlertService extends MyNotificationListenerService {
     }
 
     //当系统收到新的通知后出发回调
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         try {
             //获取应用包名
             String packageName = sbn.getPackageName();
-            Log.e(TAG, "------通知包名=" + packageName);
+            Timber.e("------通知包名=" + packageName);
             //获取notification对象
             Notification notification = sbn.getNotification();
             if (notification == null) return;
@@ -171,9 +173,10 @@ public class AlertService extends MyNotificationListenerService {
                 return;
             if(msgCont.contains("正在运行"))
                 return;
-
+            Timber.e("-----消息="+msgCont+" title="+title);
+            Timber.e("----notify="+NotifyConfig.notifyMap.get(packageName));
             if(NotifyConfig.notifyMap.get(packageName) != null){
-                BleOperateManager.getInstance().sendAPPNoticeMessage(1, title, msgCont, new WriteBackDataListener() {
+                BleOperateManager.getInstance().sendAPPNoticeMessage(1, Objects.equals(title, "null") ? NotifyConfig.notifyMap.get(packageName) : title, msgCont, new WriteBackDataListener() {
                     @Override
                     public void backWriteData(byte[] data) {
 

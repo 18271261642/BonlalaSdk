@@ -14,6 +14,10 @@ import com.bonlala.fitalent.R;
 import com.bonlala.fitalent.dialog.WaitDialog;
 import com.gyf.immersionbar.ImmersionBar;
 import com.hjq.bar.TitleBar;
+import com.hjq.http.EasyHttp;
+import com.hjq.http.listener.OnDownloadListener;
+import com.hjq.http.model.HttpMethod;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -241,5 +245,15 @@ public abstract class AppActivity extends BaseActivity
 
         spannableString.setSpan(new ForegroundColorSpan(Color.BLACK),distance.length()-unitType.length(),distance.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return spannableString;
+    }
+
+    /**
+     * 下载
+     * @param downUrl 下载的地址
+     * @param saveUrl 文件保存的地址
+     * @param downloadListener 回调
+     */
+    protected void downloadFile(String downUrl, String saveUrl, OnDownloadListener downloadListener){
+        EasyHttp.download(this).method(HttpMethod.GET).url(downUrl).file(saveUrl).listener(downloadListener).start();
     }
 }
