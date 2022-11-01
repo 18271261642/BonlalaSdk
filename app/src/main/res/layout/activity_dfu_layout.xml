@@ -31,6 +31,7 @@
             android:layout_gravity="center"/>
     </LinearLayout>
     <TextView
+        android:id="@+id/dfuCurrentVersionTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="当前版本：V1.01.07"
@@ -56,38 +57,43 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/dfuNetLastVersionTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="@color/black"
-            android:text="最新版本:v10.3"/>
+            android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/dfuFileSizeTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="@color/black"
-            android:text="固件包大小:0.2Mb"/>
+            android:textColor="@color/black" />
         <TextView
+            android:id="@+id/dfuRemarkTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textColor="@color/black"
-            android:text="更新内容："/>
+            android:textColor="@color/black" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/dfuNoUpdateTv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:textSize="16sp"
-            android:textColor="@color/black"
-            android:text="固件包大小:0.2Mb\ndfddf\n\dfasf\n\dafds\ndfa"/>
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:gravity="center"
+            android:textColor="#FFABABAB"
+            android:text="@string/string_has_last_version"/>
 
     </com.hjq.shape.layout.ShapeLinearLayout>
 
 
     <com.bonlala.fitalent.view.LinearProgressView
+        android:id="@+id/dfuBtnStatusView"
         android:layout_width="match_parent"
-        app:linear_bg_color="#D6D6DD"
+        app:linear_bg_color="#FF4EDD7D"
         android:layout_marginStart="@dimen/dp_20"
         android:layout_marginEnd="@dimen/dp_20"
         android:layout_marginBottom="@dimen/dp_10"

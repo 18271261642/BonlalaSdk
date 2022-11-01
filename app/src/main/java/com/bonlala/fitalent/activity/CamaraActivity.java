@@ -24,6 +24,7 @@ import com.blala.blalable.listener.WriteBackDataListener;
 import com.bonlala.fitalent.BaseApplication;
 import com.bonlala.fitalent.R;
 import com.bonlala.fitalent.utils.DisplayUtils;
+import com.hjq.toast.ToastUtils;
 import com.otaliastudios.cameraview.BitmapCallback;
 import com.otaliastudios.cameraview.CameraException;
 import com.otaliastudios.cameraview.CameraListener;
@@ -311,7 +312,7 @@ public class CamaraActivity extends BaseActivity implements View.OnClickListener
                 } else {
                     MediaStore.Images.Media.insertImage(this.getContentResolver(), file.getAbsolutePath(), bitName, null);
                 }
-
+                ToastUtils.show(getResources().getString(R.string.string_save_success));
             }
         } catch (FileNotFoundException e) {
             Log.e("FileNotFoundException", "FileNotFoundException:" + e.getMessage().toString());

@@ -254,6 +254,9 @@ public class StepChartView extends View {
                 }
 
                 if(list.get(i).isChecked()){
+                    if(list.get(i).getPoint() == null){
+                        list.get(i).setPoint(new Point((int) (x+singleBarWidth/2),0));
+                    }
                     canvasTopRectf(canvas,list.get(i));
                 }
 
@@ -276,7 +279,9 @@ public class StepChartView extends View {
 
         Point point = stepItem.getPoint();
         if(point == null)
-            return;
+        {
+           return;
+        }
 
         float paddingWidth = MiscUtil.dipToPx(getContext(),8f);
         //宽度

@@ -5,12 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.Color
 import android.net.Uri
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.style.AbsoluteSizeSpan
-import android.text.style.ForegroundColorSpan
 import android.view.View
 import androidx.core.content.FileProvider
 import androidx.core.widget.NestedScrollView
@@ -26,7 +21,6 @@ import com.bonlala.fitalent.emu.W560BExerciseType
 import com.bonlala.fitalent.utils.*
 import com.hjq.permissions.XXPermissions
 import kotlinx.android.synthetic.main.activity_exercise_detail_layout.*
-import kotlinx.android.synthetic.main.activity_operate_layout.*
 import kotlinx.android.synthetic.main.item_sport_record_item_layout.*
 import timber.log.Timber
 import java.io.File
@@ -74,7 +68,7 @@ class ExerciseDetailActivity : AppActivity() {
             File(str)
         )
 
-        shareImage(this@ExerciseDetailActivity,u2,"分享")
+        shareImage(this@ExerciseDetailActivity,u2,resources.getString(R.string.string_share))
     }
 
     override fun initData() {
@@ -100,6 +94,16 @@ class ExerciseDetailActivity : AppActivity() {
             list?.addAll(tempList)
         }
         itemAdapter?.notifyDataSetChanged()
+
+
+        itemSportTypeImg.setImageResource(W560BExerciseType.getTypeResource(exerciseModel.type))
+        itemExerciseTypeNameTv.text = W560BExerciseType.getW560BTypeName(
+            exerciseModel.type,
+            context
+        )
+        itemExerciseStartTimeTv.text = exerciseModel.startTimeStr + "~" + exerciseModel.endTimeStr
+        itemSportTimeTv.text = exerciseModel.hourMinute
+
 
 //        val distance = exerciseModel.distance
 //        itemExerciseDistanceTv.text = getTargetType(CalculateUtils.mToKm(distance).toString(),"km")
@@ -259,14 +263,18 @@ class ExerciseDetailActivity : AppActivity() {
 
     private fun getTypeMap(exerciseModel: ExerciseModel): List<ExerciseItemBean>? {
         val type = exerciseModel.type
+        val isKm = MmkvUtils.getUnit()
+
         return if (type == W560BExerciseType.TYPE_WALK || type == W560BExerciseType.TYPE_RUN) {
             val distance = exerciseModel.distance
             val disStr = CalculateUtils.mToKm(distance)
             val list: MutableList<ExerciseItemBean> = ArrayList()
+
+
             list.add(
                 ExerciseItemBean(
                     resources.getString(R.string.string_distance),
-                    getTargetType(disStr.toString() + "", "km")
+                    getTargetType(if(isKm) disStr.toString() else CalculateUtils.kmToMiValue(disStr).toString(), if(isKm) "km" else "mi")
                 )
             )
             list.add(
@@ -292,30 +300,35 @@ class ExerciseDetailActivity : AppActivity() {
             )
 
             //计算速度
-            val time = exerciseModel.exerciseTime
+            val time = exerciseModel.exerciseMinute
             //速度=距离/时间
-            val speed = CalculateUtils.div(distance.toDouble(), (time * 60).toDouble(), 4)
-            val resultSpeed = CalculateUtils.mul(speed, 3.6)
+            //速度=距离/时间
+            //速度=距离/时间
+            val speed = CalculateUtils.div(exerciseModel.avgSpeed.toDouble(), 10.0, 2)
 
 
             //计算配速
-            val pace = CalculateUtils.div(
-                (time * 60).toDouble(),
-                CalculateUtils.mToKm(distance).toDouble(),
-                3
-            )
-            val tempPace = pace.toInt()
-            Timber.e("-pace=$pace $tempPace")
+
+
+            //计算配速
+
+            val pace = CalculateUtils.div(time.toDouble(),if(isKm) disStr.toDouble() else CalculateUtils.kmToMiValue(disStr).toDouble(),3)
+
             list.add(
                 ExerciseItemBean(
                     resources.getString(R.string.string_place),
-                    getTargetType(CalculateUtils.getPace(tempPace), "/km")
+                    getTargetType(
+                        CalculateUtils.getFloatPace(pace.toFloat()),
+                        if (isKm) "/km" else "/mi"
+                    )
                 )
             )
+
             list.add(
                 ExerciseItemBean(
                     resources.getString(R.string.string_speed),
-                    getTargetType(CalculateUtils.keepPoint(resultSpeed, 2).toString() + "", "km/h")
+                    getTargetType(if(isKm)CalculateUtils.keepPoint(speed, 2).toString() else CalculateUtils.keepPoint(
+                        CalculateUtils.kmToMiValue(speed.toFloat()).toDouble(),2).toString(), if(isKm) "km/h" else "mi/h")
                 )
             )
             list

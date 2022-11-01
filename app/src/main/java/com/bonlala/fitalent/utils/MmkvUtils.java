@@ -38,7 +38,8 @@ public class MmkvUtils {
     /**计步目标**/
     private static final String STEP_GOAL_KEY = "step_goal";
 
-
+    /**公英制**/
+    private static final String IS_UNIT_KEY = "is_unit_key";
 
 
 
@@ -197,5 +198,15 @@ public class MmkvUtils {
     /**获取计步目标**/
     public static int getStepGoal(){
         return (int) getSaveParams(STEP_GOAL_KEY,8000);
+    }
+
+
+    /**保存公英制 true公制，false英制**/
+    public static void saveUnit(boolean isUnit){
+        setSaveObjParams(IS_UNIT_KEY,isUnit);
+    }
+    /**获取公英制**/
+    public static boolean getUnit(){
+        return (boolean) getSaveParams(IS_UNIT_KEY,false);
     }
 }

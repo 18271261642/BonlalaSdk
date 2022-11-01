@@ -29,7 +29,8 @@ public class LinearProgressView extends View {
     private int mStartColor;//渐变开始颜色
     private int mEndColor;//渐变结束颜色
     private float mProgress = 100;//进度条总进度
-    private int mbgColor;//背景边框颜色
+    //背景边框颜色
+    private int mbgColor;
     private float mCurrentProgress;//当前进度
     private float mRadius;
     private Paint mPaint;
@@ -44,6 +45,9 @@ public class LinearProgressView extends View {
 
     /**里面文字的画笔**/
     private Paint txtPaint;
+
+    /**设置显示的文字**/
+    private String setShowTxt;
 
     public LinearProgressView(Context context) {
         super(context, null);
@@ -100,6 +104,15 @@ public class LinearProgressView extends View {
         invalidate();
     }
 
+    /**
+     *各位邻居，
+     * 关于“七窄门”的事都已经了解了，
+     * 就现实情况而论，关于窄门的事无需多说，相信作为一个普通正常人来说一栋住宅楼设计如此小的门实在让人难以接受，在没有提前告知的情况下我们都是受害者，当然不在乎小门的情况下就另当别论
+     *目前状况：
+     * 1，开发商明知有大小门之分，却在销售中刻意隐瞒，相信开发商内部已经有应对之策！！
+     * 2，销售人员再销售中也没有明确告知实际情况，仅以样板房为准，业主了解大小门之分后销售明确表示不知情
+     */
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -116,7 +129,7 @@ public class LinearProgressView extends View {
         rectF.top = 0;
         mRadius = getHeight()/2;
         mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setColor(Color.parseColor("#E8E9ED"));
+        mPaint.setColor(mbgColor);
         pathBg.addRoundRect(rectF, mRadius, mRadius, Path.Direction.CCW);
         canvas.drawPath(pathBg, mPaint);
         //绘制进度条
@@ -146,16 +159,22 @@ public class LinearProgressView extends View {
         pathPro.reset();
         mPaint.reset();
 
-        if(isDownload){
-            String txt = "Download: "+(CalculateUtils.div(mCurrentProgress,mProgress,200) * 100)+"%";
-            float txtHeight = MiscUtil.measureTextHeight(txtPaint);
-            canvas.drawText(txt,getWidth()/2,getHeight()/2+txtHeight/2,txtPaint);
-        }else{
-            String txt = (int)mCurrentProgress+"/"+(int) mProgress;
-            float txtHeight = MiscUtil.measureTextHeight(txtPaint);
-            canvas.drawText(txt,getWidth()/2,getHeight()/2+txtHeight/2,txtPaint);
-        }
+        if(setShowTxt != null){
+            /**设置显示的文字**/
+            float showTxtWidth =  MiscUtil.measureTextHeight(txtPaint);
+            canvas.drawText(setShowTxt,getWidth()/2,getHeight()/2+showTxtWidth/2,txtPaint);
+        }else {
+            if(isDownload){
+                String txt = "Download: "+(CalculateUtils.div(mCurrentProgress,mProgress,200) * 100)+"%";
+                float txtHeight = MiscUtil.measureTextHeight(txtPaint);
+                canvas.drawText(txt,getWidth()/2,getHeight()/2+txtHeight/2,txtPaint);
+            }else{
+                String txt = (int)mCurrentProgress+"/"+(int) mProgress;
+                float txtHeight = MiscUtil.measureTextHeight(txtPaint);
+                canvas.drawText(txt,getWidth()/2,getHeight()/2+txtHeight/2,txtPaint);
+            }
 
+        }
     }
 
 
@@ -165,5 +184,24 @@ public class LinearProgressView extends View {
 
     public void setDownload(boolean download) {
         isDownload = download;
+    }
+
+    public String getSetShowTxt() {
+        return setShowTxt;
+    }
+
+    public void setSetShowTxt(String setShowTxt) {
+        this.setShowTxt = setShowTxt;
+        invalidate();
+    }
+
+    public int getMbgColor() {
+        return mbgColor;
+    }
+
+    /**设置别家颜色**/
+    public void setMbgColor(int mbgColor) {
+        this.mbgColor = mbgColor;
+        invalidate();
     }
 }

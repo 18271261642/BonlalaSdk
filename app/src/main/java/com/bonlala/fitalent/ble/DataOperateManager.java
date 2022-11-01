@@ -135,6 +135,11 @@ public class DataOperateManager {
             int minute = exerciseArray[7] & 0xff;
             //秒
             int second = exerciseArray[8] & 0xff;
+
+            if(month==0 || month>12 || day>31)
+                return;
+
+
             String yearStr = year+"-"+String.format("%02d",month)+"-"+String.format("%02d",day);
             String startTime = yearStr+" "+String.format("%02d",hour)+":"+String.format("%02d",minute)+":"+String.format("%02d",second);
             exerciseModel.setStartTime(startTime);
@@ -159,6 +164,7 @@ public class DataOperateManager {
             int endHour = exerciseArray[15] & 0xff;
             int endMinute = exerciseArray[16] & 0xff;
             int endSecond = exerciseArray[17] & 0xff;
+
 
 
             String endYearStr = endYear+"-"+String.format("%02d",endMonth)+"-"+String.format("%02d",endDay);
@@ -351,8 +357,9 @@ public class DataOperateManager {
                     deviceSetModel.setTimeStyle(valueArray[5] & 0xff);
                     //中英文
                     //deviceSetModel?.set
-                    //公英制
+                    //公英制 0公制
                     deviceSetModel.setIsKmUnit(valueArray[7] &0xff);
+                    MmkvUtils.saveUnit((valueArray[7] & 0xff) == 0);
 
                 }
 
@@ -361,7 +368,7 @@ public class DataOperateManager {
         });
     }
 
-    //读取亮屏时间和亮度等级
+    /**读取亮屏时间和亮度等级**/
     private void readLightData(BleOperateManager bleOperateManager){
         bleOperateManager.getBackLight(new WriteBackDataListener() {
             @Override

@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.bonlala.fitalent.R;
 import com.bonlala.fitalent.bean.ExerciseItemBean;
+import com.bonlala.fitalent.emu.W560BExerciseType;
+
 import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,6 +42,8 @@ public class ItemExerciseAdapter extends RecyclerView.Adapter<ItemExerciseAdapte
         ExerciseItemBean exerciseItemBean = list.get(position);
         holder.type.setText(exerciseItemBean.getTypeName());
         holder.value.setText(exerciseItemBean.getSpannableString());
+
+
     }
 
     @Override
@@ -50,6 +54,8 @@ public class ItemExerciseAdapter extends RecyclerView.Adapter<ItemExerciseAdapte
     class ItemV extends RecyclerView.ViewHolder{
         private TextView type;
         private TextView value;
+
+
         public ItemV(@NonNull View itemView) {
             super(itemView);
             type = itemView.findViewById(R.id.itemExerciseTypeTypeTv);

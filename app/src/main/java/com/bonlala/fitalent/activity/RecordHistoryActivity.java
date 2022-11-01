@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bonlala.action.AppActivity;
+import com.bonlala.action.SingleClick;
 import com.bonlala.fitalent.R;
 import com.bonlala.fitalent.activity.history.HistoryBpFragment;
 import com.bonlala.fitalent.activity.history.HistoryHeartFragment;
@@ -213,6 +214,7 @@ public class RecordHistoryActivity extends AppActivity implements View.OnClickLi
 
     }
 
+    @SingleClick
     @Override
     public void onClick(View view) {
         super.onClick(view);

@@ -91,11 +91,19 @@ public class ConnStatusService extends Service {
             @Override
             public void onSearchStopped() {
                 Timber.e("----onSearchStopped--");
+//                if(BaseApplication.getInstance().getConnStatus() != ConnStatus.CONNECTED || BaseApplication.getInstance().getConnStatus() != ConnStatus.IS_SYNC_DATA){
+//                    BaseApplication.getInstance().setConnStatus(ConnStatus.NOT_CONNECTED);
+//                    sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
+//                }
             }
 
             @Override
             public void onSearchCanceled() {
                 Timber.e("----onSearchCanceled--");
+//                if(BaseApplication.getInstance().getConnStatus() != ConnStatus.CONNECTED || BaseApplication.getInstance().getConnStatus() != ConnStatus.IS_SYNC_DATA){
+//                    BaseApplication.getInstance().setConnStatus(ConnStatus.NOT_CONNECTED);
+//                    sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
+//                }
             }
         },20 * 1000,1);
     }
@@ -112,6 +120,7 @@ public class ConnStatusService extends Service {
                     BaseApplication.getInstance().setConnStatus(ConnStatus.NOT_CONNECTED);
                     sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
                 }
+
             }
         });
         BleOperateManager.getInstance().connYakDevice(name, bleMac, new ConnStatusListener() {

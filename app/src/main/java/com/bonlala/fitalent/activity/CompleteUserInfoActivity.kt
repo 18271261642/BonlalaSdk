@@ -22,6 +22,9 @@ class CompleteUserInfoActivity : AppActivity() {
 
     var userInfo : UserInfoModel ?= null
 
+
+    var isKmUnit = true
+
     override fun getLayoutId(): Int {
        return R.layout.activity_complete_user_info_layout
     }
@@ -39,6 +42,7 @@ class CompleteUserInfoActivity : AppActivity() {
            DBManager.getInstance().initUserInfoData()
             userInfo = DBManager.getUserInfo()
         }
+
         showUserInfoData()
     }
 

@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.bonlala.fitalent">
 
-
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.INSTALL_PACKAGES"/>
     <uses-permission android:name="android.permission.ANSWER_PHONE_CALLS"/>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
@@ -129,6 +130,13 @@
             </intent-filter>
         </service>
 
+        <service android:name="com.bonlala.fitalent.service.DfuService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="no.nordicsemi.android.action.DFU_UPLOAD" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
         <!-- 获取电话广播 -->
         <receiver android:name="com.bonlala.fitalent.service.PhoneBroadcastReceiver"
             android:exported="true">

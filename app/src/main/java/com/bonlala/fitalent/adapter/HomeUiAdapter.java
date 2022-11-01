@@ -227,9 +227,11 @@ public class HomeUiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             //距离
             int dis = sumSportModel.getSumDistance();
+            float kmDis = CalculateUtils.mToKm(dis);
+            boolean isKm = MmkvUtils.getUnit();
 
 
-            SpannableString kmSb = getTargetType(CalculateUtils.mToKm(dis)+"","km");
+            SpannableString kmSb = getTargetType((isKm ? kmDis : CalculateUtils.kmToMiValue(kmDis))+"",isKm ? "km" : "mi");
             SpannableString kcalSb = getTargetType(CalculateUtils.mToKm(sumSportModel.getSumKcal())+"","kcal");
 
             ((HomeCountStepViewHolder) holder).itemHomeCountStepDisTv.setText(kmSb);

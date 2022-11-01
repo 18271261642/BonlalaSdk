@@ -115,7 +115,7 @@ class HistoryHeartFragment : TitleBarFragment<RecordHistoryActivity>(),OnRecordH
                 detailHeartView?.visibility = View.VISIBLE
                 sleepNoDataTv.visibility = View.GONE
                 chartViewUtils!!.setChartData(activity, tempHrList, ArrayList<String>(),true)
-
+                showEmptyData()
                 return@observe
             }
             tempHrList.clear()

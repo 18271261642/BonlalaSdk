@@ -5,6 +5,15 @@
     <string name="title_dashboard">device</string>
     <string name="title_notifications">mine</string>
 
+    <string name="string_string_download">下载</string>
+    <string name="string_i_konw">我已了解</string>
+    <string name="string_download_ing">下载中</string>
+    <string name="string_upgrade_ing">升级中</string>
+
+    <string name="string_has_last_version">Currently the last version</string>
+    <string name="string_version_file_size">size:</string>
+    <string name="string_save_success">保存成功</string>
+    <string name="string_share">Share</string>
     <string name="string_sport_detail">Sport detail</string>
     <string name="string_history">history</string>
     <string name="string_hr_txt_desc">HRrest: The number of heartbeats per minute in a normal person is generally 60 to 100 in a quiet state. Exercise Heart Rate: During exercise, the body\'s exercise state can be judged according to the heart rate interval. Only by selecting an appropriate heart rate interval can a better exercise state be achieved, and an appropriate heart rate interval can be used to achieve a better exercise effect. \n*The data and suggestions provided are for reference only and cannot be used as a basis for clinical diagnosis and treatment</string>
@@ -44,6 +53,7 @@
 
 
     <string name="string_double_click_exit">Double click to exit!</string>
+    <string name="string_string_level_str">Level</string>
     <string name="string_string_level">Level %1$d</string>
     <string name="string_second">s</string>
     <string name="string_hour">hour</string>

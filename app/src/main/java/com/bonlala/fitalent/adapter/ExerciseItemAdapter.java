@@ -18,6 +18,7 @@ import com.bonlala.fitalent.bean.ExerciseItemBean;
 import com.bonlala.fitalent.db.model.ExerciseModel;
 import com.bonlala.fitalent.emu.W560BExerciseType;
 import com.bonlala.fitalent.utils.CalculateUtils;
+import com.bonlala.fitalent.utils.MmkvUtils;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -95,18 +96,18 @@ public class ExerciseItemAdapter extends AppAdapter<ExerciseModel> {
             itemExerciseTypeNameTv.setText(W560BExerciseType.getW560BTypeName(exerciseModel.getType(),getContext()));
             itemExerciseStartTimeTv.setText(exerciseModel.getStartTimeStr()+"~"+exerciseModel.getEndTimeStr());
             itemSportTimeTv.setText(exerciseModel.getHourMinute());
-
-
-            int distance = exerciseModel.getDistance();
-            float disStr = CalculateUtils.mToKm(distance);
-
-            itemExerciseDistanceTv.setText(getTargetType(disStr+"","km"));
-            itemExerciseKcalTv.setText(getTargetType(exerciseModel.getKcal()+"","kcal"));
-            itemExerciseStepTv.setText(getTargetType(exerciseModel.getCountStep()+"","step"));
-            itemExerciseAvgHrTv.setText(getTargetType(exerciseModel.getAvgHr()+"","bpm"));
-            //itemExercisePaceTv.setText(getTargetType(exerciseModel));
-
-            itemExerciseSpeedTv.setText(getTargetType(exerciseModel.getAvgSpeed()+""," km/s"));
+//
+//
+//            int distance = exerciseModel.getDistance();
+//            float disStr = CalculateUtils.mToKm(distance);
+//
+//            itemExerciseDistanceTv.setText(getTargetType(disStr+"","km"));
+//            itemExerciseKcalTv.setText(getTargetType(exerciseModel.getKcal()+"","kcal"));
+//            itemExerciseStepTv.setText(getTargetType(exerciseModel.getCountStep()+"","step"));
+//            itemExerciseAvgHrTv.setText(getTargetType(exerciseModel.getAvgHr()+"","bpm"));
+//            //itemExercisePaceTv.setText(getTargetType(exerciseModel));
+//
+//            itemExerciseSpeedTv.setText(getTargetType(exerciseModel.getAvgSpeed()+""," km/s"));
 
 
             //显示类型的图片
@@ -200,25 +201,27 @@ public class ExerciseItemAdapter extends AppAdapter<ExerciseModel> {
             float disStr = CalculateUtils.mToKm(distance);
             List<ExerciseItemBean> list = new ArrayList<>();
 
-            list.add(new ExerciseItemBean(getResources().getString(R.string.string_distance),getTargetType(disStr+"","km")));
+            //公英制
+            boolean isKm = MmkvUtils.getUnit();
+
+
+            list.add(new ExerciseItemBean(getResources().getString(R.string.string_distance),getTargetType((isKm ? disStr : CalculateUtils.kmToMiValue(disStr))+"",isKm ? "km" : "mi")));
             list.add(new ExerciseItemBean(getResources().getString(R.string.string_consumption),getTargetType(exerciseModel.getKcal()+"","kcal")));
             list.add(new ExerciseItemBean(getResources().getString(R.string.string_count_step),getTargetType(exerciseModel.getCountStep()+"",getResources().getString(R.string.string_step))));
             list.add(new ExerciseItemBean(getResources().getString(R.string.string_avg_hr),getTargetType(exerciseModel.getAvgHr()+"","bpm")));
 
             //计算速度
-            int time = exerciseModel.getExerciseTime();
+            float time = exerciseModel.getExerciseMinute();
             //速度=距离/时间
-            double speed = CalculateUtils.div(distance,time*60,4);
-            double resultSpeed = CalculateUtils.mul(speed,3.6d);
+            double speed = CalculateUtils.div(exerciseModel.getAvgSpeed(),10,2);
 
 
             //计算配速
-            double pace = CalculateUtils.div(time*60,CalculateUtils.mToKm(distance),3);
-            int tempPace = (int) pace;
+            double pace = CalculateUtils.div(time,isKm ? disStr : CalculateUtils.kmToMiValue(disStr),3);
+            list.add(new ExerciseItemBean(getResources().getString(R.string.string_place), getTargetType(CalculateUtils.getFloatPace((float) pace),isKm ? "/km" : "/mi")));
 
-            Timber.e("-pace="+pace+" "+tempPace);
-            list.add(new ExerciseItemBean(getResources().getString(R.string.string_place), getTargetType(CalculateUtils.getPace(tempPace),"/km")));
-            list.add(new ExerciseItemBean(getResources().getString(R.string.string_speed),getTargetType(CalculateUtils.keepPoint(resultSpeed,2)+"","km/h")));
+
+            list.add(new ExerciseItemBean(getResources().getString(R.string.string_speed),getTargetType((isKm ? CalculateUtils.keepPoint(speed,2) : CalculateUtils.keepPoint(CalculateUtils.kmToMiValue((float) speed),2))+"",isKm ? "km/h" : "mi/h")));
 
             return list;
 

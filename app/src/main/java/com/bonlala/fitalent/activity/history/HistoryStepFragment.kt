@@ -183,18 +183,17 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
         val oneDayStepModel = OneDayStepModel()
         Timber.e("-----有效的数据="+detailStep)
         val stepItemList = GsonUtils.getGsonObject<List<StepItem>>(detailStep)
-        stepItemList?.reversed()
-        (0 until stepItemList?.size!!).also { range->
+        val tempList = stepItemList?.reversed()
+        (0 until tempList?.size!!).also { range->
             range.forEach fe@{
-                if(stepItemList.get(it).step !=0){
-                    stepItemList.get(it).isChecked = true
+                if(tempList.get(it).step !=0){
+                    tempList.get(it).isChecked = true
                     return@also
                 }
 
             }
         }
-        val dSte = stepItemList.reversed()
-        oneDayStepModel.detailStep =Gson().toJson(dSte)
+        oneDayStepModel.detailStep =Gson().toJson(tempList.reversed())
         oneDayStepModel.dayStr = dayStr
         oneDayStepModel.dayStep = dayStep
         oneDayStepModel.dayDistance = dayDistance
@@ -213,7 +212,11 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
         stepTotalStepTv.text = oneDayStepModel.dayStep.toString()+" step"
         //距离
         val distance = oneDayStepModel.dayDistance
-        stepHistoryDistanceTv.text = CalculateUtils.mToKm(distance).toString()
+        val kmDis = CalculateUtils.mToKm(distance)
+        val isKm = MmkvUtils.getUnit()
+        stepHistoryDistanceTv.text = if(isKm) kmDis.toString() else CalculateUtils.kmToMiValue(kmDis).toString()
+        historyStepUnitTv.text = if(isKm) "km" else "mi"
+
         stepHistoryKcalTv.text = oneDayStepModel.dayCalories.toString()
 
         if(type == StepType.WEEK){

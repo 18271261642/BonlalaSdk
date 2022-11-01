@@ -2,9 +2,11 @@ package com.bonlala.fitalent
 
 import android.Manifest
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
@@ -85,6 +87,7 @@ class HomeActivity : AppActivity() , NavigationAdapter.OnNavigationListener{
 
         }
     }
+
 
     override fun initData() {
         getH5Url()
