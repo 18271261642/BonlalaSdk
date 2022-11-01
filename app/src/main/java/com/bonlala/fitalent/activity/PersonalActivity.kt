@@ -52,8 +52,8 @@ class PersonalActivity : AppActivity() {
                 it
             )
         }
-        val weight = if(isKmUnit) userInfo?.userWeight.toString()+" kg" else CalculateUtils.kgToLbValue(userInfo!!.userWeight).toString()+" inch"
-        personalHeightBar.rightText = height.toString() +(if(isKmUnit)" cm" else " lb")
+        val weight = if(isKmUnit) userInfo?.userWeight.toString()+" kg" else CalculateUtils.kgToLbValue(userInfo!!.userWeight).toString()+" lb"
+        personalHeightBar.rightText = height.toString() +(if(isKmUnit)" cm" else " inch")
         personalWeightBar.rightText = weight
 
 
