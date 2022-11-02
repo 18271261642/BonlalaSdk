@@ -124,6 +124,12 @@ class ExerciseDetailActivity : AppActivity() {
         if(hrArray != null){
             Timber.e("---hr="+hrArray)
             val hrList = GsonUtils.getGsonObject<List<Int>>(hrArray)
+
+            if(hrList == null || hrList.isEmpty()){
+
+                return
+            }
+
             val chartList = mutableListOf<LineChartEntity>()
             Timber.e("-----长度="+hrList?.size)
             //最大心率

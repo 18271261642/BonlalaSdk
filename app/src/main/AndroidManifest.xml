@@ -103,7 +103,7 @@
         <!--消息提醒-->
         <activity android:name=".activity.MsgNotifyActivity"/>
         <activity android:name="com.bonlala.fitalent.activity.history.TestA" />
-
+        <activity android:name=".activity.GuideActivity"/>
         <service android:name="com.bonlala.fitalent.ble.ConnStatusService"/>
 
 

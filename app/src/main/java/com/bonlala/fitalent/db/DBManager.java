@@ -352,8 +352,6 @@ public class DBManager {
                 return;
             }
 
-
-
             int[] stepArray = new int[tempList.size()];
             Timber.e("----222---长度="+tempList.size());
             for(int i = 0;i<tempList.size();i++){
@@ -368,9 +366,11 @@ public class DBManager {
 
             for(int i = 0;i<stepArray.length;i+=60){
                 int[] itemArr = new int[60];
+                if(i+60 <stepArray.length){
+                    System.arraycopy(stepArray,i,itemArr,0,59);
+                    itemList.add(itemArr);
+                }
 
-                System.arraycopy(stepArray,i,itemArr,0,59);
-                itemList.add(itemArr);
             }
 
 
@@ -597,14 +597,22 @@ public class DBManager {
             List<DataRecordModel> list = LitePal.where("userId = ? and deviceMac = ? and dataType = ?",userId,mac, String.valueOf(type)).find(DataRecordModel.class);
              if(list == null || list.isEmpty())
                  return null;
-
+            Timber.e("-----锻炼="+new Gson().toJson(list));
             Collections.sort(list, new Comparator<DataRecordModel>() {
                 @Override
                 public int compare(DataRecordModel dataRecordModel, DataRecordModel t1) {
                     return t1.getDayStr().compareTo(dataRecordModel.getDayStr());
                 }
             });
-
+            Timber.e("-----dddd="+new Gson().toJson(list.get(0).getDayStr()));
+            String dayStr = list.get(0).getDayStr();
+            int[] dayArray = BikeUtils.getDayArrayOfStr(dayStr);
+            if(dayArray[1] == 0 || dayArray[2] >31){
+                if(list.size()>1){
+                    return list.get(1).getDayStr();
+                }
+                return null;
+            }
            return list.get(0).getDayStr();
         }catch (Exception e){
             e.printStackTrace();

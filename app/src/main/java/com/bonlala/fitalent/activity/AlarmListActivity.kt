@@ -102,6 +102,7 @@ class AlarmListActivity : AppActivity() {
                     adapter?.getItem(code)?.hour   = hour
                     adapter?.getItem(code)?.minute = minute
                     adapter?.getItem(code)?.repeat = timeDialog?.weekRepestValue?.toByte()!!
+                    adapter?.getItem(code)?.isOpen = true
                     adapter?.notifyDataSetChanged()
 
                     adapter?.getItem(code)?.let { setChooseAlarm(it) }

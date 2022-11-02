@@ -93,7 +93,7 @@ class MeasureDialog : AppCompatDialog {
 
 
     //开始或停止测量
-    fun startOrEndMeasure(isStart : Boolean,type: MeasureType){
+    private fun startOrEndMeasure(isStart : Boolean,type: MeasureType){
 
         if(type ==MeasureType.BP){
             BleOperateManager.getInstance().measureBloodStatus(isStart

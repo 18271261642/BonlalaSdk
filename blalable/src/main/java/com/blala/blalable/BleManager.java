@@ -134,6 +134,7 @@ public class BleManager {
     public void startScanBleDevice(final SearchResponse searchResponse, int duration, int times){
         final SearchRequest searchRequest = new SearchRequest.Builder()
                 .searchBluetoothLeDevice(duration,times)
+                .searchBluetoothClassicDevice(20)
                 .build();
         bluetoothClient.search(searchRequest, new SearchResponse() {
             @Override
@@ -187,8 +188,10 @@ public class BleManager {
     private synchronized void connBleDevice(final String bleMac, final String bleName, final ConnStatusListener connectResponse){
         BleSpUtils.put(mContext,SAVE_BLE_MAC_KEY,bleMac);
 
+        Log.e(TAG,"************连接处="+bleMac);
+
         bluetoothClient.registerConnectStatusListener(bleMac,connectStatusListener);
-        BleConnectOptions options = (new com.inuker.bluetooth.library.connect.options.BleConnectOptions.Builder()).setConnectRetry(3).setConnectTimeout(30000).setServiceDiscoverRetry(3).setServiceDiscoverTimeout(20000).build();
+        BleConnectOptions options = (new com.inuker.bluetooth.library.connect.options.BleConnectOptions.Builder()).setConnectRetry(1).setConnectTimeout(30000).setServiceDiscoverRetry(1).setServiceDiscoverTimeout(20000).build();
         bluetoothClient.connect(bleMac, options, new BleConnectResponse() {
             @Override
             public void onResponse(final int code, final BleGattProfile data) {

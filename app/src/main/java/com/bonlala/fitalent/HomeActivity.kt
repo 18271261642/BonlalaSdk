@@ -15,6 +15,7 @@ import com.bonlala.action.ActivityManager
 import com.bonlala.action.AppActivity
 import com.bonlala.action.AppFragment
 import com.bonlala.base.FragmentPagerAdapter
+import com.bonlala.fitalent.activity.GuideActivity
 import com.bonlala.fitalent.adapter.NavigationAdapter
 import com.bonlala.fitalent.dialog.AppUpdateDialog
 import com.bonlala.fitalent.emu.ConnStatus
@@ -107,8 +108,7 @@ class HomeActivity : AppActivity() , NavigationAdapter.OnNavigationListener{
 
 
     //重连
-    private fun autoConnDevice(){
-
+    public fun autoConnDevice(){
         try {
             val mac = MmkvUtils.getConnDeviceMac()
             if(!BikeUtils.isEmpty(mac)){
@@ -265,4 +265,5 @@ class HomeActivity : AppActivity() , NavigationAdapter.OnNavigationListener{
         }
         return super.onKeyDown(keyCode, event)
     }
+
 }

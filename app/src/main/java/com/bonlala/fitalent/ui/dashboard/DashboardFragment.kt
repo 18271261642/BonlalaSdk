@@ -30,6 +30,7 @@ import com.bonlala.fitalent.db.model.DeviceSetModel
 import com.bonlala.fitalent.dialog.HelpDialogView
 import com.bonlala.fitalent.dialog.SelectDialogView
 import com.bonlala.fitalent.emu.ConnStatus
+import com.bonlala.fitalent.listeners.OnItemClickListener
 import com.bonlala.fitalent.utils.BikeUtils
 import com.bonlala.fitalent.utils.ClickUtils
 import com.bonlala.fitalent.utils.MmkvUtils
@@ -265,13 +266,13 @@ import timber.log.Timber
                 val isSaveBle = MmkvUtils.getConnDeviceMac()
                 if(BikeUtils.isEmpty(isSaveBle))
                     return
-                BaseApplication.getInstance().connStatusService.autoConnDevice(isSaveBle)
+               attachActivity.autoConnDevice()
                 reConnTv.text = resources.getString(R.string.string_conning)
             }
 
             R.id.deviceFindDeviceLayout -> {    //查找手机
-              //  bleOperateManager?.findDevice()
-                bleOperateManager?.let { viewModel.getCurrentDaySport(attachActivity,it) }
+                bleOperateManager?.findDevice()
+//                bleOperateManager?.let { viewModel.getCurrentDaySport(attachActivity,it) }
 
             }
 
@@ -359,6 +360,20 @@ import timber.log.Timber
     private fun showHelpDialog(){
         val helpDialog = HelpDialogView(attachActivity, com.bonlala.base.R.style.BaseDialogTheme)
         helpDialog.show()
+        helpDialog.setOnCommClickListener { position ->
+            helpDialog.dismiss()
+            if (position == 0) {
+                startActivity(GuideActivity::class.java)
+            }
+            if(position == 1){
+                val url = MmkvUtils.getGuideUrl("W560B")
+                val intent = Intent(attachActivity,ShowWebActivity::class.java)
+                intent.putExtra("url",url)
+                startActivity(intent)
+            }
+        }
+
+
         val window = helpDialog.window
         val windowLayout = window?.attributes
         windowLayout?.gravity = Gravity.BOTTOM
@@ -366,6 +381,10 @@ import timber.log.Timber
         val widthW: Int = metrics2.widthPixels
         windowLayout?.width = widthW
         window?.attributes = windowLayout
+
+
+
+
     }
 
 
@@ -483,6 +502,7 @@ import timber.log.Timber
                 val commBleSetBean = CommBleSetBean()
                 commBleSetBean.temperature = if(it.toString()=="℃") 0 else 1
                 deviceSetModel?.tempStyle = if(it.toString()=="℃") 0 else 1
+                MmkvUtils.saveTemperatureUnit(it.toString()=="℃")
                 setCommSet()
             }
             if(code == 0x04){   //公英制

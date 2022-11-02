@@ -193,6 +193,8 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
 
             }
         }
+
+
         oneDayStepModel.detailStep =Gson().toJson(tempList.reversed())
         oneDayStepModel.dayStr = dayStr
         oneDayStepModel.dayStep = dayStep
@@ -218,6 +220,29 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
         historyStepUnitTv.text = if(isKm) "km" else "mi"
 
         stepHistoryKcalTv.text = oneDayStepModel.dayCalories.toString()
+
+        //计算平均步数，日不显示
+        if(type != StepType.DAY){
+            var countDayStep = 0
+            var countDayNumbers = 0
+            tempList.reversed().forEach {
+                if(it.step != 0){
+                    countDayStep+=it.step
+                    countDayNumbers++
+                }
+            }
+            if(countDayStep == 0 || countDayStep == 0){
+                stepHistoryAvgStepTv.text = "--"
+            }else{
+                val avgStep = countDayStep / countDayNumbers
+
+                stepHistoryAvgStepTv.text = avgStep.toInt().toString()
+            }
+
+        }
+
+
+
 
         if(type == StepType.WEEK){
             //val weekCalendar = BikeUtils.getDayCalendar(dayStr)
@@ -298,18 +323,22 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
             dataType = StepType.DAY
 //            dayStr = BikeUtils.getCurrDate()
 //            getDayData()
+            stepAvgLayout.visibility = View.GONE
         }
         if(code == 1){  //周
             stepWeekView.visibility = View.VISIBLE
             dataType = StepType.WEEK
 //            dayStr = BikeUtils.getCurrDate()
 //            getWeekData()
+            stepAvgLayout.visibility = View.VISIBLE
+
         }
         if(code == 2){
             stepMonthView.visibility = View.VISIBLE
             dataType = StepType.MONTH
 //            dayStr = BikeUtils.getFormatDate(System.currentTimeMillis(),"yyyy-MM")
 //            getMonthData()
+            stepAvgLayout.visibility = View.VISIBLE
         }
         if(code == 3){
             stepYearView.visibility = View.VISIBLE

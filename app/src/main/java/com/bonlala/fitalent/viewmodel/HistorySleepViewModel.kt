@@ -199,7 +199,7 @@ open class HistorySleepViewModel : ViewModel() {
 
         val resultEndTime = 8 * 60  - (allSleepList.size-endTime)
 
-        Timber.e("---endTime="+endTime+" ==="+resultEndTime+" "+resultStartTime)
+        Timber.e("---endTime="+endTime+" ==="+resultEndTime+" "+resultStartTime+"\n")
 
         val resultSleepList = mutableListOf<Int>()
 
@@ -210,13 +210,13 @@ open class HistorySleepViewModel : ViewModel() {
         //清醒
         var awakeTime = 0
         allSleepList.forEachIndexed { index, i ->
-            if(index in startTime until endTime){
+            if(index in startTime .. endTime){
                 resultSleepList.add(i)
             }
         }
 
         val sleepSource = getTest(resultSleepList,resultStartTime)
-        Timber.e("--stt="+Gson().toJson(sleepSource))
+        Timber.e("--stt="+Gson().toJson(sleepSource)+"\n"+resultSleepList.size+" "+Gson().toJson(resultSleepList))
 
         var resultAwakeTime = 0
         sleepSource?.forEach {
@@ -231,7 +231,7 @@ open class HistorySleepViewModel : ViewModel() {
             }
         }
 
-        Timber.e("----清醒时间="+resultAwakeTime)
+        Timber.e("----清醒时间="+resultAwakeTime+" "+deepTime+" "+lightTime)
 
         sleepSource?.get(sleepSource.size -1)?.isClick = true
         sleepModel.lightTime = lightTime
@@ -268,7 +268,7 @@ open class HistorySleepViewModel : ViewModel() {
 
     private fun getTest(array : List<Int>,startTime : Int): List<SleepItem>? {
         //List<Integer> mOriginal = new ArrayList<>();
-
+        Timber.e("-----ssssssss="+Gson().toJson(array))
         val list = ArrayList<SleepItem>()
         var tempStartTime = startTime
         var n = 0
@@ -289,8 +289,8 @@ open class HistorySleepViewModel : ViewModel() {
 
                         n = k
                       // println("添加完：length:" + length + "k:" + k)
-                        Timber.e("--111开始时间="+startT+" 长度="+length+" 结束时间="+endT+" 类型="+array[k])
-                        list.add(SleepItem(startT,length,endT,array[k]))
+                       // Timber.e("--111开始时间="+startT+" 长度="+length+" 结束时间="+endT+" 类型="+array[k-1])
+                        list.add(SleepItem(startT,length,endT,array[k-1]))
 
                         tempStartTime+=length
                         break
@@ -298,10 +298,10 @@ open class HistorySleepViewModel : ViewModel() {
                     if (k == array.size - 1) {
                         val startT = tempStartTime
                         val endT = tempStartTime+length
-                        Timber.e("--22开始时间="+startT+" 长度="+length+" 结束时间="+endT+" 类型="+array[k])
+                        Timber.e("--22开始时间="+startT+" 长度="+length+" 结束时间="+endT+" 类型="+array[k-1])
                         // mLength.add(length);
                       //  list.add(SleepItem(length, array[k]))
-                        list.add(SleepItem(startT,length,endT,array[k]))
+                        list.add(SleepItem(startT,length,endT,array[k-1]))
                         n = array.size
 
                         tempStartTime+=length

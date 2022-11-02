@@ -41,7 +41,8 @@ public class MmkvUtils {
     /**公英制**/
     private static final String IS_UNIT_KEY = "is_unit_key";
 
-
+    /**温度单位**/
+    private static final String TEMPERATURE_UNIT_KEY = "temperature_unit_key";
 
     private static MMKV mmkv;
 
@@ -185,8 +186,8 @@ public class MmkvUtils {
         setSaveParams("guide_url",url);
     }
 
-    public static String getGuideUrl(int type){
-        return (String) getSaveParams("guide_url",null)+type;
+    public static String getGuideUrl(String type){
+        return (String) getSaveParams("guide_url",null)+"/"+type;
     }
 
 
@@ -208,5 +209,16 @@ public class MmkvUtils {
     /**获取公英制**/
     public static boolean getUnit(){
         return (boolean) getSaveParams(IS_UNIT_KEY,false);
+    }
+
+    /**保存温度单位**/
+    public static void saveTemperatureUnit(boolean isC){
+        setSaveObjParams(TEMPERATURE_UNIT_KEY,isC);
+    }
+    /**
+     * 获取温度单位 ture 为摄氏度
+     */
+    public static boolean getTemperature(){
+        return (boolean) getSaveParams(TEMPERATURE_UNIT_KEY,false);
     }
 }

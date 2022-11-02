@@ -18,6 +18,8 @@ import com.bonlala.fitalent.adapter.WeatherAdapter
 import com.bonlala.fitalent.http.api.RealtimeWeatherApi
 import com.bonlala.fitalent.http.api.WeatherRecordApi
 import com.bonlala.fitalent.utils.BikeUtils
+import com.bonlala.fitalent.utils.CalculateUtils
+import com.bonlala.fitalent.utils.MmkvUtils
 import com.bonlala.fitalent.viewmodel.WeatherViewModel
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_weather_layout.*
@@ -179,7 +181,10 @@ class WeatherActivity : AppActivity() {
 
     //展示实时天气
     private fun showRealtimeWeather(realTimeBean : RealtimeWeatherApi.RealtimeWeatherBean){
-        realtimeTemTv.text = realTimeBean.temp.toString()+"℃"
+        val isTemp = MmkvUtils.getTemperature()
+        val temp = realTimeBean.temp
+
+        realtimeTemTv.text = if(isTemp) "$temp℃" else CalculateUtils.celsiusToFahrenheit(temp).toString()+"℉"
         val imgUrl = realTimeBean.weatherImgUrl
         Glide.with(this@WeatherActivity).load(imgUrl).into(realtimeWeatherImg)
     }

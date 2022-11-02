@@ -129,7 +129,9 @@ class ShowPermissionActivity : AppActivity(),View.OnClickListener {
 
             if(p0.id == R.id.permissionPhoneStatusLayout){     //电话权限
                 requestPermission(arrayOf(android.Manifest.permission.READ_PHONE_STATE,android.Manifest.permission.CALL_PHONE))
-
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ANSWER_PHONE_CALLS), REQUEST_PERMISSION_CODE)
+                }
             }
 
             if(p0.id == R.id.permissionContactLayout){     //通讯录
@@ -167,9 +169,9 @@ class ShowPermissionActivity : AppActivity(),View.OnClickListener {
 
         };
        // ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_SMS),REQUEST_PERMISSION_CODE)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ANSWER_PHONE_CALLS), REQUEST_PERMISSION_CODE)
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ANSWER_PHONE_CALLS), REQUEST_PERMISSION_CODE)
+//        }
 
         handle.sendEmptyMessage(0x02)
 

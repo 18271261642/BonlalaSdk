@@ -160,6 +160,7 @@ public class ExerciseItemAdapter extends AppAdapter<ExerciseModel> {
 
 
     private int getTypeResource(int type){
+        Timber.e("------type="+type);
         if(type == W560BExerciseType.TYPE_WALK){
             return R.mipmap.ic_sport_walk;
         }

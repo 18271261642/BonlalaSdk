@@ -215,6 +215,37 @@
                         android:textSize="12sp" />
                 </LinearLayout>
 
+
+                <LinearLayout
+                    android:id="@+id/stepAvgLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Avg:"
+                        android:textColor="#ff6e6e77"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/stepHistoryAvgStepTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="99999"
+                        android:textColor="#ff000000"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/stepAvgUnitTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="steps/day"
+                        android:layout_marginStart="@dimen/dp_5"
+                        android:textColor="#ff6e6e77"
+                        android:textSize="12sp" />
+                </LinearLayout>
             </LinearLayout>
 
 

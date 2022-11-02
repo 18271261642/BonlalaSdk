@@ -27,19 +27,19 @@ public class W560BExerciseType {
     public static final int TYPE_RIDE = 0x03;
 
     /**登山**/
-    public static final int TYPE_MOUNTAINEERING = 0x04;
+    public static final int TYPE_MOUNTAINEERING = 0x08;
 
     /**足球**/
-    public static final int TYPE_FOOTBALL = 0x05;
+    public static final int TYPE_FOOTBALL = 0x07;
 
     /**篮球**/
     public static final int TYPE_BASKETBALL = 0x06;
 
     /**乒乓球**/
-    public static final int TYPE_PINGPONG = 0x07;
+    public static final int TYPE_PINGPONG = 0x09;
 
-    /**篮球**/
-    public static final int  TYPE_BADMINTON= 0x08;
+    /**羽毛球**/
+    public static final int  TYPE_BADMINTON= 0x05;
 
 
     private final static Map<Integer,String> map = new HashMap<>();

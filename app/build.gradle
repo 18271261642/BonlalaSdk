@@ -125,4 +125,6 @@ dependencies {
     implementation 'org.aspectj:aspectjrt:1.9.6'
 
     implementation 'com.github.arcadefire:nice-spinner:1.4.4'
+    // 指示器框架：https://github.com/ongakuer/CircleIndicator
+    implementation 'me.relex:circleindicator:2.1.6'
 }

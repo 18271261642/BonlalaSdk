@@ -83,7 +83,7 @@ class PieChartUtils {
              colors.add(emptyColor)
          }else{
              pointList.forEachIndexed { index, i ->
-                 if(i != 0){
+                 if(i != 0 && parties.size>index){
                      entries.add(PieEntry(i.toFloat(),parties.get(index)))
                      colors.add(context.resources.getColor(colorArray[index]))
                  }

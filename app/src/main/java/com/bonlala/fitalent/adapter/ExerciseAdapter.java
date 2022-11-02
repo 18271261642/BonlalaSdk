@@ -73,6 +73,11 @@ public class ExerciseAdapter extends AppAdapter<ExerciseShowBean>{
             exerciseItemAdapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(RecyclerView recyclerView, View itemView, int position2) {
+                    //判断是否有心率，没有心率就不跳转
+                    String hrStr = getItem(position).getExerciseModelList().get(position2).getHrArray();
+                    if(hrStr == null || "[]".equals(hrStr))
+                        return;
+
                     Intent intent = new Intent(getContext(), ExerciseDetailActivity.class);
                     String str = new Gson().toJson(getItem(position).getExerciseModelList().get(position2));
                     intent.putExtra("exercise_item",str);

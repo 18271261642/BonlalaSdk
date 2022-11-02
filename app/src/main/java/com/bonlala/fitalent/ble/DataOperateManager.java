@@ -98,7 +98,7 @@ public class DataOperateManager {
         bleOperateManager.setExerciseDataListener(new OnExerciseDataListener() {
             @Override
             public void backExerciseData(byte[] data) {
-                Timber.e("-------锻炼数据="+Utils.formatBtArrayToString(data));
+                Timber.e("-------返回锻炼数据="+Utils.formatBtArrayToString(data));
 
                 dealWithExercise(data);
             }
@@ -116,9 +116,11 @@ public class DataOperateManager {
             if(sb.length() == 0)
                 return;
             byte[] exerciseArray = Utils.hexStringToByte(sb.toString());
+            Timber.e("----sb="+sb.toString());
             ExerciseModel exerciseModel = new ExerciseModel();
             //运动类型
             int type = exerciseArray[1] & 0xff;
+            Timber.e("-------运动类型="+type);
             exerciseModel.setType(type);
             //平均心率
             int avgHr = exerciseArray[2] & 0xff;
@@ -233,9 +235,13 @@ public class DataOperateManager {
             BaseApplication.getInstance().setConnStatus(ConnStatus.CONNECTED);
 
             setCommBroad(BleConstant.BLE_24HOUR_SYNC_COMPLETE_ACTION);
+
+            sb.delete(0,sb.length());
+
         }else{
             exArrayList.add(data);
             String tmp = Utils.getHexString(data);
+            Timber.e("---tmp="+tmp);
             sb.append(tmp);
         }
 
@@ -351,8 +357,9 @@ public class DataOperateManager {
                     //[0, 0, 1, 0, 0, 0, 0, 0]
                     //24小时心率
                     deviceSetModel.setIs24Heart(valueArray[3]==0);
-                    //稳定单位，0摄氏度
+                    //温度单位，0摄氏度
                     deviceSetModel.setTempStyle(valueArray[2]& 0xff);
+
                     //12小时制
                     deviceSetModel.setTimeStyle(valueArray[5] & 0xff);
                     //中英文
@@ -360,7 +367,7 @@ public class DataOperateManager {
                     //公英制 0公制
                     deviceSetModel.setIsKmUnit(valueArray[7] &0xff);
                     MmkvUtils.saveUnit((valueArray[7] & 0xff) == 0);
-
+                    MmkvUtils.saveTemperatureUnit((valueArray[2]& 0xff) == 0);
                 }
 
                 readLightData(bleOperateManager);
@@ -633,6 +640,7 @@ public class DataOperateManager {
         BleOperateManager.getInstance().getExerciseData(0, new WriteBackDataListener() {
             @Override
             public void backWriteData(byte[] data) {
+                sb.delete(0,sb.length());
                 Timber.e("----获取锻炼返回="+Utils.formatBtArrayToString(data));
                 if(data[0] == 2 && (data[1] & 0xff) == 0xff && (data[2] &0xff) == 66 && data[3]==4){
                     BleOperateManager.getInstance().setClearListener();
@@ -642,7 +650,6 @@ public class DataOperateManager {
                 }
             }
         });
-
     }
 
 

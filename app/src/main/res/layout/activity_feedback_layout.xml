@@ -37,6 +37,7 @@
             android:id="@+id/feedbackContentEdit"
             android:layout_width="match_parent"
             android:background="@null"
+            android:maxLength="1000"
             android:hint="Please enter feedback"
             android:layout_height="wrap_content"/>
 

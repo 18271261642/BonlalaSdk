@@ -201,7 +201,7 @@ class DashboardViewModel : ViewModel() {
     fun getCurrentDaySport(context: Context,bleOperateManager: BleOperateManager){
         stringBuffer.delete(0,stringBuffer.length)
         bleOperateManager.setClearExercisListener()
-        DataOperateManager.getInstance(context).get24HourData(bleOperateManager,4)
+        DataOperateManager.getInstance(context).get24HourData(bleOperateManager,0)
 
 
 

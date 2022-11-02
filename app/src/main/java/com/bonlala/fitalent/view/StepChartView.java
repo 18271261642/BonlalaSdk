@@ -287,15 +287,22 @@ public class StepChartView extends View {
         //宽度
         float mTxtWidth = MiscUtil.getTextWidth(clickPaint,stepItem.getStep()+"step");
         float mTxtHeight = MiscUtil.measureTextHeight(clickPaint);
-        RectF rectF = new RectF(point.x-(mTxtWidth/2)-paddingWidth,stepType == StepType.DAY ? -mHeight+mTxtHeight*2.5f+paddingWidth :  -mHeight+mTxtHeight*2f+paddingWidth,point.x+mTxtWidth/2+paddingWidth,-mHeight);
+
+        float x = point.x-(mTxtWidth/2)-paddingWidth;
+        Timber.e("---x="+x);
+        if(x <0)
+            x = 0;
+        RectF rectF = new RectF(x,stepType == StepType.DAY ? -mHeight+mTxtHeight*2.5f+paddingWidth :  -mHeight+mTxtHeight*2f+paddingWidth,x == 0 ? point.x+mTxtWidth + paddingWidth : point.x+mTxtWidth/2+paddingWidth,-mHeight);
+
         canvas.drawRoundRect(rectF,10f,10f,rectPaint);
 
-        canvas.drawText(stepItem.getStep()+"step",point.x-(mTxtWidth/2),-mHeight+mTxtHeight+paddingWidth/2,clickPaint);
+        float txtX = point.x-(mTxtWidth/2);
+        canvas.drawText(stepItem.getStep()+"step",txtX<0 ? paddingWidth/2: txtX,-mHeight+mTxtHeight+paddingWidth/2,clickPaint);
 
         if(stepType == StepType.DAY){
             String hourStr = stepItem.getHour()+":00";
             float hourWidth = MiscUtil.getTextWidth(clickPaint,hourStr);
-            canvas.drawText(hourStr,point.x-hourWidth/2,-mHeight+mTxtHeight*2.8f,clickPaint);
+            canvas.drawText(hourStr,hourWidth,-mHeight+mTxtHeight*2.8f,clickPaint);
 
         }
 

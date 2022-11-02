@@ -6,7 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
+import android.os.Message;
+import android.se.omapi.SEService;
 import android.text.TextUtils;
 
 import com.blala.blalable.BleConstant;
@@ -21,18 +25,30 @@ import com.inuker.bluetooth.library.Constants;
 import com.inuker.bluetooth.library.search.SearchResult;
 import com.inuker.bluetooth.library.search.response.SearchResponse;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 /**
  * Created by Admin
  * Date 2022/8/15
+ * @author Admin
  */
 public class ConnStatusService extends Service {
 
 
     public IBinder iBinder = new ConnBinder();
 
+
+    private final Handler handler = new Handler(Looper.getMainLooper()){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            if(msg.what == 0x00){
+
+            }
+        }
+    };
 
     @Override
     public void onCreate() {
@@ -66,8 +82,10 @@ public class ConnStatusService extends Service {
     }
 
 
-    //重新连接设备，扫描连接
+    /**重新连接设备，扫描连接**/
     public void autoConnDevice(String mac){
+        Timber.e("-----auto连接="+mac);
+
         BleOperateManager.getInstance().scanBleDevice(new SearchResponse() {
             @Override
             public void onSearchStarted() {
@@ -83,8 +101,9 @@ public class ConnStatusService extends Service {
                     return;
                 if(searchResult.getAddress().equals(mac)){
                     BleOperateManager.getInstance().stopScanDevice();
-
+                    Timber.e("-------扫描到了，开始连接="+mac);
                     connDevice(bleName,mac);
+                    return;
                 }
             }
 
@@ -108,8 +127,8 @@ public class ConnStatusService extends Service {
         },20 * 1000,1);
     }
 
-    //连接
-    public void connDevice(String name,String bleMac){
+
+    private void setConnListener(){
         BleOperateManager.getInstance().setBleConnStatusListener(new BleConnStatusListener() {
             @Override
             public void onConnectStatusChanged(String mac, int status) {
@@ -119,10 +138,57 @@ public class ConnStatusService extends Service {
                 if(status == Constants.STATUS_DISCONNECTED){
                     BaseApplication.getInstance().setConnStatus(ConnStatus.NOT_CONNECTED);
                     sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
+                    new Handler(Looper.myLooper()).postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            autoConnDevice(mac);
+                        }
+                    },2 * 1000);
+
                 }
 
             }
         });
+    }
+
+    public void connDeviceBack(String bleName, String mac, BleConnStatusListener bleConnStatusListener){
+        setConnListener();
+        BleOperateManager.getInstance().connYakDevice(bleName, mac, new ConnStatusListener() {
+            @Override
+            public void connStatus(int status) {
+
+            }
+
+            @Override
+            public void setNoticeStatus(int code) {
+
+                Timber.e("-------连接成功="+code);
+                //连接成功
+                BaseApplication.getInstance().setConnStatus(ConnStatus.CONNECTED);
+                BaseApplication.getInstance().setConnBleName(bleName);
+                MmkvUtils.saveConnDeviceMac(mac);
+                MmkvUtils.saveConnDeviceName(bleName);
+
+                //同步时间
+                BleOperateManager.getInstance().syncDeviceTime(new WriteBackDataListener() {
+                    @Override
+                    public void backWriteData(byte[] data) {
+//                        sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
+//                        BleOperateManager.getInstance().setClearListener();
+                        if(bleConnStatusListener != null)
+                            bleConnStatusListener.onConnectStatusChanged(mac,88);
+                    }
+                });
+
+                DataOperateManager.getInstance(ConnStatusService.this).setMeasureDataSave(BleOperateManager.getInstance());
+
+            }
+        });
+    }
+
+    //连接
+    public void connDevice(String name,String bleMac){
+        setConnListener();
         BleOperateManager.getInstance().connYakDevice(name, bleMac, new ConnStatusListener() {
             @Override
             public void connStatus(int status) {

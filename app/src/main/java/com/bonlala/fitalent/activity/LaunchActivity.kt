@@ -3,6 +3,8 @@ package com.bonlala.fitalent.activity
 import android.content.Intent
 import android.os.Looper
 import android.os.Message
+import androidx.activity.viewModels
+import androidx.lifecycle.ViewModel
 import com.blala.blalable.listener.OnCommBackDataListener
 import com.bonlala.action.AppActivity
 import com.bonlala.fitalent.BaseApplication
@@ -12,6 +14,7 @@ import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.dialog.GuideMsgDialog
 import com.bonlala.fitalent.dialog.ShowPrivacyDialogView
 import com.bonlala.fitalent.utils.MmkvUtils
+import com.bonlala.fitalent.viewmodel.LaunchViewModel
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
 import org.json.JSONObject
@@ -24,6 +27,11 @@ import timber.log.Timber
  *Date 2022/9/5
  */
 class LaunchActivity : AppActivity() {
+
+
+    private val viewModel by viewModels<LaunchViewModel>()
+
+
 
     private val handler = object : android.os.Handler(Looper.getMainLooper()){
         override fun handleMessage(msg: Message) {
@@ -96,6 +104,10 @@ class LaunchActivity : AppActivity() {
 
     override fun initData() {
         getH5Url()
+        viewModel.guideUrl.observe(this){
+
+        }
+        viewModel.getGuideUrl(this)
     }
 
     //获取H5链接

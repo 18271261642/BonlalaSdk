@@ -5,11 +5,13 @@ import android.content.Intent
 import android.provider.Settings
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blala.blalable.BleOperateManager
+import com.blala.blalable.Utils
 import com.blala.blalable.listener.WriteBackDataListener
 import com.bonlala.action.AppActivity
 import com.bonlala.fitalent.R
 import com.bonlala.fitalent.adapter.AppNotifyAdapter
 import com.bonlala.fitalent.bean.NotifyBean
+import com.bonlala.fitalent.ble.DataOperateManager
 import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.db.model.DeviceSetModel
 import com.bonlala.fitalent.utils.BikeUtils
@@ -66,12 +68,21 @@ class MsgNotifyActivity : AppActivity(){
 
         var inputStr = notifyTypeEdit.text
         testNotifyBtn.setOnClickListener {
-            BleOperateManager.getInstance().sendAPPNoticeMessage(inputStr.toString().toInt(),"title","content内容",object : WriteBackDataListener{
+            BleOperateManager.getInstance().setClearListener()
+            BleOperateManager.getInstance().getExerciseData(inputStr.toString().toInt(),object : WriteBackDataListener{
                 override fun backWriteData(data: ByteArray?) {
-
+                   Timber.e("-----获取锻炼="+Utils.formatBtArrayToString(data))
                 }
 
             })
+
+
+//            BleOperateManager.getInstance().sendAPPNoticeMessage(inputStr.toString().toInt(),"title","content内容",object : WriteBackDataListener{
+//                override fun backWriteData(data: ByteArray?) {
+//
+//                }
+//
+//            })
         }
 
     }

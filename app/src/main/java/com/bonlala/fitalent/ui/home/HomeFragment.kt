@@ -168,7 +168,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
                 }
 
                 BaseApplication.getInstance().connStatus = ConnStatus.CONNECTING
-                BaseApplication.getInstance().connStatusService.autoConnDevice(isSaveBle)
+                attachActivity.autoConnDevice()
                 homeDeviceStatusView.setHomeConnStatus(ConnStatus.CONNECTING)
             }
         })
@@ -319,6 +319,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
 
         //锻炼数据
         viewModel.todayExercise.observe(viewLifecycleOwner){
+            Timber.e("----homeduanl ="+gson.toJson(it))
             sourceList.get(6).dataSource = it.toString()
             homeUiAdapter?.notifyItemChanged(6)
         }

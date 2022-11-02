@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/itemPlayTitleTv"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Swipe the screen
+to switch the list of functions"
+        android:textColor="#ff000000"
+        android:textSize="20sp"
+        android:gravity="center"/>
+
+
+    <TextView
+        android:id="@+id/itemPlayContentTv"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Swipe up and down
+the screen to switch the function list"
+        android:textColor="#ff9399a5"
+        android:textSize="14sp"
+        android:gravity="center"/>
+
+
+    <TextView
+        android:id="@+id/itemPlayContentFootTv"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#ff9399a5"
+        android:textSize="14sp"
+        android:gravity="center"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/itemGuideImgView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_gravity="center"
+            android:src="@mipmap/ic_launcher"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>

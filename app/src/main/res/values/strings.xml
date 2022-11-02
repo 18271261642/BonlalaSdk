@@ -5,6 +5,8 @@
     <string name="title_dashboard">device</string>
     <string name="title_notifications">mine</string>
 
+    <string name="string_play_equipment">Play Equipment</string>
+    
     <string name="string_time_ratio">Time ratio</string>
     <string name="string_string_download">Download</string>
     <string name="string_i_konw">I know</string>

@@ -9,14 +9,18 @@ import java.text.DecimalFormat;
  * 计算类工具
  * Created by Admin
  * Date 2022/6/14
+ * @author Admin
  */
 public class CalculateUtils {
 
 
-    //公制转英制 1km = 0.6214英里
+    /**公制转英制 1km = 0.6214英里**/
     private static final double kmToMiModulus = 0.6214d;
 
-    //1 cm = 0.3937 inch 英寸
+    /**摄氏度转华摄氏度 1摄氏度=33.8华摄氏度**/
+    private static final double Fahrenheit_Modulus = 33.8f;
+
+    /**1 cm = 0.3937 inch 英寸**/
     private static final double cmToInchModulus = 0.39737d;
 
     //1kg = 2.205磅
@@ -135,6 +139,17 @@ public class CalculateUtils {
         double tMvalue = mul((double) mValue,mToFoot);
         return (int) tMvalue;
     }
+
+
+    /**
+     * 摄氏度转华摄氏度
+     * @return 华摄氏度
+     */
+    public static int celsiusToFahrenheit(int celsiusValue){
+       double temp = mul((double) celsiusValue,Fahrenheit_Modulus);
+       return (int) temp;
+    }
+
 
     //小数加法
     public static float add(double v1,double v2){

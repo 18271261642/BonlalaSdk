@@ -25,6 +25,7 @@
 
 
     <TextView
+        android:id="@+id/helpPlayEquipmentTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Play equipment"
@@ -38,10 +39,11 @@
         android:layout_marginStart="@dimen/dp_25"
         android:layout_marginEnd="@dimen/dp_25"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:background="#DBDBDB"/>
 
     <TextView
+        android:id="@+id/helpGuideTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Operation guide"
@@ -55,10 +57,11 @@
         android:layout_marginStart="@dimen/dp_25"
         android:layout_marginEnd="@dimen/dp_25"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:background="#DBDBDB"/>
 
     <TextView
+        android:id="@+id/helpAudioTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Audio guide"

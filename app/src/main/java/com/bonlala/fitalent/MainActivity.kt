@@ -10,8 +10,10 @@ import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blala.blalable.BleConstant
 import com.blala.blalable.BleOperateManager
+import com.blala.blalable.listener.BleConnStatusListener
 import com.blala.blalable.listener.ConnStatusListener
 import com.bonlala.action.AppActivity
+import com.bonlala.fitalent.activity.GuideActivity
 import com.bonlala.fitalent.adapter.ScanDeviceAdapter
 import com.bonlala.fitalent.bean.BleBean
 import com.bonlala.fitalent.emu.ConnStatus
@@ -188,28 +190,49 @@ class MainActivity : AppActivity() ,OnItemClickListener{
         val bleName =  listData?.get(position)?.bluetoothDevice?.name
 
         showDialog("连接中..")
-
-        BleOperateManager.getInstance().connYakDevice("b",bleMac,object : ConnStatusListener{
-            override fun connStatus(status: Int) {
-
-            }
-
-            override fun setNoticeStatus(code: Int) {
-                hideDialog()
-                Timber.e("----notifyCode="+code)
-               BaseApplication.getInstance().connBleName = bleName
+        BaseApplication.getInstance().connStatusService.connDeviceBack(bleName,bleMac
+        ) { mac, status ->
+            //连接成功
+            if (status == 88) {
+                BaseApplication.getInstance().connBleName = bleName
                 BaseApplication.getInstance().connStatus = ConnStatus.CONNECTED
                 MmkvUtils.saveConnDeviceName(bleName)
                 MmkvUtils.saveConnDeviceMac(bleMac)
 
-                val broadIntent= Intent()
+                val broadIntent = Intent()
                 broadIntent.action = BleConstant.BLE_CONNECTED_ACTION
                 sendBroadcast(broadIntent)
+                //进入玩转设备页面
+                startActivity(GuideActivity::class.java)
 
                 finish()
             }
+        }
 
-        })
+
+//        BleOperateManager.getInstance().connYakDevice("b",bleMac,object : ConnStatusListener{
+//            override fun connStatus(status: Int) {
+//
+//            }
+//
+//            override fun setNoticeStatus(code: Int) {
+//                hideDialog()
+//                Timber.e("----notifyCode="+code)
+//                BaseApplication.getInstance().connBleName = bleName
+//                BaseApplication.getInstance().connStatus = ConnStatus.CONNECTED
+//                MmkvUtils.saveConnDeviceName(bleName)
+//                MmkvUtils.saveConnDeviceMac(bleMac)
+//
+//                val broadIntent= Intent()
+//                broadIntent.action = BleConstant.BLE_CONNECTED_ACTION
+//                sendBroadcast(broadIntent)
+//                //进入玩转设备页面
+//                startActivity(GuideActivity::class.java)
+//
+//                finish()
+//            }
+//
+//        })
     }
 
 

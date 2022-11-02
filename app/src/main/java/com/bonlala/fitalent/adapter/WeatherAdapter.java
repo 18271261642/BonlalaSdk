@@ -9,6 +9,8 @@ import com.bonlala.base.BaseAdapter;
 import com.bonlala.fitalent.R;
 import com.bonlala.fitalent.http.api.WeatherRecordApi;
 import com.bonlala.fitalent.utils.BikeUtils;
+import com.bonlala.fitalent.utils.CalculateUtils;
+import com.bonlala.fitalent.utils.MmkvUtils;
 import com.bumptech.glide.Glide;
 
 import androidx.annotation.NonNull;
@@ -56,7 +58,14 @@ public class WeatherAdapter extends AppAdapter<WeatherRecordApi.WeatherRecordBea
         @Override
         public void onBindView(int position) {
             WeatherRecordApi.WeatherRecordBean.WeathersBean wb = getItem(position);
-            itemRecordWeatherScopeTv.setText(wb.getLowTemp()+"℃"+"~"+wb.getHiTemp()+"℃");
+            boolean isTemp = MmkvUtils.getTemperature();
+            int lowTemp = wb.getLowTemp();
+            int hiTemp = wb.getHiTemp();
+            String lowStr = isTemp ? lowTemp+"℃"  : CalculateUtils.celsiusToFahrenheit(lowTemp)+"℉";
+            String hStr = isTemp ? hiTemp+"℃" : CalculateUtils.celsiusToFahrenheit(hiTemp)+"℉";
+
+
+            itemRecordWeatherScopeTv.setText(lowStr+"~"+hStr);
             itemRecordWeatherDateTv.setText(wb.getCurrentDate());
             itemRecordWeekTv.setText(BikeUtils.getWeekForDay(getContext(),wb.getCurrentDate()));
             Glide.with(getContext()).load(wb.getWeatherImgUrl()).into(itemRecordWeatherImgView);

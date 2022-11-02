@@ -147,23 +147,13 @@ class HistorySleepDescDialog : AppCompatDialog {
         }else{
             count.forEachIndexed { index, i ->
                 if(i != 0){
-                    entries.add(PieEntry(i.toFloat()+range/3,parties.get(index)))
+                    entries.add(PieEntry(i.toFloat(),parties.get(index)))
                     colors.add(context.resources.getColor(colorArray[index]))
                 }
 
             }
         }
 
-//        for (i in 0 until count) {
-//            entries.add(
-//                PieEntry(
-//                    (Math.random() * range).toFloat() + range / 5,
-//                    parties.get(i % parties.size)
-//                )
-//            )
-//        colors.add(context.resources.getColor(colorArray[i]))
-//
-//        }
         val dataSet = PieDataSet(entries, "Election Results")
         dataSet.sliceSpace = 3f
         dataSet.selectionShift = 5f

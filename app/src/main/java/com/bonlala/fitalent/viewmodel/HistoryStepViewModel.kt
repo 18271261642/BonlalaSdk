@@ -85,6 +85,7 @@ class HistoryStepViewModel : ViewModel() {
             listStepItem.add(stepItem)
         }
 
+
         val oneDayB = OneDayStepModel()
         oneDayB.detailStep = Gson().toJson(listStepItem)
         oneDayB.dayDistance = countDistance
@@ -124,9 +125,9 @@ class HistoryStepViewModel : ViewModel() {
                 weekList.forEachIndexed { index, oneDayStepModel ->
                     val isEqual = tempDayStr == BikeUtils.transToDate(oneDayStepModel.dayStr)
                     if(isEqual){
-                        countDistance = oneDayStepModel.dayDistance
-                        countKcal = oneDayStepModel.dayCalories
-                        step = oneDayStepModel.dayStep
+                        countDistance += oneDayStepModel.dayDistance
+                        countKcal += oneDayStepModel.dayCalories
+                        step += oneDayStepModel.dayStep
                         countStep+=oneDayStepModel.dayStep
                     }
                 }
@@ -134,6 +135,7 @@ class HistoryStepViewModel : ViewModel() {
             stepItem.step = step
             stepIteList.add(stepItem)
         }
+        Timber.e("------周="+countDistance+" "+countKcal)
         val oneDayB = OneDayStepModel()
         oneDayB.detailStep = Gson().toJson(stepIteList)
         oneDayB.dayDistance = countDistance
