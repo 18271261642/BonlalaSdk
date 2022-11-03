@@ -31,6 +31,7 @@ import com.hjq.http.listener.OnHttpListener
 import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.XXPermissions
 import com.hjq.toast.ToastUtils
+import kotlinx.android.synthetic.main.fragment_home.*
 import org.json.JSONObject
 import timber.log.Timber
 
@@ -58,6 +59,8 @@ class HomeActivity : AppActivity() , NavigationAdapter.OnNavigationListener{
         mNavigationView = findViewById(R.id.rv_home_navigation)
 
         mNavigationAdapter = NavigationAdapter(this)
+
+        //判断是否有绑定过，有绑定过进入首页，未绑定进入设置
         mNavigationAdapter!!.addItem(
             NavigationAdapter.MenuItem(
                 getString(R.string.title_home),
@@ -70,6 +73,7 @@ class HomeActivity : AppActivity() , NavigationAdapter.OnNavigationListener{
                 ContextCompat.getDrawable(this, R.drawable.home_device_selector)
             )
         )
+
         mNavigationAdapter!!.addItem(
             NavigationAdapter.MenuItem(
                 getString(R.string.title_notifications),
@@ -92,13 +96,23 @@ class HomeActivity : AppActivity() , NavigationAdapter.OnNavigationListener{
 
     override fun initData() {
         getH5Url()
+
         mPagerAdapter = FragmentPagerAdapter(this)
         mPagerAdapter?.addFragment(HomeFragment().newInstance())
         mPagerAdapter?.addFragment(DashboardFragment().getInstance())
+
         mPagerAdapter?.addFragment(NotificationsFragment().getInstance())
         mViewPager?.adapter = mPagerAdapter
 
         onNewIntent(intent)
+        val mac = MmkvUtils.getConnDeviceMac()
+        if(!BikeUtils.isEmpty(mac)){
+            onNavigationItemSelected(0)
+            switchFragment(0)
+        }else{
+            onNavigationItemSelected(1)
+            switchFragment(1)
+        }
 
         autoConnDevice()
         viewModel.getAppVersion(this)
@@ -111,18 +125,20 @@ class HomeActivity : AppActivity() , NavigationAdapter.OnNavigationListener{
     public fun autoConnDevice(){
         try {
             val mac = MmkvUtils.getConnDeviceMac()
+            Timber.e("----重新连接了="+mac)
             if(!BikeUtils.isEmpty(mac)){
-                if(BaseApplication.getInstance().connStatus == ConnStatus.NOT_CONNECTED){
+
+                if(BaseApplication.getInstance().connStatus == ConnStatus.NOT_CONNECTED || BaseApplication.getInstance().connStatus == ConnStatus.CONNECTING){
                     if(XXPermissions.isGranted(this@HomeActivity,Manifest.permission.ACCESS_FINE_LOCATION)){
-                        BaseApplication.getInstance().connStatusService.autoConnDevice(mac)
+                        BaseApplication.getInstance().connStatusService.autoConnDevice(mac,false)
                     }else{
                         XXPermissions.with(this@HomeActivity).permission(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION)).request(object : OnPermissionCallback{
                             override fun onGranted(
                                 permissions: MutableList<String>?,
                                 all: Boolean
                             ) {
-                                if(all)
-                                    autoConnDevice()
+//                                if(all)
+//                                    autoConnDevice()
                             }
                         })
                     }
@@ -159,6 +175,9 @@ class HomeActivity : AppActivity() , NavigationAdapter.OnNavigationListener{
         if (fragmentIndex == -1) {
             return
         }
+
+        Timber.e("-------swww="+fragmentIndex)
+
         when (fragmentIndex) {
             0, 1, 2, 3 -> {
                 mViewPager!!.currentItem = fragmentIndex

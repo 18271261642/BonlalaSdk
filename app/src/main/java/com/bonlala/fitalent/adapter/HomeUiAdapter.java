@@ -232,7 +232,7 @@ public class HomeUiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
 
             SpannableString kmSb = getTargetType((isKm ? kmDis : CalculateUtils.kmToMiValue(kmDis))+"",isKm ? "km" : "mi");
-            SpannableString kcalSb = getTargetType(CalculateUtils.mToKm(sumSportModel.getSumKcal())+"","kcal");
+            SpannableString kcalSb = getTargetType(sumSportModel.getSumKcal()+"","kcal");
 
             ((HomeCountStepViewHolder) holder).itemHomeCountStepDisTv.setText(kmSb);
             ((HomeCountStepViewHolder) holder).itemHomeCountKcalDisTv.setText(kcalSb);
@@ -402,7 +402,10 @@ public class HomeUiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 return;
             }
             for(Map.Entry<String,String> m : map.entrySet()){
-                ((HomeSportRecordViewHolder) holder).itemSportRecordLastTimeTv.setText(m.getKey());
+                //日期
+                String dayStr = m.getKey();
+
+                ((HomeSportRecordViewHolder) holder).itemSportRecordLastTimeTv.setText(BikeUtils.isEqualDay(dayStr,BikeUtils.getCurrDate()) ? context.getResources().getString(R.string.string_today) : dayStr);
                 String vStr = m.getValue();
                 String time = StringUtils.substringBefore(vStr,"+");
                 String kcal = StringUtils.substringAfter(vStr,"+");

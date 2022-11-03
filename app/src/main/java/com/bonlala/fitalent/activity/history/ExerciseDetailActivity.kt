@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
 import android.net.Uri
 import android.view.View
 import androidx.core.content.FileProvider
@@ -22,6 +23,10 @@ import com.bonlala.fitalent.utils.*
 import com.hjq.permissions.XXPermissions
 import kotlinx.android.synthetic.main.activity_exercise_detail_layout.*
 import kotlinx.android.synthetic.main.item_sport_record_item_layout.*
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
 import java.util.*
@@ -54,9 +59,21 @@ class ExerciseDetailActivity : AppActivity() {
         itemExerciseTypeRy.adapter = itemAdapter
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onRightClick(view: View?) {
         super.onRightClick(view)
+
+        showShare(true)
+        GlobalScope.launch {
+            delay(100)
+            toShare()
+        }
+
+    }
+
+    private fun toShare(){
         val bitmap = shotNestedScrollView(exerciseShareView)
+
         val str = FileUtils.savePic(bitmap,this)
         if(BikeUtils.isEmpty(str)){
 
@@ -70,6 +87,7 @@ class ExerciseDetailActivity : AppActivity() {
 
         shareImage(this@ExerciseDetailActivity,u2,resources.getString(R.string.string_share))
     }
+
 
     override fun initData() {
         var exercise_itemStr = intent.getStringExtra("exercise_item")
@@ -246,8 +264,11 @@ class ExerciseDetailActivity : AppActivity() {
             }
             // 创建对应大小的bitmap
             val bitmap = Bitmap.createBitmap(nestedScrollView.width, h, Bitmap.Config.ARGB_8888)
+
             val canvas = Canvas(bitmap)
-            nestedScrollView.draw(canvas)
+            canvas.drawColor(Color.WHITE)
+            //nestedScrollView.draw(canvas)
+            nestedScrollView.getChildAt(0).draw(canvas)
 
             // 保存图片
             //savePicture(nestedScrollView.context, bitmap)
@@ -263,7 +284,16 @@ class ExerciseDetailActivity : AppActivity() {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "image/png"
         intent.putExtra(Intent.EXTRA_STREAM, uri)
-        context.startActivity(Intent.createChooser(intent, title))
+        //context.startActivity(Intent.createChooser(intent, title))
+        startActivityForResult(intent,0x00)
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Timber.e("------分享="+resultCode+" "+requestCode)
+
+        showShare(false)
     }
 
 
@@ -356,5 +386,11 @@ class ExerciseDetailActivity : AppActivity() {
         }
     }
 
+
+    private fun showShare(isShare : Boolean){
+        exerciseDescTv.visibility = if(isShare) View.GONE else View.VISIBLE
+        exerciseDescLayout.visibility = if(isShare) View.GONE else View.VISIBLE
+        shareLogoLayout.visibility = if(isShare) View.VISIBLE else View.GONE
+    }
 
 }

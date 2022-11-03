@@ -69,7 +69,14 @@ class TurnWristActivity : AppActivity(),View.OnClickListener{
             turnWristSwitchBtn.isChecked = it.switchStatus == 1
             turnWristStartTimeBar.rightText = String.format("%02d",it.startHour)+":"+String.format("%02d",it.startMinute)
             turnWristEndTimeBar.rightText = String.format("%02d",it.endHour)+":"+String.format("%02d",it.endMinute)
-            deviceSetModel?.turnWrist= if(it.switchStatus == 0) "0" else  String.format("%02d",it.startHour)+":"+String.format("%02d",it.startMinute)+"-"+String.format("%02d",it.endHour)+":"+String.format("%02d",it.endMinute)
+
+            //判断结束时间是否小于开始时间
+            val startTime = it.startHour*60+it.startMinute
+            val endTime = it.endHour * 60 + it.endMinute
+
+            val endStr = String.format("%02d",it.endHour)+":"+String.format("%02d",it.endMinute)
+
+            deviceSetModel?.turnWrist= if(it.switchStatus == 0) "0" else  (String.format("%02d",it.startHour)+":"+String.format("%02d",it.startMinute)+"-"+if(endTime<startTime) resources.getString(R.string.string_next_day)+endStr else endStr)
             saveData()
         })
 
@@ -105,6 +112,17 @@ class TurnWristActivity : AppActivity(),View.OnClickListener{
                         timeBean?.endHour = hour
                         timeBean?.endMinute = minute
                     }
+
+                    //判断结束时间是否小于开始时间
+                    val startTime = (timeBean?.startHour?.times(60) ?: 0) + (timeBean?.startMinute
+                        ?: 0)
+                    val endTime = (timeBean?.endHour ?: 0) * 60 + (timeBean?.endMinute ?: 0)
+
+                    val endStr = String.format("%02d",timeBean?.endHour)+":"+String.format("%02d",timeBean?.endMinute)
+
+
+                    deviceSetModel?.turnWrist= if(timeBean?.switchStatus == 0) "0" else  (String.format("%02d",timeBean?.startHour)+":"+String.format("%02d",timeBean?.startMinute)+"-"+if(endTime<startTime) resources.getString(R.string.string_next_day)+endStr else endStr )
+
                     setTurnWristData()
                 }
 

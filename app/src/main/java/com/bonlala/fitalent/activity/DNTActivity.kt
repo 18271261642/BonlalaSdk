@@ -67,7 +67,11 @@ class DNTActivity : AppActivity(),View.OnClickListener{
             turnWristStartTimeBar.rightText = String.format("%02d",it.startHour)+":"+String.format("%02d",it.startMinute)
             turnWristEndTimeBar.rightText = String.format("%02d",it.endHour)+":"+String.format("%02d",it.endMinute)
 
-            deviceSetModel?.dnt= if(it.switchStatus == 0) "0" else  String.format("%02d",it.startHour)+":"+String.format("%02d",it.startMinute)+"-"+String.format("%02d",it.endHour)+":"+String.format("%02d",it.endMinute)
+            //判断结束时间是否小于开始时间
+            val startTime = it.startHour*60+it.startMinute
+            val endTime = it.endHour * 60 + it.endMinute
+            val endStr = String.format("%02d",it.endHour)+":"+String.format("%02d",it.endMinute)
+            deviceSetModel?.dnt= if(it.switchStatus == 0) "0" else  ( String.format("%02d",it.startHour)+":"+String.format("%02d",it.startMinute)+"-"+if(endTime<startTime) resources.getString(R.string.string_next_day)+endStr else endStr)
             setDntData()
 
         })
@@ -105,7 +109,11 @@ class DNTActivity : AppActivity(),View.OnClickListener{
                         timeBean?.endHour = hour
                         timeBean?.endMinute = minute
                     }
-
+                    //判断结束时间是否小于开始时间
+                    val startTime = (timeBean?.startHour ?: 0) *60+ (timeBean?.startMinute ?: 0)
+                    val endTime = (timeBean?.endHour ?: 0) * 60 + (timeBean?.endMinute ?: 0)
+                    val endStr = String.format("%02d",timeBean?.endHour)+":"+String.format("%02d",timeBean?.endMinute)
+                    deviceSetModel?.dnt= if(timeBean?.switchStatus == 0) "0" else  ( String.format("%02d",timeBean?.startHour)+":"+String.format("%02d",timeBean?.startMinute)+"-"+if(endTime<startTime) resources.getString(R.string.string_next_day)+endStr else endStr)
                     setDntData()
                 }
 
@@ -135,14 +143,17 @@ class DNTActivity : AppActivity(),View.OnClickListener{
     }
 
     private fun setDntData(){
+        saveData()
         if(timeBean == null)
             return
         BaseApplication.getInstance().bleOperate.setDNTStatus(timeBean){
             deviceSetModel?.dnt= if(timeBean?.switchStatus == 0) "0" else  String.format("%02d",timeBean?.startHour)+":"+String.format("%02d",timeBean?.startMinute)+"-"+String.format("%02d",timeBean?.endHour)+":"+String.format("%02d",timeBean?.endMinute)
             BleOperateManager.getInstance().setClearListener()
-            saveData()
+
             ToastUtils.show("设置成功!")
         }
+
+
     }
 
     private fun saveData(){

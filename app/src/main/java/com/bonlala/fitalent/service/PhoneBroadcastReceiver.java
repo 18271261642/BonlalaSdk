@@ -182,11 +182,6 @@ public class PhoneBroadcastReceiver extends BroadcastReceiver {
     private void sendCommVerticalPhone(String tagName,String contentStr,String phoneStr){
         Log.e(TAG,"---name="+tagName+"---=联系人="+contentStr+"---phoneNumber="+phoneStr);
 
-        if(tagName.equals("B30")){
-            setB30PhoneMsg(contentStr,phoneStr);
-            return;
-        }
-
         BleOperateManager.getInstance().sendAPPNoticeMessage(1, phoneStr, contentStr, new WriteBackDataListener() {
             @Override
             public void backWriteData(byte[] data) {

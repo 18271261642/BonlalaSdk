@@ -12,18 +12,23 @@ import android.os.Looper;
 import android.os.Message;
 import android.se.omapi.SEService;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 
 import com.blala.blalable.BleConstant;
 import com.blala.blalable.BleOperateManager;
+import com.blala.blalable.blebean.CommBleSetBean;
 import com.blala.blalable.listener.BleConnStatusListener;
 import com.blala.blalable.listener.ConnStatusListener;
 import com.blala.blalable.listener.WriteBackDataListener;
 import com.bonlala.fitalent.BaseApplication;
+import com.bonlala.fitalent.db.DBManager;
+import com.bonlala.fitalent.db.model.DeviceSetModel;
 import com.bonlala.fitalent.emu.ConnStatus;
 import com.bonlala.fitalent.utils.MmkvUtils;
 import com.inuker.bluetooth.library.Constants;
 import com.inuker.bluetooth.library.search.SearchResult;
 import com.inuker.bluetooth.library.search.response.SearchResponse;
+import com.tencent.mmkv.MMKV;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -83,7 +88,7 @@ public class ConnStatusService extends Service {
 
 
     /**重新连接设备，扫描连接**/
-    public void autoConnDevice(String mac){
+    public void autoConnDevice(String mac,boolean isScanClass){
         Timber.e("-----auto连接="+mac);
 
         BleOperateManager.getInstance().scanBleDevice(new SearchResponse() {
@@ -124,7 +129,7 @@ public class ConnStatusService extends Service {
 //                    sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
 //                }
             }
-        },20 * 1000,1);
+        },isScanClass,20 * 1000,1);
     }
 
 
@@ -138,10 +143,11 @@ public class ConnStatusService extends Service {
                 if(status == Constants.STATUS_DISCONNECTED){
                     BaseApplication.getInstance().setConnStatus(ConnStatus.NOT_CONNECTED);
                     sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
+//                    BleOperateManager.getInstance().disConnNotRemoveMac();
                     new Handler(Looper.myLooper()).postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            autoConnDevice(mac);
+//                            autoConnDevice(mac,true);
                         }
                     },2 * 1000);
 
@@ -161,7 +167,8 @@ public class ConnStatusService extends Service {
 
             @Override
             public void setNoticeStatus(int code) {
-
+                if(bleConnStatusListener != null)
+                    bleConnStatusListener.onConnectStatusChanged(mac,code != 32 ? -1 :88);
                 Timber.e("-------连接成功="+code);
                 //连接成功
                 BaseApplication.getInstance().setConnStatus(ConnStatus.CONNECTED);
@@ -170,18 +177,8 @@ public class ConnStatusService extends Service {
                 MmkvUtils.saveConnDeviceName(bleName);
 
                 //同步时间
-                BleOperateManager.getInstance().syncDeviceTime(new WriteBackDataListener() {
-                    @Override
-                    public void backWriteData(byte[] data) {
-//                        sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
-//                        BleOperateManager.getInstance().setClearListener();
-                        if(bleConnStatusListener != null)
-                            bleConnStatusListener.onConnectStatusChanged(mac,88);
-                    }
-                });
-
-                DataOperateManager.getInstance(ConnStatusService.this).setMeasureDataSave(BleOperateManager.getInstance());
-
+                //同步时间
+                BleOperateManager.getInstance().syncDeviceTime(writeBackDataListener);
             }
         });
     }
@@ -206,22 +203,52 @@ public class ConnStatusService extends Service {
                 MmkvUtils.saveConnDeviceName(name);
 
                 //同步时间
-                BleOperateManager.getInstance().syncDeviceTime(new WriteBackDataListener() {
-                    @Override
-                    public void backWriteData(byte[] data) {
-                        sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
-                        BleOperateManager.getInstance().setClearListener();
-                    }
-                });
-
-                DataOperateManager.getInstance(ConnStatusService.this).setMeasureDataSave(BleOperateManager.getInstance());
-
-//                DataOperateManager.getInstance(ConnStatusService.this).setExerciseListener(BleOperateManager.getInstance());
+                BleOperateManager.getInstance().syncDeviceTime(writeBackDataListener);
+//                BleOperateManager.getInstance().syncDeviceTime(new WriteBackDataListener() {
+//                    @Override
+//                    public void backWriteData(byte[] data) {
+//                        sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
+//                        BleOperateManager.getInstance().setClearListener();
+//                    }
+//                });
+//
+//                DataOperateManager.getInstance(ConnStatusService.this).setMeasureDataSave(BleOperateManager.getInstance());
+//                DataOperateManager.getInstance(ConnStatusService.this).readAllDataSet(BleOperateManager.getInstance());
+////                DataOperateManager.getInstance(ConnStatusService.this).setExerciseListener(BleOperateManager.getInstance());
             }
         });
     }
 
 
+    private WriteBackDataListener writeBackDataListener = new WriteBackDataListener() {
+        @Override
+        public void backWriteData(byte[] data) {
+            //设备回复: 02 FF 30 00
+            //同步时间返回
+            if(data.length == 4 && data[0] ==2 && (data[1] & 0xff) == 255 && (data[2] & 0xff) == 48){
+                CommBleSetBean commBleSetBean = new CommBleSetBean();
+                String mac = MmkvUtils.getConnDeviceMac();
+                if(!TextUtils.isEmpty(mac)){
+                    DeviceSetModel deviceSetModel = DBManager.dbManager.getDeviceSetModel("user_1001", mac);
+                    if(deviceSetModel != null){
+                        commBleSetBean.setIs24Heart(deviceSetModel.isIs24Heart() ? 0 : 1);
+                        commBleSetBean.setLanguage(1);
+                        commBleSetBean.setMetric(deviceSetModel.getIsKmUnit());
+                    }
+                }
+
+
+                commBleSetBean.setTimeType(DateFormat.is24HourFormat(ConnStatusService.this) ? 1 : 0);
+                BleOperateManager.getInstance().setCommonSetting(commBleSetBean,writeBackDataListener);
+
+                sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
+                BleOperateManager.getInstance().setClearListener();
+
+                DataOperateManager.getInstance(ConnStatusService.this).setMeasureDataSave(BleOperateManager.getInstance());
+                DataOperateManager.getInstance(ConnStatusService.this).readAllDataSet(BleOperateManager.getInstance());
+            }
+        }
+    };
 
 
 

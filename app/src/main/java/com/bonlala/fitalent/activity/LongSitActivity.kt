@@ -76,7 +76,11 @@ class LongSitActivity : AppActivity(),View.OnClickListener{
             turnWristStartTimeBar.rightText = String.format("%02d",commTimeBean.startHour)+":"+String.format("%02d",commTimeBean.startMinute)
             turnWristEndTimeBar.rightText = String.format("%02d",commTimeBean.endHour)+":"+String.format("%02d",commTimeBean.endMinute)
             turnWristLevelBar.rightText =  "${commTimeBean.level} "+resources.getString(R.string.string_minute)
-            deviceSetModel?.longSitStr=   String.format("%02d",commTimeBean.startHour)+":"+String.format("%02d",commTimeBean.startMinute)+"-"+String.format("%02d",commTimeBean.endHour)+":"+String.format("%02d",commTimeBean.endMinute)
+
+            val startT = commTimeBean.startHour*60 + commTimeBean.startMinute
+            val endT = commTimeBean.endHour *60 + commTimeBean.endMinute
+            val endStr = String.format("%02d",commTimeBean.endHour)+":"+String.format("%02d",commTimeBean.endMinute)
+            deviceSetModel?.longSitStr=    String.format("%02d",commTimeBean.startHour)+":"+String.format("%02d",commTimeBean.startMinute)+"-"+(if(startT > endT) resources.getString(R.string.string_next_day)+endStr else endStr)
             saveData()
         })
     }
@@ -114,7 +118,11 @@ class LongSitActivity : AppActivity(),View.OnClickListener{
                         timeBean?.endHour = hour
                         timeBean?.endMinute = minute
                     }
+                    val startM =  (timeBean?.startHour?.times(60) ?: 0) + minute
+                    val endM = (timeBean?.endHour?.times(60) ?: 0) + minute
 
+                    val endStr = String.format("%02d",timeBean?.endHour)+":"+String.format("%02d",timeBean?.endMinute)
+                    deviceSetModel?.longSitStr=  String.format("%02d",timeBean?.startHour)+":"+String.format("%02d",timeBean?.startMinute)+"-"+(if(endM<startM) resources.getString(R.string.string_next_day) +endStr else endStr)
                     setLongSitData()
                 }
 
@@ -186,6 +194,9 @@ class LongSitActivity : AppActivity(),View.OnClickListener{
         if(deviceSetModel == null)
             return
         val mac = MmkvUtils.getConnDeviceMac() ?: return
+
+
+
         DBManager.dbManager.saveDeviceSetData("user_1001",mac,deviceSetModel)
     }
 }

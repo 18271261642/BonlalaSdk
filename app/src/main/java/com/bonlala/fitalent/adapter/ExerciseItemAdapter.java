@@ -209,7 +209,8 @@ public class ExerciseItemAdapter extends AppAdapter<ExerciseModel> {
             list.add(new ExerciseItemBean(getResources().getString(R.string.string_distance),getTargetType((isKm ? disStr : CalculateUtils.kmToMiValue(disStr))+"",isKm ? "km" : "mi")));
             list.add(new ExerciseItemBean(getResources().getString(R.string.string_consumption),getTargetType(exerciseModel.getKcal()+"","kcal")));
             list.add(new ExerciseItemBean(getResources().getString(R.string.string_count_step),getTargetType(exerciseModel.getCountStep()+"",getResources().getString(R.string.string_step))));
-            list.add(new ExerciseItemBean(getResources().getString(R.string.string_avg_hr),getTargetType(exerciseModel.getAvgHr()+"","bpm")));
+            list.add(new ExerciseItemBean(getResources().getString(R.string.string_avg_hr),getTargetType(exerciseModel.getAvgHr() == 0 ? "--":
+                    exerciseModel.getAvgHr()+"","bpm")));
 
             //计算速度
             float time = exerciseModel.getExerciseMinute();
@@ -228,7 +229,7 @@ public class ExerciseItemAdapter extends AppAdapter<ExerciseModel> {
 
         }else{
             List<ExerciseItemBean> list = new ArrayList<>();
-            list.add(new ExerciseItemBean(getResources().getString(R.string.string_avg_hr),getTargetType(exerciseModel.getAvgHr()+"","bpm")));
+            list.add(new ExerciseItemBean(getResources().getString(R.string.string_avg_hr),getTargetType(exerciseModel.getAvgHr() == 0 ? "--":exerciseModel.getAvgHr()+"","bpm")));
             list.add(new ExerciseItemBean(getResources().getString(R.string.string_consumption),getTargetType(exerciseModel.getKcal()+"","kcal")));
 
             return list;

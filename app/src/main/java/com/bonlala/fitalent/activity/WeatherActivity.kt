@@ -12,6 +12,8 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.blala.blalable.BleOperateManager
+import com.blala.blalable.listener.WriteBackDataListener
 import com.bonlala.action.AppActivity
 import com.bonlala.fitalent.R
 import com.bonlala.fitalent.adapter.WeatherAdapter
@@ -187,6 +189,13 @@ class WeatherActivity : AppActivity() {
         realtimeTemTv.text = if(isTemp) "$temp℃" else CalculateUtils.celsiusToFahrenheit(temp).toString()+"℉"
         val imgUrl = realTimeBean.weatherImgUrl
         Glide.with(this@WeatherActivity).load(imgUrl).into(realtimeWeatherImg)
+
+        BleOperateManager.getInstance().sendWeatherData(weatherCityTv.text.toString(),object : WriteBackDataListener{
+            override fun backWriteData(data: ByteArray?) {
+
+            }
+
+        })
     }
 
     //展示记录的天气

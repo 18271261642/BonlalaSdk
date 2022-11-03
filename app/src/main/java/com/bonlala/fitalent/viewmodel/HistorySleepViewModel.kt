@@ -49,10 +49,10 @@ open class HistorySleepViewModel : ViewModel() {
 
         val sleepB = DBManager.dbManager.getDaySleepData("user_1001",mac,sleepRecord)
 
-        Timber.e("----ss="+Gson().toJson(sleepB))
+        //Timber.e("----ss="+Gson().toJson(sleepB))
         //再查询上一天的
         val sleepPreviewB = DBManager.dbManager.getDaySleepData("user_1001",mac,BikeUtils.getBeforeOrAfterDayStr(sleepRecord,true))
-        Timber.e("----222ss="+Gson().toJson(sleepPreviewB))
+       // Timber.e("----222ss="+Gson().toJson(sleepPreviewB))
         //上午的str
         var morningStr : String ?= null
         //晚上的str
@@ -68,8 +68,8 @@ open class HistorySleepViewModel : ViewModel() {
         }
         val morList = morningStr?.let { GsonUtils.getGsonObject<List<Int>>(it) }
         val nigList = nightStr?.let { GsonUtils.getGsonObject<List<Int>>(it) }
-        Timber.e("------今天上午的睡眠="+morList?.size+" "+morningStr)
-        Timber.e("-----昨天晚上的睡眠="+nigList?.size+" "+nightStr)
+//        Timber.e("------今天上午的睡眠="+morList?.size+" "+morningStr)
+//        Timber.e("-----昨天晚上的睡眠="+nigList?.size+" "+nightStr)
 
         if(morningStr == null && nightStr == null){
             lastRecordSleep.postValue(null)
@@ -96,7 +96,7 @@ open class HistorySleepViewModel : ViewModel() {
         Timber.e("----ss="+Gson().toJson(sleepB))
         //再查询上一天的
         val sleepPreviewB = DBManager.dbManager.getDaySleepData("user_1001",mac,BikeUtils.getBeforeOrAfterDayStr(day,true))
-        Timber.e("----222ss="+Gson().toJson(sleepPreviewB))
+        //Timber.e("----222ss="+Gson().toJson(sleepPreviewB))
         //上午的str
         var morningStr : String ?= null
         //晚上的str
@@ -112,8 +112,8 @@ open class HistorySleepViewModel : ViewModel() {
         }
         val morList = morningStr?.let { GsonUtils.getGsonObject<List<Int>>(it) }
         val nigList = nightStr?.let { GsonUtils.getGsonObject<List<Int>>(it) }
-        Timber.e("------今天上午的睡眠="+morList?.size+" "+morningStr)
-        Timber.e("-----昨天晚上的睡眠="+nigList?.size+" "+nightStr)
+//        Timber.e("------今天上午的睡眠="+morList?.size+" "+morningStr)
+//        Timber.e("-----昨天晚上的睡眠="+nigList?.size+" "+nightStr)
 
         if(morningStr == null && nightStr == null){
             onDaySleep.postValue(null)
@@ -169,7 +169,7 @@ open class HistorySleepViewModel : ViewModel() {
 
         dayCalendar.set(Calendar.HOUR_OF_DAY,0)
 
-        Timber.e("----all="+Gson().toJson(allSleepList))
+        //Timber.e("----all="+Gson().toJson(allSleepList))
         //开始时间
         var startTime = 0
 
@@ -199,7 +199,7 @@ open class HistorySleepViewModel : ViewModel() {
 
         val resultEndTime = 8 * 60  - (allSleepList.size-endTime)
 
-        Timber.e("---endTime="+endTime+" ==="+resultEndTime+" "+resultStartTime+"\n")
+      //  Timber.e("---endTime="+endTime+" ==="+resultEndTime+" "+resultStartTime+"\n")
 
         val resultSleepList = mutableListOf<Int>()
 
@@ -216,7 +216,7 @@ open class HistorySleepViewModel : ViewModel() {
         }
 
         val sleepSource = getTest(resultSleepList,resultStartTime)
-        Timber.e("--stt="+Gson().toJson(sleepSource)+"\n"+resultSleepList.size+" "+Gson().toJson(resultSleepList))
+       // Timber.e("--stt="+Gson().toJson(sleepSource)+"\n"+resultSleepList.size+" "+Gson().toJson(resultSleepList))
 
         var resultAwakeTime = 0
         sleepSource?.forEach {
@@ -231,7 +231,7 @@ open class HistorySleepViewModel : ViewModel() {
             }
         }
 
-        Timber.e("----清醒时间="+resultAwakeTime+" "+deepTime+" "+lightTime)
+        //Timber.e("----清醒时间="+resultAwakeTime+" "+deepTime+" "+lightTime)
 
         sleepSource?.get(sleepSource.size -1)?.isClick = true
         sleepModel.lightTime = lightTime
@@ -268,7 +268,7 @@ open class HistorySleepViewModel : ViewModel() {
 
     private fun getTest(array : List<Int>,startTime : Int): List<SleepItem>? {
         //List<Integer> mOriginal = new ArrayList<>();
-        Timber.e("-----ssssssss="+Gson().toJson(array))
+       // Timber.e("-----ssssssss="+Gson().toJson(array))
         val list = ArrayList<SleepItem>()
         var tempStartTime = startTime
         var n = 0
@@ -298,7 +298,7 @@ open class HistorySleepViewModel : ViewModel() {
                     if (k == array.size - 1) {
                         val startT = tempStartTime
                         val endT = tempStartTime+length
-                        Timber.e("--22开始时间="+startT+" 长度="+length+" 结束时间="+endT+" 类型="+array[k-1])
+                       // Timber.e("--22开始时间="+startT+" 长度="+length+" 结束时间="+endT+" 类型="+array[k-1])
                         // mLength.add(length);
                       //  list.add(SleepItem(length, array[k]))
                         list.add(SleepItem(startT,length,endT,array[k-1]))

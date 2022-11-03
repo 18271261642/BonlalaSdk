@@ -17,6 +17,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.dialog_measure_layout.*
 import timber.log.Timber
+import kotlin.experimental.and
 
 /**
  * 测量的dialog
@@ -115,6 +116,18 @@ class MeasureDialog : AppCompatDialog {
                 if(data.size == 3 && data.get(0).toInt() == 1 && data.get(1).toInt() == 62 && data.get(2).toInt() == -1){
                     dismiss()
                 }
+
+                if (data.size == 3 && data.get(0).toInt() == 1 && (data.get(1) and 0xff.toByte()).toInt() == 62){
+                    val spo2 =( data.get(2) and 0xFF.toByte()).toInt()
+                    if(spo2 == 255){
+                        dialogMeasureTypeValueTv.text ="--"
+                        dialogMeasureOkTv.text = "OK"
+                        return@measureSo2Status
+                    }
+                    dialogMeasureTypeValueTv.text =spo2.toString()+"%"
+                    dialogMeasureOkTv.text = "OK"
+                   // DBManager.getInstance().saveMeasureSpo2("user_1001",mac,time,spo2)
+                }
             }
         }
 
@@ -126,6 +139,8 @@ class MeasureDialog : AppCompatDialog {
                 if(data.size == 3 && data.get(0).toInt() == 1 && data.get(1).toInt() == 81 && data.get(2).toInt() ==-1){
                     dismiss()
                 }
+
+
             }
         }
 

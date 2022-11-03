@@ -64,6 +64,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:orientation="horizontal">
 
             <TextView
@@ -85,7 +86,7 @@
 
 
         <View
-            android:layout_width="@dimen/dp_50"
+            android:layout_width="@dimen/dp_10"
             android:layout_height="@dimen/dp_0_1" />
 
         <LinearLayout
@@ -114,6 +115,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="bpm"
+                android:layout_marginStart="@dimen/dp_3"
                 android:textColor="#ffacacac"
                 android:textSize="16sp" />
         </LinearLayout>

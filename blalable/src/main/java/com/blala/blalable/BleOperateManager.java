@@ -70,6 +70,11 @@ public class BleOperateManager {
         bleManager.startScanBleDevice(searchResponse,duration,times);
     }
 
+    //搜索
+    public void scanBleDevice(SearchResponse searchResponse, boolean isScanClass,int duration, int times){
+        bleManager.startScanBleDevice(searchResponse,isScanClass,duration,times);
+    }
+
     //停止搜索
     public void stopScanDevice(){
         bleManager.stopScan();
@@ -113,6 +118,10 @@ public class BleOperateManager {
     //断连连接
     public void disConnYakDevice(){
         bleManager.disConnDevice();
+    }
+
+    public void disConnNotRemoveMac(){
+        bleManager.disConnDeviceNotRemoveMac();
     }
 
     //写通用的设置，直接写数据

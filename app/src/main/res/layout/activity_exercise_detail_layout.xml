@@ -173,12 +173,14 @@
                 android:text="HR data analysis diagram"
                 android:textColor="#ff2f2f33"
                 android:textSize="22sp"
+                android:id="@+id/exerciseDescTv"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginStart="@dimen/dp_10"/>
 
             <com.hjq.shape.layout.ShapeLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/exerciseDescLayout"
                 app:shape_solidColor="@color/white"
                 android:padding="@dimen/dp_15"
                 app:shape_radius="@dimen/dp_15"
@@ -205,6 +207,41 @@ Exercise heart rate: During exercise, you can judge the state of your body's exe
                     android:textSize="14sp"
                     android:lineSpacingExtra="@dimen/dp_5"/>
             </com.hjq.shape.layout.ShapeLinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/shareLogoLayout"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_share_logo"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    android:src="@mipmap/ic_share_logo"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

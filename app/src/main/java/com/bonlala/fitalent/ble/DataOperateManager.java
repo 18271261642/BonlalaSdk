@@ -278,6 +278,12 @@ public class DataOperateManager {
 
     //连接成功获取设置项
     public void readAllDataSet(BleOperateManager bleOperateManager){
+
+
+
+
+
+
         deviceSetModel = new DeviceSetModel();
         deviceSetModel.assignBaseObjId(0);
         BaseApplication.getInstance().setConnStatus(ConnStatus.IS_SYNC_DATA);

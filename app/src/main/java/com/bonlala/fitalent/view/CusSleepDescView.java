@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.bonlala.fitalent.R;
 import com.bonlala.fitalent.db.model.SleepModel;
+import com.bonlala.fitalent.utils.BikeUtils;
 
 import androidx.annotation.Nullable;
 
@@ -85,14 +86,14 @@ public class CusSleepDescView extends LinearLayout {
     public void setDeepData(int value,float maxValue){
         sleepDeepScheduleView.setAllScheduleValue(maxValue);
         sleepDeepScheduleView.setCurrScheduleValue(value);
-        sleepDeepTimeTv.setText(value+"min");
+        sleepDeepTimeTv.setText(BikeUtils.formatHourAndMinute(value)+"min");
         invalidate();
     }
     /**设置浅睡的进度**/
     public void setLightData(int value,float maxValue){
         sleepLightScheduleView.setAllScheduleValue(maxValue);
         sleepLightScheduleView.setCurrScheduleValue(value);
-        sleepLightTime.setText(value+"min");
+        sleepLightTime.setText(BikeUtils.formatHourAndMinute(value)+"min");
         invalidate();
     }
 
@@ -100,7 +101,7 @@ public class CusSleepDescView extends LinearLayout {
     public void setAwakeData(int value,float maxValue){
         sleepAwakeScheduleView.setAllScheduleValue(maxValue);
         sleepAwakeScheduleView.setCurrScheduleValue(value);
-        sleepAwakeTime.setText(value == 0? "--min":value+"min");
+        sleepAwakeTime.setText(value == 0? "--min":BikeUtils.formatHourAndMinute(value)+"min");
         invalidate();
     }
 

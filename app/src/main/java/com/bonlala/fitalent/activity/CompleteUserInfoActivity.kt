@@ -1,5 +1,6 @@
 package com.bonlala.fitalent.activity
 
+import android.content.Context
 import android.graphics.Color
 import android.view.View
 import com.bonlala.action.ActivityManager
@@ -12,6 +13,7 @@ import com.bonlala.fitalent.dialog.DateDialog
 import com.bonlala.fitalent.dialog.HeightSelectDialog
 import com.bonlala.fitalent.utils.BikeUtils
 import kotlinx.android.synthetic.main.activity_complete_user_info_layout.*
+import timber.log.Timber
 
 /**
  * 首次进入完善个人资料页面
@@ -137,11 +139,13 @@ class CompleteUserInfoActivity : AppActivity() {
     private fun showSelectDialog(code:Int, title : String, data : List<String>,defaultStr : String,unitStr : String){
         var defaultIndex = 0
         for(i in data.indices){
-            if(defaultStr == data.get(i)){
+            if(defaultStr == data[i]){
                 defaultIndex = i
                 break
             }
         }
+
+        Timber.e("-----def="+defaultIndex)
 
         val heightSelectDialog = HeightSelectDialog.Builder(this@CompleteUserInfoActivity,data)
             .setTitleTx(title)

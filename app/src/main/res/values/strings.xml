@@ -5,6 +5,9 @@
     <string name="title_dashboard">device</string>
     <string name="title_notifications">mine</string>
 
+    <string name="string_conn_failed">Connection failed</string>
+    <string name="string_next_day">next day</string>
+    <string name="string_today">Today</string>
     <string name="string_play_equipment">Play Equipment</string>
     
     <string name="string_time_ratio">Time ratio</string>

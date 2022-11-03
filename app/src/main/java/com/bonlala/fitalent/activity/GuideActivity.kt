@@ -6,6 +6,7 @@ import android.view.animation.ScaleAnimation
 import androidx.activity.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import com.bonlala.action.ActivityManager
 import com.bonlala.action.AppActivity
 import com.bonlala.action.SingleClick
 import com.bonlala.fitalent.R
@@ -54,10 +55,18 @@ class GuideActivity : AppActivity(){
         viewModel.getDevicePlay(this)
     }
 
+
+    override fun onLeftClick(view: View?) {
+        super.onLeftClick(view)
+        ActivityManager.getInstance().finishActivity(GuideActivity::class.java)
+        finish()
+    }
+
+
     @SingleClick
     override fun onClick(view: View) {
         if (view === mCompleteView) {
-
+            ActivityManager.getInstance().finishActivity(GuideActivity::class.java)
             finish()
         }
     }

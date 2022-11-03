@@ -91,6 +91,7 @@ class AlarmListActivity : AppActivity() {
         timeDialog = TimeDialog.Builder(this)
             .setIgnoreSecond()
             .isShowRepeat(true)
+            .setTitle(resources.getString(R.string.string_alarm))
             .setWeekRepestValue(alarmList.get(code).repeat.toInt())
             .setChooseRepeat(getRepeat(alarmList.get(code).repeat))
             .setHour(alarmList.get(code).hour)

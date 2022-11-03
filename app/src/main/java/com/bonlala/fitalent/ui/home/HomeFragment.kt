@@ -389,6 +389,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
     private val broadcastReceiver : BroadcastReceiver = object : BroadcastReceiver(){
         override fun onReceive(p0: Context?, p1: Intent?) {
             var action = p1?.action
+            Timber.e("--------action="+action)
             //连接状态
             if (action == BleConstant.BLE_CONNECTED_ACTION || action == BleConstant.BLE_DIS_CONNECT_ACTION){
                 showDeviceStatus()

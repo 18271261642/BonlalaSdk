@@ -144,10 +144,15 @@ public class CalculateUtils {
     /**
      * 摄氏度转华摄氏度
      * @return 华摄氏度
+     * 1华氏度(℉) = 32 + 1摄氏度 x 1.8开氏度(K)
      */
     public static int celsiusToFahrenheit(int celsiusValue){
-       double temp = mul((double) celsiusValue,Fahrenheit_Modulus);
-       return (int) temp;
+
+        double t = mul((double) celsiusValue,1.8d);
+        double v = t + 32;
+
+        return (int) v;
+
     }
 
 

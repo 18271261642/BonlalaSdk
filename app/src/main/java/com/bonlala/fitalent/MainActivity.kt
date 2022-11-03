@@ -12,6 +12,7 @@ import com.blala.blalable.BleConstant
 import com.blala.blalable.BleOperateManager
 import com.blala.blalable.listener.BleConnStatusListener
 import com.blala.blalable.listener.ConnStatusListener
+import com.bonlala.action.ActivityManager
 import com.bonlala.action.AppActivity
 import com.bonlala.fitalent.activity.GuideActivity
 import com.bonlala.fitalent.adapter.ScanDeviceAdapter
@@ -25,6 +26,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.bumptech.glide.request.RequestOptions
+import com.hjq.toast.ToastUtils
 import com.inuker.bluetooth.library.search.SearchResult
 import com.inuker.bluetooth.library.search.response.SearchResponse
 import kotlinx.android.synthetic.main.activity_main.*
@@ -93,13 +95,13 @@ class MainActivity : AppActivity() ,OnItemClickListener{
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        startScanDevice()
+        verifyScanFun()
     }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        startScanDevice()
+        verifyScanFun()
     }
 
     //搜索
@@ -204,8 +206,13 @@ class MainActivity : AppActivity() ,OnItemClickListener{
                 sendBroadcast(broadIntent)
                 //进入玩转设备页面
                 startActivity(GuideActivity::class.java)
-
+                ActivityManager.getInstance().finishActivity(MainActivity::class.java)
                 finish()
+            }else{
+                hideDialog()
+                ToastUtils.show(resources.getString(R.string.string_conn_failed))
+                BleOperateManager.getInstance().disConnYakDevice()
+              //  verifyScanFun()
             }
         }
 

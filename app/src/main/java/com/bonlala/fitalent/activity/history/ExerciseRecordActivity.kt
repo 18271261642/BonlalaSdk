@@ -145,7 +145,7 @@ class ExerciseRecordActivity : AppActivity(){
     }
 
     //展示总的
-    fun showTotalData(list : List<ExerciseShowBean>){
+    private fun showTotalData(list : List<ExerciseShowBean>){
         var totalTime =0
         var distance = 0
         var kcal = 0

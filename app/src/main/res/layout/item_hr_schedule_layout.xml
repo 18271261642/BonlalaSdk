@@ -186,7 +186,7 @@
             android:layout_width="6dp"
             android:layout_height="6dp"
             android:layout_gravity="center"
-            app:shape_solidColor="@color/hr_color_5"
+            app:shape_solidColor="@color/hr_color_2"
             app:shape_radius="3dp"/>
 
 

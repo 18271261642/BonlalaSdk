@@ -2,6 +2,9 @@ package com.blala.blalable;
 
 import android.app.Application;
 
+import com.inuker.bluetooth.library.BluetoothClient;
+import com.inuker.bluetooth.library.BluetoothContext;
+
 import org.litepal.LitePalApplication;
 
 /**
@@ -18,6 +21,7 @@ public class BleApplication extends LitePalApplication {
     public void onCreate() {
         super.onCreate();
         bleApplication = this;
+        BluetoothContext.set(this);
     }
 
     public static BleApplication getInstance(){

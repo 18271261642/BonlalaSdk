@@ -32,16 +32,32 @@ class ShowWebActivity : AppActivity() {
 
     override fun initData() {
        val url = intent.getStringExtra("url")
+        val title = intent.getStringExtra("title");
         if(url == null){
             ToastUtils.show("url 为空!")
             return
         }
+        setTitle(title)
         Timber.e("-----url="+url)
         showSetting(showWebView)
         showWebView.loadUrl(url)
 
-        showWebView.webChromeClient = WebChorm()
+        showWebView.webChromeClient = WebCh()
     }
+
+
+    private class WebCh : WebChromeClient() {
+        override fun onProgressChanged(view: WebView, newProgress: Int) {
+            super.onProgressChanged(view, newProgress)
+        }
+
+        override fun onReceivedTitle(view: WebView, title: String) {
+            super.onReceivedTitle(view, title)
+            Timber.e("----title="+title)
+        }
+    }
+
+
 
      class WebChorm : WebChromeClient{
 
@@ -55,7 +71,7 @@ class ShowWebActivity : AppActivity() {
 
         override fun onReceivedTitle(view: WebView?, title: String?) {
             super.onReceivedTitle(view, title)
-            Timber.e("-----reco="+title)
+            Timber.e("-----reco="+title+" "+view?.title)
 
         }
 
@@ -82,6 +98,8 @@ class ShowWebActivity : AppActivity() {
         override fun onPageFinished(view: WebView?, url: String?) {
             super.onPageFinished(view, url)
         }
+
+
 
 
     }

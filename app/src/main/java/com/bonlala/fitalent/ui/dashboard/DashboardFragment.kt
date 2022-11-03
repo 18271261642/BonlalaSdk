@@ -1,13 +1,17 @@
 package com.bonlala.fitalent.ui.dashboard
 
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.text.format.DateFormat
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Gravity
@@ -35,6 +39,7 @@ import com.bonlala.fitalent.utils.BikeUtils
 import com.bonlala.fitalent.utils.ClickUtils
 import com.bonlala.fitalent.utils.MmkvUtils
 import com.google.gson.Gson
+import com.hjq.permissions.XXPermissions
 import com.hjq.toast.ToastUtils
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.item_device_top_layout.*
@@ -112,6 +117,7 @@ import timber.log.Timber
     //展示读取的设置
     @SuppressLint("SetTextI18n")
     private fun showReadSet(){
+        batteryView.power = 0
         val saveMac = MmkvUtils.getConnDeviceMac();
         if(!BikeUtils.isEmpty(saveMac)){
             deviceSetModel = DBManager.getInstance().getDeviceSetModel("user_1001",saveMac)
@@ -123,7 +129,15 @@ import timber.log.Timber
         //24小时心率
         realHeartCheckView.setCheckStatus(deviceSetModel!!.isIs24Heart)
         //电量
-        setBatteryTv.text =  resources.getString(R.string.string_battery)+":"+ (if(BaseApplication.getInstance().connStatus == ConnStatus.CONNECTED || BaseApplication.getInstance().connStatus == ConnStatus.IS_SYNC_DATA) deviceSetModel!!.battery.toString()+"%" else "--")
+        setBatteryTv.text =  ""+ (if(BaseApplication.getInstance().connStatus == ConnStatus.CONNECTED || BaseApplication.getInstance().connStatus == ConnStatus.IS_SYNC_DATA) deviceSetModel!!.battery.toString()+"%" else "--")
+
+        if(BaseApplication.getInstance().connStatus == ConnStatus.CONNECTED || BaseApplication.getInstance().connStatus == ConnStatus.IS_SYNC_DATA){
+            batteryView.power = deviceSetModel!!.battery
+        }else{
+            batteryView.power = 0
+        }
+
+
         //计步目标
         menuStepGoalLayout.rightText = deviceSetModel!!.stepGoal.toString()+resources.getString(R.string.string_step)
         //亮屏时间
@@ -160,7 +174,7 @@ import timber.log.Timber
         val mac = MmkvUtils.getConnDeviceMac()
 
         //viewModel.readAllSetData(bleOperateManager!!,"user_1001",mac)
-        DataOperateManager.getInstance(activity).readAllDataSet(bleOperateManager)
+//        DataOperateManager.getInstance(activity).readAllDataSet(bleOperateManager)
     }
 
 
@@ -241,6 +255,27 @@ import timber.log.Timber
         activity?.unregisterReceiver(broadcastReceiver)
     }
 
+    var totalTime : Long = 10*1000 //总时长 2小时
+    //查找手机显示10s倒计时
+    private fun showFindCountTime(){
+
+        val countDownTimer=object : CountDownTimer(totalTime,1000){//1000ms运行一次onTick里面的方法
+        override fun onFinish() {
+
+            findDeviceTv.text = resources.getString(R.string.string_find_device)
+            totalTime = 10 * 1000
+        }
+            override fun onTick(millisUntilFinished: Long) {
+                totalTime -= 1000
+                findDeviceTv.text = (totalTime/1000).toString()+resources.getString(R.string.string_second)
+            }
+        }
+        countDownTimer.start()
+
+    }
+
+
+
     @SingleClick
     override fun onClick(p0: View?) {
         val id = p0?.id
@@ -271,6 +306,9 @@ import timber.log.Timber
             }
 
             R.id.deviceFindDeviceLayout -> {    //查找手机
+                if(totalTime != 10 * 1000L)
+                    return
+                showFindCountTime()
                 bleOperateManager?.findDevice()
 //                bleOperateManager?.let { viewModel.getCurrentDaySport(attachActivity,it) }
 
@@ -458,12 +496,25 @@ import timber.log.Timber
             dataSource.add("℃")
             dataSource.add("℉ ")
 
+            for(i in 0 until dataSource.size){
+                if(backFill == dataSource[i]){
+                    defaultPosition = i
+                    break
+                }
+            }
        }
 
         //公英制
         if(code == 0x04){
             dataSource.add(resources.getString(R.string.string_metric))
             dataSource.add(resources.getString(R.string.string_imperial))
+
+            for(i in 0 until dataSource.size){
+                if(backFill == dataSource[i]){
+                    defaultPosition = i
+                    break
+                }
+            }
         }
 
         Log.e(tags,"------value="+dataSource.toString()+defaultPosition)
@@ -475,7 +526,7 @@ import timber.log.Timber
         selectDialogView.setSignalSelectListener {
             if(code == 0){  //目标步数
                 MmkvUtils.saveStepGoal(it.toInt())
-                menuStepGoalLayout.rightText = it+""
+                menuStepGoalLayout.rightText = it+resources.getString(R.string.string_step)
                 deviceSetModel?.stepGoal = it.toInt()
                 viewModel.setDeviceTargetStep(bleOperateManager!!,it.toInt())
             }
@@ -522,7 +573,7 @@ import timber.log.Timber
         val commBleSetBean = CommBleSetBean()
         commBleSetBean.temperature = deviceSetModel?.tempStyle ?: 0
         commBleSetBean.metric = deviceSetModel?.isKmUnit!!
-        commBleSetBean.timeType = 1
+        commBleSetBean.timeType = if(DateFormat.is24HourFormat(context)) 1 else 0
         commBleSetBean.language = 1
         commBleSetBean.is24Heart = if(deviceSetModel?.isIs24Heart == true) 0 else 1
         viewModel.setCommSet(bleOperateManager!!,commBleSetBean)
@@ -568,7 +619,12 @@ import timber.log.Timber
 
 
         phoneCallCheckView.setCheckListener{button,checked->
+            if(checked){
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                    XXPermissions.with(attachActivity).permission(arrayOf(Manifest.permission.ANSWER_PHONE_CALLS)).request { permissions, all ->  }
+                }
 
+            }
         }
 
         menuMsgNotifyBar.setOnClickListener(this)

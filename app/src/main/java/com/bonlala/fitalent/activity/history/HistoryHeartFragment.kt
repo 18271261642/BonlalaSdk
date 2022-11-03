@@ -244,11 +244,11 @@ class HistoryHeartFragment : TitleBarFragment<RecordHistoryActivity>(),OnRecordH
         val hrDesc = HistoryHrDescDialog(attachActivity, com.bonlala.base.R.style.BaseDialogTheme)
         hrDesc.show()
         hrDesc.setHrStrongData(analysisHeartList)
-//        val layoutP = hrDesc.window?.attributes
-//        val metrics2: DisplayMetrics = resources.displayMetrics
-//        val height: Int = metrics2.heightPixels
-//        layoutP?.height = height
-//        hrDesc.window?.attributes = layoutP
+        val layoutP = hrDesc.window?.attributes
+        val metrics2: DisplayMetrics = resources.displayMetrics
+        val height: Int = metrics2.heightPixels
+        layoutP?.height = height
+        hrDesc.window?.attributes = layoutP
     }
 
 

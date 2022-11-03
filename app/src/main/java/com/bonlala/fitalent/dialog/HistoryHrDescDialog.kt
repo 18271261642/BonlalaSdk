@@ -173,7 +173,7 @@ class HistoryHrDescDialog : AppCompatDialog {
         }else{
             count.forEachIndexed { index, i ->
                 if(i != 0){
-                    entries.add(PieEntry(i.toFloat()+range/3,parties.get(index)))
+                    entries.add(PieEntry(i.toFloat(),parties.get(index)))
                     colors.add(context.resources.getColor(colorArray[index]))
                 }
 
