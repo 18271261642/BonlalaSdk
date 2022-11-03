@@ -34,7 +34,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Step count"
+                android:text="@string/string_steps"
                 android:textColor="#ff000000"
                 android:textSize="16sp"
                 android:layout_marginStart="@dimen/dp_10"
@@ -78,7 +78,7 @@
                 app:bgArcWidth="@dimen/dp_10"
                 app:arcWidth="@dimen/dp_10"
                 app:bgArcColor="#FFEBEBEB"
-                app:hint="Step"
+                app:hint="@string/string_step"
                 app:hintSize="14sp"
                 app:hintColor="#ff5e5e5e"
                 app:valueSize="20sp"

@@ -37,7 +37,7 @@
             android:paddingBottom="@dimen/dp_3"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Turn on real-time HR"/>
+            android:text="@string/string_open_real_time_hr"/>
 
     </LinearLayout>
 
@@ -59,7 +59,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Real time HR"
+                android:text="@string/string_real_time_hr"
                 android:textColor="#ff000000"
                 android:layout_gravity="center"
                 android:gravity="center"

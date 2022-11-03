@@ -5,6 +5,33 @@
     <string name="string_metric">公制</string>
     <string name="string_imperial">英制</string>
 
+
+    <string name="string_real_time_hr">实时心率</string>
+    <string name="string_data_sync">数据同步中</string>
+    <string name="string_add_device">添加设备</string>
+    <string name="string_open_real_time_hr">开启实时心率</string>
+    <string name="string_daily_avg">日均:</string>
+    <string name="string_systolic_pressure">收缩压</string>
+    <string name="string_diastolic_pressure">舒张压</string>
+    <string name="string_exercise_record">锻炼记录</string>
+    <string name="string_exercise_time">锻炼时间</string>
+    <string name="string_operate_guide">操作指引</string>
+    <string name="string_not_bond_device">未绑定设备</string>
+    <string name="string_help">帮助</string>
+    <string name="string_personal_center">个人中心</string>
+    <string name="string_feedback">反馈</string>
+    <string name="string_feedback_suggestion">*问题反馈或建议</string>
+    <string name="string_input_feedback">请输入反馈</string>
+    <string name="string_contact">*联系方式</string>
+    <string name="string_input_email">请输入您的邮箱</string>
+    <string name="string_submit">提交</string>
+
+
+
+
+
+
+
     <string name="string_conn_failed">连接失败</string>
     <string name="string_next_day">次日</string>
     <string name="string_today">当天</string>
@@ -27,9 +54,9 @@
     <string name="string_bp_txt_desc">血压正常值：\n收缩压：90~139 mmHg\n/舒张压： 60~89 mmHg"\n *所提供的数据及建议仅供参考，不可作为临床诊断和治疗依据</string>
     <string name="string_sleep_txt_desc">睡眠是生物维持生命的重要行为之一，通过硬件设备记录您的睡眠状况，对睡眠质量进行分析，帮助您了解和调整睡眠习惯。\n*所提供的数据建议仅供参考，不可作为临床诊断和治疗依据。</string>
     <string name="string_spo2_txt_desc">了解血氧饱和度数据：血氧饱和度是血液中被氧结合的氧合血红蛋白的容量占全部可结合的血红蛋白容量的百分比，即血液中血氧的浓度，它是呼吸循环的重要生物参数。正常动脉的血氧饱和度约为95%~99%。\n*所提供的数据及建议仅供参考，不可作为临床诊断和治疗依据</string>
-    
-    
-    
+
+
+
     <string name="string_about">关于</string>
     <string name="string_measure">测量</string>
     <string name="string_scan_ing">扫描中..</string>
@@ -46,8 +73,8 @@
     <string name="string_mail">邮件</string>
     <string name="string_wechat">微信</string>
 
-    
-    
+
+
 
     <string name="string_distance">距离</string>
     <string name="string_consumption">能量消耗</string>
@@ -76,9 +103,9 @@
     <string name="string_weight">体重</string>
     <string name="string_men">男</string>
     <string name="string_women">女</string>
-    
 
-    
+
+
     <string name="string_all_sport">所有</string>
     <string name="string_exericse_walk">走路</string>
     <string name="string_exercise_run">跑步</string>
@@ -141,13 +168,13 @@
     <string name="string_light_sleep">浅睡</string>
     <string name="string_awake">清醒</string>
     <string name="string_rem">快速眼动</string>
-    
-    
+
+
     <string name="string_day">日</string>
     <string name="string_week">周</string>
     <string name="string_month">月</string>
     <string name="string_year">年</string>
-    
+
 
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_home">数据</string>
@@ -230,4 +257,4 @@
     <string name="http_request_cancel">请求被中断，请重试</string>
 
 
-</resources>
+></resources>

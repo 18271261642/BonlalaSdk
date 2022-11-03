@@ -21,6 +21,7 @@ import com.blala.blalable.listener.WriteBack24HourDataListener;
 import com.blala.blalable.listener.WriteBackDataListener;
 import com.google.gson.Gson;
 import com.inuker.bluetooth.library.BluetoothClient;
+import com.inuker.bluetooth.library.Constants;
 import com.inuker.bluetooth.library.connect.listener.BleConnectStatusListener;
 import com.inuker.bluetooth.library.connect.options.BleConnectOptions;
 import com.inuker.bluetooth.library.connect.response.BleConnectResponse;
@@ -134,7 +135,6 @@ public class BleManager {
     public void startScanBleDevice(final SearchResponse searchResponse, int duration, int times){
         final SearchRequest searchRequest = new SearchRequest.Builder()
                 .searchBluetoothLeDevice(duration,times)
-                .searchBluetoothClassicDevice(1000)
                 .build();
         bluetoothClient.search(searchRequest, new SearchResponse() {
             @Override
@@ -222,8 +222,8 @@ public class BleManager {
         String spMac = (String) BleSpUtils.get(mContext,SAVE_BLE_MAC_KEY,"");
         if(TextUtils.isEmpty(spMac))
             return;
-        bluetoothClient.disconnect(spMac);
         bluetoothClient.stopSearch();
+        bluetoothClient.disconnect(spMac);
         BleSpUtils.remove(mContext,SAVE_BLE_MAC_KEY);
     }
 
@@ -235,11 +235,41 @@ public class BleManager {
 
     }
 
+    /**
+     * // Constants.REQUEST_READ，所有读请求
+     * // Constants.REQUEST_WRITE，所有写请求
+     * // Constants.REQUEST_NOTIFY，所有通知相关的请求
+     * // Constants.REQUEST_RSSI，所有读信号强度的请求
+     */
+    public void clearRequest(){
+        String mac = (String) BleSpUtils.get(mContext,SAVE_BLE_MAC_KEY,"");
+        if(TextUtils.isEmpty(mac))
+            return;
+        bluetoothClient.clearRequest(mac,Constants.REQUEST_WRITE);
+
+    }
+
 
     private synchronized void connBleDevice(final String bleMac, final String bleName, final ConnStatusListener connectResponse){
         BleSpUtils.put(mContext,SAVE_BLE_MAC_KEY,bleMac);
 
-        Log.e(TAG,"************连接处="+bleMac);
+
+
+        int status = bluetoothClient.getConnectStatus(bleMac);
+
+        Log.e(TAG,"************连接处="+bleMac+"--连接状态="+status);
+
+//        if(status ==  Constants.STATUS_DEVICE_CONNECTED){
+//            Log.e(TAG,"***********已经连接了，不要再连接了");
+//            bluetoothClient.disconnect(bleMac);
+//
+//        }
+
+        try {
+            Thread.sleep(1000);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         bluetoothClient.registerConnectStatusListener(bleMac, new BleConnectStatusListener() {
             @Override
@@ -253,7 +283,7 @@ public class BleManager {
         });
 
 
-        BleConnectOptions options = (new com.inuker.bluetooth.library.connect.options.BleConnectOptions.Builder()).setConnectRetry(1).setConnectTimeout(30000).setServiceDiscoverRetry(1).setServiceDiscoverTimeout(20000).build();
+        BleConnectOptions options = (new com.inuker.bluetooth.library.connect.options.BleConnectOptions.Builder()).setConnectRetry(2).setConnectTimeout(30000).setServiceDiscoverRetry(1).setServiceDiscoverTimeout(20000).build();
         bluetoothClient.connect(bleMac, options, new BleConnectResponse() {
             @Override
             public void onResponse(final int code, final BleGattProfile data) {
@@ -540,7 +570,7 @@ public class BleManager {
         @Override
         public void onConnectStatusChanged(String mac, int status) {
 
-            Log.e(TAG,"----连接状态manager="+mac+" "+status);
+            Log.e(TAG,"---mmmmm-连接状态manager="+mac+" "+status);
 
             if(bleConnStatusListener != null){
                 bleConnStatusListener.onConnectStatusChanged(mac==null?"mac":mac,status);

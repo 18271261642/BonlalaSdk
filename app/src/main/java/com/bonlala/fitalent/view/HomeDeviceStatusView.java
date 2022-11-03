@@ -78,13 +78,13 @@ public class HomeDeviceStatusView extends LinearLayout {
         Timber.e("======="+connStatus);
         String status = null;
         if(connStatus == ConnStatus.CONNECTED || connStatus == ConnStatus.IS_SYNC_COMPLETE){
-            status = "connected";
+            status = getContext().getResources().getString(R.string.string_connected);
         }
         if(connStatus == ConnStatus.CONNECTING){
-            status = "connecting";
+            status = getContext().getResources().getString(R.string.string_conning);
         }
         if(connStatus == ConnStatus.NOT_CONNECTED){
-            status = "Not connected";
+            status = getContext().getResources().getString(R.string.string_not_connect);
         }
         if(connStatus == ConnStatus.IS_SYNC_DATA){
             status = "Data synchronization…";

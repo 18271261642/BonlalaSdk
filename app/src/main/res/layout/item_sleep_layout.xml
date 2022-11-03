@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_10"
-                android:text="Sleep"
+                android:text="@string/string_sleep"
                 android:textColor="#ff000000"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@id/itemHomeSleepTmpView"

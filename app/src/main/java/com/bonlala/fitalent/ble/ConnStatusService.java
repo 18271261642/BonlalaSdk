@@ -1,6 +1,7 @@
 package com.bonlala.fitalent.ble;
 
 import android.app.Service;
+import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -63,6 +64,9 @@ public class ConnStatusService extends Service {
         intentFilter.addAction(BleConstant.BLE_DIS_CONNECT_ACTION);
         intentFilter.addAction(BleConstant.COMM_BROADCAST_ACTION);
         intentFilter.addAction(BleConstant.BLE_COMPLETE_EXERCISE_ACTION);
+
+        intentFilter.addAction(BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED);
+
         registerReceiver(broadcastReceiver,intentFilter);
 
     }
@@ -143,7 +147,7 @@ public class ConnStatusService extends Service {
                 if(status == Constants.STATUS_DISCONNECTED){
                     BaseApplication.getInstance().setConnStatus(ConnStatus.NOT_CONNECTED);
                     sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
-//                    BleOperateManager.getInstance().disConnNotRemoveMac();
+                    BleOperateManager.getInstance().disConnYakDevice();
                     new Handler(Looper.myLooper()).postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -178,7 +182,14 @@ public class ConnStatusService extends Service {
 
                 //同步时间
                 //同步时间
-                BleOperateManager.getInstance().syncDeviceTime(writeBackDataListener);
+               // BleOperateManager.getInstance().syncDeviceTime(writeBackDataListener);
+
+
+                sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
+                BleOperateManager.getInstance().setClearListener();
+
+                DataOperateManager.getInstance(ConnStatusService.this).setMeasureDataSave(BleOperateManager.getInstance());
+                DataOperateManager.getInstance(ConnStatusService.this).readAllDataSet(BleOperateManager.getInstance());
             }
         });
     }
@@ -202,8 +213,15 @@ public class ConnStatusService extends Service {
                 MmkvUtils.saveConnDeviceMac(bleMac);
                 MmkvUtils.saveConnDeviceName(name);
 
+
+                sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
+                BleOperateManager.getInstance().setClearListener();
+
+                DataOperateManager.getInstance(ConnStatusService.this).setMeasureDataSave(BleOperateManager.getInstance());
+                DataOperateManager.getInstance(ConnStatusService.this).readAllDataSet(BleOperateManager.getInstance());
+
                 //同步时间
-                BleOperateManager.getInstance().syncDeviceTime(writeBackDataListener);
+                //BleOperateManager.getInstance().syncDeviceTime(writeBackDataListener);
 //                BleOperateManager.getInstance().syncDeviceTime(new WriteBackDataListener() {
 //                    @Override
 //                    public void backWriteData(byte[] data) {
@@ -266,6 +284,10 @@ public class ConnStatusService extends Service {
             String action = intent.getAction();
             if(action == null)
                 return;
+
+
+
+
             if(action.equals(BleConstant.COMM_BROADCAST_ACTION)){
                 int[] valueArray = intent.getIntArrayExtra(BleConstant.COMM_BROADCAST_KEY);
                 if(valueArray[0] == BleConstant.MEASURE_COMPLETE_VALUE){

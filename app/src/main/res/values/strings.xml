@@ -5,6 +5,26 @@
     <string name="title_dashboard">device</string>
     <string name="title_notifications">mine</string>
 
+    <string name="string_real_time_hr">Real-time Heart Rate</string>
+    <string name="string_data_sync">Data synchronization..</string>
+    <string name="string_add_device">Add Device</string>
+    <string name="string_open_real_time_hr">Turn on real-time heart rate</string>
+    <string name="string_daily_avg">Daily avg:</string>
+    <string name="string_systolic_pressure">systolic pressure</string>
+    <string name="string_diastolic_pressure">diastolic pressure</string>
+    <string name="string_exercise_record">Exercise Record</string>
+    <string name="string_exercise_time">Exercise Time</string>
+    <string name="string_operate_guide">Operate guide</string>
+    <string name="string_not_bond_device">未绑定设备</string>
+    <string name="string_help">help</string>
+    <string name="string_personal_center">Personal Center</string>
+    <string name="string_feedback">Feedback</string>
+    <string name="string_feedback_suggestion">*feedback or suggestion</string>
+    <string name="string_input_feedback">Please enter feedback</string>
+    <string name="string_contact">*contact</string>
+    <string name="string_input_email">Please enter your email</string>
+    <string name="string_submit">Submit</string>
+
     <string name="string_conn_failed">Connection failed</string>
     <string name="string_next_day">next day</string>
     <string name="string_today">Today</string>

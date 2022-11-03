@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp_10"
-                android:text="Blood pressure"
+                android:text="@string/string_bp"
                 android:textColor="#ff000000"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@id/itemHomeBpTmpView"
@@ -73,7 +73,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Systolic pressure"
+                android:text="@string/string_systolic_pressure"
                 android:textColor="#ff191919"
                 android:textSize="12sp"
                 android:layout_marginStart="@dimen/dp_10"/>
@@ -88,7 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
-                android:text="Diastolic pressure"
+                android:text="@string/string_diastolic_pressure"
                 android:textColor="#ff191919"
                 android:textSize="12sp"
                 android:layout_marginStart="@dimen/dp_10"/>
