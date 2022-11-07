@@ -14,17 +14,23 @@ import com.blala.blalable.BleOperateManager;
 import com.blala.blalable.listener.WriteBackDataListener;
 import com.bonlala.fitalent.BaseApplication;
 import com.bonlala.fitalent.utils.BikeUtils;
+import com.bonlala.fitalent.utils.MmkvUtils;
+
+import timber.log.Timber;
+
 import static android.content.Context.TELEPHONY_SERVICE;
 
 /**
- * Created by admin on 2017/5/14.\
+ *
+ * @author admin
+ * @date 2017/5/14
  * 6.0 广播接收来电
  */
 
 public class PhoneBroadcastReceiver extends BroadcastReceiver {
 
     private static final String TAG = "PhoneBroadcastReceiver";
-    private static final String H9_NAME_TAG = "H9";    //H9手表
+
 
 
     String phoneNumber = "";
@@ -46,6 +52,12 @@ public class PhoneBroadcastReceiver extends BroadcastReceiver {
         //呼入电话
         if (action.equals(TelephonyManager.ACTION_PHONE_STATE_CHANGED)) {
             Log.e(TAG, "---------action---" + action);
+
+            //判断来电的开关是否打开
+            boolean isPhone = MmkvUtils.getW560BPhoneStatus();
+            if(!isPhone){
+                return;
+            }
             doReceivePhone(context, intent);
         }
     }
@@ -58,23 +70,28 @@ public class PhoneBroadcastReceiver extends BroadcastReceiver {
      */
     public void doReceivePhone(Context context, Intent intent) {
         phoneNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
+        Timber.tag(TAG).e("---phoneNumber----" + phoneNumber);
         if (BikeUtils.isEmpty(phoneNumber))
             return;
-        Log.d(TAG, "---phoneNumber----" + phoneNumber);
         TelephonyManager telephony = (TelephonyManager) context.getSystemService(TELEPHONY_SERVICE);
         if (telephony == null)
             return;
         int state = telephony.getCallState();
-        Log.d(TAG, "-----state-----" + state);
+        Timber.tag(TAG).e("-----state-----" + state);
         switch (state) {
-            case TelephonyManager.CALL_STATE_RINGING://呼入电话，未接听状态
+            //呼入电话，未接听状态
+            case TelephonyManager.CALL_STATE_RINGING:
                 verticalDeviceType(context);
                 break;
-            case TelephonyManager.CALL_STATE_IDLE:// 电话挂断
-                Log.d(TAG, "------挂断电话--");
-            case TelephonyManager.CALL_STATE_OFFHOOK://已接通
-                Log.d(TAG, "------通话中--");
+            // 电话挂断
+            //已接通
+            case TelephonyManager.CALL_STATE_IDLE:
+                Timber.tag(TAG).d("------挂断电话--");
+            case TelephonyManager.CALL_STATE_OFFHOOK:
+                Timber.tag(TAG).d("------通话中--");
                 verticalDeviceCancelPhone();
+                break;
+            default:
                 break;
         }
     }
@@ -88,7 +105,7 @@ public class PhoneBroadcastReceiver extends BroadcastReceiver {
     //来电呼入状态
     private void verticalDeviceType(Context context){
         try {
-            if (!BikeUtils.isEmpty(phoneNumber) && !BikeUtils.isEmpty(bleName)) {
+            if (!BikeUtils.isEmpty(phoneNumber) ) {
                 Log.d(TAG, "------收到了来电广播---" + phoneNumber);
                 //H8
                 findPhoneContactsByNumber(phoneNumber,"bb");

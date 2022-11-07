@@ -2,6 +2,7 @@ package com.bonlala.fitalent.ui.dashboard
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,17 +15,21 @@ import com.blala.blalable.listener.WriteBackDataListener
 import com.bonlala.fitalent.ble.DataOperateManager
 import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.db.model.DeviceSetModel
+import com.bonlala.fitalent.http.RequestServer
+import com.bonlala.fitalent.http.api.VersionApi
+import com.bonlala.fitalent.utils.GsonUtils
 import com.google.gson.Gson
+import com.hjq.http.EasyConfig
+import com.hjq.http.EasyHttp
+import com.hjq.http.listener.OnHttpListener
+import com.hjq.http.model.BodyType
+import org.json.JSONObject
 import timber.log.Timber
+import java.lang.Exception
 import java.util.*
 import kotlin.experimental.and
 
 class DashboardViewModel : ViewModel() {
-
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
-    }
-    val text: LiveData<String> = _text
 
 
 
@@ -34,10 +39,10 @@ class DashboardViewModel : ViewModel() {
     //电量
      var batteryStr = MutableLiveData<String>()
 
-
      val byteArray = MutableLiveData<ByteArray>()
 
-
+    //获取是否有固件新版本
+    var serverVersion = MutableLiveData<String>()
 
     //设置亮度等级和时长
     fun setLightAndInterval(bleOperateManager: BleOperateManager,light : Int,level : Int){
@@ -65,6 +70,34 @@ class DashboardViewModel : ViewModel() {
 
         })
     }
+
+
+    //后台获取固件版本信息
+    fun getServerVersionInfo(lifecycle: LifecycleOwner){
+        val requestServer = RequestServer()
+        requestServer.bodyType = BodyType.FORM
+        EasyConfig.getInstance().setServer(requestServer).into()
+        EasyHttp.get(lifecycle).api(VersionApi().setVersion("W560B",1)).request(object :
+            OnHttpListener<String> {
+            override fun onSucceed(result: String?) {
+                val jsonObject = JSONObject(result)
+                if(jsonObject.get("code") == "200" && jsonObject.get("success") == true){
+                    val dataStr = jsonObject.getString("data")
+                    val verBean = GsonUtils.getGsonObject<VersionApi.VersionInfo>(dataStr)
+
+                    Timber.e("----固件版本="+verBean.toString())
+                    serverVersion.postValue(verBean?.versionName)
+                }
+            }
+
+            override fun onFail(e: Exception?) {
+
+            }
+
+        })
+
+    }
+
 
 
     //设置实时心率开关

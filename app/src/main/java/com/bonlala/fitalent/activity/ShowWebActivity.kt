@@ -42,11 +42,18 @@ class ShowWebActivity : AppActivity() {
         showSetting(showWebView)
         showWebView.loadUrl(url)
 
-        showWebView.webChromeClient = WebCh()
+
+
+        showWebView.webChromeClient = object : WebChromeClient() {
+            override fun onReceivedTitle(view: WebView, title: String) {
+                super.onReceivedTitle(view, title)
+                setTitleStr(title)
+            }
+        }
     }
 
 
-    private class WebCh : WebChromeClient() {
+     class WebCh : WebChromeClient() {
         override fun onProgressChanged(view: WebView, newProgress: Int) {
             super.onProgressChanged(view, newProgress)
         }
@@ -54,6 +61,7 @@ class ShowWebActivity : AppActivity() {
         override fun onReceivedTitle(view: WebView, title: String) {
             super.onReceivedTitle(view, title)
             Timber.e("----title="+title)
+
         }
     }
 
@@ -129,7 +137,7 @@ class ShowWebActivity : AppActivity() {
         // 本地 DOM 存储（解决加载某些网页出现白板现象）
         // 本地 DOM 存储（解决加载某些网页出现白板现象）
         settings.domStorageEnabled = true
-        settings.cacheMode = WebSettings.LOAD_DEFAULT
+        settings.cacheMode = WebSettings.LOAD_NO_CACHE
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // 解决 Android 5.0 上 WebView 默认不允许加载 Http 与 Https 混合内容

@@ -13,6 +13,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import com.bonlala.fitalent.R;
+import com.bonlala.fitalent.utils.DisplayUtils;
+import com.bonlala.widget.utils.MiscUtil;
+
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
@@ -43,13 +46,22 @@ public class CusScheduleView extends View {
     private float mWidth,mHeight;
 
     //所有进度值
-    private float allScheduleValue = 0f;
+    private float allScheduleValue = 100f;
     //当前进度值
     private float currScheduleValue = 0;
 
     private float animatCurrScheduleValue= 0f;
 
     private ValueAnimator objectAnimator;
+
+
+    /**设置显示的文字**/
+    private Paint txtPaint;
+    private String showTxt;
+    /**文字颜色**/
+    private int txtColor;
+    /**是否显示文字，默认不显示**/
+    private boolean isShowTxt =true;
 
 
     public CusScheduleView(Context context) {
@@ -70,6 +82,8 @@ public class CusScheduleView extends View {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CusScheduleView);
         allShceduleColor = typedArray.getColor(R.styleable.CusScheduleView_cus_all_schedule_color,Color.BLUE);
         currShceduleColor = typedArray.getColor(R.styleable.CusScheduleView_cus_curr_schedule_color,Color.BLUE);
+        txtColor = typedArray.getColor(R.styleable.CusScheduleView_cus_txt_color,Color.BLACK);
+        isShowTxt = typedArray.getBoolean(R.styleable.CusScheduleView_cus_is_show_txt,false);
         typedArray.recycle();
 
         initPaint();
@@ -91,6 +105,13 @@ public class CusScheduleView extends View {
         currSchedulePaint.setTextSize(1f);
         currSchedulePaint.setStrokeCap(Paint.Cap.SQUARE);
         currSchedulePaint.setAntiAlias(true);
+
+        txtPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        txtPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        txtPaint.setColor(txtColor);
+        txtPaint.setTextSize(DisplayUtils.dip2px(getContext(),18f));
+        txtPaint.setTextAlign(Paint.Align.CENTER);
+        txtPaint.setAntiAlias(true);
 
         currPath = new Path();
 
@@ -122,11 +143,19 @@ public class CusScheduleView extends View {
         Timber.e("---currW="+currV+" "+mWidth);
         RectF currRectf = new RectF(0,-mHeight,currV>mWidth ? mWidth : currV,0);
         currPath.addRoundRect(currRectf,mHeight/2,mHeight/2,Path.Direction.CW);
-//        canvas.drawPath(currPath,currSchedulePaint);
+        canvas.drawPath(currPath,currSchedulePaint);
+
+        Timber.e("----isShow="+isShowTxt+" "+showTxt);
+        if(isShowTxt){
+            if(showTxt != null){
+                float txtHeight = MiscUtil.measureTextHeight(txtPaint);
+                canvas.drawText(showTxt,mWidth/2,-mHeight/2+txtHeight/2,txtPaint);
+            }
+        }
 
 //        canvas.drawRect(currRectf,currSchedulePaint);
-        canvas.drawRoundRect(currRectf,mHeight/2,mHeight/2,currSchedulePaint);
-
+//        canvas.drawRoundRect(currRectf,mHeight/2,mHeight/2,currSchedulePaint);
+        currPath.reset();
     }
 
 
@@ -170,5 +199,12 @@ public class CusScheduleView extends View {
 
     }
 
+    public String getShowTxt() {
+        return showTxt;
+    }
 
+    public void setShowTxt(String showTxt) {
+        this.showTxt = showTxt;
+        invalidate();
+    }
 }

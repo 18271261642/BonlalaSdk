@@ -4,6 +4,7 @@ package com.blala.blalable;
 import android.util.Log;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.UUID;
 
 /**
@@ -329,6 +330,25 @@ public class BleConstant {
     }
 
 
+    /**
+     * 发送天气
+     * @param index 下标
+     * @param airQuality 空气质量
+     * @param temperature 当前温度
+     * @param heightT 最高温度
+     * @param lowT 最低温度
+     * @param weatherStatus 天气
+     * @return
+     */
+    public byte[] weatherList(int index,int airQuality,int temperature,int heightT,int lowT,int weatherStatus){
+
+
+        byte[] weatherByte = new byte[]{0x04,0x12, (byte) index, (byte) airQuality, (byte) (airQuality>>8), (byte) (temperature &0xff), (byte) (heightT & 0xff), (byte) (lowT &0xff), (byte) (weatherStatus & 0xff)};
+
+        return weatherByte;
+    }
+
+
     /**天气数据**/
     public ArrayList<byte[]> weatherListByte(String cityName){
         ArrayList<byte[]> list = new ArrayList<>();
@@ -345,22 +365,24 @@ public class BleConstant {
             System.arraycopy(cityByte,0,tmpCity,0,cityByte.length);
         }
 
-
         System.arraycopy(tmpCity,0,bt1,2,tmpCity.length);
         list.add(bt1);
 
-        byte[] secondByte = new byte[20];
-        secondByte[0] = 0x02;
-        secondByte[1] = 12;
-        secondByte[2] = 0x02;
-        secondByte[3] = 0x00;
-        secondByte[4] = 0x03;
-        secondByte[5] = 28;
-        secondByte[6] = 30;
-        secondByte[7] = 26;
-        secondByte[8] = 0;
+        for(int i = 2;i<9;i++){
+            byte[] secondByte = new byte[20];
+            secondByte[0] = 0x04;
+            secondByte[1] = 12;
+            secondByte[2] = (byte) i;
+            secondByte[3] = 0x00;
+            secondByte[4] = 0x20;
+            secondByte[5] = (byte) (20 >> 8);
+            secondByte[6] = 0x21;
+            secondByte[7] = 0x30;
+            secondByte[8] = 0x10;
+            secondByte[9] = 0x25;
+            list.add(secondByte);
+        }
 
-        list.add(secondByte);
 
         return list;
     }

@@ -29,6 +29,7 @@ import com.haibin.calendarview.CalendarUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Timer;
 
 import androidx.annotation.NonNull;
 import timber.log.Timber;
@@ -111,7 +112,7 @@ public class DataOperateManager {
     /**处理锻炼数据**/
     public void dealWithExercise(byte[] data){
         String str = null;
-        //结束了
+        //结束了0x81
         if((data[0] & 0xff) == 129){
             if(sb.length() == 0)
                 return;
@@ -215,7 +216,7 @@ public class DataOperateManager {
              * 第一包是结尾包
              */
             List<Integer> hrList = new ArrayList<>();
-            for(int i = 1;i<resultHr.length;i++){
+            for(int i = 0;i<resultHr.length;i++){
                 int hr = resultHr[i] & 0xff;
                 if(hr == 255)
                     continue;
@@ -232,11 +233,26 @@ public class DataOperateManager {
 
             DBManager.dbManager.saveExerciseData("user_1001",MmkvUtils.getConnDeviceMac(),startTime,exerciseModel);
             BleOperateManager.getInstance().setClearListener();
-            BaseApplication.getInstance().setConnStatus(ConnStatus.CONNECTED);
 
-            setCommBroad(BleConstant.BLE_24HOUR_SYNC_COMPLETE_ACTION);
 
             sb.delete(0,sb.length());
+
+            int numIndex = exArrayList.get(0)[0];
+            Timber.e("---numIndex="+numIndex);
+            if(numIndex+1<maxExerciseNumber){
+                tempValidExerciseIndex = numIndex+1;
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getExerciseData();
+                    }
+                },1500);
+            }else{
+                tempValidExerciseIndex = 0;
+                BaseApplication.getInstance().setConnStatus(ConnStatus.CONNECTED);
+
+                setCommBroad(BleConstant.BLE_24HOUR_SYNC_COMPLETE_ACTION);
+            }
 
         }else{
             exArrayList.add(data);
@@ -639,11 +655,18 @@ public class DataOperateManager {
         }
     }
 
+    //锻炼最多有5条
+    int maxExerciseNumber = 5;
+
+    int tempValidExerciseIndex =0;
+
     /**获取锻炼数据**/
     public void getExerciseData(){
+
         BleOperateManager.getInstance().setClearListener();
         DataOperateManager.getInstance(mContext).setExerciseListener(BleOperateManager.getInstance());
-        BleOperateManager.getInstance().getExerciseData(0, new WriteBackDataListener() {
+
+        BleOperateManager.getInstance().getExerciseData(tempValidExerciseIndex, new WriteBackDataListener() {
             @Override
             public void backWriteData(byte[] data) {
                 sb.delete(0,sb.length());
@@ -651,7 +674,7 @@ public class DataOperateManager {
                 if(data[0] == 2 && (data[1] & 0xff) == 0xff && (data[2] &0xff) == 66 && data[3]==4){
                     BleOperateManager.getInstance().setClearListener();
                     BaseApplication.getInstance().setConnStatus(ConnStatus.CONNECTED);
-
+                    tempValidExerciseIndex = 0;
                     setCommBroad(BleConstant.BLE_24HOUR_SYNC_COMPLETE_ACTION);
                 }
             }

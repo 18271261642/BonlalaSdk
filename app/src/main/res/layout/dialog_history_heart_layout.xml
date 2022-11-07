@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="Single measurement data"
+        android:text="@string/string_single_measure_record"
         android:textColor="#ff000000"
         android:textSize="20sp" />
 
@@ -47,7 +47,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="@dimen/dp_8"
-                    android:text="Measuring time"
+                    android:text="@string/string_measure_time"
                     android:textColor="#ff2f2f33"
                     android:textSize="16sp" />
 
@@ -58,7 +58,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:padding="@dimen/dp_8"
-                    android:text="Heart rate value"
+                    android:text="@string/string_measure_value"
                     android:textColor="#ff2f2f33"
                     android:textSize="16sp" />
 

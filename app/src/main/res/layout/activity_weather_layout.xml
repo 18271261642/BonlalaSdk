@@ -60,7 +60,7 @@
                     android:id="@+id/weatherGetTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Get weather"
+                    android:text="@string/string_get_weather"
                     android:textColor="#ffffffff"
                     android:textSize="14sp"
                     android:paddingTop="@dimen/dp_2"
@@ -76,7 +76,7 @@
                     android:id="@+id/weatherAqiTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Air quality index : --"
+                    android:text="@string/string_air_quality"
                     android:textColor="#ff525252"
                     android:textSize="14sp"
                     android:padding="@dimen/dp_5"/>
@@ -90,7 +90,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Air quality :  "
+                        android:text="@string/string_air_quality"
                         android:textColor="#ff525252"
                         android:textSize="14sp"
                         android:padding="@dimen/dp_5"/>

@@ -404,7 +404,7 @@ public class LineRecChartPractiseView extends View {
     float clearanceWidth;//间隔
 
     private void drawLines(Canvas canvas) {
-        clearanceWidth = DisplayUtils.dip2px(mContext, 30) / (mData.size() / 5.0f);
+        clearanceWidth = DisplayUtils.dip2px(mContext, 20) / (mData.size() / 5.0f);
         width = (mTotalWidth - mStartX - clearanceWidth * (mData.size() - 1)) / mData.size();
 
 

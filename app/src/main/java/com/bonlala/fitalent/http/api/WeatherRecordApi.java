@@ -28,10 +28,14 @@ public class WeatherRecordApi implements IRequestApi {
     /**地理经度**/
     private double lng;
 
-    public WeatherRecordApi setWeatherRecordApi(String cityDetailName, double lat, double lng) {
+    /**类型**/
+    private String deviceType;
+
+    public WeatherRecordApi setWeatherRecordApi(String cityDetailName, double lat, double lng,String deviceType) {
         this.cityDetailName = cityDetailName;
         this.lat = lat;
         this.lng = lng;
+        this.deviceType = deviceType;
         return this;
     }
 
@@ -86,7 +90,7 @@ public class WeatherRecordApi implements IRequestApi {
             private int lowTemp;
             private int temp;
             private String weatherImgUrl;
-            private String weatherTypeCode;
+            private int deviceWeatherCode;
 
             public String getCurrentDate() {
                 return currentDate;
@@ -128,12 +132,12 @@ public class WeatherRecordApi implements IRequestApi {
                 this.weatherImgUrl = weatherImgUrl;
             }
 
-            public String getWeatherTypeCode() {
-                return weatherTypeCode;
+            public int getDeviceWeatherCode() {
+                return deviceWeatherCode;
             }
 
-            public void setWeatherTypeCode(String weatherTypeCode) {
-                this.weatherTypeCode = weatherTypeCode;
+            public void setDeviceWeatherCode(int deviceWeatherCode) {
+                this.deviceWeatherCode = deviceWeatherCode;
             }
         }
     }

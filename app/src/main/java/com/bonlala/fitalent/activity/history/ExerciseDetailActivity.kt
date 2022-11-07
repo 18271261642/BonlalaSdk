@@ -98,6 +98,8 @@ class ExerciseDetailActivity : AppActivity() {
         Timber.e("-----dbbb="+exceriseB.toString())
         if(exceriseB == null)
             return
+        val avgHr = intent.getIntExtra("avg_hr",0)
+        exerciseAvgTv.text = avgHr.toString()
         showDetail(exceriseB)
     }
 
@@ -203,9 +205,9 @@ class ExerciseDetailActivity : AppActivity() {
 
             exerciseMaxTv.text = hrMaxValue.toString()
             exerciseMinTv.text = hrMinValue.toString()
-            if (hrList != null) {
-                exerciseAvgTv.text = (countHr / hrList.size).toInt().toString()
-            }
+//            if (hrList != null) {
+//                exerciseAvgTv.text = (countHr / hrList.size).toInt().toString()
+//            }
 
 
             val timeList = mutableListOf<Int>()

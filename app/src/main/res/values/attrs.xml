@@ -13,7 +13,10 @@
     <declare-styleable name="CusScheduleView">
         <attr name="cus_all_schedule_color" format="color"/>
         <attr name="cus_curr_schedule_color" format="color"/>
-
+        <!--文字显示的颜色-->
+        <attr name="cus_txt_color" format="color"/>
+        <!--是否显示文字-->
+        <attr name="cus_is_show_txt" format="boolean"/>
     </declare-styleable>
 
     <attr name="xy_line_color" format="color" />

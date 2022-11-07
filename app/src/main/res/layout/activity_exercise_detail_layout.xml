@@ -32,7 +32,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="HR histogram"
+                android:text="@string/string_hr_histogram"
                 android:textColor="#ff2f2f33"
                 android:textSize="22sp"
                 android:layout_margin="@dimen/dp_10"/>
@@ -136,7 +136,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="HR data analysis diagram"
+                android:text="@string/string_hr_data_analysis"
                 android:textColor="#ff2f2f33"
                 android:textSize="22sp"
                 android:layout_margin="@dimen/dp_10"/>
@@ -170,7 +170,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="HR data analysis diagram"
+                android:text="@string/string_hr_data_analysis"
                 android:textColor="#ff2f2f33"
                 android:textSize="22sp"
                 android:id="@+id/exerciseDescTv"
@@ -191,21 +191,13 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="    Resting heart rate: The number of heartbeats per minute for a normal person is generally 60 to 100 beats per minute in a resting state.
-Exercise heart rate: During exercise, you can judge the state of your body's exercise according to the heart rate interval, and select the appropriate heart rate interval to achieve the best exercise effect."
+                    android:text="@string/string_hr_txt_desc"
                     android:textColor="#ff2f2f33"
                     android:textSize="14sp"
                     android:lineSpacingExtra="5dp"/>
 
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="* The data and suggestions provided are for reference only and cannot be used as a basis for clinical diagnosis and treatment"
-                    android:textColor="#ff2f2f33"
-                    android:layout_marginTop="@dimen/dp_20"
-                    android:textSize="14sp"
-                    android:lineSpacingExtra="@dimen/dp_5"/>
+
             </com.hjq.shape.layout.ShapeLinearLayout>
 
 
@@ -215,6 +207,7 @@ Exercise heart rate: During exercise, you can judge the state of your body's exe
                 android:layout_marginTop="@dimen/dp_20"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
+                android:layout_marginBottom="@dimen/dp_30"
                 android:orientation="horizontal">
 
                 <View

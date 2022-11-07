@@ -195,25 +195,37 @@ class MainActivity : AppActivity() ,OnItemClickListener{
         BaseApplication.getInstance().connStatusService.connDeviceBack(bleName,bleMac
         ) { mac, status ->
             //连接成功
-            if (status == 88) {
-                BaseApplication.getInstance().connBleName = bleName
-                BaseApplication.getInstance().connStatus = ConnStatus.CONNECTED
-                MmkvUtils.saveConnDeviceName(bleName)
-                MmkvUtils.saveConnDeviceMac(bleMac)
+            BaseApplication.getInstance().connBleName = bleName
+            BaseApplication.getInstance().connStatus = ConnStatus.CONNECTED
+            MmkvUtils.saveConnDeviceName(bleName)
+            MmkvUtils.saveConnDeviceMac(bleMac)
 
-                val broadIntent = Intent()
-                broadIntent.action = BleConstant.BLE_CONNECTED_ACTION
-                sendBroadcast(broadIntent)
-                //进入玩转设备页面
-                startActivity(GuideActivity::class.java)
-                ActivityManager.getInstance().finishActivity(MainActivity::class.java)
-                finish()
-            }else{
-                hideDialog()
-                ToastUtils.show(resources.getString(R.string.string_conn_failed))
-                BleOperateManager.getInstance().disConnYakDevice()
-              //  verifyScanFun()
-            }
+            val broadIntent = Intent()
+            broadIntent.action = BleConstant.BLE_CONNECTED_ACTION
+            sendBroadcast(broadIntent)
+            //进入玩转设备页面
+            startActivity(GuideActivity::class.java)
+            ActivityManager.getInstance().finishActivity(MainActivity::class.java)
+            finish()
+//            if (status == 88) {
+//                BaseApplication.getInstance().connBleName = bleName
+//                BaseApplication.getInstance().connStatus = ConnStatus.CONNECTED
+//                MmkvUtils.saveConnDeviceName(bleName)
+//                MmkvUtils.saveConnDeviceMac(bleMac)
+//
+//                val broadIntent = Intent()
+//                broadIntent.action = BleConstant.BLE_CONNECTED_ACTION
+//                sendBroadcast(broadIntent)
+//                //进入玩转设备页面
+//                startActivity(GuideActivity::class.java)
+//                ActivityManager.getInstance().finishActivity(MainActivity::class.java)
+//                finish()
+//            }else{
+//                hideDialog()
+//                ToastUtils.show(resources.getString(R.string.string_conn_failed))
+//                BleOperateManager.getInstance().disConnYakDevice()
+//              //  verifyScanFun()
+//            }
         }
 
 

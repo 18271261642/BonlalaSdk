@@ -42,6 +42,7 @@ public class LinearProgressView extends View {
 
     /**是否是下载模式，下载模式显示进度**/
     private boolean isDownload = false;
+    private String showDownloadTxt = null;
 
     /**里面文字的画笔**/
     private Paint txtPaint;
@@ -104,14 +105,6 @@ public class LinearProgressView extends View {
         invalidate();
     }
 
-    /**
-     *各位邻居，
-     * 关于“七窄门”的事都已经了解了，
-     * 就现实情况而论，关于窄门的事无需多说，相信作为一个普通正常人来说一栋住宅楼设计如此小的门实在让人难以接受，在没有提前告知的情况下我们都是受害者，当然不在乎小门的情况下就另当别论
-     *目前状况：
-     * 1，开发商明知有大小门之分，却在销售中刻意隐瞒，相信开发商内部已经有应对之策！！
-     * 2，销售人员再销售中也没有明确告知实际情况，仅以样板房为准，业主了解大小门之分后销售明确表示不知情
-     */
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -164,8 +157,8 @@ public class LinearProgressView extends View {
             float showTxtWidth =  MiscUtil.measureTextHeight(txtPaint);
             canvas.drawText(setShowTxt,getWidth()/2,getHeight()/2+showTxtWidth/2,txtPaint);
         }else {
-            if(isDownload){
-                String txt = "Download: "+(CalculateUtils.div(mCurrentProgress,mProgress,200) * 100)+"%";
+            if(isDownload  && showDownloadTxt != null){
+                String txt =showDownloadTxt+(CalculateUtils.div(mCurrentProgress,mProgress,2) * 100)+"%";
                 float txtHeight = MiscUtil.measureTextHeight(txtPaint);
                 canvas.drawText(txt,getWidth()/2,getHeight()/2+txtHeight/2,txtPaint);
             }else{
@@ -184,6 +177,14 @@ public class LinearProgressView extends View {
 
     public void setDownload(boolean download) {
         isDownload = download;
+    }
+
+    public String getShowDownloadTxt() {
+        return showDownloadTxt;
+    }
+
+    public void setShowDownloadTxt(String showDownloadTxt) {
+        this.showDownloadTxt = showDownloadTxt;
     }
 
     public String getSetShowTxt() {

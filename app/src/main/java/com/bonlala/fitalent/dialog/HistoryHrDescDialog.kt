@@ -105,14 +105,14 @@ class HistoryHrDescDialog : AppCompatDialog {
     private fun setChart(){
         hrDialogChart?.setUsePercentValues(true)
         hrDialogChart?.description?.isEnabled = false
-        hrDialogChart?.setExtraOffsets(5f, 10f, 5f, 5f)
+        hrDialogChart?.setExtraOffsets(15f, 0f, 15f, 0f)
 
         hrDialogChart?.dragDecelerationFrictionCoef = 0.95f
 
 //        pieChart?.setCenterTextTypeface(Typeface.createFromAsset(getAssets(), "OpenSans-Light.ttf"))
 //        pieChart?.setCenterText(generateCenterSpannableText())
 
-        hrDialogChart?.setExtraOffsets(20f, 0f, 20f, 0f)
+       // hrDialogChart?.setExtraOffsets(20f, 0f, 20f, 0f)
 
         hrDialogChart?.isDrawHoleEnabled = true
         hrDialogChart?.setHoleColor(Color.WHITE)
@@ -120,8 +120,8 @@ class HistoryHrDescDialog : AppCompatDialog {
         hrDialogChart?.setTransparentCircleColor(Color.WHITE)
         hrDialogChart?.setTransparentCircleAlpha(110)
 
-        hrDialogChart?.holeRadius = 58f
-        hrDialogChart?.transparentCircleRadius = 61f
+        hrDialogChart?.holeRadius = 48f
+        hrDialogChart?.transparentCircleRadius = 51f
 
         hrDialogChart?.setDrawCenterText(true)
 
@@ -148,6 +148,9 @@ class HistoryHrDescDialog : AppCompatDialog {
 
         // chart.spin(2000, 0, 360);
         val l: Legend? = hrDialogChart?.legend
+        l?.textSize = 11f
+//        l?.xOffset = 2f
+//        l?.yOffset = 2f
         l?.verticalAlignment = Legend.LegendVerticalAlignment.TOP
         l?.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
         l?.orientation = Legend.LegendOrientation.VERTICAL

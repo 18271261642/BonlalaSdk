@@ -13,6 +13,7 @@ import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.db.model.DeviceSetModel
 import com.bonlala.fitalent.dialog.TimeDialog
 import com.bonlala.fitalent.emu.ConnStatus
+import com.bonlala.fitalent.utils.BikeUtils
 import com.bonlala.fitalent.utils.MmkvUtils
 import com.hjq.toast.ToastUtils
 import kotlinx.android.synthetic.main.activity_trun_wrist_layout.*
@@ -42,6 +43,7 @@ class DNTActivity : AppActivity(),View.OnClickListener{
             timeBean?.switchStatus = if(checked) 1 else 0
 
             contentLayout.visibility = if(checked) View.VISIBLE else View.GONE
+            deviceSetModel?.dnt = if(!checked) "0" else deviceSetModel?.dnt
             setDntData()
         }
         alertDescTv.text = resources.getString(R.string.string_dnt_desc)
@@ -51,9 +53,12 @@ class DNTActivity : AppActivity(),View.OnClickListener{
         if(BaseApplication.getInstance().connStatus != ConnStatus.CONNECTED)
             return
         val mac = MmkvUtils.getConnDeviceMac()
+        if(BikeUtils.isEmpty(mac))
+            return
+        showDialog()
         deviceSetModel = DBManager.getInstance().getDeviceSetModel("user_1001",mac)
         BaseApplication.getInstance().bleOperate.getDNTStatus(OnCommTimeSetListener {
-
+            hideDialog()
             timeBean = CommTimeBean()
             timeBean?.startHour = it.startHour
             timeBean?.startMinute = it.startMinute

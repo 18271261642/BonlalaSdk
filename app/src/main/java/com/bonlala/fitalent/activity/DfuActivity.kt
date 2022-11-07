@@ -1,20 +1,34 @@
 package com.bonlala.fitalent.activity
 
+import android.content.DialogInterface
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
+import android.view.KeyEvent
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import com.blala.blalable.BleOperateManager
+import com.blala.blalable.listener.OnCommBackDataListener
+import com.bonlala.action.ActivityManager
 import com.bonlala.action.AppActivity
+import com.bonlala.fitalent.BaseApplication
 import com.bonlala.fitalent.R
+import com.bonlala.fitalent.ble.DataOperateManager
+import com.bonlala.fitalent.db.DBManager
+import com.bonlala.fitalent.dialog.CommAlertDialogView
 import com.bonlala.fitalent.http.api.VersionApi
+import com.bonlala.fitalent.listeners.OnItemClickListener
 import com.bonlala.fitalent.service.DfuService
+import com.bonlala.fitalent.utils.BikeUtils
 import com.bonlala.fitalent.utils.MmkvUtils
 import com.bonlala.fitalent.viewmodel.DfuViewModel
 import com.hjq.http.listener.OnDownloadListener
 import com.hjq.toast.ToastUtils
 import kotlinx.android.synthetic.main.activity_dfu_layout.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import no.nordicsemi.android.dfu.DfuProgressListener
 import no.nordicsemi.android.dfu.DfuServiceInitiator
 import no.nordicsemi.android.dfu.DfuServiceListenerHelper
@@ -37,22 +51,78 @@ class DfuActivity : AppActivity() {
     //W560B的固件包
     private val w560BDfuFile = "w560b_bin.bin"
 
+    //是否在升级中，升级中进制退出
+    private var isUpgradeing : Boolean ?= null
+
+    //是否已下载，没有下载显示下载按钮，下载完成后隐藏下载按钮
+    private var isDownloadComplete : Boolean ?= null
+
+    //后台获取的固件版本，用于下载地址使用
+    private var serverVersionInfo: VersionApi.VersionInfo ? = null
+
     override fun getLayoutId(): Int {
         return R.layout.activity_dfu_layout
     }
 
     override fun initView() {
+        isDownloadComplete = false
+
+
+        //点击开始下载
+        dfuCompleteTv.setOnClickListener {
+            if(serverVersionInfo == null)
+                return@setOnClickListener
+            if(isUpgradeing == true){
+                ToastUtils.show(resources.getString(R.string.string_upgrade_ing_not_cancel))
+                return@setOnClickListener
+            }
+
+            startDownload(serverVersionInfo!!)
+        }
+
+        //下载完成，点击开始升级
+        dfuDownloadTv.setOnClickListener {
+            if(serverVersionInfo == null)
+                return@setOnClickListener
+            startDfu()
+        }
 
         dfuBtnStatusView.setOnClickListener {
-            ToastUtils.show("click")
+           finish()
         }
+
+    }
+
+
+
+    //判断是否满足条件升级
+    private fun verticalUpgradeFunction() {
+        BleOperateManager.getInstance().readBattery(object : OnCommBackDataListener{
+            override fun onIntDataBack(value: IntArray?) {
+               val batteryValue = value?.get(0)?.toInt()
+                Timber.e("-----battery="+batteryValue)
+                dfuBatteryTv.text = batteryValue.toString()+"%"
+                if (batteryValue != null) {
+                    if(batteryValue.toInt()<40){
+                        isUpgradeing = true
+                        showNotCancel(resources.getString(R.string.string_low_battery_alert),true)
+                        return
+                    }
+                }
+            }
+
+            override fun onStrDataBack(vararg value: String?) {
+
+            }
+
+        })
     }
 
     override fun initData() {
         dfuBtnStatusView.setShowTxt = resources.getString(R.string.string_i_konw)
         dfuNoUpdateTv.visibility = View.VISIBLE
 
-
+        DfuServiceListenerHelper.registerProgressListener(this, mDfuProgressListener)
         fileSaveUrl = getExternalFilesDir(null)?.path
         Timber.e("---path="+fileSaveUrl)
         viewModel.getServerData.observe(this){
@@ -63,62 +133,126 @@ class DfuActivity : AppActivity() {
 
         viewModel.deviceDfuVersion.observe(this){
             deviceVersion = it
+            dfuCurrentVersionTv.text = resources.getString(R.string.string_current_version)+it.toString()
+
 
             //获取后台固件版本信息
             viewModel.getServerVersionInfo(this)
         }
         viewModel.getDeviceVersion(BleOperateManager.getInstance())
 
-        DfuServiceListenerHelper.registerProgressListener(this, mDfuProgressListener)
+
+        verticalUpgradeFunction()
+    }
+
+
+    override fun onLeftClick(view: View?) {
+        showNotCancel(resources.getString(R.string.string_upgrade_ing_not_cancel),false)
+        super.onLeftClick(view)
+
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        // 过滤按键动作
+        if (event.keyCode == KeyEvent.KEYCODE_BACK && isUpgradeing == true) {
+            showNotCancel(resources.getString(R.string.string_upgrade_ing_not_cancel),false)
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+
+    private fun showNotCancel(content : String,isFinish : Boolean){
+        if(isUpgradeing == true){
+            val dialog = CommAlertDialogView(this@DfuActivity, com.bonlala.base.R.style.BaseDialogTheme)
+            dialog.show()
+            dialog.setCancelable(false)
+            dialog.setShowContent(content,true)
+            dialog.setCommListener {
+                dialog.dismiss()
+                if(isFinish){
+                    finish()
+                }
+
+            }
+        }
     }
 
     //显示更新的内容
     private fun showUpdateContent(versionInfo: VersionApi.VersionInfo){
-//        startDownload(versionInfo)
-        if(versionInfo.updateMethod == 0){
+        serverVersionInfo = versionInfo
+        //startDownload(versionInfo)
+        //无需更新
+        if(versionInfo.versionName == deviceVersion){
             dfuNoUpdateTv.visibility = View.VISIBLE
             dfuBtnStatusView.setShowTxt = resources.getString(R.string.string_i_konw)
             dfuBtnStatusView.mbgColor = Color.parseColor("#FF4EDD7D")
+
+
+            dfuCompleteTv.visibility = View.VISIBLE
+            dfuDownloadTv.visibility = View.GONE
+            dfuBtnStatusView.visibility = View.GONE
             return
         }
-        if(versionInfo.versionName.equals(deviceVersion)){
-            dfuNoUpdateTv.visibility = View.VISIBLE
-            dfuBtnStatusView.setShowTxt = resources.getString(R.string.string_i_konw)
-            dfuBtnStatusView.mbgColor = Color.parseColor("#FF4EDD7D")
-            return
-        }
+        dfuCompleteTv.visibility = View.VISIBLE
+        dfuDownloadTv.visibility = View.GONE
+        dfuBtnStatusView.visibility = View.GONE
+
         dfuNoUpdateTv.visibility = View.GONE
         dfuNetLastVersionTv.text = resources.getString(R.string.string_last_version)+""+versionInfo.versionName
         dfuFileSizeTv.text = resources.getString(R.string.string_version_file_size)+""+(versionInfo.fileSize/1000)+"kb"
         dfuRemarkTv.text = resources.getString(R.string.string_version_desc)+"\n"+versionInfo.remark
 
-        dfuBtnStatusView.setShowTxt = resources.getString(R.string.string_string_download)
-        dfuBtnStatusView.mbgColor = Color.parseColor("#FFD6D6DD")
+        dfuCompleteTv.text = resources.getString(R.string.string_string_download)
+
+
+        isDownloadComplete = false
     }
 
 
     //开始下载
     private fun startDownload(versionInfo: VersionApi.VersionInfo){
         dfuBtnStatusView.isDownload = true
+        titleBar?.leftIcon = null
         //判断是否有存储权限
         downloadFile(versionInfo.fileUrl, "$fileSaveUrl/$w560BDfuFile",object : OnDownloadListener{
             override fun onStart(file: File?) {
                 Timber.e("----开始下载")
+                dfuCompleteTv.visibility = View.GONE
+                dfuDownloadTv.visibility = View.VISIBLE
+                isUpgradeing = true
+                dfuDownloadTv.allScheduleValue = 100f
+                dfuDownloadTv.showTxt = resources.getString(R.string.string_download_ing)
             }
 
             override fun onProgress(file: File?, progress: Int) {
                 Timber.e("----onProgress="+progress)
-                dfuBtnStatusView.setCurrentProgressValue(progress.toFloat(),100f)
+
+                dfuDownloadTv.currScheduleValue = progress.toFloat()
+                dfuDownloadTv.showTxt = resources.getString(R.string.string_download_ing)+":"+progress+"%"
+
             }
 
             override fun onComplete(file: File?) {
                 Timber.e("----onComplete="+file?.path)
-                file?.path?.let { startDfu(it) }
+
+
+                dfuCompleteTv.visibility = View.GONE
+                dfuDownloadTv.visibility = View.VISIBLE
+                dfuDownloadTv.currScheduleValue = 100f
+                dfuDownloadTv.showTxt = resources.getString(R.string.string_download_start_upgrade)
+
+
+                file?.path?.let {
+                   // downloadCompleteAndToStart(it)
+                }
 
             }
 
             override fun onError(file: File?, e: Exception?) {
                 Timber.e("----onError="+e?.message)
+                isUpgradeing = false
+                titleBar?.leftIcon = resources.getDrawable(R.drawable.ic_black_back)
             }
 
             override fun onEnd(file: File?) {
@@ -129,17 +263,48 @@ class DfuActivity : AppActivity() {
     }
 
 
-    //下载完成后开始升级
-    private fun startDfu(binUrl : String){
-        val url = "$fileSaveUrl/$w560BDfuFile"
 
+    //下载完成是否升级
+    private fun downloadCompleteAndToStart(url : String){
+        val dialog = AlertDialog.Builder(this)
+            .setTitle(resources.getString(R.string.string_prompt))
+            .setMessage("下载完成，是否开始升级固件?")
+            .setNegativeButton(resources.getString(R.string.string_cancel)
+            ) { p0, p1 ->
+                p0?.dismiss()
+                finish()
+            }
+            .setPositiveButton(resources.getString(R.string.string_confirm)
+            ) { p0, p1 ->
+                p0?.dismiss()
+                startDfu()
+            }
+        dialog.create().show()
+    }
+
+
+
+    //下载完成后开始升级
+    private fun startDfu(){
+        val url = "$fileSaveUrl/$w560BDfuFile"
+        if(url == null)
+            return
         val uri = Uri.fromFile(File("$fileSaveUrl/$w560BDfuFile"))
         Timber.e("---url="+url+"\n"+uri.toString())
+
+
+        dfuDownloadTv.visibility = View.GONE
+        dfuBtnStatusView.visibility = View.VISIBLE
+        dfuBtnStatusView.mbgColor = Color.parseColor("#FFD6D6DD")
+        dfuBtnStatusView.setShowTxt = null
+        dfuBtnStatusView.isDownload = true
+        dfuBtnStatusView.showDownloadTxt = resources.getString(R.string.string_upgrade_ing_not_cancel)
+
 
         val mac = MmkvUtils.getConnDeviceMac()
         val dfuServiceInitiator = DfuServiceInitiator(mac)
             .setDeviceName(MmkvUtils.getConnDeviceName())
-            .setKeepBond(false)
+            .setKeepBond(true)
             .setForceDfu(false)
             .setPacketsReceiptNotificationsEnabled(true)
             .setPacketsReceiptNotificationsValue(6)
@@ -148,8 +313,8 @@ class DfuActivity : AppActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             DfuServiceInitiator.createDfuNotificationChannel(this)
         }
-        dfuServiceInitiator.setZip(uri)
-        dfuServiceInitiator.start(this,DfuService::class.java)
+        dfuServiceInitiator.setZip(url)
+        dfuServiceInitiator.start(BaseApplication.getInstance().applicationContext,DfuService::class.java)
     }
 
 
@@ -162,6 +327,9 @@ class DfuActivity : AppActivity() {
     private val mDfuProgressListener : DfuProgressListener = object : DfuProgressListener{
         override fun onDeviceConnecting(deviceAddress: String?) {
             Timber.e("------onDeviceConnecting--------")
+
+            dfuBtnStatusView.mbgColor = Color.parseColor("#FFD6D6DD")
+            dfuBtnStatusView.setShowTxt = resources.getString(R.string.string_upgrade_ing)
         }
 
         override fun onDeviceConnected(deviceAddress: String?) {
@@ -170,6 +338,8 @@ class DfuActivity : AppActivity() {
 
         override fun onDfuProcessStarting(deviceAddress: String?) {
             Timber.e("------onDfuProcessStarting--------")
+            isUpgradeing = true
+            dfuDownloadTv.visibility = View.GONE
         }
 
         override fun onDfuProcessStarted(deviceAddress: String?) {
@@ -189,10 +359,18 @@ class DfuActivity : AppActivity() {
             partsTotal: Int
         ) {
             Timber.e("------onProgressChanged--------="+percent)
+            dfuBtnStatusView.mbgColor = Color.parseColor("#FFD6D6DD")
+            dfuBtnStatusView.setShowTxt = null
+            dfuBtnStatusView.isDownload = true
+            dfuBtnStatusView.showDownloadTxt = resources.getString(R.string.string_upgrade_ing)+":"
+            dfuBtnStatusView.setCurrentProgressValue((percent * 10 / 10).toFloat(),100f)
+
         }
 
         override fun onFirmwareValidating(deviceAddress: String?) {
             Timber.e("-----onFirmwareValidating---------")
+            isUpgradeing = false
+            titleBar?.leftIcon = resources.getDrawable(R.drawable.ic_black_back)
         }
 
         override fun onDeviceDisconnecting(deviceAddress: String?) {
@@ -204,7 +382,19 @@ class DfuActivity : AppActivity() {
         }
 
         override fun onDfuCompleted(deviceAddress: String?) {
-            Timber.e("-------onDfuCompleted-------")
+            Timber.e("-------onDfuCompleted-------="+deviceAddress)
+            ToastUtils.show("upgrade successful")
+            dfuNoUpdateTv.visibility = View.GONE
+            dfuBtnStatusView.setShowTxt = resources.getString(R.string.string_upgrade_success)
+            dfuBtnStatusView.mbgColor = Color.parseColor("#FF4EDD7D")
+            isUpgradeing = false
+            titleBar?.leftIcon = resources.getDrawable(R.drawable.ic_black_back)
+
+            val saveMac = MmkvUtils.getConnDeviceMac()
+            if(!BikeUtils.isEmpty(saveMac)){
+                BaseApplication.getInstance().connStatusService.autoConnDevice(saveMac,true)
+            }
+            //BaseApplication.getInstance().connStatusService.autoConnDevice()
         }
 
         override fun onDfuAborted(deviceAddress: String?) {
@@ -213,6 +403,11 @@ class DfuActivity : AppActivity() {
 
         override fun onError(deviceAddress: String?, error: Int, errorType: Int, message: String?) {
             Timber.e("--------onError------="+error+" "+message)
+            dfuBtnStatusView.isDownload = false
+            dfuBtnStatusView.setShowTxt = resources.getString(R.string.string_upgrade_failed)
+            ToastUtils.show("升级失败,请重新升级!")
+            isUpgradeing = false
+            titleBar?.leftIcon = resources.getDrawable(R.drawable.ic_black_back)
         }
 
     }

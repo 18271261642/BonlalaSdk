@@ -31,7 +31,7 @@ class WeatherViewModel : ViewModel() {
     fun getRealtimeWeather(lifecycleOwner: LifecycleOwner,cityDetailName :String ,lat : Double,lng : Double){
         val requestServer = RequestServer()
         requestServer.bodyType = BodyType.FORM
-        val realWeatherApi = RealtimeWeatherApi().setRealtimeWeatherApi(cityDetailName,lat,lng)
+        val realWeatherApi = RealtimeWeatherApi().setRealtimeWeatherApi(cityDetailName,lat,lng,"W560B")
         EasyHttp.get(lifecycleOwner).api(realWeatherApi).request(object :
             OnHttpListener<String> {
             override fun onSucceed(result: String?) {
@@ -58,7 +58,7 @@ class WeatherViewModel : ViewModel() {
     fun get15DayWeather(lifecycleOwner: LifecycleOwner,cityDetailName :String ,lat : Double,lng : Double){
         val requestServer = RequestServer()
         requestServer.bodyType = BodyType.FORM
-        val recordApi = WeatherRecordApi().setWeatherRecordApi(cityDetailName,lat,lng)
+        val recordApi = WeatherRecordApi().setWeatherRecordApi(cityDetailName,lat,lng,"W560B")
         EasyHttp.get(lifecycleOwner).api(recordApi).request(object : OnHttpListener<String>{
             override fun onSucceed(result: String?) {
                 val jsonObject = JSONObject(result)

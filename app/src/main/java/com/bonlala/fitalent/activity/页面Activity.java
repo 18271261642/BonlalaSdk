@@ -13,9 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 class 页面Activity extends AppCompatActivity {
 
+    private WebView webView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
     }
 
     private class WebCh extends WebChromeClient{

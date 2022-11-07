@@ -22,7 +22,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Extreme anaerobic"
+            android:text="@string/string_hr_6_desc"
             android:textColor="#ff6e6e77"
             android:textSize="12sp"
             android:layout_marginStart="@dimen/dp_5"
@@ -62,7 +62,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Strength enhancement"
+            android:text="@string/string_hr_5_desc"
             android:textColor="#ff6e6e77"
             android:textSize="12sp"
             android:layout_marginStart="@dimen/dp_5"
@@ -102,7 +102,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cardiopulmonary aerobics"
+            android:text="@string/string_hr_4_desc"
             android:textColor="#ff6e6e77"
             android:textSize="12sp"
             android:layout_marginStart="@dimen/dp_5"
@@ -142,7 +142,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fat Burning Endurance"
+            android:text="@string/string_hr_3_desc"
             android:textColor="#ff6e6e77"
             android:textSize="12sp"
             android:layout_marginStart="@dimen/dp_5"
@@ -181,7 +181,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Warm up recovery"
+            android:text="@string/string_hr_2_desc"
             android:textColor="#ff6e6e77"
             android:textSize="12sp"
             android:layout_marginStart="@dimen/dp_5"
@@ -221,7 +221,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rest"
+            android:text="@string/strign_hr_1_desc"
             android:textColor="#ff6e6e77"
             android:textSize="12sp"
             android:layout_marginStart="@dimen/dp_5"

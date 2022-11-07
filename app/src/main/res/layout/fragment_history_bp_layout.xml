@@ -172,7 +172,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Low blood pressure＜59mmHg"
+                            android:text="@string/string_low_bp_rang"
                             android:textColor="#ff6e6e77"
                             android:textSize="12sp"
                             android:padding="@dimen/dp_3"
@@ -202,7 +202,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Hypertension Systolic ≥140mmHg"
+                            android:text="@string/string_height_bp_rang"
                             android:textColor="#ff6e6e77"
                             android:textSize="12sp"
                             android:padding="@dimen/dp_3"
@@ -237,7 +237,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Normal:Systolic 90~139 mmHg / Diasolic 60~89 mmHg"
+                        android:text="@string/string_bp_normal_rang"
                         android:textColor="#ff6e6e77"
                         android:textSize="12sp"
                         android:padding="@dimen/dp_3"

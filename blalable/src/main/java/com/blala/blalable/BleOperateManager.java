@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+
+import com.blala.blalable.bean.WeatherBean;
 import com.blala.blalable.blebean.AlarmBean;
 import com.blala.blalable.blebean.CommBleSetBean;
 import com.blala.blalable.blebean.CommTimeBean;
@@ -22,6 +24,7 @@ import com.blala.blalable.listener.OnWatchFaceVerifyListener;
 import com.blala.blalable.listener.OnWriteProgressListener;
 import com.blala.blalable.listener.WriteBack24HourDataListener;
 import com.blala.blalable.listener.WriteBackDataListener;
+import com.google.gson.Gson;
 import com.inuker.bluetooth.library.search.response.SearchResponse;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -590,6 +593,19 @@ public class BleOperateManager {
 
 
 
+    private ArrayList<byte[]> appList = new ArrayList<>();
+
+    private final Handler msgHandler = new Handler(Looper.myLooper()){
+        @NonNull
+        @Override
+        public String getMessageName(@NonNull Message message) {
+            return super.getMessageName(message);
+
+
+        }
+    };
+
+
 
     /**
      * 发送app通知
@@ -598,13 +614,41 @@ public class BleOperateManager {
      * @param content 内容
      * @param writeBackDataListener
      */
+
+
+    int tempIndex = 0;
     public void sendAPPNoticeMessage(int type,String title,String content,WriteBackDataListener writeBackDataListener){
+        tempIndex = 0;
+        appList.clear();
         ArrayList<byte[]> appByte = Utils.sendMessageData(type,title,content);
+        appList.addAll(appByte);
+
+        Log.e(TAG,"------消息="+new Gson().toJson(appByte));
+
         for(int i = 0 ;i<appByte.size();i++){
             byte[] bt = appByte.get(i);
-            bleManager.writeDataToDevice(bt,writeBackDataListener);
+          Log.e(TAG,"消息提醒="+Utils.formatBtArrayToString(bt));
         }
+        int size = appByte.size();
+
+
+        bleManager.writeDataToDevice(appByte.get(0), new WriteBackDataListener() {
+            @Override
+            public void backWriteData(byte[] data) {
+                Log.e(TAG,"---------发送消息="+Utils.formatBtArrayToString(data)+" "+tempIndex);
+                if(tempIndex+1>=appByte.size()){
+                    bleManager.setClearListener();
+                    return;
+                }
+                tempIndex = tempIndex+1;
+
+                byte[] v = appByte.get(tempIndex);
+                bleManager.writeDataToDevice(v);
+            }
+        });
     }
+
+
 
 
 
@@ -621,14 +665,41 @@ public class BleOperateManager {
 
     //发送天气
     public void sendWeatherData(String cityName,WriteBackDataListener writeBackDataListener){
-        ArrayList<byte[]> weatherLt = bleConstant.weatherListByte(cityName);
-        for(int i = 0;i<weatherLt.size();i++){
-            byte[] wtByte = weatherLt.get(i);
-            bleManager.writeDataToDevice(wtByte,writeBackDataListener);
-        }
+
+        byte[] secondByte = new byte[20];
+        secondByte[0] = 0x04;
+        secondByte[1] = 12;
+        secondByte[2] = (byte) 2;
+        secondByte[3] = 0x20;
+        secondByte[4] = (byte) (20 >> 8);
+        secondByte[5] = 0x21;
+        secondByte[6] = 0x30;
+        secondByte[7] = 0x10;
+        secondByte[8] = 0x25;
+
+        byte[] wb = new byte[]{0x04,0x12 ,0x02, 0x13, 0x00 ,0x18, 0x17, 0x12, 0x01 };
+
+        bleManager.writeDataToDevice(wb,writeBackDataListener);
+//        ArrayList<byte[]> weatherLt = bleConstant.weatherListByte(cityName);
+//        for(int i = 0;i<weatherLt.size();i++){
+//            byte[] wtByte = weatherLt.get(i);
+//            bleManager.writeDataToDevice(wtByte,writeBackDataListener);
+//        }
     }
 
 
+    /**
+     * 发送天气
+     * @param weatherList 天气集合
+     */
+    public void sendWeatherData(List<WeatherBean> weatherList,WriteBackDataListener writeBackDataListener){
+        int index = 1;
+        for(WeatherBean wb : weatherList){
+            index = index+1;
+            bleManager.writeDataToDevice(bleConstant.weatherList(index,wb.getAirQuality(),wb.getTemperature(),wb.getMaxTemper(),wb.getMinTemper(),wb.getWeather()),writeBackDataListener);
+        }
+
+    }
 
     public void sendIndexBack(int index,OnWatchFaceVerifyListener onWatchFaceVerifyListener){
         bleManager.writeWatchFaceData(bleConstant.sendCurrWatchFace(index), new WriteBackDataListener() {

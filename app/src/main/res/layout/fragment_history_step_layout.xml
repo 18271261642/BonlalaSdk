@@ -152,7 +152,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:layout_marginStart="@dimen/dp_10"
-                    android:text="Grand total:"
+                    android:text="@string/string_steps"
                     android:textColor="#ff6e6e77"
                     android:textSize="12sp" />
 
@@ -164,7 +164,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Mileage:"
+                        android:text="@string/string_distance"
                         android:textColor="#ff6e6e77"
                         android:textSize="12sp" />
 
@@ -173,6 +173,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="999.99"
+
                         android:textColor="#ff000000"
                         android:textSize="18sp" />
 
@@ -194,7 +195,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Consume:"
+                        android:text="@string/string_consumption"
                         android:textColor="#ff6e6e77"
                         android:textSize="12sp" />
 

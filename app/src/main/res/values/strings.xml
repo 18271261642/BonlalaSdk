@@ -5,6 +5,45 @@
     <string name="title_dashboard">device</string>
     <string name="title_notifications">mine</string>
 
+    <string name="string_download_start_upgrade">Upgrade</string>
+    <string name="string_has_new_version">new version</string>
+    <string name="string_low_battery_alert">Upgrade requires at least 40% battery!</string>
+    <string name="string_upgrade_success">update successes</string>
+    <string name="string_upgrade_ing_not_cancel">The upgrade is in progress, please do not quit!</string>
+    <string name="string_upgrade_failed">upgrade failed</string>
+    <string name="string_current_version">Current version:</string>
+    <string name="string_hr_zone">Heart rate zone relationship</string>
+    <string name="string_total_distance">Total mileage</string>
+    <string name="string_total_times">Total</string>
+    <string name="string_total_duration">Total duration</string>
+    <string name="string_total_consumption">Total consumption</string>
+    <string name="string_hr_histogram">HR histogram</string>
+    <string name="string_hr_data_analysis">HR data analysis diagram</string>
+
+
+
+    <string name="string_please_keep_device_stable">*Please keep the device stable</string>
+    <string name="string_update_time">update time:</string>
+    <string name="string_update_2hou_weather">Automatically update device weather information every two hours</string>
+    <string name="string_7_day_weather">7 day weather forecast</string>
+    <string name="string_air_quality">Air quality</string>
+    <string name="string_get_weather">Get weather</string>
+
+
+    <string name="string_min_hr">Min HR:</string>
+    <string name="string_max_hr">MaxHR:</string>
+    <string name="string_bp_normal_rang">Normal:Systolic 90~139 mmHg / Diastolic 60~89 mmHg</string>
+    <string name="string_height_bp_rang">Hypertension:≥140mmHg</string>
+    <string name="string_low_bp_rang">Hypotension:&lt;59mmHg</string>
+    <string name="string_measure_value">Hear rate value</string>
+    <string name="string_measure_time">Measuring time</string>
+    <string name="string_single_measure_record">Single HR Measurements Record</string>
+    <string name="string_today_count">Current total</string>
+    <string name="string_spo2_nomal">Normal:95%~100%</string>
+    <string name="string_spo2_abnormal">Abnormal:&lt;95%</string>
+    
+    
+    <string name="string_kcal_consumption">Calorie Consumption</string>
     <string name="string_real_time_hr">Real-time Heart Rate</string>
     <string name="string_data_sync">Data synchronization..</string>
     <string name="string_add_device">Add Device</string>
@@ -16,7 +55,7 @@
     <string name="string_exercise_time">Exercise Time</string>
     <string name="string_operate_guide">Operate guide</string>
     <string name="string_not_bond_device">未绑定设备</string>
-    <string name="string_help">help</string>
+    <string name="string_help">Help</string>
     <string name="string_personal_center">Personal Center</string>
     <string name="string_feedback">Feedback</string>
     <string name="string_feedback_suggestion">*feedback or suggestion</string>
@@ -66,15 +105,15 @@
     <string name="string_distance">distance</string>
     <string name="string_consumption">consumption</string>
     <string name="string_count_step">step count</string>
-    <string name="string_avg_hr">avg HR</string>
+    <string name="string_avg_hr">avg HR:</string>
     <string name="string_place">pace</string>
     <string name="string_speed">speed</string>
 
     <string name="string_hr_6_desc">LTHR</string>
-    <string name="string_hr_5_desc">Heart Rate Anaerobic Threshold</string>
-    <string name="string_hr_4_desc">Heart Rate Aerobic Threshold</string>
-    <string name="string_hr_3_desc">Heart Rate Fat Burning Threshold</string>
-    <string name="string_hr_2_desc">Heart Rate Warm Up Threshold</string>
+    <string name="string_hr_5_desc">Anaerobic Threshold</string>
+    <string name="string_hr_4_desc">Aerobic Threshold</string>
+    <string name="string_hr_3_desc">Fat Burning Threshold</string>
+    <string name="string_hr_2_desc">Warm Up Threshold</string>
     <string name="strign_hr_1_desc">HRrest</string>
 
 

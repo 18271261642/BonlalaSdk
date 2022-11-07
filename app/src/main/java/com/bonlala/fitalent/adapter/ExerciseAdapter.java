@@ -77,10 +77,13 @@ public class ExerciseAdapter extends AppAdapter<ExerciseShowBean>{
                     String hrStr = getItem(position).getExerciseModelList().get(position2).getHrArray();
                     if(hrStr == null || "[]".equals(hrStr))
                         return;
-
+                    int hrV = getItem(position).getExerciseModelList().get(position2).getAvgHr();
+                    if(hrV == 0)
+                        return;
                     Intent intent = new Intent(getContext(), ExerciseDetailActivity.class);
                     String str = new Gson().toJson(getItem(position).getExerciseModelList().get(position2));
                     intent.putExtra("exercise_item",str);
+                    intent.putExtra("avg_hr",getItem(position).getExerciseModelList().get(position2).getAvgHr());
                     getContext().startActivity(intent);
                 }
             });

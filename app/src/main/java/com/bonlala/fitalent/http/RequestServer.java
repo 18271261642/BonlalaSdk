@@ -13,7 +13,7 @@ public class RequestServer implements IRequestServer {
 
     @Override
     public String getHost() {
-        return "http://192.168.1.203/dev/bo/";
+        return "http://192.168.1.203/test/bo/";
     }
 
     @Override

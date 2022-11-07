@@ -44,7 +44,7 @@
                android:layout_width="wrap_content"
                android:layout_marginStart="@dimen/dp_10"
                android:layout_height="wrap_content"
-               android:text="重新连接"/>
+               android:text="@string/string_reconnect"/>
 
         </LinearLayout>
 
@@ -57,7 +57,7 @@
 
             <com.bonlala.fitalent.view.BatteryView
                 android:id="@+id/batteryView"
-                android:layout_width="@dimen/dp_35"
+                android:layout_width="@dimen/dp_30"
                 android:layout_gravity="center"
                 android:layout_height="@dimen/dp_15"/>
 

@@ -20,7 +20,7 @@ public class MmkvUtils {
 
     //用户信息的bean
     private static final String USER_INFO_KEY = "user_info_key";
-    //连接的设备mac
+    /**连接的设备mac**/
     private static final String CONN_DEVICE_MAC = "b_conn_device_mac";
     private static final String CONN_DEVICE_NAME = "b_conn_device_name";
     //是否已经同意用户协议
@@ -32,7 +32,7 @@ public class MmkvUtils {
     //植树系数
     private static final String TREE_COM_MODULUS = "tree_modulus";
 
-    //天气对象Key
+    /**天气对象Key**/
     private static final String WEATHER_BEAN_KEY = "weather_bean";
 
     /**计步目标**/
@@ -43,6 +43,13 @@ public class MmkvUtils {
 
     /**温度单位**/
     private static final String TEMPERATURE_UNIT_KEY = "temperature_unit_key";
+
+    /**W560B的电话提醒**/
+    private static final String W560B_PHONE_CALL_KEY = "w560b_phone_switch";
+    /**W560B的消息提醒**/
+    private static final String W560B_APPS_KEY = "w560b_apps_key";
+
+
 
     private static MMKV mmkv;
 
@@ -187,7 +194,7 @@ public class MmkvUtils {
     }
 
     public static String getGuideUrl(String type){
-        return (String) getSaveParams("guide_url",null)+"/"+type;
+        return (String) getSaveParams("guide_url",null)+type;
     }
 
 
@@ -220,5 +227,17 @@ public class MmkvUtils {
      */
     public static boolean getTemperature(){
         return (boolean) getSaveParams(TEMPERATURE_UNIT_KEY,false);
+    }
+
+
+    /**保存电话提醒的状态**/
+    public static void saveW560BPhoneStatus(boolean isOpen){
+        setSaveObjParams(W560B_PHONE_CALL_KEY,isOpen);
+    }
+    /**
+     * 获取电话提醒的状态
+     */
+    public static boolean getW560BPhoneStatus(){
+        return (boolean) getSaveParams(W560B_PHONE_CALL_KEY,false);
     }
 }

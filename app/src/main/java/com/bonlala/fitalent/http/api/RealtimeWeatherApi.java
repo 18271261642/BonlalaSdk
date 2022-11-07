@@ -42,10 +42,14 @@ public class RealtimeWeatherApi implements IRequestApi {
     /**地理经度**/
     private double lng;
 
-    public RealtimeWeatherApi setRealtimeWeatherApi(String cityDetailName, double lat, double lng) {
+    /**类型**/
+    private String deviceType;
+
+    public RealtimeWeatherApi setRealtimeWeatherApi(String cityDetailName, double lat, double lng,String type) {
         this.cityDetailName = cityDetailName;
         this.lat = lat;
         this.lng = lng;
+        this.deviceType = type;
         return this;
     }
 

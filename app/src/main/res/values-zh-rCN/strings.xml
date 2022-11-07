@@ -5,7 +5,42 @@
     <string name="string_metric">公制</string>
     <string name="string_imperial">英制</string>
 
+    <string name="string_download_start_upgrade">下载完成，点击开始升级</string>
+    <string name="string_low_battery_alert">电量低于40%，请充电后再升级!</string>
+    <string name="string_upgrade_success">升级成功</string>
+    <string name="string_upgrade_ing_not_cancel">正在升级中，请勿退出!</string>
+    <string name="string_upgrade_failed">升级失败</string>
+    <string name="string_current_version">当前版本:</string>
+    <string name="string_hr_zone">心率区间</string>
+    
+    <string name="string_total_distance">总里程</string>
+    <string name="string_total_times">总次数</string>
+    <string name="string_total_duration">总时长</string>
+    <string name="string_total_consumption">总消耗</string>
+    <string name="string_hr_histogram">心率图表</string>
+    <string name="string_hr_data_analysis">心率区间分析图表</string>
 
+
+    <string name="string_please_keep_device_stable">*请保持设备稳定</string>
+    <string name="string_update_time">更新时间:</string>
+    <string name="string_update_2hou_weather">每两小时更新一次天气</string>
+    <string name="string_7_day_weather">未来7天数据</string>
+    <string name="string_air_quality">空气质量</string>
+    <string name="string_get_weather">获取天气</string>
+
+    <string name="string_min_hr">最小心率:</string>
+    <string name="string_max_hr">最大心率:</string>
+    <string name="string_bp_normal_rang">正常范围:舒张压 90~139 mmHg / 收缩压 60~89 mmHg</string>
+    <string name="string_height_bp_rang">高血压:≥140mmHg</string>
+    <string name="string_low_bp_rang">低血压:&lt;59mmHg</string>
+    <string name="string_measure_value">心率值</string>
+    <string name="string_measure_time">测量时间</string>
+    <string name="string_single_measure_record">单次心率测量记录</string>
+    <string name="string_today_count">当前总计</string>
+    <string name="string_spo2_nomal">正常范围:95%~100%</string>
+    <string name="string_spo2_abnormal">非正常范围:&lt;95%</string>
+
+    <string name="string_kcal_consumption">卡路里消耗</string>
     <string name="string_real_time_hr">实时心率</string>
     <string name="string_data_sync">数据同步中</string>
     <string name="string_add_device">添加设备</string>
@@ -73,13 +108,10 @@
     <string name="string_mail">邮件</string>
     <string name="string_wechat">微信</string>
 
-
-
-
     <string name="string_distance">距离</string>
     <string name="string_consumption">能量消耗</string>
     <string name="string_count_step">步数</string>
-    <string name="string_avg_hr">平均心率</string>
+    <string name="string_avg_hr">平均心率:</string>
     <string name="string_place">配速</string>
     <string name="string_speed">速度</string>
     <string name="string_string_level_str">级</string>
@@ -105,7 +137,7 @@
     <string name="string_women">女</string>
 
 
-
+    <string name="string_has_new_version">有新版本</string>
     <string name="string_all_sport">所有</string>
     <string name="string_exericse_walk">走路</string>
     <string name="string_exercise_run">跑步</string>

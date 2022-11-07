@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.bonlala.fitalent.R;
 import com.bonlala.widget.utils.MiscUtil;
 
 import androidx.annotation.Nullable;
@@ -80,7 +81,7 @@ public class CusLineGridView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if(isNodata){
-            canvas.drawText("No Data",mWidth/2,mHeight/2,noDataPaint);
+            canvas.drawText(getContext().getResources().getString(R.string.string_no_data),mWidth/2,mHeight/2,noDataPaint);
             return;
         }
 

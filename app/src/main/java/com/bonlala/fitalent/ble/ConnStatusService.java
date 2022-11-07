@@ -2,6 +2,7 @@ package com.bonlala.fitalent.ble;
 
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +26,7 @@ import com.bonlala.fitalent.BaseApplication;
 import com.bonlala.fitalent.db.DBManager;
 import com.bonlala.fitalent.db.model.DeviceSetModel;
 import com.bonlala.fitalent.emu.ConnStatus;
+import com.bonlala.fitalent.utils.BikeUtils;
 import com.bonlala.fitalent.utils.MmkvUtils;
 import com.inuker.bluetooth.library.Constants;
 import com.inuker.bluetooth.library.search.SearchResult;
@@ -66,7 +68,7 @@ public class ConnStatusService extends Service {
         intentFilter.addAction(BleConstant.BLE_COMPLETE_EXERCISE_ACTION);
 
         intentFilter.addAction(BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED);
-
+        intentFilter.addAction(BluetoothDevice.ACTION_PAIRING_REQUEST);
         registerReceiver(broadcastReceiver,intentFilter);
 
     }
@@ -172,7 +174,7 @@ public class ConnStatusService extends Service {
             @Override
             public void setNoticeStatus(int code) {
                 if(bleConnStatusListener != null)
-                    bleConnStatusListener.onConnectStatusChanged(mac,code != 32 ? -1 :88);
+                    bleConnStatusListener.onConnectStatusChanged(mac,code);
                 Timber.e("-------连接成功="+code);
                 //连接成功
                 BaseApplication.getInstance().setConnStatus(ConnStatus.CONNECTED);
@@ -285,8 +287,21 @@ public class ConnStatusService extends Service {
             if(action == null)
                 return;
 
+            //配对
+            if(action.equals(BluetoothDevice.ACTION_PAIRING_REQUEST)){
+               // abortBroadcast();
+            }
 
 
+            //连接断开
+            if(action.equals(BleConstant.BLE_DIS_CONNECT_ACTION)){
+                //判断是否主动断开，主动断开无Mac地址
+                String saveMac = MmkvUtils.getConnDeviceMac();
+                if(BikeUtils.isEmpty(saveMac)){
+                    return;
+                }
+//                autoConnDevice(saveMac,true);
+            }
 
             if(action.equals(BleConstant.COMM_BROADCAST_ACTION)){
                 int[] valueArray = intent.getIntArrayExtra(BleConstant.COMM_BROADCAST_KEY);

@@ -69,20 +69,20 @@ class MsgNotifyActivity : AppActivity(){
         var inputStr = notifyTypeEdit.text
         testNotifyBtn.setOnClickListener {
             BleOperateManager.getInstance().setClearListener()
-            BleOperateManager.getInstance().getExerciseData(inputStr.toString().toInt(),object : WriteBackDataListener{
-                override fun backWriteData(data: ByteArray?) {
-                   Timber.e("-----获取锻炼="+Utils.formatBtArrayToString(data))
-                }
-
-            })
-
-
-//            BleOperateManager.getInstance().sendAPPNoticeMessage(inputStr.toString().toInt(),"title","content内容",object : WriteBackDataListener{
+//            BleOperateManager.getInstance().getExerciseData(inputStr.toString().toInt(),object : WriteBackDataListener{
 //                override fun backWriteData(data: ByteArray?) {
-//
+//                   Timber.e("-----获取锻炼="+Utils.formatBtArrayToString(data))
 //                }
 //
 //            })
+
+
+            BleOperateManager.getInstance().sendAPPNoticeMessage(inputStr.toString().toInt(),"18888888888","content内容",object : WriteBackDataListener{
+                override fun backWriteData(data: ByteArray?) {
+
+                }
+
+            })
         }
 
     }

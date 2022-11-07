@@ -40,7 +40,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Total mileage"
+                    android:text="@string/string_total_distance"
                     android:textColor="#ff000000"
                     android:textSize="18sp" />
 
@@ -55,7 +55,7 @@
                         android:id="@+id/exerciseTotalKmTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0.09"
+                        android:text="--"
                         android:textColor="#ff000000"
                         android:textSize="36sp" />
 
@@ -105,7 +105,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Total"
+                    android:text="@string/string_total_times"
                     android:textColor="#ff000000"
                     android:textSize="12sp" />
 
@@ -113,7 +113,7 @@
                     android:id="@+id/exerciseTotalTimesTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="999"
+                    android:text="--"
                     android:textColor="#ff000000"
                     android:textSize="22sp" />
             </LinearLayout>
@@ -129,7 +129,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Total duration"
+                    android:text="@string/string_total_duration"
                     android:textColor="#ff000000"
                     android:textSize="12sp" />
 
@@ -137,7 +137,7 @@
                     android:id="@+id/exerciseTotalTimeTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="999"
+                    android:text="--"
                     android:textColor="#ff000000"
                     android:textSize="22sp" />
             </LinearLayout>
@@ -152,7 +152,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Total consumption"
+                    android:text="@string/string_total_consumption"
                     android:textColor="#ff000000"
                     android:textSize="12sp" />
 
@@ -160,7 +160,7 @@
                     android:id="@+id/exerciseTotalKcalTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="999"
+                    android:text="--"
                     android:textColor="#ff000000"
                     android:textSize="22sp" />
             </LinearLayout>

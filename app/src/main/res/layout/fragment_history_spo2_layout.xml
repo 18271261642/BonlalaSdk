@@ -172,7 +172,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Normal:95%~100%"
+                            android:text="@string/string_spo2_nomal"
                             android:textColor="#ff6e6e77"
                             android:textSize="12sp"
                             android:layout_marginStart="@dimen/dp_10"/>
@@ -201,7 +201,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Abnormal:＜95%"
+                            android:text="@string/string_spo2_abnormal"
                             android:textColor="#ff6e6e77"
                             android:textSize="12sp"
                             android:layout_marginStart="@dimen/dp_10"/>

@@ -111,6 +111,8 @@ import timber.log.Timber
 
         }
 
+
+
     }
 
 
@@ -125,6 +127,9 @@ import timber.log.Timber
         if(deviceSetModel == null)
             return
 
+        val phoneStatus = MmkvUtils.getW560BPhoneStatus()
+
+        phoneCallCheckView.setCheckStatus(phoneStatus)
         Timber.e("----deviceModel="+Gson().toJson(deviceSetModel))
         //24小时心率
         realHeartCheckView.setCheckStatus(deviceSetModel!!.isIs24Heart)
@@ -157,6 +162,16 @@ import timber.log.Timber
         //久坐
         menuLongSitBar.rightText = if(deviceSetModel!!.longSitStr == "0") "未开启" else deviceSetModel!!.longSitStr
 
+        viewModel.serverVersion.observe(this){
+            if(deviceSetModel != null){
+                if(!deviceSetModel!!.deviceVersionName.equals(it)){
+                    //固件版本
+                    menuFirmwareBar.rightText = deviceSetModel!!.deviceVersionName+"("+resources.getString(R.string.string_has_new_version)+")"
+                }
+            }
+        }
+        //获取后台的固件信息
+        viewModel.getServerVersionInfo(this)
     }
 
 
@@ -222,7 +237,7 @@ import timber.log.Timber
             status = resources.getString(R.string.string_not_connect)
         }
         if (connStatus == ConnStatus.IS_SYNC_DATA) {
-            status = "Data synchronization…"
+            status = resources.getString(R.string.string_data_sync)
         }
         return status
     }
@@ -302,7 +317,8 @@ import timber.log.Timber
                 if(BikeUtils.isEmpty(isSaveBle))
                     return
                attachActivity.autoConnDevice()
-                reConnTv.text = resources.getString(R.string.string_conning)
+                reConnTv.visibility = View.GONE
+                showConnStatus()
             }
 
             R.id.deviceFindDeviceLayout -> {    //查找手机
@@ -619,10 +635,13 @@ import timber.log.Timber
 
 
         phoneCallCheckView.setCheckListener{button,checked->
+            MmkvUtils.saveW560BPhoneStatus(checked)
             if(checked){
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-                    XXPermissions.with(attachActivity).permission(arrayOf(Manifest.permission.ANSWER_PHONE_CALLS)).request { permissions, all ->  }
+                    XXPermissions.with(attachActivity).permission(arrayOf(Manifest.permission.ANSWER_PHONE_CALLS,Manifest.permission.READ_PHONE_NUMBERS,Manifest.permission.READ_CALL_LOG)).request { permissions, all ->  }
                 }
+
+                XXPermissions.with(attachActivity).permission(arrayOf(Manifest.permission.READ_PHONE_STATE)).request { permissions, all ->  }
 
             }
         }
@@ -639,7 +658,6 @@ import timber.log.Timber
         menuSwitchLightBar?.setOnClickListener(this)
         menuLongSitBar?.setOnClickListener(this)
         menuDntBar?.setOnClickListener(this)
-        reConnTv.setOnClickListener(this)
         deviceAddDeviceTv.setOnClickListener(this)
         menuTempUnitBar.setOnClickListener(this)
         deviceWeatherLayout.setOnClickListener(this)

@@ -13,11 +13,11 @@ import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.blala.blalable.BleOperateManager
+import com.blala.blalable.bean.WeatherBean
 import com.blala.blalable.listener.WriteBackDataListener
 import com.bonlala.action.AppActivity
 import com.bonlala.fitalent.R
 import com.bonlala.fitalent.adapter.WeatherAdapter
-import com.bonlala.fitalent.http.api.RealtimeWeatherApi
 import com.bonlala.fitalent.http.api.WeatherRecordApi
 import com.bonlala.fitalent.utils.BikeUtils
 import com.bonlala.fitalent.utils.CalculateUtils
@@ -71,23 +71,55 @@ class WeatherActivity : AppActivity() {
 
     private fun showNetData(){
 
-        viewModel.realtimeWeather.observe(this){
-            weatherGetTv.text = "Get weather"
-            if (it != null) {
-                showRealtimeWeather(it)
-            }
-        }
+//        viewModel.realtimeWeather.observe(this){
+//            weatherGetTv.text = "Get weather"
+//            if (it != null) {
+//                showRealtimeWeather(it)
+//            }
+//        }
 
         viewModel.weatherRecord.observe(this){
+            weatherGetTv.text = resources.getString(R.string.string_get_weather)
             var list = it?.weathers
+            if (list != null) {
+                if (it != null) {
+                    sendWeatherToDevice(list,it.aqiValue,it.temp)
+                }
+            }
             if(list?.size!! >7)
                 list = list.subList(0,7)
+
+            //获取当天的天气
+            list.forEachIndexed { index, weathersBean ->
+                if(weathersBean.currentDate == BikeUtils.getCurrDate()){
+                    if (it != null) {
+                        showRealtimeWeather(weathersBean,it.temp,it.aqiValue)
+                    }
+                }
+
+            }
+
             weatherAdapter?.data = list
-            weatherAqiTv.text = "空气质量: "+it?.aqiValue
-            it?.aqiValue?.let { it1 -> weatherQualityView.setQualitySchedule(it1) }
-            weatherUpdateTv.text = "更新日期:"+BikeUtils.getFormatDate(System.currentTimeMillis(),"MM-dd HH:mm")
+
+
         }
     }
+
+
+    //发送天气
+    private fun sendWeatherToDevice(list : List<WeatherRecordApi.WeatherRecordBean.WeathersBean>,aqiValue : Int,tem : Int){
+        val weatherList = mutableListOf<WeatherBean>()
+        val tempList = mutableListOf<WeatherRecordApi.WeatherRecordBean.WeathersBean>()
+        tempList.addAll(list.subList(1,list.size-1))
+        tempList.forEach {
+           val weatherBean = WeatherBean(aqiValue,tem,it.hiTemp,it.lowTemp,it.deviceWeatherCode)
+            weatherList.add(weatherBean)
+        }
+
+        BleOperateManager.getInstance().sendWeatherData(weatherList
+        ) { }
+    }
+
 
 
     private fun requestLocation(){
@@ -182,20 +214,22 @@ class WeatherActivity : AppActivity() {
     }
 
     //展示实时天气
-    private fun showRealtimeWeather(realTimeBean : RealtimeWeatherApi.RealtimeWeatherBean){
+    private fun showRealtimeWeather(
+        realTimeBean: WeatherRecordApi.WeatherRecordBean.WeathersBean,
+        tem: Int,
+        aqiValue: Int
+    ){
         val isTemp = MmkvUtils.getTemperature()
-        val temp = realTimeBean.temp
+        val temp = tem
 
         realtimeTemTv.text = if(isTemp) "$temp℃" else CalculateUtils.celsiusToFahrenheit(temp).toString()+"℉"
         val imgUrl = realTimeBean.weatherImgUrl
         Glide.with(this@WeatherActivity).load(imgUrl).into(realtimeWeatherImg)
 
-        BleOperateManager.getInstance().sendWeatherData(weatherCityTv.text.toString(),object : WriteBackDataListener{
-            override fun backWriteData(data: ByteArray?) {
+        weatherAqiTv.text = resources.getString(R.string.string_air_quality)+": "+aqiValue
+       weatherQualityView.setQualitySchedule(aqiValue)
+        weatherUpdateTv.text = resources.getString(R.string.string_update_time)+": "+BikeUtils.getFormatDate(System.currentTimeMillis(),"MM-dd HH:mm")
 
-            }
-
-        })
     }
 
     //展示记录的天气

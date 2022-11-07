@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.bonlala.fitalent.R;
 import com.bonlala.fitalent.bean.ChartBpBean;
 import com.bonlala.fitalent.view.ChartView;
+import com.bonlala.fitalent.view.CusScheduleView;
 import com.bonlala.fitalent.view.CustomizeSingleBpView;
 import com.bonlala.widget.view.CompletedView;
 
@@ -49,6 +50,20 @@ public class TestA extends AppCompatActivity {
 //
 //        }
         setContentView(R.layout.test_view_layout);
+
+
+        CusScheduleView cusScheduleView = findViewById(R.id.testV);
+
+        CusScheduleView dfuDownloadTv = findViewById(R.id.dfuDownloadTv);
+        dfuDownloadTv.setShowTxt("dddd");
+
+        cusScheduleView.setAllScheduleValue(100f);
+        cusScheduleView.setCurrScheduleValue(50f);
+
+
+
+
+
 
 
 

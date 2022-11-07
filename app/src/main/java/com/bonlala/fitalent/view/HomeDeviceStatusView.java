@@ -87,7 +87,7 @@ public class HomeDeviceStatusView extends LinearLayout {
             status = getContext().getResources().getString(R.string.string_not_connect);
         }
         if(connStatus == ConnStatus.IS_SYNC_DATA){
-            status = "Data synchronization…";
+            status = getContext().getResources().getString(R.string.string_data_sync);
         }
 
         homeDeviceStatusTv.setText(status);

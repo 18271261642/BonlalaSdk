@@ -33,7 +33,7 @@
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_alarm_list_layout.xml" value="0.22604166666666667" />
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_camara2.xml" value="0.176" />
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_complete_user_info_layout.xml" value="0.4" />
-        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_dfu_layout.xml" value="0.2" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_dfu_layout.xml" value="0.264" />
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_dial_layout.xml" value="0.17083333333333334" />
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_exercise_detail_layout.xml" value="0.176" />
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_feedback_layout.xml" value="0.4" />
@@ -50,6 +50,7 @@
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_sport_record_layout.xml" value="0.4" />
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_trun_wrist_layout.xml" value="0.4" />
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/activity_weather_layout.xml" value="0.4" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/comm_alert_dialog_layout.xml" value="0.264" />
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/common_history_bot_date_layout.xml" value="0.536" />
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/custom_marker_view.xml" value="0.536" />
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/dialog_date_select_layout.xml" value="0.15177426250534418" />
@@ -58,11 +59,11 @@
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/dialog_height_layout.xml" value="0.264" />
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/dialog_history_heart_layout.xml" value="0.264" />
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/dialog_hr_desc_layout.xml" value="0.264" />
-        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/dialog_measure_layout.xml" value="0.4" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/dialog_measure_layout.xml" value="0.264" />
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/dialog_select_layout.xml" value="0.19895833333333332" />
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/dialog_sleep_desc_layout.xml" value="0.264" />
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/fragment_dashboard.xml" value="0.2519201228878648" />
-        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/fragment_history_bp_layout.xml" value="0.264" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/fragment_history_bp_layout.xml" value="0.4" />
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/fragment_history_heart_layout.xml" value="0.264" />
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/fragment_history_sleep_layout.xml" value="0.264" />
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/fragment_history_spo2_layout.xml" value="0.264" />
@@ -89,7 +90,7 @@
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_home_recyclerview_layout.xml" value="0.15572916666666667" />
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_home_top_device_layout.xml" value="0.6" />
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_hr_desc_by_age_layout.xml" value="0.4" />
-        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_hr_schedule_layout.xml" value="0.536" />
+        <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_hr_schedule_layout.xml" value="0.2" />
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_notify_item_layout.xml" value="0.11628901239846089" />
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_real_time_hr_layout.xml" value="0.4" />
         <entry key="..\:/Works/BonlalaSdk/app/src/main/res/layout/item_record_weather_layout.xml" value="0.2" />

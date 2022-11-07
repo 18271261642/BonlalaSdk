@@ -46,6 +46,7 @@ import androidx.annotation.NonNull;
 /**
  * Created by Admin
  * Date 2021/9/3
+ * @author Admin
  */
 public class BleManager {
 
@@ -170,12 +171,13 @@ public class BleManager {
      */
     public void startScanBleDevice(final SearchResponse searchResponse, boolean scanClass,int duration, int times){
 
-//        if(!scanClass){
-//            startScanBleDevice(searchResponse,duration,times);
-//            return;
-//        }
+        if(!scanClass){
+            startScanBleDevice(searchResponse,duration,times);
+            return;
+        }
         final SearchRequest searchRequest = new SearchRequest.Builder()
                 .searchBluetoothLeDevice(duration,times)
+                .searchBluetoothClassicDevice(10 * 1000)
                 .build();
         bluetoothClient.search(searchRequest, new SearchResponse() {
             @Override
@@ -224,7 +226,9 @@ public class BleManager {
             return;
         bluetoothClient.stopSearch();
         bluetoothClient.disconnect(spMac);
+        bluetoothClient.unregisterConnectStatusListener(spMac,connectStatusListener);
         BleSpUtils.remove(mContext,SAVE_BLE_MAC_KEY);
+
     }
 
     public void disConnDeviceNotRemoveMac(){
@@ -232,7 +236,6 @@ public class BleManager {
         if(TextUtils.isEmpty(spMac))
             return;
         bluetoothClient.disconnect(spMac);
-
     }
 
     /**
@@ -259,30 +262,7 @@ public class BleManager {
 
         Log.e(TAG,"************连接处="+bleMac+"--连接状态="+status);
 
-//        if(status ==  Constants.STATUS_DEVICE_CONNECTED){
-//            Log.e(TAG,"***********已经连接了，不要再连接了");
-//            bluetoothClient.disconnect(bleMac);
-//
-//        }
-
-        try {
-            Thread.sleep(1000);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        bluetoothClient.registerConnectStatusListener(bleMac, new BleConnectStatusListener() {
-            @Override
-            public void onConnectStatusChanged(String s, int i) {
-
-                connectStatusListener.onConnectStatusChanged(s,i);
-//                if(i == 32){
-//                    connectResponse.connStatus(-1);
-//                }
-            }
-        });
-
-
+        bluetoothClient.registerConnectStatusListener(bleMac,connectStatusListener);
         BleConnectOptions options = (new com.inuker.bluetooth.library.connect.options.BleConnectOptions.Builder()).setConnectRetry(2).setConnectTimeout(30000).setServiceDiscoverRetry(1).setServiceDiscoverTimeout(20000).build();
         bluetoothClient.connect(bleMac, options, new BleConnectResponse() {
             @Override
@@ -300,10 +280,10 @@ public class BleManager {
                             notifyRealtime(bleMac,bleConstant.SERVICE_UUID,bleConstant.REAL_TIME_UUID);
                             setNotifyData(bleMac,bleConstant.SERVICE_UUID,bleConstant.READ_UUID,connectResponse);
                             setSaveNotifyData(bleMac,bleConstant.SERVICE_UUID,bleConstant.SAVE_DATA_SEND_UUID);
-                            connectResponse.connStatus(code);
+
                         }
                     }, 2000L);
-
+                    connectResponse.connStatus(code);
                 }
             }
         });
@@ -515,7 +495,14 @@ public class BleManager {
         interfaceManager.setWriteBackDataListener(writeBackDataListener);
         bluetoothClient.write(bleMac,bleConstant.SERVICE_UUID,bleConstant.WRITE_UUID,data,bleWriteResponse);
     }
-
+    //写入设备数据
+    public synchronized void writeDataToDevice(byte[] data){
+        Log.e(TAG,"-----写入数据="+Arrays.toString(data));
+        String bleMac = (String) BleSpUtils.get(mContext,SAVE_BLE_MAC_KEY,"");
+        if(TextUtils.isEmpty(bleMac))
+            return;
+        bluetoothClient.write(bleMac,bleConstant.SERVICE_UUID,bleConstant.WRITE_UUID,data,bleWriteResponse);
+    }
 
 
 
@@ -571,7 +558,9 @@ public class BleManager {
         public void onConnectStatusChanged(String mac, int status) {
 
             Log.e(TAG,"---mmmmm-连接状态manager="+mac+" "+status);
-
+            if(mac != null || status == Constants.STATUS_DISCONNECTED){
+                sendCommBroadcast(BleConstant.BLE_DIS_CONNECT_ACTION);
+            }
             if(bleConnStatusListener != null){
                 bleConnStatusListener.onConnectStatusChanged(mac==null?"mac":mac,status);
             }

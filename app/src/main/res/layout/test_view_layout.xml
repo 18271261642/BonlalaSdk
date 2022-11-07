@@ -1,20 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
     android:background="@color/gray"
     tools:ignore="MissingDefaultResource">
 
+    <com.bonlala.fitalent.view.CusScheduleView
+        android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20"
+        android:id="@+id/testV"
+        app:cus_all_schedule_color="@color/red"
+        app:cus_curr_schedule_color="@color/white"
+        android:layout_height="@dimen/dp_50"/>
+
+
+    <com.bonlala.fitalent.view.CusScheduleView
+        android:id="@+id/dfuDownloadTv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_35"
+        app:shape_radius="@dimen/dp_15"
+        app:cus_is_show_txt="true"
+        app:cus_txt_color="@color/white"
+        app:shape_solidColor="#FF4EDD7D"
+        android:textColor="@color/white"
+        app:cus_curr_schedule_color="#FF4EDD7D"
+        app:cus_all_schedule_color="#FFD6D6DD"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20"
+        android:textSize="20sp"
+        android:padding="@dimen/dp_10"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:text="@string/string_i_konw"/>
 
     <org.angmarch.views.NiceSpinner
         android:layout_width="wrap_content"
+        android:visibility="gone"
         android:layout_height="wrap_content"
         android:id="@+id/niceSpinner"/>
 
     <FrameLayout
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="wrap_content">
 
 
@@ -35,12 +66,14 @@
 
     <com.bonlala.fitalent.view.ChartView
         android:id="@+id/chartView"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_120"/>
 
     <com.bonlala.widget.view.CompletedView
         android:id="@+id/testCompleteView"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="@dimen/dp_180"/>
 
 </LinearLayout>

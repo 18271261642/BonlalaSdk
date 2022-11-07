@@ -9,14 +9,14 @@
     <com.hjq.bar.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="Feedback"
+        app:title="@string/string_feedback"
         app:leftIcon="@drawable/ic_black_back"/>
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="* Problem description or suggestion"
+        android:text="@string/string_feedback_suggestion"
         android:textColor="#ff000000"
         android:textSize="14sp"
         android:layout_marginTop="@dimen/dp_20"
@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:background="@null"
             android:maxLength="1000"
-            android:hint="Please enter feedback"
+            android:hint="@string/string_input_feedback"
             android:layout_height="wrap_content"/>
 
 
@@ -48,7 +48,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="* contact details"
+        android:text="@string/string_contact"
         android:textColor="#ff000000"
         android:textSize="14sp"
         android:layout_margin="@dimen/dp_20"/>
@@ -67,7 +67,7 @@
         android:layout_width="match_parent"
         android:layout_margin="@dimen/dp_5"
         android:layout_height="wrap_content"
-        android:hint="please input your email"/>
+        android:hint="@string/string_input_email"/>
 
 
 
@@ -87,5 +87,5 @@
         android:layout_marginTop="@dimen/dp_35"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Submit"/>
+        android:text="@string/string_submit"/>
 </LinearLayout>

@@ -105,6 +105,17 @@ class MeasureDialog : AppCompatDialog {
                 //023cffff
                 Timber.e("-----测量结果=" + Utils.formatBtArrayToString(data))
 
+                if (data.size == 4 && (data[0] and 0xff.toByte()).toInt() == 2 && (data[1] and 0xff.toByte()).toInt() == 60){
+                    val sBp = (data[2] and 0xFF.toByte()).toInt()
+                    val disBp = (data[3] and 0xFF.toByte()).toInt()
+                    if(sBp == 255 || disBp == 255){
+                        dialogMeasureTypeValueTv.text = "--"
+                        dialogMeasureOkTv.text = "OK"
+                        return@measureBloodStatus
+                    }
+                    dialogMeasureTypeValueTv.text = sBp.toString()+"/"+disBp+"mmHg"
+                    dialogMeasureOkTv.text = "OK"
+                }
             }
         }
 
@@ -139,7 +150,16 @@ class MeasureDialog : AppCompatDialog {
                 if(data.size == 3 && data.get(0).toInt() == 1 && data.get(1).toInt() == 81 && data.get(2).toInt() ==-1){
                     dismiss()
                 }
-
+                if(data.size == 3 && data[0].toInt() == 1 && (data[1] and 0xff.toInt().toByte()).toInt() == 81){
+                    val heart = (data.get(2) and 0xff.toByte()).toInt()
+                    if(heart == 255){
+                        dialogMeasureOkTv.text = "--"
+                        dialogMeasureTypeValueTv.text = heart.toString()+"bpm"
+                        return@measureHeartStatus
+                    }
+                    dialogMeasureOkTv.text = "OK"
+                    dialogMeasureTypeValueTv.text = heart.toString()+"bpm"
+                }
 
             }
         }

@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_20"
-        android:text="Personal center"
+        android:text="@string/string_personal_center"
         android:textColor="#ff000000"
         android:textSize="28sp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/dp_8"
-                android:text="Personal details"
+                android:text="@string/string_personal_data"
                 android:textColor="#ff000000"
                 android:textSize="18sp" />
 
@@ -102,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/dp_8"
-                android:text="APP Rights management"
+                android:text="@string/string_permiss_title"
                 android:textColor="#ff000000"
                 android:textSize="18sp" />
 
@@ -143,7 +143,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/dp_8"
-                android:text="Feedback"
+                android:text="@string/string_feedback"
                 android:textColor="#ff000000"
                 android:textSize="18sp" />
 
@@ -184,7 +184,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/dp_8"
-                android:text="About"
+                android:text="@string/string_about"
                 android:textColor="#ff000000"
                 android:textSize="18sp" />
 
