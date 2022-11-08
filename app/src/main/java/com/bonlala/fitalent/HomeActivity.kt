@@ -318,6 +318,7 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
                 if (version != null) {
                     viewModel.getDeviceVersionInfo(this@HomeActivity, version)
                 }
+                showNotConnImg(false)
             }
 
 
@@ -326,9 +327,11 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
                 Timber.e("----isConn="+isConn)
                 if(!isConn){
                     BaseApplication.getInstance().connStatus = ConnStatus.NOT_CONNECTED
-
+                    isShowConnImg = true
+                }else{
+                    isShowConnImg = false
                 }
-                isShowConnImg = !isConn
+
                 showNotConnImg(!isConn)
             }
         }

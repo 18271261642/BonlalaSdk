@@ -300,9 +300,12 @@ public class StepChartView extends View {
         canvas.drawText(stepItem.getStep()+"step",txtX<0 ? paddingWidth/2: txtX,-mHeight+mTxtHeight+paddingWidth/2,clickPaint);
 
         if(stepType == StepType.DAY){
+
             String hourStr = stepItem.getHour()+":00";
             float hourWidth = MiscUtil.getTextWidth(clickPaint,hourStr);
-            canvas.drawText(hourStr,hourWidth,-mHeight+mTxtHeight*2.8f,clickPaint);
+
+            float timeTxtX = point.x - (hourWidth/2);
+            canvas.drawText(hourStr,timeTxtX<0 ? paddingWidth/2 : timeTxtX,-mHeight+mTxtHeight*2.8f,clickPaint);
 
         }
 

@@ -86,8 +86,8 @@ class WeatherActivity : AppActivity() {
                     sendWeatherToDevice(list,it.aqiValue,it.temp)
                 }
             }
-            if(list?.size!! >7)
-                list = list.subList(0,7)
+            if(list?.size!! >8)
+                list = list.subList(1,8)
 
             //获取当天的天气
             list.forEachIndexed { index, weathersBean ->

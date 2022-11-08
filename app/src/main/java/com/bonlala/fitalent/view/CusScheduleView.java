@@ -130,19 +130,34 @@ public class CusScheduleView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.translate(0,mHeight);
-        canvas.save();
+//        canvas.translate(0,mHeight);
+//        canvas.save();
         drawSchedule(canvas);
     }
 
+    RectF currRectf;
     private void drawSchedule(Canvas canvas) {
-        float currV = currScheduleValue >= allScheduleValue ? mWidth : (currScheduleValue * ( mWidth/allScheduleValue));
-        RectF rectF = new RectF(0,-mHeight,mWidth,0);
+        float currV = (currScheduleValue / allScheduleValue *mWidth);
+        if(currV>mWidth){
+            currV = mWidth;
+        }
+        RectF rectF = new RectF(0,mHeight,mWidth,0);
         canvas.drawRoundRect(rectF,mHeight/2,mHeight/2,allSchedulePaint);
 
-        Timber.e("---currW="+currV+" "+mWidth);
+        if(currRectf == null){
+            currRectf = new RectF();
+        }
+
+
+
+        currRectf.left =0;// currV < mHeight ?  mHeight-currV : 0;
+        currRectf.top = 0;
+        currRectf.right = currV;
+        currRectf.bottom = mHeight;
+
+        Timber.e("---currW="+currV+" "+mWidth+" "+mHeight);
         float y = currV<mHeight ? currV - mHeight : 0;
-        RectF currRectf = new RectF(0,-mHeight,y,0);
+//        RectF currRectf = new RectF(5f,y,currV,0);
         currPath.addRoundRect(currRectf,mHeight/2,mHeight/2,Path.Direction.CW);
         canvas.drawPath(currPath,currSchedulePaint);
 
@@ -150,7 +165,7 @@ public class CusScheduleView extends View {
         if(isShowTxt){
             if(showTxt != null){
                 float txtHeight = MiscUtil.measureTextHeight(txtPaint);
-                canvas.drawText(showTxt,mWidth/2,-mHeight/2+txtHeight/2,txtPaint);
+                canvas.drawText(showTxt,mWidth/2,mHeight/2+txtHeight/2,txtPaint);
             }
         }
 
