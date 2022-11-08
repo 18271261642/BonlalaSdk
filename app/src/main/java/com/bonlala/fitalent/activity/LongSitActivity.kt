@@ -70,7 +70,7 @@ class LongSitActivity : AppActivity(),View.OnClickListener{
              * 判断开关是否打开，开关关闭是开始时间00结束时间23:59
              */
             turnWristSwitchBtn.isChecked = commTimeBean.switchStatus == 1
-            contentLayout.visibility = if(commTimeBean.switchStatus == 1) View.VISIBLE else View.GONE
+//            contentLayout.visibility = if(commTimeBean.switchStatus == 1) View.VISIBLE else View.GONE
 
 
             turnWristStartTimeBar.rightText = String.format("%02d",commTimeBean.startHour)+":"+String.format("%02d",commTimeBean.startMinute)

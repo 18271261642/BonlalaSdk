@@ -19,6 +19,7 @@ import com.bonlala.fitalent.R
 import com.hjq.permissions.XXPermissions
 
 import kotlinx.android.synthetic.main.activity_show_permission_layout.*
+import timber.log.Timber
 
 
 /**
@@ -86,7 +87,7 @@ class ShowPermissionActivity : AppActivity(),View.OnClickListener {
         contactStatusTv.text = getStatus(isContact)
 
         //麦克风
-        val isAudio = ActivityCompat.checkSelfPermission(this,android.Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
+        val isAudio = ActivityCompat.checkSelfPermission(this,android.Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
         audioStatusTv.text = getStatus(isAudio)
 
     }
@@ -146,7 +147,7 @@ class ShowPermissionActivity : AppActivity(),View.OnClickListener {
 
             //麦克风
             if(p0.id == R.id.audioLayout){
-                requestPermission(arrayOf(android.Manifest.permission.RECORD_AUDIO))
+                requestPermission(arrayOf(android.Manifest.permission.READ_SMS))
             }
 
 
@@ -166,14 +167,15 @@ class ShowPermissionActivity : AppActivity(),View.OnClickListener {
     private fun requestPermission(permissStr: Array<String>){
       //  ActivityCompat.requestPermissions(this, permissStr, REQUEST_PERMISSION_CODE)
         XXPermissions.with(instance).permission(permissStr).request { p0, p1 ->
-
+            Timber.e("-------onddddd")
+            handle.sendEmptyMessageDelayed(0x02,500)
         };
        // ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_SMS),REQUEST_PERMISSION_CODE)
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 //            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ANSWER_PHONE_CALLS), REQUEST_PERMISSION_CODE)
 //        }
 
-        handle.sendEmptyMessage(0x02)
+
 
     }
 
@@ -229,6 +231,7 @@ class ShowPermissionActivity : AppActivity(),View.OnClickListener {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         handle.sendEmptyMessage(0x02)
+        Timber.e("---222----onddddd")
     }
 
 

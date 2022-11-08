@@ -26,18 +26,24 @@ import androidx.annotation.Nullable;
  */
 public class LinearProgressView extends View {
 
-    private int mStartColor;//渐变开始颜色
-    private int mEndColor;//渐变结束颜色
-    private float mProgress = 100;//进度条总进度
+    //渐变开始颜色
+    private int mStartColor;
+    //渐变结束颜色
+    private int mEndColor;
+    //进度条总进度
+    private float mProgress = 100;
     //背景边框颜色
     private int mbgColor;
-    private float mCurrentProgress;//当前进度
+    //当前进度
+    private float mCurrentProgress;
     private float mRadius;
     private Paint mPaint;
     private LinearGradient gradient;
+
     private Path path;
     private Path pathBg;
     private Path pathPro;
+
     private RectF rectF;
 
     /**是否是下载模式，下载模式显示进度**/
@@ -83,6 +89,11 @@ public class LinearProgressView extends View {
         path = new Path();
         pathBg = new Path();
 
+        //绘制背景
+        mPaint.setColor(mbgColor);
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStrokeWidth(MiscUtil.dipToPx(getContext(),1f));
+
         pathPro = new Path();
 
         txtPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -106,16 +117,20 @@ public class LinearProgressView extends View {
     }
 
 
+    public void setCurrentProgressValue(int currentProgressValue, float allValue) {
+        mCurrentProgress = currentProgressValue;
+        mProgress = allValue;
+        invalidate();
+    }
+
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (rectF == null) {
             rectF = new RectF();
         }
-        //绘制背景
-        mPaint.setColor(mbgColor);
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeWidth(MiscUtil.dipToPx(getContext(),1f));
+
         rectF.left = 0;
         rectF.bottom = getHeight();
         rectF.right = getWidth();
@@ -158,7 +173,8 @@ public class LinearProgressView extends View {
             canvas.drawText(setShowTxt,getWidth()/2,getHeight()/2+showTxtWidth/2,txtPaint);
         }else {
             if(isDownload  && showDownloadTxt != null){
-                String txt =showDownloadTxt+(CalculateUtils.div(mCurrentProgress,mProgress,2) * 100)+"%";
+                double proValue = CalculateUtils.div(mCurrentProgress,mProgress,2) * 100;
+                String txt =showDownloadTxt+(((int)proValue)+"%");
                 float txtHeight = MiscUtil.measureTextHeight(txtPaint);
                 canvas.drawText(txt,getWidth()/2,getHeight()/2+txtHeight/2,txtPaint);
             }else{

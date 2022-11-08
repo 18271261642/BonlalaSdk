@@ -67,6 +67,7 @@ public class ConnStatusService extends Service {
         intentFilter.addAction(BleConstant.COMM_BROADCAST_ACTION);
         intentFilter.addAction(BleConstant.BLE_COMPLETE_EXERCISE_ACTION);
 
+        intentFilter.addAction(BleConstant.BLE_SOURCE_DIS_CONNECTION_ACTION);
         intentFilter.addAction(BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED);
         intentFilter.addAction(BluetoothDevice.ACTION_PAIRING_REQUEST);
         registerReceiver(broadcastReceiver,intentFilter);
@@ -93,6 +94,9 @@ public class ConnStatusService extends Service {
     }
 
 
+    //是否扫描到了
+    private boolean isScanDevice = false;
+
     /**重新连接设备，扫描连接**/
     public void autoConnDevice(String mac,boolean isScanClass){
         Timber.e("-----auto连接="+mac);
@@ -101,6 +105,7 @@ public class ConnStatusService extends Service {
             @Override
             public void onSearchStarted() {
                 Timber.e("----onSearchStarted--");
+                isScanDevice = false;
                 BaseApplication.getInstance().setConnStatus(ConnStatus.CONNECTING);
                 sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
             }
@@ -113,6 +118,7 @@ public class ConnStatusService extends Service {
                 if(searchResult.getAddress().equals(mac)){
                     BleOperateManager.getInstance().stopScanDevice();
                     Timber.e("-------扫描到了，开始连接="+mac);
+                    isScanDevice = true;
                     connDevice(bleName,mac);
                     return;
                 }
@@ -121,19 +127,22 @@ public class ConnStatusService extends Service {
             @Override
             public void onSearchStopped() {
                 Timber.e("----onSearchStopped--");
-//                if(BaseApplication.getInstance().getConnStatus() != ConnStatus.CONNECTED || BaseApplication.getInstance().getConnStatus() != ConnStatus.IS_SYNC_DATA){
-//                    BaseApplication.getInstance().setConnStatus(ConnStatus.NOT_CONNECTED);
-//                    sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
-//                }
+                if(!isScanDevice){
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            sendActionBroad(BleConstant.BLE_SCAN_COMPLETE_ACTION,"0");
+                        }
+                    },3 *1000);
+
+                }
             }
 
             @Override
             public void onSearchCanceled() {
                 Timber.e("----onSearchCanceled--");
-//                if(BaseApplication.getInstance().getConnStatus() != ConnStatus.CONNECTED || BaseApplication.getInstance().getConnStatus() != ConnStatus.IS_SYNC_DATA){
-//                    BaseApplication.getInstance().setConnStatus(ConnStatus.NOT_CONNECTED);
-//                    sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
-//                }
+
+
             }
         },isScanClass,20 * 1000,1);
     }
@@ -149,7 +158,7 @@ public class ConnStatusService extends Service {
                 if(status == Constants.STATUS_DISCONNECTED){
                     BaseApplication.getInstance().setConnStatus(ConnStatus.NOT_CONNECTED);
                     sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
-                    BleOperateManager.getInstance().disConnYakDevice();
+//                    BleOperateManager.getInstance().disConnYakDevice();
                     new Handler(Looper.myLooper()).postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -286,6 +295,24 @@ public class ConnStatusService extends Service {
             String action = intent.getAction();
             if(action == null)
                 return;
+
+            if(action.equals(BleConstant.BLE_SOURCE_DIS_CONNECTION_ACTION)){
+
+                Timber.e("---------收到了断开连接");
+                String saveMac = MmkvUtils.getConnDeviceMac();
+                Timber.e("----------锻炼联了=");
+                BleOperateManager.getInstance().disConnNotRemoveMac();
+                if(BikeUtils.isEmpty(saveMac)){
+                    return;
+                }
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        autoConnDevice(saveMac,true);
+                    }
+                },2 * 1000);
+
+            }
 
             //配对
             if(action.equals(BluetoothDevice.ACTION_PAIRING_REQUEST)){

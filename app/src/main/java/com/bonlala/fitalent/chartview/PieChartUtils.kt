@@ -9,6 +9,8 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
+import com.google.gson.Gson
+import timber.log.Timber
 
 /**
  * Created by Admin
@@ -59,7 +61,7 @@ class PieChartUtils {
     }
 
 
-    private var parties  = mutableListOf<String>(" "," "," "," ")
+    private var parties  = mutableListOf<String>(" "," "," "," "," "," ")
 
     private val colorArray = mutableListOf<Int>(
         R.color.hr_color_1,
@@ -75,9 +77,9 @@ class PieChartUtils {
      fun setData(pointList : List<Int>, range: Float,context : Context,isEmpty : Boolean) {
         val entries = ArrayList<PieEntry>()
         val colors = ArrayList<Int>()
+         Timber.e("----poisntLIst="+Gson().toJson(pointList))
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
         // the chart.
-
          if(isEmpty){
              entries.add(PieEntry(100f,""))
              colors.add(emptyColor)

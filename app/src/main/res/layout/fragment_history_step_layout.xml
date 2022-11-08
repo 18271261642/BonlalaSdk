@@ -150,8 +150,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
                     android:layout_marginStart="@dimen/dp_10"
+                    android:layout_weight="1"
                     android:text="@string/string_steps"
                     android:textColor="#ff6e6e77"
                     android:textSize="12sp" />
@@ -181,8 +181,8 @@
                         android:id="@+id/historyStepUnitTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="km"
                         android:layout_marginStart="@dimen/dp_5"
+                        android:text="km"
                         android:textColor="#ff6e6e77"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -210,8 +210,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="kcal"
                         android:layout_marginStart="@dimen/dp_5"
+                        android:text="kcal"
                         android:textColor="#ff6e6e77"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -226,7 +226,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Avg:"
+                        android:text="@string/string_avg"
                         android:textColor="#ff6e6e77"
                         android:textSize="12sp" />
 
@@ -242,8 +242,8 @@
                         android:id="@+id/stepAvgUnitTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="steps/day"
                         android:layout_marginStart="@dimen/dp_5"
+                        android:text="@string/string_step_day"
                         android:textColor="#ff6e6e77"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -254,10 +254,10 @@
                 android:id="@+id/stepTotalStepTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
                 android:text="99999step"
                 android:textColor="#ff2b2b2b"
-                android:textSize="26sp"
-                android:layout_marginStart="@dimen/dp_10"/>
+                android:textSize="26sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -268,21 +268,19 @@
 
                 <com.bonlala.fitalent.view.StepChartView
                     android:id="@+id/stepChartView"
-                    android:layout_margin="@dimen/dp_10"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/dp_10" />
 
 
                 <com.github.mikephil.charting.charts.BarChart
                     android:id="@+id/stepBarChart"
-                    android:visibility="gone"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
 
 
             </LinearLayout>
-
-
 
 
         </LinearLayout>
@@ -295,8 +293,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1"
         android:layout_marginStart="@dimen/dp_57"
-        android:background="#CFCFCF"/>
+        android:background="#CFCFCF" />
 
-    <include layout="@layout/common_history_bot_date_layout"/>
+    <include layout="@layout/common_history_bot_date_layout" />
 
 </LinearLayout>

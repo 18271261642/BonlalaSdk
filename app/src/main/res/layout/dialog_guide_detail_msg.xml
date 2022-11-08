@@ -49,13 +49,13 @@
         android:layout_marginTop="@dimen/dp_35"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Complete information"/>
+        android:text="@string/string_complete_information"/>
 
     <TextView
         android:id="@+id/dialogGuideIgnore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ignore"
+        android:text="@string/string_ignore"
         android:layout_marginBottom="@dimen/dp_30"
         android:textColor="#ffd6d6dd"
         android:layout_marginTop="@dimen/dp_10"

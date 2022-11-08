@@ -78,7 +78,7 @@ public class StepChartViewUtils {
         Timber.e("------daxiao ="+stepList.size());
         stepChartValueList.clear();
         lineChart.setNoDataTextColor(Color.parseColor("#6E6E77"));
-        lineChart.setNoDataText("No Data");
+//        lineChart.setNoDataText(context.getResources().getString(R.string.string_no_data));
         lineChart.setExtraLeftOffset(15f);
         lineChart.setExtraRightOffset(15f);
 
@@ -185,7 +185,7 @@ public class StepChartViewUtils {
 
 
         if(stepChartValueList.size()==0){
-            lineChart.setNoDataText("No Data");
+            lineChart.setNoDataText(context.getResources().getString(R.string.string_no_data));
             lineChart.invalidate();
             return;
         }

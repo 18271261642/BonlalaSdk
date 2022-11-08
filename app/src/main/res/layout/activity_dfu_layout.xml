@@ -16,19 +16,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dp_10"
         android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_home_top_device_battery_img" />
+
+        <com.bonlala.fitalent.view.BatteryView
+            android:id="@+id/dfuBatteryView"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_15"
+            android:layout_gravity="center" />
 
         <TextView
             android:id="@+id/dfuBatteryTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="95%"
+            android:layout_marginStart="@dimen/dp_8"
+            android:text="--"
             android:textColor="#ff2f2f33"
             android:textSize="14sp" />
     </LinearLayout>
@@ -96,15 +100,16 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_marginBottom="@dimen/dp_15"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_15">
+
         <com.bonlala.fitalent.view.LinearProgressView
             android:id="@+id/dfuBtnStatusView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_35"
             android:layout_marginStart="@dimen/dp_20"
-            android:visibility="gone"
             android:layout_marginEnd="@dimen/dp_20"
+            android:visibility="visible"
             app:linear_bg_color="#FF4EDD7D" />
 
 
@@ -112,34 +117,36 @@
             android:id="@+id/dfuDownloadTv"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_35"
-            app:shape_radius="@dimen/dp_15"
-            app:cus_is_show_txt="true"
-            app:cus_txt_color="@color/white"
-            app:shape_solidColor="#FF4EDD7D"
-            android:textColor="@color/white"
-            app:cus_curr_schedule_color="#FF4EDD7D"
-            app:cus_all_schedule_color="#FFD6D6DD"
+            android:layout_gravity="center"
             android:layout_marginStart="@dimen/dp_20"
             android:layout_marginEnd="@dimen/dp_20"
-            android:textSize="20sp"
-            android:padding="@dimen/dp_10"
             android:gravity="center"
-            android:layout_gravity="center"
-            android:text="@string/string_i_konw"/>
+            android:padding="@dimen/dp_10"
+            android:text="@string/string_i_konw"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:visibility="gone"
+            app:cus_all_schedule_color="#FFD6D6DD"
+            app:cus_curr_schedule_color="#FF4EDD7D"
+            app:cus_is_show_txt="true"
+            app:cus_txt_color="@color/white"
+            app:shape_radius="@dimen/dp_15"
+            app:shape_solidColor="#FF4EDD7D" />
 
         <com.hjq.shape.view.ShapeTextView
             android:id="@+id/dfuCompleteTv"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_35"
-            app:shape_radius="@dimen/dp_15"
-            app:shape_solidColor="#FFD6D6DD"
-            android:textColor="@color/white"
+            android:layout_gravity="center"
             android:layout_marginStart="@dimen/dp_20"
             android:layout_marginEnd="@dimen/dp_20"
-            android:textSize="20sp"
             android:gravity="center"
-            android:layout_gravity="center"
-            android:text="@string/string_string_download"/>
+            android:text="@string/string_string_download"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:visibility="gone"
+            app:shape_radius="@dimen/dp_15"
+            app:shape_solidColor="#FFD6D6DD" />
     </FrameLayout>
 
 </LinearLayout>

@@ -21,7 +21,7 @@
         app:layout_constraintTop_toBottomOf="@id/deviceHolderImgView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Device not yet bound"
+        android:text="@string/string_not_bond_device"
         android:textColor="#ff6e6e77"
         android:textSize="14sp"
         app:layout_constraintRight_toRightOf="parent"
@@ -44,6 +44,6 @@
         android:paddingTop="@dimen/dp_5"
         android:paddingBottom="@dimen/dp_5"
         android:layout_height="wrap_content"
-        android:text="Add device"/>
+        android:text="@string/string_add_device"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

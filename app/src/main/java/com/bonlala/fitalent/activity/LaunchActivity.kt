@@ -15,6 +15,7 @@ import com.bonlala.fitalent.dialog.GuideMsgDialog
 import com.bonlala.fitalent.dialog.ShowPrivacyDialogView
 import com.bonlala.fitalent.utils.MmkvUtils
 import com.bonlala.fitalent.viewmodel.LaunchViewModel
+import com.google.gson.Gson
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
 import org.json.JSONObject
@@ -68,6 +69,7 @@ class LaunchActivity : AppActivity() {
     }
 
     override fun initView() {
+        getUrls()
         val userInfoModel = DBManager.getUserInfo()
         if(userInfoModel == null){
             showPrivacyDialog()
@@ -103,11 +105,33 @@ class LaunchActivity : AppActivity() {
 
 
     override fun initData() {
+
+    }
+
+
+    private fun getUrls(){
         getH5Url()
         viewModel.guideUrl.observe(this){
 
         }
+
+        viewModel.guiderTypeList.observe(this){
+            Timber.e("-------guide="+Gson().toJson(it))
+
+            val bean = it
+            val url = bean?.guideUrl
+
+            val list = it?.list
+            var typeId = 0
+            list?.forEach {
+                if(it.deviceType == "W560B"){
+                    typeId = it.deviceTypeId
+                }
+            }
+            MmkvUtils.saveGuideUrl(url+typeId)
+        }
         viewModel.getGuideUrl(this)
+        viewModel.getGuideTypeList(this)
     }
 
     //获取H5链接
@@ -128,9 +152,9 @@ class LaunchActivity : AppActivity() {
                     val privacyUrl = dataJsonObject.getString("privacyAgreementUrl")
                     MmkvUtils.savePrivacyUrl(privacyUrl)
 
-                    val deviceGuideUrl = dataJsonObject.getString("deviceGuideUrl")
+//                    val deviceGuideUrl = dataJsonObject.getString("deviceGuideUrl")
 
-                    MmkvUtils.saveGuideUrl(deviceGuideUrl)
+//                    MmkvUtils.saveGuideUrl(deviceGuideUrl)
                 }catch (e : Exception){
                     e.printStackTrace()
                 }

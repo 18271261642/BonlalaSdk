@@ -44,9 +44,10 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/recordGoalTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Today's goal"
+                android:text="@string/string_params_goal"
                 android:textColor="#ff676767"
                 android:textSize="14sp"
                 android:layout_marginEnd="@dimen/dp_5"

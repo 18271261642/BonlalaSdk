@@ -256,4 +256,15 @@ public abstract class AppActivity extends BaseActivity
     protected void downloadFile(String downUrl, String saveUrl, OnDownloadListener downloadListener){
         EasyHttp.download(this).method(HttpMethod.GET).url(downUrl).file(saveUrl).listener(downloadListener).start();
     }
+
+
+    protected void startActivity(Class<?> c,String[] key,String[] value){
+        if(key.length != value.length)
+            return;
+        Intent intent = new Intent(this,c);
+        for(int i = 0;i<key.length;i++){
+            intent.putExtra(key[i],value[i]);
+        }
+        startActivity(intent);
+    }
 }

@@ -5,7 +5,21 @@
     <string name="string_metric">公制</string>
     <string name="string_imperial">英制</string>
 
-
+    <string name="string_download_success">下载成功</string>
+    <string name="string_skip">跳过</string>
+    <string name="string_see_why">查看原因</string>
+    <string name="string_timeout_desc">设置多次连接失败，请查看原因</string>
+    <string name="string_conn_timeout">连接超时</string>
+    <string name="string_step_day">步/天</string>
+    <string name="string_params_goal">%1$s目标</string>
+    <string name="string_avg">平均</string>
+    <string name="string_scan_desc">*设备解绑后无法搜索?</string>
+    <string name="string_keep_close_to_phone">请保持手表在手机附近</string>
+    <string name="string_ignore">忽略</string>
+    <string name="string_complete_information">完善信息</string>
+    <string name="string_finish">完成</string>
+    <string name="strign_dfu_alert_desc">手表有新的固件，是否升级?</string>
+    <string name="string_firmware_txt">固件升级</string>
     <string name="string_back_current">回到当前</string>
     <string name="string_download_start_upgrade">下载完成，点击开始升级</string>
     <string name="string_low_battery_alert">电量低于40%，请充电后再升级!</string>

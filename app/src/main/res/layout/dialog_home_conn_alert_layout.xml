@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hjq.shape.layout.ShapeLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_350"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:shape_radius="@dimen/dp_10"
+    app:shape_solidColor="@color/white"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:layout_margin="@dimen/dp_10"
+    android:padding="@dimen/dp_10"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/string_conn_timeout"
+        android:textColor="#ff2f2f33"
+        android:textSize="18sp"
+        android:layout_gravity="center"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/string_timeout_desc"
+        android:textColor="#ff2f2f33"
+        android:layout_marginBottom="10dp"
+        android:textSize="16sp"
+        android:gravity="center"/>
+
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/connAlertWhyTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/string_see_why"
+        android:textColor="@color/white"
+        app:shape_solidColor="#FFFF453A"
+        android:gravity="center"
+        android:layout_margin="@dimen/dp_5"
+        app:shape_radius="@dimen/dp_5"
+        android:padding="@dimen/dp_10"/>
+
+
+    <com.hjq.shape.view.ShapeTextView
+        android:id="@+id/connAlertSkipTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/string_skip"
+        android:textColor="#FF2F2F33"
+        app:shape_solidColor="#FFF7F7F9"
+        android:gravity="center"
+        android:layout_margin="@dimen/dp_5"
+        app:shape_radius="@dimen/dp_5"
+        android:padding="@dimen/dp_10"/>
+
+</com.hjq.shape.layout.ShapeLinearLayout>

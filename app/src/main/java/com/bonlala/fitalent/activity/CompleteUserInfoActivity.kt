@@ -12,6 +12,7 @@ import com.bonlala.fitalent.db.model.UserInfoModel
 import com.bonlala.fitalent.dialog.DateDialog
 import com.bonlala.fitalent.dialog.HeightSelectDialog
 import com.bonlala.fitalent.utils.BikeUtils
+import com.bonlala.fitalent.utils.CalculateUtils
 import kotlinx.android.synthetic.main.activity_complete_user_info_layout.*
 import timber.log.Timber
 
@@ -69,6 +70,21 @@ class CompleteUserInfoActivity : AppActivity() {
         completeKmTv.shapeDrawableBuilder.setSolidColor(if(unit == 0) Color.parseColor("#E8E9ED") else Color.parseColor("#FFFFFF")).intoBackground()
         completeMiTv.shapeDrawableBuilder.setSolidColor(if(unit == 0) Color.parseColor("#FFFFFF") else Color.parseColor("#E8E9ED")).intoBackground()
         userInfo?.userUnit = unit
+        isKmUnit = unit == 0
+        //处理公制或英制问题
+        completeHeightTv.text = if(unit == 0) (userInfo?.userHeight.toString() +" cm") else (userInfo?.userHeight?.let {
+            CalculateUtils.cmToInchValue(
+                it
+            ).toString()
+        } +" inch")
+
+        //体重
+            var weight = userInfo?.userWeight
+            if(weight == null){
+                weight = 80
+            }
+        completeWeightTv.text =  if(unit == 0) ("$weight kg") else (CalculateUtils.kgToLbValue(weight).toString()+" lb")
+
     }
 
     override fun onClick(view: View?) {
@@ -96,19 +112,53 @@ class CompleteUserInfoActivity : AppActivity() {
             //身高
             R.id.completeHeightTv->{
                 val list = mutableListOf<String>()
-                for(i in 80 until 255){
-                    list.add(i.toString())
+
+                //判断是否是公制
+                val isUnit = (userInfo?.userUnit ?: 0) == 0
+
+                if(isUnit){
+                    for(i in 80 until 255){
+                        list.add(i.toString())
+                    }
+                }else{
+                    val start = CalculateUtils.cmToInchValue(80)
+                    val end = CalculateUtils.cmToInchValue(255)
+                    for(i in start until end){
+                        list.add(i.toString())
+                    }
                 }
-                showSelectDialog(0x01,resources.getString(R.string.string_height),list,userInfo?.userHeight.toString(),"cm")
+
+               var h = userInfo?.userHeight
+                if(h == null){
+                    h = 180
+                }
+
+                showSelectDialog(0x01,resources.getString(R.string.string_height),list,if(isUnit) h.toString() else CalculateUtils.cmToInchValue(h).toString(),if(isUnit)"cm" else "inch")
             }
 
             //体重
             R.id.completeWeightTv->{
                 val list = mutableListOf<String>()
-                for(i in 30..150){
-                    list.add(i.toString())
+
+                //判断是否是公制
+                val isUnit = (userInfo?.userUnit ?: 0) == 0
+                if(isUnit){
+                    for(i in 30..300){
+                        list.add(i.toString())
+                    }
+                }else{
+                    val start = CalculateUtils.kgToLbValue(30)
+                    val end = CalculateUtils.kgToLbValue(300)
+                    for(i in start until end){
+                        list.add(i.toString())
+                    }
                 }
-                showSelectDialog(0x02,resources.getString(R.string.string_weight),list,userInfo?.userWeight.toString(),"kg")
+
+                var w = userInfo?.userWeight
+                if(w == null){
+                    w = 80
+                }
+                showSelectDialog(0x02,resources.getString(R.string.string_weight),list,if(isUnit) w.toString() else CalculateUtils.kgToLbValue(w).toString(),if(isUnit)"kg" else "lb")
             }
 
             //公制
@@ -153,12 +203,13 @@ class CompleteUserInfoActivity : AppActivity() {
             .setUnitShow(true,unitStr)
             .setSignalSelectListener {
                 if(code == 1){
-                    completeHeightTv.text = it+" cm"
-                    userInfo?.userWeight = it.toInt()
+                    completeHeightTv.text = it+unitStr
+                    userInfo?.userHeight = if(isKmUnit) it.toInt() else CalculateUtils.InchToCmValue(it.toInt())
                 }
                 if(code == 0x02){
-                    completeWeightTv.text = it+" kg"
-                    userInfo?.userWeight = it.toInt()
+                    completeWeightTv.text = it+unitStr
+                    userInfo?.userWeight = if(isKmUnit) it.toInt() else CalculateUtils.lbToKg(it.toInt()
+                        .toFloat())
                 }
 
             }

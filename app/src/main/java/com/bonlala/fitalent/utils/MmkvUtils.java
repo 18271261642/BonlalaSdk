@@ -194,7 +194,7 @@ public class MmkvUtils {
     }
 
     public static String getGuideUrl(String type){
-        return (String) getSaveParams("guide_url",null)+type;
+        return (String) getSaveParams("guide_url",null);
     }
 
 

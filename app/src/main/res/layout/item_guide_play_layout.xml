@@ -8,8 +8,9 @@
 
     <TextView
         android:id="@+id/itemPlayTitleTv"
-        android:layout_marginTop="@dimen/dp_10"
+
         android:layout_width="match_parent"
+       android:layout_margin="@dimen/dp_15"
         android:layout_height="wrap_content"
         android:text="Swipe the screen
 to switch the list of functions"
@@ -20,7 +21,7 @@ to switch the list of functions"
 
     <TextView
         android:id="@+id/itemPlayContentTv"
-        android:layout_marginTop="@dimen/dp_10"
+        android:layout_margin="@dimen/dp_15"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Swipe up and down

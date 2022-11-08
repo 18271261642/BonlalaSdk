@@ -341,7 +341,7 @@ public class DataOperateManager {
                     deviceSetModel.setDeviceVersionCode(Integer.parseInt(hardVersion));
                     deviceSetModel.setDeviceVersionName(versionStr);
                 }
-
+                setCommBroad(BleConstant.BLE_SEND_DUF_VERSION_ACTION,versionStr);
                 readStepGoal(bleOperateManager);
             }
         });
@@ -685,6 +685,16 @@ public class DataOperateManager {
     private void setCommBroad(String action){
         Intent intent = new Intent();
         intent.setAction(action);
+        if(mContext == null)
+            return;
+        mContext.sendBroadcast(intent);
+    }
+
+    private void setCommBroad(String action,String value){
+        Intent intent = new Intent();
+        intent.setAction(action);
+
+        intent.putExtra("comm_key",value);
         if(mContext == null)
             return;
         mContext.sendBroadcast(intent);

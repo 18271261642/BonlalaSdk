@@ -1,5 +1,7 @@
 package com.blala.blalable;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -35,6 +37,7 @@ import com.inuker.bluetooth.library.search.SearchRequest;
 import com.inuker.bluetooth.library.search.SearchResult;
 import com.inuker.bluetooth.library.search.response.SearchResponse;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -235,9 +238,28 @@ public class BleManager {
         String spMac = (String) BleSpUtils.get(mContext,SAVE_BLE_MAC_KEY,"");
         if(TextUtils.isEmpty(spMac))
             return;
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (bluetoothAdapter != null) {
+            BluetoothDevice bleDevice = bluetoothAdapter.getRemoteDevice(spMac);
+            if (bleDevice != null) {
+                unpairDevice(bleDevice);
+            }
+        }
+        bluetoothClient.stopSearch();
         bluetoothClient.disconnect(spMac);
+        bluetoothClient.unregisterConnectStatusListener(spMac,connectStatusListener);
+        BleSpUtils.remove(mContext,SAVE_BLE_MAC_KEY);
     }
-
+    //反射来调用BluetoothDevice.removeBond取消设备的配对
+    private void unpairDevice(BluetoothDevice device) {
+        try {
+            Method m = device.getClass()
+                    .getMethod("removeBond", (Class[]) null);
+            m.invoke(device, (Object[]) null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * // Constants.REQUEST_READ，所有读请求
      * // Constants.REQUEST_WRITE，所有写请求
@@ -558,8 +580,8 @@ public class BleManager {
         public void onConnectStatusChanged(String mac, int status) {
 
             Log.e(TAG,"---mmmmm-连接状态manager="+mac+" "+status);
-            if(mac != null || status == Constants.STATUS_DISCONNECTED){
-                sendCommBroadcast(BleConstant.BLE_DIS_CONNECT_ACTION);
+            if(mac != null && status == Constants.STATUS_DISCONNECTED){
+                sendCommBroadcast(BleConstant.BLE_SOURCE_DIS_CONNECTION_ACTION);
             }
             if(bleConnStatusListener != null){
                 bleConnStatusListener.onConnectStatusChanged(mac==null?"mac":mac,status);

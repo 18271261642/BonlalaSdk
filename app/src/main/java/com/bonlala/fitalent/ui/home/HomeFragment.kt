@@ -100,7 +100,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
 
             if(BikeUtils.isEmpty(MmkvUtils.getConnDeviceMac())){
 
-                ToastUtils.show("请连接设备!")
+                ToastUtils.show(resources.getString(R.string.string_not_connect))
                 return@setOnItemClickListener
             }
 
@@ -132,6 +132,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
         intentFilter.addAction(BleConstant.BLE_SYNC_COMPLETE_SET_ACTION)
         intentFilter.addAction(BleConstant.COMM_BROADCAST_ACTION)
         intentFilter.addAction(BleConstant.BLE_24HOUR_SYNC_COMPLETE_ACTION)
+        intentFilter.addAction(BleConstant.BLE_SCAN_COMPLETE_ACTION)
         activity?.registerReceiver(broadcastReceiver, intentFilter)
 
         homeDeviceClick()
@@ -391,7 +392,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
             var action = p1?.action
             Timber.e("--------action="+action)
             //连接状态
-            if (action == BleConstant.BLE_CONNECTED_ACTION || action == BleConstant.BLE_DIS_CONNECT_ACTION){
+            if (action == BleConstant.BLE_CONNECTED_ACTION || action == BleConstant.BLE_DIS_CONNECT_ACTION || action == BleConstant.BLE_SCAN_COMPLETE_ACTION){
                 showDeviceStatus()
             }
 

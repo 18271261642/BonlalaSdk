@@ -8,6 +8,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.bonlala.action.AppActivity;
 import com.bonlala.action.SingleClick;
@@ -46,6 +47,7 @@ public class RecordHistoryActivity extends AppActivity implements View.OnClickLi
     private ShapeTextView recordMeasureTv;
     //历史
     private ShapeTextView recordHistoryTv;
+    private TextView recordGoalTv;
 
 
     private OnRecordHistoryRightListener onRecordHistoryRightListener;
@@ -97,6 +99,7 @@ public class RecordHistoryActivity extends AppActivity implements View.OnClickLi
 
     @Override
     protected void initView() {
+        recordGoalTv = findViewById(R.id.recordGoalTv);
         historyBackImg = findViewById(R.id.historyBackImg);
         spinner = findViewById(R.id.historySpinner);
         spinner.setDropDownVerticalOffset(100);
@@ -244,5 +247,8 @@ public class RecordHistoryActivity extends AppActivity implements View.OnClickLi
     /**设置计步进度条**/
     public void setStepSchedule(float value,float goal){
         stepGoalProgressView.setCurrentProgressValue(value,goal);
+    }
+    public void setTypeGoal(String type){
+        recordGoalTv.setText(String.format(getResources().getString(R.string.string_params_goal),type));
     }
 }

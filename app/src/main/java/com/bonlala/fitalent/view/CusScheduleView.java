@@ -141,7 +141,8 @@ public class CusScheduleView extends View {
         canvas.drawRoundRect(rectF,mHeight/2,mHeight/2,allSchedulePaint);
 
         Timber.e("---currW="+currV+" "+mWidth);
-        RectF currRectf = new RectF(0,-mHeight,currV>mWidth ? mWidth : currV,0);
+        float y = currV<mHeight ? currV - mHeight : 0;
+        RectF currRectf = new RectF(0,-mHeight,y,0);
         currPath.addRoundRect(currRectf,mHeight/2,mHeight/2,Path.Direction.CW);
         canvas.drawPath(currPath,currSchedulePaint);
 

@@ -5,7 +5,21 @@
     <string name="title_dashboard">device</string>
     <string name="title_notifications">mine</string>
 
-
+    <string name="string_download_success">Download successful</string>
+    <string name="string_skip">Skip</string>
+    <string name="string_see_why">See Why</string>
+    <string name="string_timeout_desc">Device failed to connect multiple times Please check</string>
+    <string name="string_conn_timeout">Connection timed out</string>
+    <string name="string_step_day">steps/day</string>
+    <string name="string_params_goal">%1$s goal</string>
+    <string name="string_avg">Avg</string>
+    <string name="string_scan_desc">* Unable to search after the device is unbound?</string>
+    <string name="string_keep_close_to_phone">Keep your phone close to the device</string>
+    <string name="string_ignore">Ignore</string>
+    <string name="string_complete_information">Complete information</string>
+    <string name="string_finish">Finish</string>
+    <string name="strign_dfu_alert_desc">A new version of the device firmware was detected Do you want to upgrade now?</string>
+    <string name="string_firmware_txt">Firmware upgrade</string>
     <string name="string_back_current">Return current</string>
     <string name="string_download_start_upgrade">Upgrade</string>
     <string name="string_has_new_version">new version</string>
@@ -196,7 +210,7 @@
     <string name="string_bp">Blood pressure</string>
     <string name="string_heart">Heart rate</string>
     <string name="string_sleep">Sleep</string>
-    <string name="string_no_data">No data</string>
+    <string name="string_no_data">No Data</string>
     <string name="string_sleep_desc1">Ensuring adequate sleep every day is very beneficial for maintaining physical and mental health. From 10:00 at night to 6:00 in the morning, it is the quality sleep time The National Sleep Foundation recommends that adults sleep for 6-10 hours.</string>
     <string name="string_sleep_desc2">* The data and suggestions provided are for reference only and cannot be used as a basis for clinical diagnosis and treatment</string>
 

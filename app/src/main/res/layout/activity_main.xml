@@ -30,15 +30,14 @@
         android:layout_width="match_parent"
         android:textSize="@dimen/sp_18"
         android:layout_marginTop="@dimen/dp_25"
-        android:text="Searching for devices…"
+        android:text="@string/string_scan_ing"
         android:layout_height="wrap_content"
         android:gravity="center"/>
 
     <TextView
         android:layout_width="150dp"
         android:layout_height="40dp"
-        android:text="Keep your phone close
-to the device"
+        android:text="@string/string_keep_close_to_phone"
         android:textColor="#ff000000"
         android:layout_gravity="center"
         android:gravity="center"
@@ -46,12 +45,14 @@ to the device"
         android:layout_marginTop="@dimen/dp_8"/>
 
     <TextView
+        android:id="@+id/scanDescTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="* Unable to search after the device is unbound?"
+        android:text="@string/string_scan_desc"
         android:textColor="#ff4edd7d"
         android:textSize="12sp"
         android:padding="5dp"
+        android:autoLink="all"
         android:gravity="center"
         android:layout_gravity="center"/>
 

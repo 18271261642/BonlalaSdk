@@ -169,7 +169,7 @@ class ExerciseDetailActivity : AppActivity() {
             var point6 = 0
 
 
-            hrList?.forEachIndexed { index, i ->
+            hrList.forEachIndexed { index, i ->
                 //心率强度百分比
                 //心率强度百分比
                 val hrPercent = HeartRateConvertUtils.hearRate2Percent(i, maxHr)

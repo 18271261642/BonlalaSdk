@@ -39,6 +39,7 @@ class DNTActivity : AppActivity(),View.OnClickListener{
         turnWristStartTimeBar.setOnClickListener(this)
         turnWristEndTimeBar.setOnClickListener(this)
         turnWristSwitchBtn.setOnCheckedChangeListener { button, checked ->
+            showDialog()
             turnWristSwitchBtn.isChecked = checked
             timeBean?.switchStatus = if(checked) 1 else 0
 
@@ -149,12 +150,14 @@ class DNTActivity : AppActivity(),View.OnClickListener{
 
     private fun setDntData(){
         saveData()
-        if(timeBean == null)
+        if(timeBean == null){
+            hideDialog()
             return
+        }
+        hideDialog()
         BaseApplication.getInstance().bleOperate.setDNTStatus(timeBean){
             deviceSetModel?.dnt= if(timeBean?.switchStatus == 0) "0" else  String.format("%02d",timeBean?.startHour)+":"+String.format("%02d",timeBean?.startMinute)+"-"+String.format("%02d",timeBean?.endHour)+":"+String.format("%02d",timeBean?.endMinute)
             BleOperateManager.getInstance().setClearListener()
-
             ToastUtils.show("设置成功!")
         }
 

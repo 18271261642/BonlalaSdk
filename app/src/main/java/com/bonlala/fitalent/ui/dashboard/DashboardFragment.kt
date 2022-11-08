@@ -167,6 +167,7 @@ import timber.log.Timber
                 if(!deviceSetModel!!.deviceVersionName.equals(it)){
                     //固件版本
                     menuFirmwareBar.rightText = deviceSetModel!!.deviceVersionName+"("+resources.getString(R.string.string_has_new_version)+")"
+//                    attachActivity.showDeviceDfuDialog()
                 }
             }
         }

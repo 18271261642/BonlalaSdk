@@ -62,14 +62,14 @@ public class DBManager {
         UserInfoModel userInfoModel = new UserInfoModel();
         userInfoModel.setUserId("uid_"+System.currentTimeMillis()/1000);
         userInfoModel.setUserUnit(0);
-        userInfoModel.setUserHeight(175);
-        userInfoModel.setUserWeight(60);
+        userInfoModel.setUserHeight(180);
+        userInfoModel.setUserWeight(80);
         userInfoModel.setDistanceGoal(5000);
         userInfoModel.setKcalGoal(1000);
         userInfoModel.setStepGoal(8000);
         userInfoModel.setNickName("nickName");
         userInfoModel.setSex(0);
-        userInfoModel.setUserBirthday("2000-01-01");
+        userInfoModel.setUserBirthday("1900-06-01");
         if(getUserInfo() == null){
             userInfoModel.save();
         }
@@ -366,11 +366,10 @@ public class DBManager {
 
             for(int i = 0;i<stepArray.length;i+=60){
                 int[] itemArr = new int[60];
-                if(i+60 <stepArray.length){
+                if(i+60 <=stepArray.length){
                     System.arraycopy(stepArray,i,itemArr,0,59);
                     itemList.add(itemArr);
                 }
-
             }
 
 

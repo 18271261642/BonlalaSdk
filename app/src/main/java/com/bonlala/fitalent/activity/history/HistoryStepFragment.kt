@@ -211,15 +211,15 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
 
 
         //总的计步
-        stepTotalStepTv.text = oneDayStepModel.dayStep.toString()+" step"
+        stepTotalStepTv.text = oneDayStepModel.dayStep.toString()+resources.getString(R.string.string_step)
         //距离
         val distance = oneDayStepModel.dayDistance
         val kmDis = CalculateUtils.mToKm(distance)
         val isKm = MmkvUtils.getUnit()
-        stepHistoryDistanceTv.text = if(isKm) kmDis.toString() else CalculateUtils.kmToMiValue(kmDis).toString()
+        stepHistoryDistanceTv.text = if(isKm) ":$kmDis" else ":"+CalculateUtils.kmToMiValue(kmDis).toString()
         historyStepUnitTv.text = if(isKm) "km" else "mi"
 
-        stepHistoryKcalTv.text = oneDayStepModel.dayCalories.toString()
+        stepHistoryKcalTv.text = ":"+oneDayStepModel.dayCalories.toString()
 
         //计算平均步数，日不显示
         if(type != StepType.DAY){
@@ -236,7 +236,7 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
             }else{
                 val avgStep = countDayStep / countDayNumbers
 
-                stepHistoryAvgStepTv.text = avgStep.toInt().toString()
+                stepHistoryAvgStepTv.text = ":"+avgStep.toInt().toString()
             }
 
         }
@@ -270,10 +270,10 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
         attachActivity.setStepSchedule(0f,MmkvUtils.getStepGoal().toFloat())
         commonHistoryDateTv.text = dayStr
         //总的计步
-        stepTotalStepTv.text = "-- step"
+        stepTotalStepTv.text = "-- "+resources.getString(R.string.string_step)
         //距离
-        stepHistoryDistanceTv.text = "--"
-        stepHistoryKcalTv.text = "--"
+        stepHistoryDistanceTv.text = ":--"
+        stepHistoryKcalTv.text = ":--"
 
         val oneDayStepModel = OneDayStepModel()
         oneDayStepModel.detailStep = emptyHourListData()
@@ -324,6 +324,7 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
 //            dayStr = BikeUtils.getCurrDate()
 //            getDayData()
             stepAvgLayout.visibility = View.GONE
+            attachActivity.setTypeGoal(resources.getString(R.string.string_day))
         }
         if(code == 1){  //周
             stepWeekView.visibility = View.VISIBLE
@@ -331,6 +332,7 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
 //            dayStr = BikeUtils.getCurrDate()
 //            getWeekData()
             stepAvgLayout.visibility = View.VISIBLE
+            attachActivity.setTypeGoal(resources.getString(R.string.string_week))
 
         }
         if(code == 2){
@@ -339,10 +341,12 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
 //            dayStr = BikeUtils.getFormatDate(System.currentTimeMillis(),"yyyy-MM")
 //            getMonthData()
             stepAvgLayout.visibility = View.VISIBLE
+            attachActivity.setTypeGoal(resources.getString(R.string.string_month))
         }
         if(code == 3){
             stepYearView.visibility = View.VISIBLE
             dataType = StepType.YEAR
+            attachActivity.setTypeGoal(resources.getString(R.string.string_year))
         }
 
         backCurrentDay()
@@ -397,31 +401,6 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
             getDayData()
         }
 
-
-
-//
-//        val calendarDialog = CalendarSelectDialog(attachActivity, com.bonlala.base.R.style.BaseDialogTheme)
-//        calendarDialog.show()
-//        calendarDialog.showCalendarData()
-//        calendarDialog.setCancelable(true)
-//        calendarDialog.setMarkCalendarDate(dateList)
-//        //calendarDialog.setRebackDay(dayStr)
-//        calendarDialog.setOnCalendarSelectListener {
-//            calendarDialog.dismiss()
-//            dayStr = it
-//            getDayData()
-//        }
-//
-//        val windowM = calendarDialog.window?.windowManager
-//        val layoutP = calendarDialog?.window?.attributes
-//
-//        val metrics2: DisplayMetrics = resources.displayMetrics
-//        val widthW: Int = metrics2.widthPixels
-//        layoutP?.width = widthW
-//        layoutP?.height = metrics2.heightPixels
-//        layoutP?.x = 40
-//        layoutP?.y = 0
-//        calendarDialog.window?.attributes = layoutP
     }
 
 

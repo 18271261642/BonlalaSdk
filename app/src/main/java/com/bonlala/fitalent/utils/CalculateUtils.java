@@ -81,6 +81,19 @@ public class CalculateUtils {
         return (int) tmpV;
     }
 
+    /**
+     * 英寸转厘米
+     * @param inch 英寸
+     * @return 厘米
+     */
+    public static int InchToCmValue(int inch){
+        if(inch == 0)
+            return 0;
+        double tempV = mul((double) inch,2.5d);
+        return (int) tempV;
+    }
+
+
     public static float mToInchValue(int cmValue){
         if(cmValue == 0)
             return 0.0f;

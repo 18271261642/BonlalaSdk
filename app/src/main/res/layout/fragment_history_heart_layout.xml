@@ -282,9 +282,9 @@
                     android:id="@+id/sleepNoDataTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No Data"
+                    android:text="@string/string_no_data"
                     android:textColor="#ff6e6e77"
-                    android:textSize="18sp"
+                    android:textSize="13sp"
                     android:visibility="gone"
                     android:layout_gravity="center"
                     android:gravity="center"/>

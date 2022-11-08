@@ -20,6 +20,14 @@ public class BleConstant {
     /**断开连接的action**/
     public static final String BLE_DIS_CONNECT_ACTION = "com.blala.blalable.ble_dis_connected";
 
+    /**发送固件版本的action**/
+    public static final String BLE_SEND_DUF_VERSION_ACTION = "com.blala.blalable.dfu_version";
+
+    public static final String BLE_SOURCE_DIS_CONNECTION_ACTION = "com.blala.blalable.source_dis_conn";
+
+    /**扫描完了的广播，一个扫描过程最多20秒**/
+    public static final String BLE_SCAN_COMPLETE_ACTION = "com.blala.blalable.scan_complete";
+
 
 
     /**设置数据同步完成的广播**/

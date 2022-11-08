@@ -68,6 +68,7 @@ class DfuActivity : AppActivity() {
         isDownloadComplete = false
 
 
+
         //点击开始下载
         dfuCompleteTv.setOnClickListener {
             if(serverVersionInfo == null)
@@ -103,6 +104,9 @@ class DfuActivity : AppActivity() {
                 Timber.e("-----battery="+batteryValue)
                 dfuBatteryTv.text = batteryValue.toString()+"%"
                 if (batteryValue != null) {
+                    dfuBatteryView.power = batteryValue.toInt()
+                }
+                if (batteryValue != null) {
                     if(batteryValue.toInt()<40){
                         isUpgradeing = true
                         showNotCancel(resources.getString(R.string.string_low_battery_alert),true)
@@ -119,8 +123,14 @@ class DfuActivity : AppActivity() {
     }
 
     override fun initData() {
-        dfuBtnStatusView.setShowTxt = resources.getString(R.string.string_i_konw)
         dfuNoUpdateTv.visibility = View.VISIBLE
+        dfuBtnStatusView.visibility = View.VISIBLE
+        dfuBtnStatusView.setShowTxt = resources.getString(R.string.string_i_konw)
+        dfuBtnStatusView.mbgColor = Color.parseColor("#FF4EDD7D")
+
+
+        dfuCompleteTv.visibility = View.GONE
+        dfuDownloadTv.visibility = View.GONE
 
         DfuServiceListenerHelper.registerProgressListener(this, mDfuProgressListener)
         fileSaveUrl = getExternalFilesDir(null)?.path
@@ -189,9 +199,9 @@ class DfuActivity : AppActivity() {
             dfuBtnStatusView.mbgColor = Color.parseColor("#FF4EDD7D")
 
 
-            dfuCompleteTv.visibility = View.VISIBLE
+            dfuCompleteTv.visibility = View.GONE
             dfuDownloadTv.visibility = View.GONE
-            dfuBtnStatusView.visibility = View.GONE
+
             return
         }
         dfuCompleteTv.visibility = View.VISIBLE
@@ -236,7 +246,7 @@ class DfuActivity : AppActivity() {
             override fun onComplete(file: File?) {
                 Timber.e("----onComplete="+file?.path)
 
-
+                ToastUtils.show(resources.getString(R.string.string_download_success))
                 dfuCompleteTv.visibility = View.GONE
                 dfuDownloadTv.visibility = View.VISIBLE
                 dfuDownloadTv.currScheduleValue = 100f
@@ -358,12 +368,12 @@ class DfuActivity : AppActivity() {
             currentPart: Int,
             partsTotal: Int
         ) {
-            Timber.e("------onProgressChanged--------="+percent)
+            Timber.e("------onProgressChanged--------="+percent+" "+currentPart)
             dfuBtnStatusView.mbgColor = Color.parseColor("#FFD6D6DD")
             dfuBtnStatusView.setShowTxt = null
             dfuBtnStatusView.isDownload = true
             dfuBtnStatusView.showDownloadTxt = resources.getString(R.string.string_upgrade_ing)+":"
-            dfuBtnStatusView.setCurrentProgressValue((percent * 10 / 10).toFloat(),100f)
+            dfuBtnStatusView.setCurrentProgressValue(percent,100f)
 
         }
 
@@ -383,7 +393,7 @@ class DfuActivity : AppActivity() {
 
         override fun onDfuCompleted(deviceAddress: String?) {
             Timber.e("-------onDfuCompleted-------="+deviceAddress)
-            ToastUtils.show("upgrade successful")
+            ToastUtils.show(resources.getString(R.string.string_upgrade_success))
             dfuNoUpdateTv.visibility = View.GONE
             dfuBtnStatusView.setShowTxt = resources.getString(R.string.string_upgrade_success)
             dfuBtnStatusView.mbgColor = Color.parseColor("#FF4EDD7D")
@@ -392,7 +402,7 @@ class DfuActivity : AppActivity() {
 
             val saveMac = MmkvUtils.getConnDeviceMac()
             if(!BikeUtils.isEmpty(saveMac)){
-                BaseApplication.getInstance().connStatusService.autoConnDevice(saveMac,true)
+//                BaseApplication.getInstance().connStatusService.autoConnDevice(saveMac,true)
             }
             //BaseApplication.getInstance().connStatusService.autoConnDevice()
         }

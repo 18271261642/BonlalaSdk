@@ -3,6 +3,7 @@ package com.bonlala.fitalent
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Paint
 import android.os.*
 import android.text.TextUtils
 import android.util.Log
@@ -15,6 +16,7 @@ import com.blala.blalable.listener.ConnStatusListener
 import com.bonlala.action.ActivityManager
 import com.bonlala.action.AppActivity
 import com.bonlala.fitalent.activity.GuideActivity
+import com.bonlala.fitalent.activity.ShowWebActivity
 import com.bonlala.fitalent.adapter.ScanDeviceAdapter
 import com.bonlala.fitalent.bean.BleBean
 import com.bonlala.fitalent.emu.ConnStatus
@@ -157,7 +159,11 @@ class MainActivity : AppActivity() ,OnItemClickListener{
     }
 
     override fun initView() {
-
+        scanDescTv.paint.flags = Paint.UNDERLINE_TEXT_FLAG
+        scanDescTv.setOnClickListener {
+            val url = MmkvUtils.getGuideUrl("")
+            startActivity(ShowWebActivity::class.java, arrayOf("url"), arrayOf(url))
+        }
     }
 
     override fun initData() {
