@@ -5,6 +5,8 @@
     <string name="title_dashboard">device</string>
     <string name="title_notifications">mine</string>
 
+
+    <string name="string_back_current">Return current</string>
     <string name="string_download_start_upgrade">Upgrade</string>
     <string name="string_has_new_version">new version</string>
     <string name="string_low_battery_alert">Upgrade requires at least 40% battery!</string>

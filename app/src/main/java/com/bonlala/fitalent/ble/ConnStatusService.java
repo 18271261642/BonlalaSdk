@@ -297,6 +297,7 @@ public class ConnStatusService extends Service {
             if(action.equals(BleConstant.BLE_DIS_CONNECT_ACTION)){
                 //判断是否主动断开，主动断开无Mac地址
                 String saveMac = MmkvUtils.getConnDeviceMac();
+                Timber.e("----------锻炼联了=");
                 if(BikeUtils.isEmpty(saveMac)){
                     return;
                 }

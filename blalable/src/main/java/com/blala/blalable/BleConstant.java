@@ -20,6 +20,8 @@ public class BleConstant {
     /**断开连接的action**/
     public static final String BLE_DIS_CONNECT_ACTION = "com.blala.blalable.ble_dis_connected";
 
+
+
     /**设置数据同步完成的广播**/
     public static final String BLE_SYNC_COMPLETE_SET_ACTION = "com.blala.blalable.set_complete";
     /**24小时数据同步完成**/
