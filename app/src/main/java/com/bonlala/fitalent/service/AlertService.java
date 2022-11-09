@@ -176,7 +176,7 @@ public class AlertService extends MyNotificationListenerService {
             Timber.e("-----消息="+msgCont+" title="+title);
             Timber.e("----notify="+NotifyConfig.notifyMap.get(packageName));
             if(NotifyConfig.notifyMap.get(packageName) != null){
-                BleOperateManager.getInstance().sendAPPNoticeMessage(30, "title", msgCont, new WriteBackDataListener() {
+                BleOperateManager.getInstance().sendAPPNoticeMessage(2, "title", msgCont, new WriteBackDataListener() {
                     @Override
                     public void backWriteData(byte[] data) {
 

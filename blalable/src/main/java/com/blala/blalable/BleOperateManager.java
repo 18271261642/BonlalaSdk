@@ -679,30 +679,30 @@ public class BleOperateManager {
         appList.addAll(appByte);
 
         Log.e(TAG,"------消息="+new Gson().toJson(appByte));
-
-        for(int i = 0 ;i<appByte.size();i++){
-            byte[] bt = appByte.get(i);
-          Log.e(TAG,"消息提醒="+Utils.formatBtArrayToString(bt));
-
-            bleManager.writeDataToDevice(bt);
-        }
+//
+//        for(int i = 0 ;i<appByte.size();i++){
+//            byte[] bt = appByte.get(i);
+//          Log.e(TAG,"消息提醒="+Utils.formatBtArrayToString(bt));
+//
+//            bleManager.writeDataToDevice(bt);
+//        }
         int size = appByte.size();
 
 
-//        bleManager.writeDataToDevice(appByte.get(0), new WriteBackDataListener() {
-//            @Override
-//            public void backWriteData(byte[] data) {
-//                Log.e(TAG,"---------发送消息="+Utils.formatBtArrayToString(data)+" "+tempIndex);
-//                if(tempIndex+1>=appByte.size()){
-//                    bleManager.setClearListener();
-//                    return;
-//                }
-//                tempIndex = tempIndex+1;
-//
-//                byte[] v = appByte.get(tempIndex);
-//                bleManager.writeDataToDevice(v);
-//            }
-//        });
+        bleManager.writeDataToDevice(appByte.get(0), new WriteBackDataListener() {
+            @Override
+            public void backWriteData(byte[] data) {
+                Log.e(TAG,"---------发送消息="+Utils.formatBtArrayToString(data)+" "+tempIndex);
+                if(tempIndex+1>=appByte.size()){
+                    bleManager.setClearListener();
+                    return;
+                }
+                tempIndex = tempIndex+1;
+
+                byte[] v = appByte.get(tempIndex);
+                bleManager.writeDataToDevice(v);
+            }
+        });
     }
 
 
