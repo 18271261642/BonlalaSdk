@@ -57,7 +57,8 @@ open abstract class BaseActivity : AppCompatActivity(),TitleBarAction{
 
 
     override fun onLeftClick(view: View?) {
-        onBackPressed()
+       // onBackPressed()
+        finish()
     }
 
 

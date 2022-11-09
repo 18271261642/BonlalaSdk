@@ -8,12 +8,12 @@ import com.bonlala.fitalent.BaseApplication
 import com.bonlala.fitalent.R
 import com.bonlala.fitalent.activity.RecordHistoryActivity
 import com.bonlala.fitalent.bean.ChartHrBean
+import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.dialog.*
 import com.bonlala.fitalent.emu.ConnStatus
 import com.bonlala.fitalent.emu.MeasureType
 import com.bonlala.fitalent.listeners.OnRecordHistoryRightListener
 import com.bonlala.fitalent.utils.BikeUtils
-import com.bonlala.fitalent.utils.MmkvUtils
 import com.bonlala.fitalent.view.StepChartViewUtils
 import com.bonlala.fitalent.viewmodel.HistoryHeartViewModel
 import com.github.mikephil.charting.charts.LineChart
@@ -69,12 +69,13 @@ class HistoryHeartFragment : TitleBarFragment<RecordHistoryActivity>(),OnRecordH
 
         showResult()
 
-        if(BikeUtils.isEmpty(MmkvUtils.getConnDeviceMac())){
+        val mac = DBManager.getBindMac()
+        if(BikeUtils.isEmpty(mac)){
             showEmptyData()
             return
         }
         chartViewUtils = StepChartViewUtils(detailHeartView)
-        viewModel.getAllHrRecord(MmkvUtils.getConnDeviceMac())
+        viewModel.getAllHrRecord(mac)
 
         getDayHeart("innitData")
     }
@@ -140,7 +141,7 @@ class HistoryHeartFragment : TitleBarFragment<RecordHistoryActivity>(),OnRecordH
      private fun getDayHeart(tag : String){
         Timber.e("----getDayHr="+tag)
 
-        val mac = MmkvUtils.getConnDeviceMac()
+        val mac = DBManager.getBindMac()
             if(BikeUtils.isEmpty(mac)){
                 showEmptyData()
                 return
@@ -149,7 +150,7 @@ class HistoryHeartFragment : TitleBarFragment<RecordHistoryActivity>(),OnRecordH
 
         viewModel.queryOneDayHeart(mac,dayStr.toString())
 
-         commonHistoryDateTv.text = dayStr
+         commonHistoryDateTv.text = if(BaseApplication.getInstance().isChinese) dayStr else BikeUtils.getFormatEnglishDate(dayStr)
          //判断回到当前是否显示
          commonHistoryCurrentTv.visibility =
              if (!dayStr.equals(BikeUtils.getCurrDate())) View.VISIBLE else View.GONE
@@ -304,7 +305,7 @@ class HistoryHeartFragment : TitleBarFragment<RecordHistoryActivity>(),OnRecordH
         getDayHeart("selectDate"+isPreview)
     }
 
-    fun backCurrentData(){
+    private fun backCurrentData(){
         dayStr = BikeUtils.getCurrDate()
         getDayHeart("current")
 

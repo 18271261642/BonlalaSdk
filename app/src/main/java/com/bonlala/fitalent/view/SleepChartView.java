@@ -347,12 +347,12 @@ public class SleepChartView extends View {
 
     private String getSleepType(int type){
         if(type == SleepType.SLEEP_TYPE_DEEP)
-            return "深睡";
+            return getContext().getResources().getString(R.string.string_deep);
         if(type == SleepType.SLEEP_TYPE_LIGHT){
-            return "浅睡";
+            return getContext().getResources().getString(R.string.string_light_sleep);
         }
         if(type == SleepType.SLEEP_TYPE_AWAKE){
-            return "清醒";
+            return getContext().getResources().getString(R.string.string_awake);
         }
         if(type == 4){
             return "REM";

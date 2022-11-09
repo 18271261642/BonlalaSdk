@@ -104,8 +104,8 @@ public class ShowPrivacyDialogView extends AppCompatDialog implements View.OnCli
             @Override
             public void onClick(@NonNull View view) {
                 Intent intent = new Intent(getContext(), ShowWebActivity.class);
-                intent.putExtra("url", MmkvUtils.getPrivacyUrl());
-                intent.putExtra("title",getContext().getResources().getString(R.string.privacy_agreement_tips));
+                intent.putExtra("url", MmkvUtils.getUserAgreement());
+                intent.putExtra("title",getContext().getResources().getString(R.string.user_agreement_tips));
                 getContext().startActivity(intent);
 
             }
@@ -123,7 +123,7 @@ public class ShowPrivacyDialogView extends AppCompatDialog implements View.OnCli
 
                 Intent intent = new Intent(getContext(), ShowWebActivity.class);
                 intent.putExtra("title",getContext().getResources().getString(R.string.privacy_agreement_tips));
-                intent.putExtra("url", MmkvUtils.getUserAgreement());
+                intent.putExtra("url", MmkvUtils.getPrivacyUrl());
                 getContext().startActivity(intent);
 
             }

@@ -98,6 +98,7 @@ class TurnWristActivity : AppActivity(),View.OnClickListener{
         val timeDialog = TimeDialog.Builder(this)
             .setIgnoreSecond()
             .setHour(backHour)
+            .setTitle(resources.getString(if(code == 0) R.string.string_start_time else R.string.string_end_time))
             .setMinute(backMinute)
             .setListener(object : TimeDialog.OnListener{
                 override fun onSelected(dialog: BaseDialog?, hour: Int, minute: Int, second: Int) {

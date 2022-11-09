@@ -103,6 +103,7 @@ class LongSitActivity : AppActivity(),View.OnClickListener{
         val timeDialog = TimeDialog.Builder(this)
             .setIgnoreSecond()
             .setHour(backHour)
+            .setTitle(resources.getString(if(code == 0) R.string.string_start_time else R.string.string_end_time))
             .setMinute(backMinute)
             .setListener(object : TimeDialog.OnListener{
                 override fun onSelected(dialog: BaseDialog?, hour: Int, minute: Int, second: Int) {
@@ -185,7 +186,7 @@ class LongSitActivity : AppActivity(),View.OnClickListener{
             deviceSetModel?.longSitStr= if(timeBean?.switchStatus == 0) "0" else  String.format("%02d",timeBean?.startHour)+":"+String.format("%02d",timeBean?.startMinute)+"-"+String.format("%02d",timeBean?.endHour)+":"+String.format("%02d",timeBean?.endMinute)
 
 
-            ToastUtils.show("设置成功")
+            ToastUtils.show(resources.getString(R.string.string_save_success))
             BaseApplication.getInstance().bleOperate.setClearListener()
         }
         saveData()

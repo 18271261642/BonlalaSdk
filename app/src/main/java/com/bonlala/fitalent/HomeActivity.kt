@@ -6,6 +6,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
@@ -15,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.blala.blalable.AppUtils
 import com.blala.blalable.BleConstant
+import com.blala.blalable.BleOperateManager
 import com.bonlala.action.ActivityManager
 import com.bonlala.action.AppActivity
 import com.bonlala.action.AppFragment
@@ -56,6 +60,10 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
 
     //是否显示断连提醒的图表
     private var isShowConnImg = false
+
+    //连接不上点击进入的指引url
+    var noConnDescUrl : String ?= null
+
 
     override fun getLayoutId(): Int {
         return R.layout.activity_home
@@ -134,6 +142,7 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
         viewModel.isShowDfuAlert.observe(this) {
             if (it == true) {
                 showDeviceDfuDialog()
+
             }
         }
 
@@ -144,6 +153,10 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
 
         }
 
+        viewModel.notConnDescUrl.observe(this){
+            noConnDescUrl = it
+        }
+        viewModel.getNotConnUrl(this)
     }
 
     //重连
@@ -298,6 +311,7 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
 
     //显示固件升级的弹窗，点击进入固件升级页面
     private fun showDeviceDfuDialog() {
+
         val dfuDialog = DfuUpgradeDialog(this, com.bonlala.base.R.style.BaseDialogTheme)
         dfuDialog.show()
         dfuDialog.setOnItemClick {
@@ -340,7 +354,7 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
 
 
     //是否显示断连提醒的图片
-    private fun showNotConnImg(isShow : Boolean){
+     fun showNotConnImg(isShow : Boolean){
 
         homeConnStateImgView.visibility = if(isShow) View.VISIBLE else View.GONE
 
@@ -360,8 +374,15 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
         dialog.window?.setGravity(Gravity.BOTTOM)
         dialog.setOnItemClick {
             dialog.dismiss()
-            val url = MmkvUtils.getGuideUrl("")
-            startActivity(ShowWebActivity::class.java, arrayOf("url"), arrayOf(url))
+           if(noConnDescUrl == null){
+               return@setOnItemClick
+           }
+            startActivity(ShowWebActivity::class.java, arrayOf("url","title"), arrayOf(noConnDescUrl,resources.getString(R.string.string_device_cant_conn)))
         }
+    }
+
+
+    fun setImgStatus(isShow: Boolean){
+        isShowConnImg = isShow
     }
 }

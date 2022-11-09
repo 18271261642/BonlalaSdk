@@ -3,6 +3,9 @@ package com.bonlala.action;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
@@ -42,6 +45,22 @@ public abstract class AppActivity extends BaseActivity
     /** 对话框数量 */
     private int mDialogCount;
 
+
+    /**dialog默认显示10s，未关闭给关闭**/
+    private final Handler handler = new Handler(Looper.myLooper()){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            if(msg.what == 0x00){
+                if(isShowDialog()){
+                    hideDialog();
+                }
+            }
+
+        }
+    };
+
+
     /**
      * 当前加载对话框是否在显示中
      */
@@ -70,6 +89,7 @@ public abstract class AppActivity extends BaseActivity
             }
             if (!mDialog.isShowing()) {
                 mDialog.show();
+                handler.sendEmptyMessageDelayed(0x00,10 * 1000);
             }
         }, 300);
     }

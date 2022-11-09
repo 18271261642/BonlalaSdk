@@ -8,7 +8,6 @@ import com.bonlala.fitalent.R
 import com.bonlala.fitalent.adapter.HistorySingleHrAdapter
 import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.db.model.SingleHeartModel
-import com.bonlala.fitalent.utils.MmkvUtils
 import kotlinx.android.synthetic.main.dialog_history_heart_layout.*
 
 /**
@@ -54,7 +53,7 @@ class HistoryHeartDialog : AppCompatDialog {
     }
 
     private fun initData(){
-        val mac = MmkvUtils.getConnDeviceMac()
+        val mac = DBManager.getBindMac()
         //获取数据库中所有的单次心率数据
         val dbList = DBManager.dbManager.querySingleHeart("user_1001",mac)
 

@@ -50,7 +50,7 @@ import timber.log.Timber
 /**
  * 设备设置页面
  */
- public class DashboardFragment : TitleBarFragment<HomeActivity>(), View.OnClickListener {
+  class DashboardFragment : TitleBarFragment<HomeActivity>(), View.OnClickListener {
 
     private val tags = "DashboardFragment"
 
@@ -178,19 +178,11 @@ import timber.log.Timber
 
     //获取电量，连接成功后获取一次
     private fun getBattery() {
-//        viewModel.batteryStr.observe(viewLifecycleOwner) {
-//            setBatteryTv.text = it
-//        }
-//        bleOperateManager?.let { viewModel.getDeviceBattery(it) }
         viewModel.commSetModel.observe(viewLifecycleOwner){
             Log.e(tags,"------设置   ="+it.toString())
             deviceSetModel = it
             showReadSet()
         }
-        val mac = MmkvUtils.getConnDeviceMac()
-
-        //viewModel.readAllSetData(bleOperateManager!!,"user_1001",mac)
-//        DataOperateManager.getInstance(activity).readAllDataSet(bleOperateManager)
     }
 
 
@@ -208,6 +200,12 @@ import timber.log.Timber
         val isSaveBle = MmkvUtils.getConnDeviceName()
         val isConn = BaseApplication.getInstance().connStatus == ConnStatus.CONNECTED || BaseApplication.getInstance().connStatus == ConnStatus.IS_SYNC_DATA
         setIsCanClick(!BikeUtils.isEmpty(isSaveBle) && isConn)
+
+        if(BikeUtils.isEmpty(isSaveBle)){
+            attachActivity.setImgStatus(false)
+            attachActivity.showNotConnImg(false)
+        }
+
 
         menuDeviceNameTv.text = MmkvUtils.getConnDeviceName()
         devicePlaceHolderScrollView.visibility = if(BikeUtils.isEmpty(isSaveBle)) View.GONE else View.VISIBLE
@@ -421,9 +419,10 @@ import timber.log.Timber
                 startActivity(GuideActivity::class.java)
             }
             if(position == 1){
-                val url = MmkvUtils.getGuideUrl("W560B")
+                val url = MmkvUtils.getGuideUrl("")
                 val intent = Intent(attachActivity,ShowWebActivity::class.java)
                 intent.putExtra("url",url)
+                intent.putExtra("is_used_title",true)
                 startActivity(intent)
             }
         }

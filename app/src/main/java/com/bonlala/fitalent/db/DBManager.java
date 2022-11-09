@@ -55,12 +55,12 @@ public class DBManager {
     }
 
 
-
-
-    //初始化用户数据，app初次打开是初始化默认值
+    /**
+     *  初始化用户数据，app初次打开是初始化默认值
+     */
     public void initUserInfoData(){
         UserInfoModel userInfoModel = new UserInfoModel();
-        userInfoModel.setUserId("uid_"+System.currentTimeMillis()/1000);
+        userInfoModel.setUserId("user_1001");
         userInfoModel.setUserUnit(0);
         userInfoModel.setUserHeight(180);
         userInfoModel.setUserWeight(80);
@@ -84,7 +84,17 @@ public class DBManager {
     }
 
 
-
+    /**
+     * 获取用户绑定的Mac
+     * @return
+     */
+    public static String getBindMac(){
+        UserInfoModel userInfoModel = getUserInfo();
+        if(userInfoModel == null){
+            return null;
+        }
+        return userInfoModel.getUserBindMac();
+    }
 
 
     //查询用户的信息，单机版实际上就只有一条用户信息
@@ -98,8 +108,10 @@ public class DBManager {
             e.printStackTrace();
             return null;
         }
-
     }
+
+
+
 
 
     public boolean saveDeviceD(){
@@ -456,7 +468,12 @@ public class DBManager {
         /**
          * 判断是否是正常的心率
          */
+        int maxHr = Collections.max(tempHtList);
+        int minHr = Collections.min(tempHtList);
+        if(maxHr == 0 && minHr == 0){
 
+            return;
+        }
 
         oneDayHeartModel.setHeartList(tempHtList);
 

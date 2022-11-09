@@ -11,9 +11,13 @@ import com.hjq.http.EasyConfig
 import com.hjq.http.EasyHttp
 import com.hjq.http.listener.OnHttpListener
 import com.hjq.http.model.BodyType
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import timber.log.Timber
 import java.lang.Exception
+import java.util.*
 
 /**
  * Created by Admin
@@ -26,6 +30,10 @@ class HomeActivityViewModel : ViewModel() {
 
     //是否需要提醒手表固件版本升级
     var isShowDfuAlert = MutableLiveData<Boolean>()
+
+
+    //获取连接不上的指引url
+    var notConnDescUrl = MutableLiveData<String>()
 
     fun getAppVersion(lifecycleOwner: LifecycleOwner) {
         val requestServer = RequestServer()
@@ -60,7 +68,7 @@ class HomeActivityViewModel : ViewModel() {
         EasyConfig.getInstance().setServer(requestServer).into()
         EasyHttp.get(lifecycleOwner).api(VersionApi().setVersion("W560B", 1)).request(object :
             OnHttpListener<String> {
-            override fun onSucceed(result: String?) {
+            override  fun onSucceed(result: String?) {
                 val jsonObject = JSONObject(result)
                 if (jsonObject.get("code") == "200" && jsonObject.get("success") == true) {
                     val dataStr = jsonObject.getString("data")
@@ -68,8 +76,14 @@ class HomeActivityViewModel : ViewModel() {
 
                     Timber.e("--233333--固件版本=" + verBean.toString()+"\n"+currentVersion)
                     if (verBean != null) {
-                        if (!verBean.versionName.equals(currentVersion)) {
-                            isShowDfuAlert.postValue(true)
+                        if (verBean.versionName.lowercase(Locale.ROOT) != currentVersion.lowercase(
+                                Locale.ROOT)
+                        ) {
+                            GlobalScope.launch {
+                                delay(3000)
+                                isShowDfuAlert.postValue(true)
+                            }
+
                         }
                     }
                 }
@@ -81,5 +95,25 @@ class HomeActivityViewModel : ViewModel() {
 
         })
 
+    }
+
+
+    //获取连接不上的url
+    fun getNotConnUrl(lifecycleOwner: LifecycleOwner){
+        EasyHttp.get(lifecycleOwner).api("api/app/deviceGuide/detail/devicetypestring").request(object :
+            OnHttpListener<String> {
+            override fun onSucceed(result: String?) {
+                val jsonObject = JSONObject(result)
+                if(jsonObject.getString("code") == "200"){
+                    val dataStr = jsonObject.getString("data")
+                    notConnDescUrl.postValue(dataStr)
+                }
+            }
+
+            override fun onFail(e: Exception?) {
+
+            }
+
+        })
     }
 }

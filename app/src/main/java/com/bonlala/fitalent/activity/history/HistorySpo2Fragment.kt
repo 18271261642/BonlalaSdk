@@ -11,6 +11,7 @@ import com.bonlala.fitalent.R
 import com.bonlala.fitalent.activity.RecordHistoryActivity
 import com.bonlala.fitalent.adapter.SingleSpo2Adapter
 import com.bonlala.fitalent.bean.ChartSpo2Bean
+import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.dialog.MeasureDialog
 import com.bonlala.fitalent.dialog.SleepTxtDescDialogView
 import com.bonlala.fitalent.emu.ConnStatus
@@ -18,7 +19,6 @@ import com.bonlala.fitalent.emu.MeasureType
 import com.bonlala.fitalent.listeners.OnItemClickListener
 import com.bonlala.fitalent.listeners.OnRecordHistoryRightListener
 import com.bonlala.fitalent.utils.BikeUtils
-import com.bonlala.fitalent.utils.MmkvUtils
 import com.bonlala.fitalent.view.CustomerScrollView
 import com.bonlala.fitalent.viewmodel.SingleSpo2ViewModel
 import com.hjq.toast.ToastUtils
@@ -70,7 +70,7 @@ class HistorySpo2Fragment : TitleBarFragment<RecordHistoryActivity>(),OnItemClic
 
     //获取所有的血氧
     private fun getAllDbData(){
-        var mac = MmkvUtils.getConnDeviceMac()
+        var mac = DBManager.getBindMac()
         if(BikeUtils.isEmpty(mac)){
             showEmpty()
             return

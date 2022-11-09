@@ -5,6 +5,8 @@
     <string name="string_metric">公制</string>
     <string name="string_imperial">英制</string>
 
+
+    <string name="string_device_cant_conn">设备连接不上</string>
     <string name="string_download_success">下载成功</string>
     <string name="string_skip">跳过</string>
     <string name="string_see_why">查看原因</string>

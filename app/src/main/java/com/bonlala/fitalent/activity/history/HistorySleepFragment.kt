@@ -3,18 +3,17 @@ package com.bonlala.fitalent.activity.history
 import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.bonlala.action.TitleBarFragment
+import com.bonlala.fitalent.BaseApplication
 import com.bonlala.fitalent.R
 import com.bonlala.fitalent.activity.RecordHistoryActivity
-import com.bonlala.fitalent.db.model.SleepItem
+import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.db.model.SleepModel
 import com.bonlala.fitalent.dialog.HistorySleepDescDialog
 import com.bonlala.fitalent.dialog.SleepTxtDescDialogView
 import com.bonlala.fitalent.listeners.OnRecordHistoryRightListener
 import com.bonlala.fitalent.utils.BikeUtils
-import com.bonlala.fitalent.utils.MmkvUtils
 import com.bonlala.fitalent.viewmodel.HistorySleepViewModel
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.common_history_bot_date_layout.*
@@ -71,7 +70,7 @@ class HistorySleepFragment : TitleBarFragment<RecordHistoryActivity>(),OnRecordH
         viewModel.recordSleep.observe(viewLifecycleOwner){
             recordList = it
         }
-        val mac = MmkvUtils.getConnDeviceMac()
+        val mac = DBManager.getBindMac()
         if(BikeUtils.isEmpty(mac))
             return
         viewModel.getSleepRecord(mac)
@@ -135,12 +134,12 @@ class HistorySleepFragment : TitleBarFragment<RecordHistoryActivity>(),OnRecordH
 
 
     private fun getDbSleep(){
-        val mac = MmkvUtils.getConnDeviceMac()
+        val mac = DBManager.getBindMac()
         if(BikeUtils.isEmpty(mac))
             return
         viewModel.getSleepForDay(mac,dayStr.toString())
 
-        commonHistoryDateTv.text = dayStr
+        commonHistoryDateTv.text = if(BaseApplication.getInstance().isChinese) dayStr else BikeUtils.getFormatEnglishDate(dayStr)
         if(!BikeUtils.isEqualDay(dayStr,BikeUtils.getCurrDate())){
             commonHistoryCurrentTv.visibility = View.VISIBLE
         }else{

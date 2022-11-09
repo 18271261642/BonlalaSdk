@@ -30,10 +30,12 @@ public class CusScheduleView extends View {
 
     //总的进度画笔
     private Paint allSchedulePaint;
+    private Path bgPath;
     //当前进度画笔
     private Paint currSchedulePaint;
 
     private Path currPath;
+    private Path path;
 
     //总的进度颜色
     private int allShceduleColor;
@@ -100,7 +102,7 @@ public class CusScheduleView extends View {
         allSchedulePaint.setTextSize(1f);
 
         currSchedulePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        currSchedulePaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        currSchedulePaint.setStyle(Paint.Style.FILL);
         currSchedulePaint.setColor(currShceduleColor);
         currSchedulePaint.setTextSize(1f);
         currSchedulePaint.setStrokeCap(Paint.Cap.SQUARE);
@@ -114,7 +116,8 @@ public class CusScheduleView extends View {
         txtPaint.setAntiAlias(true);
 
         currPath = new Path();
-
+        bgPath = new Path();
+        path = new Path();
 
     }
 
@@ -142,36 +145,38 @@ public class CusScheduleView extends View {
             currV = mWidth;
         }
         RectF rectF = new RectF(0,mHeight,mWidth,0);
-        canvas.drawRoundRect(rectF,mHeight/2,mHeight/2,allSchedulePaint);
+//        canvas.drawRoundRect(rectF,mHeight/2,mHeight/2,allSchedulePaint);
+        allSchedulePaint.setColor(allShceduleColor);
+        bgPath.addRoundRect(rectF,mHeight/2,mHeight/2, Path.Direction.CCW);
+        canvas.drawPath(bgPath,allSchedulePaint);
 
         if(currRectf == null){
             currRectf = new RectF();
         }
 
 
-
-        currRectf.left =0;// currV < mHeight ?  mHeight-currV : 0;
+        currRectf.left = currV < mHeight ? currV-mHeight : 0;
         currRectf.top = 0;
         currRectf.right = currV;
         currRectf.bottom = mHeight;
 
-        Timber.e("---currW="+currV+" "+mWidth+" "+mHeight);
-        float y = currV<mHeight ? currV - mHeight : 0;
+
 //        RectF currRectf = new RectF(5f,y,currV,0);
         currPath.addRoundRect(currRectf,mHeight/2,mHeight/2,Path.Direction.CW);
-        canvas.drawPath(currPath,currSchedulePaint);
-
+        path.op(bgPath,currPath,Path.Op.INTERSECT);
         Timber.e("----isShow="+isShowTxt+" "+showTxt);
+        currSchedulePaint.setColor(currShceduleColor);
+        canvas.drawPath(path,currSchedulePaint);
         if(isShowTxt){
             if(showTxt != null){
                 float txtHeight = MiscUtil.measureTextHeight(txtPaint);
                 canvas.drawText(showTxt,mWidth/2,mHeight/2+txtHeight/2,txtPaint);
             }
         }
-
-//        canvas.drawRect(currRectf,currSchedulePaint);
-//        canvas.drawRoundRect(currRectf,mHeight/2,mHeight/2,currSchedulePaint);
         currPath.reset();
+        bgPath.reset();
+        path.reset();
+        currSchedulePaint.reset();
     }
 
 

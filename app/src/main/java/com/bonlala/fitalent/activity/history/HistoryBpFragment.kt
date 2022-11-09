@@ -11,6 +11,7 @@ import com.bonlala.fitalent.R
 import com.bonlala.fitalent.activity.RecordHistoryActivity
 import com.bonlala.fitalent.adapter.SingleBpAdapter
 import com.bonlala.fitalent.bean.ChartBpBean
+import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.dialog.MeasureDialog
 import com.bonlala.fitalent.dialog.SleepTxtDescDialogView
 import com.bonlala.fitalent.emu.ConnStatus
@@ -18,12 +19,10 @@ import com.bonlala.fitalent.emu.MeasureType
 import com.bonlala.fitalent.listeners.OnItemClickListener
 import com.bonlala.fitalent.listeners.OnRecordHistoryRightListener
 import com.bonlala.fitalent.utils.BikeUtils
-import com.bonlala.fitalent.utils.MmkvUtils
 import com.bonlala.fitalent.view.CusBloadChartView
 import com.bonlala.fitalent.viewmodel.SingleBpViewModel
 import com.google.gson.Gson
 import com.hjq.toast.ToastUtils
-import kotlinx.android.synthetic.main.activity_record_history_layout.*
 import kotlinx.android.synthetic.main.fragment_history_bp_layout.*
 import timber.log.Timber
 
@@ -73,7 +72,7 @@ class HistoryBpFragment : TitleBarFragment<RecordHistoryActivity>() ,OnItemClick
 
     //获取数据
     private fun getAllDbData(){
-        val mac = MmkvUtils.getConnDeviceMac()
+        val mac = DBManager.getBindMac()
         if(BikeUtils.isEmpty(mac)){
             showEmptyData()
             return

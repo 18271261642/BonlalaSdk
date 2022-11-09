@@ -200,7 +200,7 @@ public class ConnStatusService extends Service {
                 BleOperateManager.getInstance().setClearListener();
 
                 DataOperateManager.getInstance(ConnStatusService.this).setMeasureDataSave(BleOperateManager.getInstance());
-                DataOperateManager.getInstance(ConnStatusService.this).readAllDataSet(BleOperateManager.getInstance());
+                DataOperateManager.getInstance(ConnStatusService.this).readAllDataSet(BleOperateManager.getInstance(),false);
             }
         });
     }
@@ -229,7 +229,7 @@ public class ConnStatusService extends Service {
                 BleOperateManager.getInstance().setClearListener();
 
                 DataOperateManager.getInstance(ConnStatusService.this).setMeasureDataSave(BleOperateManager.getInstance());
-                DataOperateManager.getInstance(ConnStatusService.this).readAllDataSet(BleOperateManager.getInstance());
+                DataOperateManager.getInstance(ConnStatusService.this).readAllDataSet(BleOperateManager.getInstance(),false);
 
                 //同步时间
                 //BleOperateManager.getInstance().syncDeviceTime(writeBackDataListener);
@@ -272,9 +272,9 @@ public class ConnStatusService extends Service {
 
                 sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
                 BleOperateManager.getInstance().setClearListener();
-
-                DataOperateManager.getInstance(ConnStatusService.this).setMeasureDataSave(BleOperateManager.getInstance());
-                DataOperateManager.getInstance(ConnStatusService.this).readAllDataSet(BleOperateManager.getInstance());
+//
+//                DataOperateManager.getInstance(ConnStatusService.this).setMeasureDataSave(BleOperateManager.getInstance());
+//                DataOperateManager.getInstance(ConnStatusService.this).readAllDataSet(BleOperateManager.getInstance());
             }
         }
     };

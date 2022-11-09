@@ -15,8 +15,13 @@ import com.bonlala.fitalent.emu.ConnStatus;
 import com.bonlala.fitalent.http.RequestHandler;
 import com.bonlala.fitalent.http.RequestServer;
 import com.bonlala.fitalent.service.AlertService;
+import com.bonlala.fitalent.utils.LanguageUtils;
 import com.bonlala.fitalent.utils.MmkvUtils;
 import com.hjq.http.EasyConfig;
+import com.hjq.http.config.IRequestInterceptor;
+import com.hjq.http.model.HttpHeaders;
+import com.hjq.http.model.HttpParams;
+import com.hjq.http.request.HttpRequest;
 import com.hjq.toast.ToastUtils;
 import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
@@ -25,6 +30,7 @@ import com.tencent.mmkv.MMKV;
 
 import org.litepal.LitePal;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import okhttp3.OkHttpClient;
 import timber.log.Timber;
@@ -32,6 +38,7 @@ import timber.log.Timber;
 /**
  * Created by Admin
  * Date 2022/8/5
+ * @author Admin
  */
 public class BaseApplication extends BleApplication {
 
@@ -50,6 +57,9 @@ public class BaseApplication extends BleApplication {
     /**数据同步状态的枚举**/
 
 
+    /**是否是中文状态**/
+    private boolean isChinese = false;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -65,6 +75,7 @@ public class BaseApplication extends BleApplication {
         LitePal.initialize(this);
         SQLiteDatabase sqLiteDatabase = LitePal.getDatabase();
         Timber.e("---------sql="+sqLiteDatabase.getPath());
+        isChinese = LanguageUtils.isChinese();
         //腾讯mmkv
         MMKV.initialize(this);
         MmkvUtils.initMkv();
@@ -172,7 +183,8 @@ public class BaseApplication extends BleApplication {
     private void initNet(){
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .build();
-
+        //是否是中文
+        boolean isChinese = LanguageUtils.isChinese();
         EasyConfig.with(okHttpClient)
                 // 是否打印日志
                 .setLogEnabled(BuildConfig.DEBUG)
@@ -186,6 +198,12 @@ public class BaseApplication extends BleApplication {
                 //.addParam("token", "6666666")
                 // 添加全局请求头
                 //.addHeader("time", "20191030")
+                .setInterceptor(new IRequestInterceptor() {
+                    @Override
+                    public void interceptArguments(@NonNull HttpRequest<?> httpRequest, @NonNull HttpParams params, @NonNull HttpHeaders headers) {
+                        headers.put("Accept-Language", LanguageUtils.isChinese() ? "zh-CN" : "en");
+                    }
+                })
                 // 启用配置
                 .into();
     }
@@ -196,5 +214,9 @@ public class BaseApplication extends BleApplication {
 
     public void setConnBleName(String connBleName) {
         this.connBleName = connBleName;
+    }
+
+    public boolean getIsChinese(){
+        return isChinese;
     }
 }

@@ -6,21 +6,20 @@ import androidx.fragment.app.viewModels
 import com.bonlala.action.TitleBarFragment
 import com.bonlala.fitalent.R
 import com.bonlala.fitalent.activity.RecordHistoryActivity
+import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.db.model.OneDayStepModel
 import com.bonlala.fitalent.db.model.SleepItem
 import com.bonlala.fitalent.db.model.StepItem
 import com.bonlala.fitalent.dialog.CalendarSelectDialog
 import com.bonlala.fitalent.emu.StepType
-import com.bonlala.fitalent.utils.BikeUtils
-import com.bonlala.fitalent.utils.CalculateUtils
-import com.bonlala.fitalent.utils.GsonUtils
-import com.bonlala.fitalent.utils.MmkvUtils
+import com.bonlala.fitalent.utils.*
 import com.bonlala.fitalent.view.StepChartView
 import com.bonlala.fitalent.viewmodel.HistoryStepViewModel
 import com.github.mikephil.charting.charts.BarChart
 import com.google.gson.Gson
 import com.haibin.calendarview.CalendarUtil
 import kotlinx.android.synthetic.main.common_history_bot_date_layout.*
+import kotlinx.android.synthetic.main.dialog_date_select_layout.*
 import kotlinx.android.synthetic.main.fragment_history_step_layout.*
 import kotlinx.android.synthetic.main.fragment_history_step_layout.view.*
 import timber.log.Timber
@@ -65,7 +64,7 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
         dayStr = BikeUtils.getCurrDate()
         showResult()
 
-        val mac = MmkvUtils.getConnDeviceMac()
+        val mac = DBManager.getBindMac()
         viewModel.getAllStepRecord(mac)
 
         //默认日
@@ -137,7 +136,7 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
             commonHistoryCurrentTv.visibility = View.GONE
         }
 
-        val mac = MmkvUtils.getConnDeviceMac()
+        val mac =DBManager.getBindMac()
         dayStr?.let { viewModel.getOnDayStepByDay(it,mac) }
 
     }
@@ -155,7 +154,7 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
             commonHistoryCurrentTv.visibility = View.GONE
         }
 
-        val mac = MmkvUtils.getConnDeviceMac()
+        val mac = DBManager.getBindMac()
 
         viewModel.getOneYearStep(attachActivity,mac,dayStr.toString())
     }
@@ -173,7 +172,7 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
             commonHistoryCurrentTv.visibility = View.GONE
         }
 
-        val mac = MmkvUtils.getConnDeviceMac()
+        val mac = DBManager.getBindMac()
         viewModel.getOneWeekStepData(attachActivity, mac,dayStr.toString())
     }
 
@@ -221,6 +220,9 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
 
         stepHistoryKcalTv.text = ":"+oneDayStepModel.dayCalories.toString()
 
+        val isChinese = LanguageUtils.isChinese()
+
+
         //计算平均步数，日不显示
         if(type != StepType.DAY){
             var countDayStep = 0
@@ -247,19 +249,20 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
         if(type == StepType.WEEK){
             //val weekCalendar = BikeUtils.getDayCalendar(dayStr)
             //周的第一天和最后一天，周日到周六
-            val sunDay = BikeUtils.getWeekSunToSta(BikeUtils.transToDate(dayStr))
+            val sunDay =if(isChinese) BikeUtils.getWeekSunToSta(BikeUtils.transToDate(dayStr)) else BikeUtils.getWeekSunToStaForEnglish(BikeUtils.transToDate(dayStr))
             commonHistoryDateTv.text = sunDay
         }
-//        else if(type == StepType.MONTH){
-//            commonHistoryDateTv.text = BikeUtils.getDayByMonth(dayStr)
-//        }
+        else if(type == StepType.MONTH){
+            commonHistoryDateTv.text = if(isChinese) dayStr else BikeUtils.getDayByMonthEn(dayStr)
+        }
 
         else if(type == StepType.YEAR){
             val yearStr = BikeUtils.getDayOfYear(dayStr)
             commonHistoryDateTv.text = yearStr.toString()
         }
         else{
-            commonHistoryDateTv.text = dayStr
+
+            commonHistoryDateTv.text = if(isChinese) dayStr else BikeUtils.getFormatEnglishDate(dayStr)
         }
 
     }
@@ -267,8 +270,9 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
 
     //展示空的数据
     private fun showEmptyData(){
+        val isChinese = LanguageUtils.isChinese()
         attachActivity.setStepSchedule(0f,MmkvUtils.getStepGoal().toFloat())
-        commonHistoryDateTv.text = dayStr
+        commonHistoryDateTv.text =if(isChinese) dayStr else BikeUtils.getFormatEnglishDate(dayStr)
         //总的计步
         stepTotalStepTv.text = "-- "+resources.getString(R.string.string_step)
         //距离
@@ -304,7 +308,7 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
             showValidData(StepType.MONTH,it.detailStep,it.dayStep,it.dayDistance,it.dayCalories)
 
         }
-        viewModel.getOneMonthStep(dayStr.toString(),MmkvUtils.getConnDeviceMac())
+        viewModel.getOneMonthStep(dayStr.toString(),DBManager.getBindMac())
     }
 
 

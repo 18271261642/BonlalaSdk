@@ -272,7 +272,7 @@ public class BleConstant {
         }
         stringBuilder2.append(1);
         stringBuilder2.append(1);
-        byte b2 = Utils.bitToByte(stringBuilder2.toString());
+        byte b2 = 0x03;
         connByte[4] = b2;
 
         return connByte;

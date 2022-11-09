@@ -24,6 +24,7 @@ import com.bonlala.fitalent.bean.HomeHeartBean
 import com.bonlala.fitalent.bean.HomeRealtimeBean
 import com.bonlala.fitalent.bean.HomeSourceBean
 import com.bonlala.fitalent.ble.DataOperateManager
+import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.db.model.SingleBpModel
 import com.bonlala.fitalent.db.model.SingleSpo2Model
 import com.bonlala.fitalent.db.model.SumSportModel
@@ -94,11 +95,16 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
         homeRecyclerView?.adapter = homeUiAdapter
         homeUiAdapter?.setOnItemClickListener {
 
+            //判断是否用户绑定Mac了，用户绑定了Mac可以点击
+            val bindMac = DBManager.getBindMac()
+
+
+
 //            startActivity(TestA::class.java)
 //            return@setOnItemClickListener
 
 
-            if(BikeUtils.isEmpty(MmkvUtils.getConnDeviceMac())){
+            if(BikeUtils.isEmpty(bindMac)){
 
                 ToastUtils.show(resources.getString(R.string.string_not_connect))
                 return@setOnItemClickListener
@@ -141,8 +147,8 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
 
 
     private fun homeDeviceClick(){
-        val deviceName = MmkvUtils.getConnDeviceName()
-        if(BikeUtils.isEmpty(deviceName)){  //未连接过
+        val userMac = DBManager.getBindMac()
+        if(BikeUtils.isEmpty(userMac)){  //未连接过
             homeDeviceStatusView.setOnClickListener {
                 startActivity(MainActivity::class.java)
             }
@@ -158,8 +164,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
             override fun onStatusClick() {
 
 
-                val isSaveBle = MmkvUtils.getConnDeviceMac()
-                if(BikeUtils.isEmpty(isSaveBle)){
+                if(BikeUtils.isEmpty(userMac)){
                     startActivity(MainActivity::class.java)
                     return
                 }
@@ -343,7 +348,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
     private var homeHrB : HomeHeartBean ?=null
 
     private fun getDataForDb(){
-        val mac = MmkvUtils.getConnDeviceMac()
+        val mac = DBManager.getBindMac()
         if(BikeUtils.isEmpty(mac)){
             showEmptyData()
             return
@@ -367,13 +372,20 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
 
     private fun showDeviceStatus(){
         //判断是否连接过
-        val deviceName = MmkvUtils.getConnDeviceName()
-        if(BikeUtils.isEmpty(deviceName)){  //未连接过
+        val bindMac = MmkvUtils.getConnDeviceMac()
+        if(BikeUtils.isEmpty(bindMac)){  //未连接过
             homeDeviceStatusView.setIsConnRecord(false,"")
             showEmptyData()
             return
         }
-        homeDeviceStatusView.setIsConnRecord(true,deviceName)
+        val userMac = DBManager.getBindMac()
+        if(BikeUtils.isEmpty(userMac)){
+
+            return
+        }
+        getDataForDb()
+        val bleName = MmkvUtils.getConnDeviceName()
+        homeDeviceStatusView.setIsConnRecord(true,bleName)
         //连接过，判断状态
         homeDeviceStatusView.setHomeConnStatus(BaseApplication.getInstance().connStatus)
         if(BaseApplication.getInstance().connStatus == ConnStatus.CONNECTED){
@@ -432,7 +444,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
         }
         homeRefreshLayout.setEnableRefresh(true)
 
-        DataOperateManager.getInstance(attachActivity).readAllDataSet(BleOperateManager.getInstance())
+        DataOperateManager.getInstance(attachActivity).readAllDataSet(BleOperateManager.getInstance(),true)
         homeDeviceStatusView.setHomeConnStatus(BaseApplication.getInstance().connStatus)
     }
 }

@@ -448,7 +448,7 @@ public class BleOperateManager {
         Log.e(TAG,"--通用设置="+setStr);
         byte bt = Utils.bitToByte(setStr);
         byArray[3] = bt;
-        byArray[4] = 1;
+        byArray[4] = 3;
         // Utils.bitToByte()
         bleManager.writeDataToDevice(byArray,writeBackDataListener);
     }
@@ -614,13 +614,68 @@ public class BleOperateManager {
      * @param content 内容
      * @param writeBackDataListener
      */
+    public static String formatTwoStr(int number) {
+        String strNumber = String.format("%02d", number);
+        return strNumber;
+    }
+
+    private  static List<byte[]> setBytes(String content){
+
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        String strMonth = formatTwoStr(calendar.get(Calendar.MONTH) + 1);
+        String strDay = formatTwoStr(calendar.get(Calendar.DAY_OF_MONTH));
+        String strHour = formatTwoStr(calendar.get(Calendar.HOUR_OF_DAY));
+        String strMin = formatTwoStr(calendar.get(Calendar.MINUTE));
+        String strSecond = formatTwoStr(calendar.get(Calendar.SECOND));
+        //String time = "20200110T1036";
+        String time = year + strMonth + strDay + "T" + strHour + strMin + strSecond;
+
+
+        List<byte[]> allList = new ArrayList<>();
+        byte[] contentLength = content.getBytes();
+
+        byte[] b1Array = new byte[20];
+        b1Array[0] = 0x01;
+        b1Array[1] = 0x10;
+        b1Array[2] = 0x02;
+        b1Array[3] = 0x00;
+        b1Array[4] = (byte) contentLength.length;
+        b1Array[5] = 0x00;
+
+        allList.add(b1Array);
+
+        byte[] b2Array = new byte[20];
+        b2Array[0] = 0x02;
+        b2Array[1] = 0x10;
+        b2Array[2] = 0x00;
+        allList.add(b2Array);
+
+
+        byte[] b3Array = new byte[20];
+        System.arraycopy(contentLength,0,b3Array,1,contentLength.length+1);
+
+        b3Array[0]= 0x03;
+        allList.add(b3Array);
+        byte[] timeArray = time.getBytes();
+
+
+        byte[] timeA = new byte[20];
+        System.arraycopy(timeArray,0,timeA,1,timeArray.length+1);
+
+        allList.add(timeA);
+
+
+        return allList;
+
+    }
 
 
     int tempIndex = 0;
     public void sendAPPNoticeMessage(int type,String title,String content,WriteBackDataListener writeBackDataListener){
         tempIndex = 0;
         appList.clear();
-        ArrayList<byte[]> appByte = Utils.sendMessageData(type,title,content);
+        List<byte[]> appByte = Utils.sendMessageData(type,title,content);
         appList.addAll(appByte);
 
         Log.e(TAG,"------消息="+new Gson().toJson(appByte));
@@ -628,24 +683,26 @@ public class BleOperateManager {
         for(int i = 0 ;i<appByte.size();i++){
             byte[] bt = appByte.get(i);
           Log.e(TAG,"消息提醒="+Utils.formatBtArrayToString(bt));
+
+            bleManager.writeDataToDevice(bt);
         }
         int size = appByte.size();
 
 
-        bleManager.writeDataToDevice(appByte.get(0), new WriteBackDataListener() {
-            @Override
-            public void backWriteData(byte[] data) {
-                Log.e(TAG,"---------发送消息="+Utils.formatBtArrayToString(data)+" "+tempIndex);
-                if(tempIndex+1>=appByte.size()){
-                    bleManager.setClearListener();
-                    return;
-                }
-                tempIndex = tempIndex+1;
-
-                byte[] v = appByte.get(tempIndex);
-                bleManager.writeDataToDevice(v);
-            }
-        });
+//        bleManager.writeDataToDevice(appByte.get(0), new WriteBackDataListener() {
+//            @Override
+//            public void backWriteData(byte[] data) {
+//                Log.e(TAG,"---------发送消息="+Utils.formatBtArrayToString(data)+" "+tempIndex);
+//                if(tempIndex+1>=appByte.size()){
+//                    bleManager.setClearListener();
+//                    return;
+//                }
+//                tempIndex = tempIndex+1;
+//
+//                byte[] v = appByte.get(tempIndex);
+//                bleManager.writeDataToDevice(v);
+//            }
+//        });
     }
 
 

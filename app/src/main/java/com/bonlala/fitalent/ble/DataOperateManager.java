@@ -293,12 +293,7 @@ public class DataOperateManager {
     private DeviceSetModel deviceSetModel = null;
 
     //连接成功获取设置项
-    public void readAllDataSet(BleOperateManager bleOperateManager){
-
-
-
-
-
+    public void readAllDataSet(BleOperateManager bleOperateManager,boolean isRefresh){
 
         deviceSetModel = new DeviceSetModel();
         deviceSetModel.assignBaseObjId(0);
@@ -309,7 +304,7 @@ public class DataOperateManager {
                 if(deviceSetModel != null){
                     deviceSetModel.setBattery(value[0]);
                 }
-                readDeviceInfo(bleOperateManager);
+                readDeviceInfo(bleOperateManager,isRefresh);
 
             }
 
@@ -320,7 +315,7 @@ public class DataOperateManager {
         });
     }
 
-    private void readDeviceInfo(BleOperateManager bleOperateManager){
+    private void readDeviceInfo(BleOperateManager bleOperateManager,boolean isRefresh){
         bleOperateManager.getDeviceVersionData(new OnCommBackDataListener() {
             @Override
             public void onIntDataBack(int[] value) {
@@ -341,7 +336,10 @@ public class DataOperateManager {
                     deviceSetModel.setDeviceVersionCode(Integer.parseInt(hardVersion));
                     deviceSetModel.setDeviceVersionName(versionStr);
                 }
-                setCommBroad(BleConstant.BLE_SEND_DUF_VERSION_ACTION,versionStr);
+                if(!isRefresh){
+                    setCommBroad(BleConstant.BLE_SEND_DUF_VERSION_ACTION,versionStr);
+                }
+
                 readStepGoal(bleOperateManager);
             }
         });
@@ -409,8 +407,6 @@ public class DataOperateManager {
                     deviceSetModel.setLightLevel(backLight);
                     deviceSetModel.setLightTime(lightTime);
 
-
-
                     saveDeviceSetDatToDb(deviceSetModel,bleOperateManager);
                 }
             }
@@ -439,7 +435,6 @@ public class DataOperateManager {
         if(dayInterval == 0){
             deviceBackDay = 0;
         }
-
 
         get24HourData(bleOperateManager,deviceValidDay);
     }

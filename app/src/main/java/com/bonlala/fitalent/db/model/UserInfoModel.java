@@ -28,18 +28,22 @@ public class UserInfoModel extends LitePalSupport {
 
     /**头像图片地址**/
     private String headUrl;
-    //背景地址
+    /**背景地址**/
     private String backUrl;
-    //头像的缩略图
+    /**头像的缩略图**/
     private String headThumbnailUrl;
 
-    //目标，计步目标 步
+    /**目标，计步目标 步**/
     private int stepGoal;
-    //目标，距离目标 米
+    /**目标，距离目标 米**/
     private int distanceGoal;
-    //目标，卡路里目标
+    /**目标，卡路里目标**/
     private int kcalGoal;
 
+    /**
+     * 2022-11-9 17:05:54 新增字段，用户绑定的设备，每次绑定新设备后替换
+     */
+    private String userBindMac;
 
     //备注
     private String remark;
@@ -155,5 +159,13 @@ public class UserInfoModel extends LitePalSupport {
 
     public void setKcalGoal(int kcalGoal) {
         this.kcalGoal = kcalGoal;
+    }
+
+    public String getUserBindMac() {
+        return userBindMac;
+    }
+
+    public void setUserBindMac(String userBindMac) {
+        this.userBindMac = userBindMac;
     }
 }

@@ -49,6 +49,8 @@ public class MmkvUtils {
     /**W560B的消息提醒**/
     private static final String W560B_APPS_KEY = "w560b_apps_key";
 
+    /**设备连接失败的指引**/
+    private static final String CONN_ERROR_DESC_KEY = "conn_error_desc";
 
 
     private static MMKV mmkv;
@@ -239,5 +241,18 @@ public class MmkvUtils {
      */
     public static boolean getW560BPhoneStatus(){
         return (boolean) getSaveParams(W560B_PHONE_CALL_KEY,false);
+    }
+
+    /**
+     * 保存连接失败的指引
+     */
+    public static void saveConnErrorUrl(String url){
+        setSaveParams(CONN_ERROR_DESC_KEY,url);
+    }
+    /**
+     * 获取连接失败指引
+     */
+    public static String getConnErrorDesc(){
+        return (String) getSaveParams(CONN_ERROR_DESC_KEY,null);
     }
 }

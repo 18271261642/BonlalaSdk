@@ -5,6 +5,8 @@
     <string name="title_dashboard">device</string>
     <string name="title_notifications">mine</string>
 
+
+    <string name="string_device_cant_conn">Equipment cannot be connected</string>
     <string name="string_download_success">Download successful</string>
     <string name="string_skip">Skip</string>
     <string name="string_see_why">See Why</string>

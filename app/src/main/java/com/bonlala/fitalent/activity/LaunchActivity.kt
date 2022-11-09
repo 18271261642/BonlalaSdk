@@ -115,6 +115,10 @@ class LaunchActivity : AppActivity() {
 
         }
 
+        viewModel.connErrorUrl.observe(this){
+            MmkvUtils.saveConnErrorUrl(it)
+        }
+
         viewModel.guiderTypeList.observe(this){
             Timber.e("-------guide="+Gson().toJson(it))
 
@@ -132,6 +136,7 @@ class LaunchActivity : AppActivity() {
         }
         viewModel.getGuideUrl(this)
         viewModel.getGuideTypeList(this)
+        viewModel.getConnErrorDesc(this,"W560B")
     }
 
     //获取H5链接

@@ -26,11 +26,22 @@ import java.util.regex.Pattern;
 /**
  * Created by Admin
  * Date 2022/3/25
+ * @author Admin
  */
 public class BikeUtils {
 
 
     private static final long onDay = 86400000L;
+
+    /** Aug 30,2022格式**/
+    private static final  SimpleDateFormat enSdf = new SimpleDateFormat("EEE MMM,yyyy",Locale.ENGLISH);
+    /**格式化历史数据中的周 12/1~12/6 > MM dd**/
+    private static final SimpleDateFormat enWeekSdf = new SimpleDateFormat("MM dd",Locale.ENGLISH);
+    private static final SimpleDateFormat enWeekSdf2 = new SimpleDateFormat("d,yyyy",Locale.ENGLISH);
+    /**月份**/
+    private static final SimpleDateFormat enMonth = new SimpleDateFormat("d,yyyy",Locale.ENGLISH);
+
+
 
     // 字符串的非空
     public static boolean isEmpty(String input) {
@@ -46,11 +57,33 @@ public class BikeUtils {
     }
 
 
+    /**
+     * 将yyyy-MM-dd格式的日期格式化为英文 周 月 日格式的日期
+     * @param dayStr yyyy-MM-dd格式
+     * @return 日期
+     */
+    public static String getFormatEnglishDate(String dayStr){
+        try {
+            long time = simpleDateFormat.parse(dayStr).getTime();
+            return enSdf.format(new Date(time));
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return enSdf.format(new Date());
+        }
+    }
+
+
+
     public static String getFormatDate(long time,String format){
        SimpleDateFormat sdf = new SimpleDateFormat(format,Locale.CHINA);
         return sdf.format(new Date(time));
     }
 
+    public static String getFormatDate(long time,String format,Locale local){
+        SimpleDateFormat sdf = new SimpleDateFormat(format,local);
+        return sdf.format(new Date(time));
+    }
 
 
     // 根据年月日计算年龄,birthTimeString:"1994-11-14"
@@ -262,6 +295,29 @@ public class BikeUtils {
             return getFormatDate(System.currentTimeMillis(),"yyyy-MM");
         }
     }
+
+
+    /**
+     * 获取日期的月
+     * @param dayStr yyyy-MM-dd格式
+     * @return yyyy-MM
+     */
+    public static String getDayByMonthEn(String dayStr){
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM",Locale.ENGLISH);
+            long time = sdf.parse(dayStr).getTime();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(time);
+            long monthTime = calendar.getTimeInMillis();
+            return getFormatDate(monthTime,"MMM,yyyy",Locale.ENGLISH);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return getFormatDate(System.currentTimeMillis(),"MMM,yyyy",Locale.ENGLISH);
+        }
+    }
+
+
 
     /**
      * 获取上一个月或下一个月
@@ -504,9 +560,41 @@ public class BikeUtils {
         Calendar firstW = getWeekFirstDate(start);
         Calendar end = getWeekLastDate(start);
 
-        String result = getFormatDate(firstW.getTimeInMillis(),wFormat)+"~"+getFormatDate(end.getTimeInMillis(),wFormat);
-        return result;
+        int lefYear = start.get(Calendar.YEAR);
+        int endYear = end.get(Calendar.YEAR);
+        if(lefYear != endYear){
+            String result = lefYear+" "+getFormatDate(firstW.getTimeInMillis(),wFormat)+"~"+endYear+" "+getFormatDate(end.getTimeInMillis(),wFormat);
+            return result;
+        }else{
+            String result = getFormatDate(firstW.getTimeInMillis(),wFormat)+"~"+getFormatDate(end.getTimeInMillis(),wFormat);
+            return result;
+        }
+
     }
+
+
+    //周日到周六
+    public static String getWeekSunToStaForEnglish(long time){
+        String wFormat = "MMM dd";
+        String wFormat2 = "d,yyyy";
+        Calendar start = Calendar.getInstance();
+        start.setTimeInMillis(time);
+        Calendar firstW = getWeekFirstDate(start);
+        Calendar end = getWeekLastDate(start);
+
+        int lefYear = start.get(Calendar.YEAR);
+        int endYear = end.get(Calendar.YEAR);
+        if(lefYear != endYear){
+            String result = lefYear+" "+getFormatDate(firstW.getTimeInMillis(),wFormat,Locale.ENGLISH)+"~"+endYear+" "+getFormatDate(end.getTimeInMillis(),wFormat2,Locale.ENGLISH);
+            return result;
+        }else{
+            String result = getFormatDate(firstW.getTimeInMillis(),wFormat,Locale.ENGLISH)+"~"+getFormatDate(end.getTimeInMillis(),wFormat2,Locale.ENGLISH);
+            return result;
+        }
+
+    }
+
+
 
 
     /**获取日期是周几**/
@@ -770,7 +858,7 @@ public class BikeUtils {
             return "0h0min";
         int hour = minute / 60;
         int minuteStr = minute % 60;
-        return hour+"h"+minuteStr+"minute";
+        return hour+"h"+minuteStr+"min";
     }
 
 

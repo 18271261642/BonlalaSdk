@@ -86,14 +86,14 @@ public class CusSleepDescView extends LinearLayout {
     public void setDeepData(int value,float maxValue){
         sleepDeepScheduleView.setAllScheduleValue(maxValue);
         sleepDeepScheduleView.setCurrScheduleValue(value);
-        sleepDeepTimeTv.setText(BikeUtils.formatHourAndMinute(value)+"min");
+        sleepDeepTimeTv.setText(BikeUtils.formatHourAndMinute(value));
         invalidate();
     }
     /**设置浅睡的进度**/
     public void setLightData(int value,float maxValue){
         sleepLightScheduleView.setAllScheduleValue(maxValue);
         sleepLightScheduleView.setCurrScheduleValue(value);
-        sleepLightTime.setText(BikeUtils.formatHourAndMinute(value)+"min");
+        sleepLightTime.setText(BikeUtils.formatHourAndMinute(value));
         invalidate();
     }
 
@@ -101,7 +101,7 @@ public class CusSleepDescView extends LinearLayout {
     public void setAwakeData(int value,float maxValue){
         sleepAwakeScheduleView.setAllScheduleValue(maxValue);
         sleepAwakeScheduleView.setCurrScheduleValue(value);
-        sleepAwakeTime.setText(value == 0? "--min":BikeUtils.formatHourAndMinute(value)+"min");
+        sleepAwakeTime.setText(value == 0? "--min":BikeUtils.formatHourAndMinute(value));
         invalidate();
     }
 

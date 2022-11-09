@@ -34,8 +34,10 @@ import no.nordicsemi.android.dfu.DfuServiceInitiator
 import no.nordicsemi.android.dfu.DfuServiceListenerHelper
 import timber.log.Timber
 import java.io.File
+import java.util.*
 
 /**
+ * W560B固件升级
  * Created by Admin
  *Date 2022/9/19
  */
@@ -85,6 +87,7 @@ class DfuActivity : AppActivity() {
         dfuDownloadTv.setOnClickListener {
             if(serverVersionInfo == null)
                 return@setOnClickListener
+
             startDfu()
         }
 
@@ -192,8 +195,11 @@ class DfuActivity : AppActivity() {
     private fun showUpdateContent(versionInfo: VersionApi.VersionInfo){
         serverVersionInfo = versionInfo
         //startDownload(versionInfo)
+        val isE = (versionInfo.versionName.lowercase(Locale.ROOT) == ("v$deviceVersion").lowercase(
+            Locale.ROOT))
+        Timber.e("------版本="+versionInfo.versionName+" "+deviceVersion+" "+isE)
         //无需更新
-        if(versionInfo.versionName == deviceVersion){
+        if(versionInfo.versionName.lowercase(Locale.ROOT) == (deviceVersion?.lowercase(Locale.ROOT))){
             dfuNoUpdateTv.visibility = View.VISIBLE
             dfuBtnStatusView.setShowTxt = resources.getString(R.string.string_i_konw)
             dfuBtnStatusView.mbgColor = Color.parseColor("#FF4EDD7D")
@@ -209,7 +215,7 @@ class DfuActivity : AppActivity() {
         dfuBtnStatusView.visibility = View.GONE
 
         dfuNoUpdateTv.visibility = View.GONE
-        dfuNetLastVersionTv.text = resources.getString(R.string.string_last_version)+""+versionInfo.versionName
+        dfuNetLastVersionTv.text = resources.getString(R.string.string_last_version)+":"+versionInfo.versionName
         dfuFileSizeTv.text = resources.getString(R.string.string_version_file_size)+""+(versionInfo.fileSize/1000)+"kb"
         dfuRemarkTv.text = resources.getString(R.string.string_version_desc)+"\n"+versionInfo.remark
 
@@ -231,6 +237,7 @@ class DfuActivity : AppActivity() {
                 dfuCompleteTv.visibility = View.GONE
                 dfuDownloadTv.visibility = View.VISIBLE
                 isUpgradeing = true
+
                 dfuDownloadTv.allScheduleValue = 100f
                 dfuDownloadTv.showTxt = resources.getString(R.string.string_download_ing)
             }
@@ -251,7 +258,7 @@ class DfuActivity : AppActivity() {
                 dfuDownloadTv.visibility = View.VISIBLE
                 dfuDownloadTv.currScheduleValue = 100f
                 dfuDownloadTv.showTxt = resources.getString(R.string.string_download_start_upgrade)
-
+                isUpgradeing = false
 
                 file?.path?.let {
                    // downloadCompleteAndToStart(it)
@@ -301,7 +308,7 @@ class DfuActivity : AppActivity() {
             return
         val uri = Uri.fromFile(File("$fileSaveUrl/$w560BDfuFile"))
         Timber.e("---url="+url+"\n"+uri.toString())
-
+        isUpgradeing = true
 
         dfuDownloadTv.visibility = View.GONE
         dfuBtnStatusView.visibility = View.VISIBLE

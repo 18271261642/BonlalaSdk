@@ -12,6 +12,7 @@ import com.bonlala.fitalent.R
 import com.bonlala.fitalent.adapter.ExerciseAdapter
 import com.bonlala.fitalent.bean.ExerciseShowBean
 import com.bonlala.fitalent.ble.DataOperateManager
+import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.dialog.ExerciseFilterDialogView
 import com.bonlala.fitalent.utils.BikeUtils
 import com.bonlala.fitalent.utils.CalculateUtils
@@ -126,7 +127,7 @@ class ExerciseRecordActivity : AppActivity(){
     //获取所有的锻炼数据
     fun getAllExerciseData(){
 
-        val mac = MmkvUtils.getConnDeviceMac();
+        val mac = DBManager.getBindMac()
         if(BikeUtils.isEmpty(mac))
             return
         viewModel.queryAllExercise("user_1001",mac, exerciseType)

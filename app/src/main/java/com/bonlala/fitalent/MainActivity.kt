@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.os.*
 import android.text.TextUtils
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blala.blalable.BleConstant
@@ -19,11 +20,13 @@ import com.bonlala.fitalent.activity.GuideActivity
 import com.bonlala.fitalent.activity.ShowWebActivity
 import com.bonlala.fitalent.adapter.ScanDeviceAdapter
 import com.bonlala.fitalent.bean.BleBean
+import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.emu.ConnStatus
 import com.bonlala.fitalent.listeners.OnItemClickListener
 import com.bonlala.fitalent.utils.BikeUtils
 import com.bonlala.fitalent.utils.BonlalaUtils
 import com.bonlala.fitalent.utils.MmkvUtils
+import com.bonlala.fitalent.viewmodel.ScanViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.gif.GifDrawable
@@ -39,6 +42,7 @@ import kotlin.collections.ArrayList
 /**搜索页面**/
 class MainActivity : AppActivity() ,OnItemClickListener{
 
+    private val viewModel by viewModels<ScanViewModel>()
 
     private var scanDeviceAdapter : ScanDeviceAdapter ?= null
     private var listData : MutableList<BleBean> ?= null
@@ -48,6 +52,10 @@ class MainActivity : AppActivity() ,OnItemClickListener{
     private var repeatList : MutableList<String> ?= null
 
     private var handler = BleHandler()
+
+
+    //搜索不到的指引url
+    var scanUrl : String ?= null
 
     private class BleHandler() : Handler(Looper.getMainLooper()){
         override fun handleMessage(msg: Message) {
@@ -161,8 +169,9 @@ class MainActivity : AppActivity() ,OnItemClickListener{
     override fun initView() {
         scanDescTv.paint.flags = Paint.UNDERLINE_TEXT_FLAG
         scanDescTv.setOnClickListener {
-            val url = MmkvUtils.getGuideUrl("")
-            startActivity(ShowWebActivity::class.java, arrayOf("url"), arrayOf(url))
+            if(scanUrl == null)
+                return@setOnClickListener
+            startActivity(ShowWebActivity::class.java, arrayOf("url","title"), arrayOf(scanUrl,resources.getString(R.string.string_device_cant_conn)))
         }
     }
 
@@ -177,6 +186,11 @@ class MainActivity : AppActivity() ,OnItemClickListener{
         scanRecyclerView.adapter = scanDeviceAdapter
         scanDeviceAdapter?.setOnItemClickListener(this)
 
+
+        viewModel.notScanUrl.observe(this){
+            scanUrl = it
+        }
+        viewModel.getNotScanUrl(this)
 
         verifyScanFun()
     }
@@ -206,6 +220,11 @@ class MainActivity : AppActivity() ,OnItemClickListener{
             MmkvUtils.saveConnDeviceName(bleName)
             MmkvUtils.saveConnDeviceMac(bleMac)
 
+            //保存用户绑定的Mac
+            val userInfo = DBManager.getUserInfo();
+            userInfo.userBindMac = bleMac
+            DBManager.dbManager.updateUserInfo(userInfo)
+
             val broadIntent = Intent()
             broadIntent.action = BleConstant.BLE_CONNECTED_ACTION
             sendBroadcast(broadIntent)
@@ -213,51 +232,8 @@ class MainActivity : AppActivity() ,OnItemClickListener{
             startActivity(GuideActivity::class.java)
             ActivityManager.getInstance().finishActivity(MainActivity::class.java)
             finish()
-//            if (status == 88) {
-//                BaseApplication.getInstance().connBleName = bleName
-//                BaseApplication.getInstance().connStatus = ConnStatus.CONNECTED
-//                MmkvUtils.saveConnDeviceName(bleName)
-//                MmkvUtils.saveConnDeviceMac(bleMac)
-//
-//                val broadIntent = Intent()
-//                broadIntent.action = BleConstant.BLE_CONNECTED_ACTION
-//                sendBroadcast(broadIntent)
-//                //进入玩转设备页面
-//                startActivity(GuideActivity::class.java)
-//                ActivityManager.getInstance().finishActivity(MainActivity::class.java)
-//                finish()
-//            }else{
-//                hideDialog()
-//                ToastUtils.show(resources.getString(R.string.string_conn_failed))
-//                BleOperateManager.getInstance().disConnYakDevice()
-//              //  verifyScanFun()
-//            }
         }
 
-
-//        BleOperateManager.getInstance().connYakDevice("b",bleMac,object : ConnStatusListener{
-//            override fun connStatus(status: Int) {
-//
-//            }
-//
-//            override fun setNoticeStatus(code: Int) {
-//                hideDialog()
-//                Timber.e("----notifyCode="+code)
-//                BaseApplication.getInstance().connBleName = bleName
-//                BaseApplication.getInstance().connStatus = ConnStatus.CONNECTED
-//                MmkvUtils.saveConnDeviceName(bleName)
-//                MmkvUtils.saveConnDeviceMac(bleMac)
-//
-//                val broadIntent= Intent()
-//                broadIntent.action = BleConstant.BLE_CONNECTED_ACTION
-//                sendBroadcast(broadIntent)
-//                //进入玩转设备页面
-//                startActivity(GuideActivity::class.java)
-//
-//                finish()
-//            }
-//
-//        })
     }
 
 

@@ -384,6 +384,7 @@ public class Utils {
             e.printStackTrace();
 
         } finally {
+
 //            list.add(sendNotiCmd(timeByte, 3));
             return list;
         }
