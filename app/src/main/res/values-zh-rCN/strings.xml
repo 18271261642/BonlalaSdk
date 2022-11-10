@@ -5,7 +5,19 @@
     <string name="string_metric">公制</string>
     <string name="string_imperial">英制</string>
 
+    <string name="string_unbind_alert">是否确定解除绑定?</string>
+    <string name="string_open_noti_desc">使用消息提醒功能需要打开手机的通知开关，是否打开?</string>
+    <string name="string_scan_complete">扫描完成</string>
+    <string name="string_sync">获取中..</string>
+    <string name="string_normal">正常</string>
 
+    <string name="string_km">千米</string>
+    <string name="string_min">最小</string>
+    <string name="string_max">最大</string>
+    <string name="string_hr_bp_unit">次/分</string>
+    <string name="string_bp_unit">毫米汞柱</string>
+    <string name="string_times">次</string>
+    <string name="string_kcal">千卡</string>
     <string name="string_device_cant_conn">设备连接不上</string>
     <string name="string_download_success">下载成功</string>
     <string name="string_skip">跳过</string>

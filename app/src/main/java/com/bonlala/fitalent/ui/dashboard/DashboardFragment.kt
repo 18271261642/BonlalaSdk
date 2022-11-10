@@ -3,14 +3,12 @@ package com.bonlala.fitalent.ui.dashboard
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.provider.Settings
 import android.text.format.DateFormat
 import android.util.DisplayMetrics
 import android.util.Log
@@ -35,9 +33,7 @@ import com.bonlala.fitalent.dialog.HelpDialogView
 import com.bonlala.fitalent.dialog.SelectDialogView
 import com.bonlala.fitalent.emu.ConnStatus
 import com.bonlala.fitalent.listeners.OnItemClickListener
-import com.bonlala.fitalent.utils.BikeUtils
-import com.bonlala.fitalent.utils.ClickUtils
-import com.bonlala.fitalent.utils.MmkvUtils
+import com.bonlala.fitalent.utils.*
 import com.google.gson.Gson
 import com.hjq.permissions.XXPermissions
 import com.hjq.toast.ToastUtils
@@ -128,7 +124,9 @@ import timber.log.Timber
             return
 
         val phoneStatus = MmkvUtils.getW560BPhoneStatus()
+        val appsStatus = MmkvUtils.getW560BAppsStatus()
 
+        appsMsgCheckView.setCheckStatus(appsStatus)
         phoneCallCheckView.setCheckStatus(phoneStatus)
         Timber.e("----deviceModel="+Gson().toJson(deviceSetModel))
         //24小时心率
@@ -436,11 +434,35 @@ import timber.log.Timber
         windowLayout?.width = widthW
         window?.attributes = windowLayout
 
-
-
-
     }
 
+
+
+    //消息提醒的弹窗显示
+    private fun openMsgSwitch(){
+        val dialog = AlertDialog.Builder(requireActivity())
+            .setTitle(resources.getString(R.string.string_prompt))
+            .setMessage(resources.getString(R.string.string_open_noti_desc))
+            .setPositiveButton(resources.getString(R.string.string_confirm)
+            ) { p0, p1 ->
+                p0?.dismiss()
+                openNotifySwitch()
+            }
+            .setNegativeButton(resources.getString(R.string.string_cancel)) { p0, p1 ->
+                p0.dismiss()
+            }
+        dialog.create().show()
+    }
+
+
+    private fun openNotifySwitch(){
+        try {
+            val intent = Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)
+            startActivityForResult(intent, 0x01)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 
     private fun unBindDevice() {
 
@@ -449,7 +471,7 @@ import timber.log.Timber
             return
         val alert = AlertDialog.Builder(requireActivity())
             .setTitle(resources.getString(R.string.string_prompt))
-            .setMessage("是否确定解除绑定?")
+            .setMessage(resources.getString(R.string.string_unbind_alert))
             .setPositiveButton(
                 resources.getString(R.string.string_confirm)
             ) { p0, p1 ->
@@ -623,6 +645,7 @@ import timber.log.Timber
 
     override fun initView() {
 
+        appsMsgCheckView.setLeftTitle(resources.getString(R.string.string_message_notify))
         realHeartCheckView.setLeftTitle(resources.getString(R.string.string_real_heart))
         phoneCallCheckView.setLeftTitle(resources.getString(R.string.string_phone_call))
 
@@ -633,7 +656,20 @@ import timber.log.Timber
             saveSetData()
         }
 
+        val isOpen = MsgUtils.isNotificationEnabled(attachActivity)
+        Timber.e("----isOpen="+isOpen)
+        //消息提醒
+        appsMsgCheckView.setCheckListener { button, checked ->
+            //openMsgSwitch()
+            appsMsgCheckView.setCheckStatus(checked)
+            MmkvUtils.saveW560BAppsStatus(checked)
+        }
 
+        appsMsgCheckView.setOnClickListener {
+            openNotifySwitch()
+        }
+
+        //来电提醒
         phoneCallCheckView.setCheckListener{button,checked->
             MmkvUtils.saveW560BPhoneStatus(checked)
             if(checked){
@@ -641,7 +677,7 @@ import timber.log.Timber
                     XXPermissions.with(attachActivity).permission(arrayOf(Manifest.permission.ANSWER_PHONE_CALLS,Manifest.permission.READ_PHONE_NUMBERS,Manifest.permission.READ_CALL_LOG)).request { permissions, all ->  }
                 }
 
-                XXPermissions.with(attachActivity).permission(arrayOf(Manifest.permission.READ_PHONE_STATE)).request { permissions, all ->  }
+                XXPermissions.with(attachActivity).permission(arrayOf(Manifest.permission.READ_PHONE_STATE,Manifest.permission.READ_CALL_LOG)).request { permissions, all ->  }
 
             }
         }
@@ -678,5 +714,17 @@ import timber.log.Timber
         DBManager.getInstance().saveDeviceSetData("user_1001",mac,deviceSetModel)
     }
 
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        val isOpen = MsgUtils.isNotificationEnabled(attachActivity)
+      //  val o = OtherUtils().isNotificationEnabled(attachActivity)
+
+        Timber.e("-----ooo-"+isOpen+" ")
+        appsMsgCheckView.setCheckStatus(isOpen)
+
+
+    }
 
 }

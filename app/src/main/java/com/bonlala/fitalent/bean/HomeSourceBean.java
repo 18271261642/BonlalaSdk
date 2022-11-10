@@ -4,13 +4,14 @@ package com.bonlala.fitalent.bean;
  * 用于首页数据的数据data
  * Created by Admin
  * Date 2022/9/22
+ * @author Admin
  */
 public class HomeSourceBean {
 
-    //类型 0实时心率；1计步汇总；2连续心率详情；3睡眠；4，单次血氧；5，单次血压；6运动详情
+    /**类型 0实时心率；1计步汇总；2连续心率详情；3睡眠；4，单次血氧；5，单次血压；6运动详情**/
     private int dataType;
 
-    //数据源,每个类型对应每个数据源，序列化后再反序列化
+    /**数据源,每个类型对应每个数据源，序列化后再反序列化**/
     private String dataSource;
 
 

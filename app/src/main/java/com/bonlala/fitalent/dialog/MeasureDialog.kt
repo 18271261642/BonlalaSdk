@@ -49,7 +49,7 @@ class MeasureDialog : AppCompatDialog {
         setContentView(R.layout.dialog_measure_layout)
 
         dialogMeasureOkTv.setOnClickListener{
-            if(dialogMeasureOkTv.text == "Cancel"){
+            if(dialogMeasureOkTv.text == context.resources.getString(R.string.string_cancel)){
                 startOrEndMeasure(false,type)
 
             }
@@ -79,7 +79,7 @@ class MeasureDialog : AppCompatDialog {
         val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE)
         Glide.with(context).asGif().load(getTypeImg(type)).apply(requestOptions)
             .into(dialogMeasureImg)
-        dialogMeasureOkTv.text = "Cancel"
+        dialogMeasureOkTv.text = context.resources.getString(R.string.string_cancel)
         startOrEndMeasure(true,type)
 
     }

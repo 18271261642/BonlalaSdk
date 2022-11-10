@@ -123,22 +123,6 @@ class ExerciseDetailActivity : AppActivity() {
         )
         itemExerciseStartTimeTv.text = exerciseModel.startTimeStr + "~" + exerciseModel.endTimeStr
         itemSportTimeTv.text = exerciseModel.hourMinute
-
-
-//        val distance = exerciseModel.distance
-//        itemExerciseDistanceTv.text = getTargetType(CalculateUtils.mToKm(distance).toString(),"km")
-//
-//
-//        itemExerciseStartTimeTv.text = exerciseModel.startTimeStr + "~" + exerciseModel.endTimeStr
-//        itemSportTimeTv.text = exerciseModel.hourMinute
-//        itemExerciseKcalTv.text = getTargetType(exerciseModel.kcal.toString() + "", "kcal")
-//        itemExerciseStepTv.text = getTargetType(exerciseModel.countStep.toString() + "", "step")
-//        itemExerciseAvgHrTv.text = getTargetType(exerciseModel.avgHr.toString() + "", "bpm")
-//        //itemExercisePaceTv.setText(getTargetType(exerciseModel));
-//
-//        //itemExercisePaceTv.setText(getTargetType(exerciseModel));
-//        itemExerciseSpeedTv.text = getTargetType(exerciseModel.avgSpeed.toString() + "", " km/s")
-
         //心率
         val hrArray = exerciseModel.hrArray
         if(hrArray != null){

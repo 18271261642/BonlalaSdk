@@ -43,7 +43,9 @@ import androidx.annotation.Nullable;
 
 
 /**
- * Created by 中庸 on 2016/5/20.
+ *相机页面
+ * @author 中庸
+ * @date 2016/5/20
  */
 
 public class CamaraActivity extends BaseActivity implements View.OnClickListener {

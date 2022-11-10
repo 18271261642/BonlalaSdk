@@ -58,6 +58,10 @@ class HistoryHeartFragment : TitleBarFragment<RecordHistoryActivity>(),OnRecordH
     override fun initView() {
         detailHeartView = findViewById(R.id.detailHeartView)
 
+        val isChinese = BaseApplication.getInstance().isChinese
+        historySleepThumbImg.setImageResource(if(isChinese) R.mipmap.ic_hr_humb_chinese else R.mipmap.ic_hr_humb)
+
+
         setOnClickListener(R.id.commonHistoryRightImg,R.id.commonHistoryLeftImg,
             R.id.commonHistoryCurrentTv,R.id.historySleepThumbImg,R.id.commonHistoryCalendarImg)
         attachActivity.setOnRecordHistoryRightListener(this)

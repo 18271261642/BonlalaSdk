@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * Created by Admin
  * Date 2022/10/11
+ * @author Admin
  */
 public class SingleSpo2Adapter extends RecyclerView.Adapter<SingleSpo2Adapter.SingleSpo2ViewHolder> {
 

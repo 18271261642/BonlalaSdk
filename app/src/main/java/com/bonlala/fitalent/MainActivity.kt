@@ -125,7 +125,7 @@ class MainActivity : AppActivity() ,OnItemClickListener{
             }
 
             override fun onDeviceFounded(p0: SearchResult) {
-                scanStatusTv.text = "扫描中.."
+                scanStatusTv.text = resources.getString(R.string.string_scan_ing)
 
                 val bleName = p0.name
                 if(TextUtils.isEmpty(bleName) || bleName.equals("NULL"))
@@ -144,12 +144,12 @@ class MainActivity : AppActivity() ,OnItemClickListener{
             }
 
             override fun onSearchStopped() {
-                scanStatusTv.text = "扫描完成"
+                scanStatusTv.text = resources.getString(R.string.string_scan_complete)
                 stopGif()
             }
 
             override fun onSearchCanceled() {
-                scanStatusTv.text = "扫描完成"
+                scanStatusTv.text = resources.getString(R.string.string_scan_complete)
 
             }
 
@@ -211,9 +211,10 @@ class MainActivity : AppActivity() ,OnItemClickListener{
 
         val bleName =  listData?.get(position)?.bluetoothDevice?.name
 
-        showDialog("连接中..")
+        showDialog(resources.getString(R.string.string_conning))
         BaseApplication.getInstance().connStatusService.connDeviceBack(bleName,bleMac
         ) { mac, status ->
+
             //连接成功
             BaseApplication.getInstance().connBleName = bleName
             BaseApplication.getInstance().connStatus = ConnStatus.CONNECTED

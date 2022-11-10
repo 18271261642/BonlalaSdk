@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bonlala.fitalent.BaseApplication;
 import com.bonlala.fitalent.R;
 import com.bonlala.fitalent.bean.ChartHrBean;
 import com.bonlala.fitalent.bean.HomeHeartBean;
@@ -47,6 +48,7 @@ import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
@@ -293,7 +295,10 @@ public class HomeUiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             ((HomeHeartViewHolder) holder).avgTv.setText(homeHeartBean.calculateAvgHr() == 0 ? "--":(homeHeartBean.calculateAvgHr()+""));
 
             //时间
-            ((HomeHeartViewHolder) holder).timeTv.setText(homeHeartBean.getDayStr());
+
+            boolean isChinese = BaseApplication.getInstance().getIsChinese();
+
+            ((HomeHeartViewHolder) holder).timeTv.setText(isChinese ? homeHeartBean.getDayStr() : BikeUtils.getFormatEnglishDate(homeHeartBean.getDayStr()));
 
             lineChart.setFocusable(false);
             lineChart.setTouchEnabled(false);
@@ -329,7 +334,10 @@ public class HomeUiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                 return;
             }
-            ((HomeSleepViewHolder) holder).itemHomeSleepTimeTv.setText(sleepModel.getSaveDay());
+            boolean isChinese = BaseApplication.getInstance().getIsChinese();;
+            String dayStr = sleepModel.getSaveDay();
+
+            ((HomeSleepViewHolder) holder).itemHomeSleepTimeTv.setText(isChinese ? dayStr : BikeUtils.getFormatEnglishDate(dayStr));
             String timeStr = BikeUtils.formatMinute(sleepModel.getCountSleepTime());
             ((HomeSleepViewHolder) holder).itemHomeSleepAllTimeHourTv.setText(StringUtils.substringBefore(timeStr,":"));
             ((HomeSleepViewHolder) holder).itemHomeSleepAllTimeMinuteTv.setText(StringUtils.substringAfter(timeStr,":"));
@@ -358,8 +366,8 @@ public class HomeUiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
              //   Glide.with(context).clear(imageView);
                 return;
             }
-
-            ((HomeSpo2ViewHoler) holder).itemHomeSpo2TimeTv.setText(BikeUtils.getFormatDate(singleSpo2Model.getSaveLongTime(),"yyyy-MM-dd HH:mm:ss"));
+            boolean isChinese = BaseApplication.getInstance().getIsChinese();
+            ((HomeSpo2ViewHoler) holder).itemHomeSpo2TimeTv.setText(isChinese ? BikeUtils.getFormatDate(singleSpo2Model.getSaveLongTime(),"yyyy-MM-dd HH:mm:ss") : BikeUtils.getFormatDate(singleSpo2Model.getSaveLongTime(),BikeUtils.endTimeFormat, Locale.ENGLISH));
             ((HomeSpo2ViewHoler) holder).itemHomeSpo2ValueTv.setText(singleSpo2Model.getSpo2Value()+"%");
 
         }
@@ -379,7 +387,12 @@ public class HomeUiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 ((HomeBpViewHolder) holder).itemBpDiastolicView.setEmptyData();
                 return;
             }
-            ((HomeBpViewHolder) holder).itemHomeBpTimeTv.setText(BikeUtils.getFormatDate(singleBpModel.getSaveLongTime(),"yyyy-MM-dd HH:mm:ss"));
+
+            boolean isChinese = BaseApplication.getInstance().getIsChinese();
+
+            ((HomeBpViewHolder) holder).itemHomeBpTimeTv.setText(isChinese ? BikeUtils.getFormatDate(singleBpModel.getSaveLongTime(),"yyyy-MM-dd HH:mm:ss") : BikeUtils.getFormatDate(singleBpModel.getSaveLongTime(),BikeUtils.endTimeFormat, Locale.ENGLISH));
+
+
             ((HomeBpViewHolder) holder).itemBpSystolicView.setSystolicBpValue(singleBpModel.getSysBp());
             ((HomeBpViewHolder) holder).itemBpDiastolicView.setDiastolicBpValue(singleBpModel.getDiastolicBp());
 
@@ -409,8 +422,8 @@ public class HomeUiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 String vStr = m.getValue();
                 String time = StringUtils.substringBefore(vStr,"+");
                 String kcal = StringUtils.substringAfter(vStr,"+");
-                ((HomeSportRecordViewHolder) holder).itemSportRecordKcalTv.setText(getTargetType(kcal+"","kcal"));
-                ((HomeSportRecordViewHolder) holder).itemSportRecordTimeTv.setText(getTargetType(time+"","min"));
+                ((HomeSportRecordViewHolder) holder).itemSportRecordKcalTv.setText(getTargetType(kcal+"",context.getResources().getString(R.string.string_kcal)));
+                ((HomeSportRecordViewHolder) holder).itemSportRecordTimeTv.setText(getTargetType(time+"",context.getResources().getString(R.string.string_minute)));
 
             }
 

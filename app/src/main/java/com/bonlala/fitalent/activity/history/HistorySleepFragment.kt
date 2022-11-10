@@ -42,6 +42,9 @@ class HistorySleepFragment : TitleBarFragment<RecordHistoryActivity>(),OnRecordH
 
     override fun initView() {
 
+        val isChinese = BaseApplication.getInstance().isChinese
+        historySleepThumbImg.setImageResource(if(isChinese) R.mipmap.ic_hr_humb_chinese else R.mipmap.ic_hr_humb)
+
         setOnClickListener(R.id.commonHistoryLeftImg,R.id.commonHistoryRightImg,
             R.id.commonHistoryCurrentTv,R.id.historySleepThumbImg,R.id.commonHistoryCalendarImg)
 
@@ -52,7 +55,7 @@ class HistorySleepFragment : TitleBarFragment<RecordHistoryActivity>(),OnRecordH
 
         getSleepRecord()
         showEmptyData()
-        backCurrentDay()
+
         viewModel.onDaySleep.observe(viewLifecycleOwner){
             Timber.e("------sleept="+Gson().toJson(it))
             this.sleepModel = it
@@ -69,6 +72,12 @@ class HistorySleepFragment : TitleBarFragment<RecordHistoryActivity>(),OnRecordH
     private fun getSleepRecord(){
         viewModel.recordSleep.observe(viewLifecycleOwner){
             recordList = it
+            if(it != null){
+                dayStr = it[it.size-1]
+                getDbSleep()
+            }else{
+                backCurrentDay()
+            }
         }
         val mac = DBManager.getBindMac()
         if(BikeUtils.isEmpty(mac))

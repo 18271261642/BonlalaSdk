@@ -21,6 +21,8 @@ public class HistorySingleHrAdapter extends AppAdapter<SingleHeartModel>{
         super(context);
     }
 
+    private boolean isChinese ;
+
     @NonNull
     @Override
     public BaseAdapter<?>.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -42,6 +44,7 @@ public class HistorySingleHrAdapter extends AppAdapter<SingleHeartModel>{
         @Override
         public void onBindView(int position) {
             SingleHeartModel singleHeartModel = getItem(position);
+
             timeTv.setText(BikeUtils.getFormatDate(singleHeartModel.getSaveLongTime(),"yyyy-MM-dd HH:mm:ss"));
            if(singleHeartModel.getHeartValue() != 255){
                valueTv.setText(singleHeartModel.getHeartValue()+"bpm");

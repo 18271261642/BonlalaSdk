@@ -543,8 +543,8 @@ public class DBManager {
         }
 
 
-        sleepModel.setMorningSleepStr(gson.toJson(morningList));
-        sleepModel.setNightSleepStr(gson.toJson(nightList));
+        sleepModel.setMorningSleepStr(gson.toJson(resultMorningList));
+        sleepModel.setNightSleepStr(gson.toJson(resultNightList));
         SleepModel saveSleep = getDaySleepData(userId,mac,day);
         boolean isSaveSleep = false;
         if(saveSleep == null){
@@ -554,7 +554,10 @@ public class DBManager {
         }
 
         Timber.e("---isSaveSleep="+isSaveSleep);
+        if(morningMax == 2 && morningMin == 2){
 
+            return;
+        }
         saveDateTypeDay(userId,mac,day, DbType.DB_TYPE_SLEEP);
     }
 

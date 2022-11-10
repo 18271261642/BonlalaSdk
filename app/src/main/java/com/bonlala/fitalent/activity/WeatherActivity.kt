@@ -52,7 +52,7 @@ class WeatherActivity : AppActivity() {
         weatherRecyclerView.adapter = weatherAdapter
 
         weatherGetTv.setOnClickListener {
-            weatherGetTv.text = "sync..."
+            weatherGetTv.text = resources.getString(R.string.string_data_sync)
             requestLocation()
         }
     }

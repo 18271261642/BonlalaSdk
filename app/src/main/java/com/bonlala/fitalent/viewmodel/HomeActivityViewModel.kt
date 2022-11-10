@@ -100,7 +100,7 @@ class HomeActivityViewModel : ViewModel() {
 
     //获取连接不上的url
     fun getNotConnUrl(lifecycleOwner: LifecycleOwner){
-        EasyHttp.get(lifecycleOwner).api("api/app/deviceGuide/detail/devicetypestring").request(object :
+        EasyHttp.get(lifecycleOwner).api("api/app/deviceGuide/detail/W560B").request(object :
             OnHttpListener<String> {
             override fun onSucceed(result: String?) {
                 val jsonObject = JSONObject(result)

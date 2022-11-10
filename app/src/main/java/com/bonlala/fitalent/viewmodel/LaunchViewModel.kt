@@ -55,22 +55,6 @@ class LaunchViewModel : ViewModel() {
     }
 
 
-
-    fun getGuideTypeList(lifecycleOwner: LifecycleOwner){
-        EasyHttp.get(lifecycleOwner).api("/api/app/deviceGuide/guideConfigUrl").request(object : OnHttpListener<String>{
-            override fun onSucceed(result: String?) {
-
-            }
-
-            override fun onFail(e: Exception?) {
-
-            }
-
-        })
-    }
-
-
-
     fun getConnErrorDesc(lifecycleOwner: LifecycleOwner,type : String){
         EasyHttp.get(lifecycleOwner).api(ConnErrorApi().setType(type)).request(object : OnHttpListener<String>{
             override fun onSucceed(result: String?) {

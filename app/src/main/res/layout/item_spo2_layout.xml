@@ -10,8 +10,8 @@
     tools:ignore="MissingDefaultResource">
 
     <com.hjq.shape.layout.ShapeLinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <FrameLayout
@@ -57,7 +57,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_marginStart="@dimen/dp_5"
                         android:text="@string/string_spo2"
                         android:textColor="#ff000000"
                         android:textSize="16sp"
@@ -68,7 +68,7 @@
                         android:id="@+id/itemHomeSpo2TimeTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_marginStart="@dimen/dp_5"
                         android:text="16:49:55"
                         android:textColor="#ff5e5e5e"
                         android:textSize="10sp"

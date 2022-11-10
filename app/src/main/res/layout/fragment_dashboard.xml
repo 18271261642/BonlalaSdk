@@ -360,6 +360,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
+                    <com.bonlala.fitalent.view.CheckButtonView
+                        android:id="@+id/appsMsgCheckView"
+                        android:layout_width="match_parent"
+                        android:visibility="visible"
+                        app:right_back_img="true"
+                        android:layout_height="wrap_content" />
+
                     <com.bonlala.widget.layout.SettingBar
                         android:id="@+id/menuMsgNotifyBar"
                         android:layout_width="match_parent"
@@ -367,6 +374,7 @@
                         app:bar_leftText="@string/string_message_notify"
                         app:bar_leftTextSize="18sp"
                         app:bar_lineVisible="true"
+                        android:visibility="gone"
                         app:bar_rightDrawable="@drawable/ic_gray_right_back" />
 
 

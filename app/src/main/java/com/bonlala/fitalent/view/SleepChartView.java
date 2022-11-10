@@ -357,6 +357,6 @@ public class SleepChartView extends View {
         if(type == 4){
             return "REM";
         }
-        return "清醒";
+        return getContext().getResources().getString(R.string.string_awake);
     }
 }

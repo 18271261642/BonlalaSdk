@@ -73,6 +73,8 @@
         <attr name="is_show_left_img" format="boolean"/>
         <attr name="left_txt_name" format="string"/>
         <attr name="left_img_resource" format="reference"/>
+
+        <attr name="right_back_img" format="boolean"/>
     </declare-styleable>
 
 

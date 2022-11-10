@@ -7,6 +7,7 @@ import com.bonlala.fitalent.utils.MmkvUtils
 import kotlinx.android.synthetic.main.activity_about_layout.*
 
 /**
+ * 关于页面
  * Created by Admin
  *Date 2022/10/21
  */

@@ -34,14 +34,15 @@ public class BikeUtils {
     private static final long onDay = 86400000L;
 
     /** Aug 30,2022格式**/
-    private static final  SimpleDateFormat enSdf = new SimpleDateFormat("EEE MMM,yyyy",Locale.ENGLISH);
+    private static final  SimpleDateFormat enSdf = new SimpleDateFormat("MMM dd,yyyy",Locale.ENGLISH);
     /**格式化历史数据中的周 12/1~12/6 > MM dd**/
     private static final SimpleDateFormat enWeekSdf = new SimpleDateFormat("MM dd",Locale.ENGLISH);
     private static final SimpleDateFormat enWeekSdf2 = new SimpleDateFormat("d,yyyy",Locale.ENGLISH);
     /**月份**/
     private static final SimpleDateFormat enMonth = new SimpleDateFormat("d,yyyy",Locale.ENGLISH);
-
-
+    public static final String endTimeFormat = "MMM dd,yyyy HH:mm:ss";
+    /**年月日时分秒**/
+    private static final SimpleDateFormat enTime = new SimpleDateFormat(endTimeFormat,Locale.ENGLISH);
 
     // 字符串的非空
     public static boolean isEmpty(String input) {
@@ -70,6 +71,24 @@ public class BikeUtils {
         }catch (Exception e){
             e.printStackTrace();
             return enSdf.format(new Date());
+        }
+    }
+
+    /**
+     * 格式化对应格式的中文到英文
+     * @param dayStr eg:yyyy-MM-dd HH:mm:ss
+     * @param format EEE MMM,yyyy HH:mm:ss
+     * @return 对应格式
+     */
+    public static String getFormatEnglishData(String dayStr,String format){
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format,Locale.CHINA);
+            long time = simpleDateFormat.parse(dayStr).getTime();
+            return enTime.format(new Date(time));
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return enTime.format(new Date());
         }
     }
 
@@ -845,7 +864,7 @@ public class BikeUtils {
         if(hour>=24)
             hour = hour-24;
         int minuteStr = minute % 60;
-        return String.format("%02d",hour)+":"+String.format("%02d",minuteStr);
+        return String.format("%02d",hour)+":"+String.format("%02d",minuteStr<0?1:minuteStr);
     }
 
     /**

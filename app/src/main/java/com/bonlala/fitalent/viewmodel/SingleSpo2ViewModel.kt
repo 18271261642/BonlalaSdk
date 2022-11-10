@@ -4,6 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bonlala.fitalent.bean.ChartSpo2Bean
 import com.bonlala.fitalent.db.DBManager
+import com.google.gson.Gson
+import timber.log.Timber
 
 /**
  * Created by Admin
@@ -16,7 +18,7 @@ class SingleSpo2ViewModel : ViewModel() {
     //获取所有的血氧
     fun getAllDbSpo2(userId : String,mac : String){
         val list = DBManager.dbManager.querySingleSpo2(userId,mac)
-
+        Timber.e("----血氧="+Gson().toJson(list))
         val chartList = ArrayList<ChartSpo2Bean>()
 
         if(list == null){

@@ -48,6 +48,8 @@ class HistorySpo2Fragment : TitleBarFragment<RecordHistoryActivity>(),OnItemClic
         linearLayoutManager.reverseLayout = true
         historySpo2RecyclerView.layoutManager = linearLayoutManager
 
+        historySpo2RecyclerView.itemAnimator?.addDuration = 0
+
         list = ArrayList<ChartSpo2Bean>()
         adapter = SingleSpo2Adapter(activity,list)
         historySpo2RecyclerView.adapter = adapter

@@ -141,7 +141,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Automatically update device weather information every two hours"
+            android:text="@string/string_update_2hou_weather"
             android:textColor="#ffadadbb"
             android:textSize="12sp"
             android:layout_marginEnd="@dimen/dp_5"
@@ -158,7 +158,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="7 day weather forecast"
+                android:text="@string/string_7_day_weather"
                 android:textColor="#ff2f2f33"
                 android:textSize="12sp" />
             <View

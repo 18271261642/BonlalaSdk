@@ -11,9 +11,13 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.bonlala.fitalent.BaseApplication;
+import com.bonlala.fitalent.R;
 import com.bonlala.fitalent.bean.ChartBpBean;
 import com.bonlala.fitalent.utils.BikeUtils;
 import com.bonlala.widget.utils.MiscUtil;
+
+import java.util.Locale;
 
 import androidx.annotation.Nullable;
 import timber.log.Timber;
@@ -47,6 +51,9 @@ public class CustomizeSingleBpView extends View {
     private float mBarWidth;
 
     private ChartBpBean chartBpBean;
+
+    /**是否是中文**/
+    private boolean isChinese;
 
     public CustomizeSingleBpView(Context context) {
         super(context);
@@ -117,6 +124,7 @@ public class CustomizeSingleBpView extends View {
         clickStatusPaint.setTextSize(MiscUtil.dipToPx(getContext(),10f));
         clickStatusPaint.setAntiAlias(true);
 
+        isChinese = BaseApplication.getInstance().getIsChinese();
     }
 
 
@@ -140,8 +148,6 @@ public class CustomizeSingleBpView extends View {
         Timber.e("----222---cavas-"+(chartBpBean == null));
         if(chartBpBean == null)
             return;
-
-
 
 
         Timber.e("-------cavas-"+chartBpBean.toString());
@@ -169,14 +175,14 @@ public class CustomizeSingleBpView extends View {
         long timeStr = Long.parseLong(chartBpBean.getxValue());
         float tH = MiscUtil.measureTextHeight(txtPaint);
         //年
-        String year = BikeUtils.getFormatDate(timeStr,"yyyy-MM-dd");
+        String year = isChinese ? BikeUtils.getFormatDate(timeStr,"yyyy-MM-dd") : BikeUtils.getFormatDate(timeStr,"MMM dd,yyyy", Locale.ENGLISH);
         String seconds = BikeUtils.getFormatDate(timeStr,"HH:mm:ss");
 
         canvas.drawText(year,mWidth/2,-tH*1.5f,txtPaint);
         canvas.drawText(seconds,mWidth/2,0f,txtPaint);
 
         if(chartBpBean.isChecked()){
-            canvasClickBg(canvas);
+            canvasClickBg(canvas,year,seconds);
         }
 
     }
@@ -184,7 +190,7 @@ public class CustomizeSingleBpView extends View {
 
 
     //绘制点击的效果
-    private void canvasClickBg(Canvas canvas){
+    private void canvasClickBg(Canvas canvas,String year,String seconds){
         float paddingWidth = MiscUtil.dipToPx(getContext(),5f);
         String bpStr = chartBpBean.getSysBp()+"/"+chartBpBean.getDisBp()+" mmHg";
         clickTxtPaint.setTextAlign(Paint.Align.CENTER);
@@ -201,13 +207,13 @@ public class CustomizeSingleBpView extends View {
         canvas.drawText(bpStr,mWidth/2,-mHeight+txtHeight+paddingWidth*2,clickTxtPaint);
 
         clickStatusPaint.setColor(Color.parseColor("#FF4DCC4B"));
-        canvas.drawText("Normal",mWidth/2,-mHeight+txtHeight*2.2f+paddingWidth*2,clickStatusPaint);
+        canvas.drawText(getContext().getString(R.string.string_normal),mWidth/2,-mHeight+txtHeight*2.2f+paddingWidth*2,clickStatusPaint);
 
         clickStatusPaint.setColor(Color.parseColor("#FF676767"));
         long timeStr = Long.parseLong(chartBpBean.getxValue());
         //年
-        String year = BikeUtils.getFormatDate(timeStr,"yyyy-MM-dd");
-        String seconds = BikeUtils.getFormatDate(timeStr,"HH:mm:ss");
+//        String year = BikeUtils.getFormatDate(timeStr,"yyyy-MM-dd");
+//        String seconds = BikeUtils.getFormatDate(timeStr,"HH:mm:ss");
         canvas.drawText(year,mWidth/2,-mHeight+txtHeight*3.5f+paddingWidth*2,clickStatusPaint);
         canvas.drawText(seconds,mWidth/2,-mHeight+txtHeight*4.5f+paddingWidth*2,clickStatusPaint);
 

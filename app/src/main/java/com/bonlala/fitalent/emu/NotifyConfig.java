@@ -86,20 +86,20 @@ public class NotifyConfig {
 
     public static final HashMap<String,String> notifyMap = new HashMap<>();
     static {
-        notifyMap.put(QQ_PACKAGE_NAME,"30");
-        notifyMap.put(QQ_FAST_PACK_NAME,"30");
-        notifyMap.put(WECHAT_PACKAGE_NAME,"3");
-        notifyMap.put(FACEBOOK_PACKAGE_NAME,"4");
-        notifyMap.put(FACEBOOK_PACKAGE_NAME1,"30");
-        notifyMap.put(TWITTER_PACKAGE_NAME,"30");
-        notifyMap.put(WHATS_PACKAGE_NAME,"30");
-        notifyMap.put(VIBER_PACKAGE_NAME,"30");
-        notifyMap.put(INSTANRAM_PACKAGE_NAME,"30");
-        notifyMap.put(SAMSUNG_MSG_PACK_NAME,"30");
-        notifyMap.put(SAMSUNG_MSG_SRVERPCK_NAME,"30");
-        notifyMap.put(MSG_PACKAGENAME,"30");
-        notifyMap.put(SYS_SMS,"30");
-        notifyMap.put(XIAOMI_SMS_PACK_NAME,"30");
+        notifyMap.put(QQ_PACKAGE_NAME,"2");
+        notifyMap.put(QQ_FAST_PACK_NAME,"2");
+        notifyMap.put(WECHAT_PACKAGE_NAME,"2");
+        notifyMap.put(FACEBOOK_PACKAGE_NAME,"2");
+        notifyMap.put(FACEBOOK_PACKAGE_NAME1,"2");
+        notifyMap.put(TWITTER_PACKAGE_NAME,"2");
+        notifyMap.put(WHATS_PACKAGE_NAME,"2");
+        notifyMap.put(VIBER_PACKAGE_NAME,"2");
+        notifyMap.put(INSTANRAM_PACKAGE_NAME,"2");
+        notifyMap.put(SAMSUNG_MSG_PACK_NAME,"2");
+        notifyMap.put(SAMSUNG_MSG_SRVERPCK_NAME,"2");
+        notifyMap.put(MSG_PACKAGENAME,"2");
+        notifyMap.put(SYS_SMS,"2");
+        notifyMap.put(XIAOMI_SMS_PACK_NAME,"2");
 
     }
 

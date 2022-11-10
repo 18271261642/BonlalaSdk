@@ -1,36 +1,23 @@
 package com.bonlala.fitalent.service;
 
-import android.annotation.TargetApi;
+
 import android.app.Notification;
 import android.content.Context;
-import android.database.Cursor;
 import android.media.AudioManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.service.notification.StatusBarNotification;
-import android.text.TextUtils;
-import android.util.Log;
-
 import com.blala.blalable.BleOperateManager;
 import com.blala.blalable.listener.WriteBackDataListener;
 import com.bonlala.fitalent.emu.NotifyConfig;
 import com.bonlala.fitalent.utils.BikeUtils;
 import com.bonlala.fitalent.utils.CalculateUtils;
-
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-
+import com.bonlala.fitalent.utils.MmkvUtils;
 import timber.log.Timber;
 
 /**
  * 提醒服务  MyNotificationListenerService
  * 通过通知获取APP消息内容，需要打开通知功能
+ * @author Admin
  */
 public class AlertService extends MyNotificationListenerService {
 
@@ -38,79 +25,6 @@ public class AlertService extends MyNotificationListenerService {
     private static final String TAG = "AlertService";
     private static final String H8_NAME_TAG = "bozlun";
 
-    //QQ
-    private static final String QQ_PACKAGENAME = "com.tencent.mobileqq";
-    //QQ急速版
-    private static final String QQ_FAST_PACK_NAME = "com.tencent.qqlite";
-
-    //电话的通知,未接来电时的提醒
-    private static final String TEL_NOTIFICATION_NAME = "com.android.server.telecom";
-
-    //微信
-    private static final String WECHAT_PACKAGENAME = "com.tencent.mm";
-    //微博
-    private static final String WEIBO_PACKAGENAME = "com.sina.weibo";
-    //Facebook
-    private static final String FACEBOOK_PACKAGENAME = "com.facebook.katana";
-
-    private static final String FACEBOOK_PACKAGENAME1 = "com.facebook.orca";
-    //twitter
-    private static final String TWITTER_PACKAGENAME = "com.twitter.android";
-    //Whats
-    private static final String WHATS_PACKAGENAME = "com.whatsapp";
-    //viber
-    private static final String VIBER_PACKAGENAME = "com.viber.voip";
-    //instagram
-    private static final String INSTANRAM_PACKAGENAME = "com.instagram.android";
-    //日历
-    private static final String CALENDAR_PACKAGENAME = "com.android.calendar";
-    //信息 三星手机信息
-    private static final String SAMSUNG_MSG_PACKNAME = "com.samsung.android.messaging";
-    private static final String SAMSUNG_MSG_SRVERPCKNAME = "com.samsung.android.communicationservice";
-    private static final String MSG_PACKAGENAME = "com.android.mms";//短信系统短信包名
-    private static final String SYS_SMS = "com.android.mms.service";//短信 --- vivo Y85A
-    private static final String XIAOMI_SMS_PACK_NAME = "com.xiaomi.xmsf";
-
-
-    private static final String SKYPE_PACKAGENAME = "com.skype.raider";
-    private static final String SKYPE_PACKNAME = "com.skype.rover";
-    //line
-    private static final String LINE_PACKAGENAME = "jp.naver.line.android";
-    private static final String LINE_LITE_PACK_NAME = "com.linecorp.linelite";
-
-
-    //谷歌邮箱
-    private static final String GMAIL_PACKAGENAME = "com.google.android.gm";
-    //Snapchat：
-    private static final String SNAP_PACKAGENAME = "com.snapchat.android";
-
-    //音乐播放器
-    //酷狗
-    private static final String KUGOU_MUSIC_PACK_NAME = "com.kugou.android";
-    //QQ音乐
-    private static final String QQ_MUISC_PACK_NAME = "com.tencent.qqmusic";
-    //网易云
-    private static final String WAGNYI_MUSIC_PACK_NAME = "com.netease.cloudmusic";
-    //酷我音乐
-    private static final String KUWO_MUSIC_PACK_NAME = "cn.kuwo.player";
-    //咪咕音乐
-    private static final String MIGU_MUSIC_PACK_NAME = "cmccwm.mobilemusic";
-    //铃声多的
-    private static final String DUODUO_MUSIC_PACK_NAME = "com.shoujiduoduo.ringtone";
-    //喜马拉雅
-    private static final String XIMALAYA_MUSIC_NAME = "com.ximalaya.ting.android";
-    //虾米音乐
-    private static final String XIAMI_MUSIC_NAME = "fm.xiami.main";
-    //华为音乐
-    private static final String HUAWEI_MUSIC_NAME = "com.android.mediacenter";
-    //小米音乐
-    private static final String XIAOMI_MUSIC_NAME = "com.miui.player";
-    //vivo音乐
-    private static final String VIVO_MUSIC_NAME = "com.android.bbkmusic";
-
-
-    private String[] musicArray =new String[]{KUGOU_MUSIC_PACK_NAME,QQ_MUISC_PACK_NAME,WAGNYI_MUSIC_PACK_NAME,KUWO_MUSIC_PACK_NAME,MIGU_MUSIC_PACK_NAME,DUODUO_MUSIC_PACK_NAME,
-            XIMALAYA_MUSIC_NAME,XIAMI_MUSIC_NAME,HUAWEI_MUSIC_NAME,XIAOMI_MUSIC_NAME,VIVO_MUSIC_NAME};
 
     private AudioManager audioManager;
 
@@ -173,10 +87,16 @@ public class AlertService extends MyNotificationListenerService {
                 return;
             if(msgCont.contains("正在运行"))
                 return;
+
+            //判断消息提醒是否打开了
+            boolean isOpenApps = MmkvUtils.getW560BAppsStatus();
+            if(!isOpenApps)
+                return;
+
             Timber.e("-----消息="+msgCont+" title="+title);
             Timber.e("----notify="+NotifyConfig.notifyMap.get(packageName));
             if(NotifyConfig.notifyMap.get(packageName) != null){
-                BleOperateManager.getInstance().sendAPPNoticeMessage(2, "title", msgCont, new WriteBackDataListener() {
+                BleOperateManager.getInstance().sendAPPNoticeMessage(2, " ", msgCont, new WriteBackDataListener() {
                     @Override
                     public void backWriteData(byte[] data) {
 

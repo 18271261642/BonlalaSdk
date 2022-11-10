@@ -1,6 +1,6 @@
 package com.bonlala.fitalent.activity
 
-import android.content.DialogInterface
+
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
@@ -10,15 +10,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import com.blala.blalable.BleOperateManager
 import com.blala.blalable.listener.OnCommBackDataListener
-import com.bonlala.action.ActivityManager
 import com.bonlala.action.AppActivity
 import com.bonlala.fitalent.BaseApplication
 import com.bonlala.fitalent.R
-import com.bonlala.fitalent.ble.DataOperateManager
-import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.dialog.CommAlertDialogView
 import com.bonlala.fitalent.http.api.VersionApi
-import com.bonlala.fitalent.listeners.OnItemClickListener
 import com.bonlala.fitalent.service.DfuService
 import com.bonlala.fitalent.utils.BikeUtils
 import com.bonlala.fitalent.utils.MmkvUtils
@@ -26,9 +22,6 @@ import com.bonlala.fitalent.viewmodel.DfuViewModel
 import com.hjq.http.listener.OnDownloadListener
 import com.hjq.toast.ToastUtils
 import kotlinx.android.synthetic.main.activity_dfu_layout.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import no.nordicsemi.android.dfu.DfuProgressListener
 import no.nordicsemi.android.dfu.DfuServiceInitiator
 import no.nordicsemi.android.dfu.DfuServiceListenerHelper

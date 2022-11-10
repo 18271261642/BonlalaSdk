@@ -42,8 +42,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_10"
                 android:text="@string/string_bp"
+                android:layout_marginStart="@dimen/dp_5"
                 android:textColor="#ff000000"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@id/itemHomeBpTmpView"
@@ -53,9 +53,9 @@
                 android:id="@+id/itemHomeBpTimeTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_10"
                 android:text="16:49:55"
                 android:textColor="#ff5e5e5e"
+                android:layout_marginStart="@dimen/dp_5"
                 android:textSize="10sp"
                 app:layout_constraintLeft_toRightOf="@id/itemHomeBpTmpView"
                 app:layout_constraintTop_toBottomOf="@id/itemHomeBpTmpView" />

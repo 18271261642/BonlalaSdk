@@ -167,8 +167,8 @@ class ExerciseRecordActivity : AppActivity(){
 
         exerciseTotalKmTv.text = if(isKm) disStr.toString() else CalculateUtils.kmToMiValue(disStr).toString()
 
-        exerciseTotalTimeTv.text = getTargetType(totalTime.toString(),"times")
-        exerciseTotalTimesTv.text = getTargetType(count.toString(),"times")
-        exerciseTotalKcalTv.text = getTargetType(kcal.toString(),"kcal")
+        exerciseTotalTimeTv.text = getTargetType(totalTime.toString(),resources.getString(R.string.string_times))
+        exerciseTotalTimesTv.text = getTargetType(count.toString(),resources.getString(R.string.string_minute))
+        exerciseTotalKcalTv.text = getTargetType(kcal.toString(),resources.getString(R.string.string_kcal))
     }
 }

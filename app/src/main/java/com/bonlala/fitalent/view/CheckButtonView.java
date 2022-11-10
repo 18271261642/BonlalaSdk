@@ -32,6 +32,10 @@ public class CheckButtonView extends LinearLayout {
     /**设置左侧的图片**/
     private int leftImgResource;
 
+    /**是否显示右侧返回按钮**/
+    private boolean isShowRightImg;
+    private ImageView rightImg;
+
     /**设置左侧的文字描述**/
     private String leftTxt;
 
@@ -57,6 +61,8 @@ public class CheckButtonView extends LinearLayout {
         isShowLeftImg = typedArray.getBoolean(R.styleable.CheckButtonView_is_show_left_img,false);
         leftImgResource = typedArray.getResourceId(R.styleable.CheckButtonView_left_img_resource,R.mipmap.ic_launcher);
         leftTxt = typedArray.getString(R.styleable.CheckButtonView_left_txt_name);
+        isShowRightImg = typedArray.getBoolean(R.styleable.CheckButtonView_right_back_img,false);
+
         typedArray.recycle();
 
         initViews(context);
@@ -68,6 +74,7 @@ public class CheckButtonView extends LinearLayout {
         leftTv = view.findViewById(R.id.leftTitleTv);
         switchButton = view.findViewById(R.id.rightCheckBtn);
         lefImgView = view.findViewById(R.id.leftImgView);
+        rightImg = view.findViewById(R.id.rightBackImgView);
 
         lefImgView.setVisibility(isShowLeftImg ? View.VISIBLE : View.GONE);
         if(leftImgResource !=0){
@@ -77,6 +84,8 @@ public class CheckButtonView extends LinearLayout {
         if(leftTxt != null){
             leftTv.setText(leftTxt);
         }
+
+        rightImg.setVisibility(isShowRightImg ? View.VISIBLE : View.INVISIBLE);
 
     }
 
@@ -105,6 +114,13 @@ public class CheckButtonView extends LinearLayout {
         switchButton.setChecked(isChekc);
     }
 
+    /**是否显示右侧的返回图片**/
+    public void setIsShowRightImg(boolean isShow){
+        if(rightImg != null){
+            rightImg.setVisibility(isShow ? View.VISIBLE : View.INVISIBLE);
+        }
+
+    }
 
     public void setCheckListener(SwitchButton.OnCheckedChangeListener onCheckedChangeListener){
         if(switchButton == null)

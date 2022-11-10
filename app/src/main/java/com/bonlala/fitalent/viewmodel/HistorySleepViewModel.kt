@@ -112,8 +112,8 @@ open class HistorySleepViewModel : ViewModel() {
         }
         val morList = morningStr?.let { GsonUtils.getGsonObject<List<Int>>(it) }
         val nigList = nightStr?.let { GsonUtils.getGsonObject<List<Int>>(it) }
-//        Timber.e("------今天上午的睡眠="+morList?.size+" "+morningStr)
-//        Timber.e("-----昨天晚上的睡眠="+nigList?.size+" "+nightStr)
+        Timber.e("------今天上午的睡眠="+morList?.size+" "+morningStr)
+        Timber.e("-----昨天晚上的睡眠="+nigList?.size+" "+nightStr)
 
         if(morningStr == null && nightStr == null){
             onDaySleep.postValue(null)

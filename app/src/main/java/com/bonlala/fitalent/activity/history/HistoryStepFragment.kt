@@ -1,6 +1,6 @@
 package com.bonlala.fitalent.activity.history
 
-import android.util.DisplayMetrics
+
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.bonlala.action.TitleBarFragment
@@ -8,18 +8,14 @@ import com.bonlala.fitalent.R
 import com.bonlala.fitalent.activity.RecordHistoryActivity
 import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.db.model.OneDayStepModel
-import com.bonlala.fitalent.db.model.SleepItem
 import com.bonlala.fitalent.db.model.StepItem
-import com.bonlala.fitalent.dialog.CalendarSelectDialog
 import com.bonlala.fitalent.emu.StepType
 import com.bonlala.fitalent.utils.*
 import com.bonlala.fitalent.view.StepChartView
 import com.bonlala.fitalent.viewmodel.HistoryStepViewModel
 import com.github.mikephil.charting.charts.BarChart
 import com.google.gson.Gson
-import com.haibin.calendarview.CalendarUtil
 import kotlinx.android.synthetic.main.common_history_bot_date_layout.*
-import kotlinx.android.synthetic.main.dialog_date_select_layout.*
 import kotlinx.android.synthetic.main.fragment_history_step_layout.*
 import kotlinx.android.synthetic.main.fragment_history_step_layout.view.*
 import timber.log.Timber
@@ -66,9 +62,8 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
 
         val mac = DBManager.getBindMac()
         viewModel.getAllStepRecord(mac)
-
-        //默认日
         showDayCheck(0)
+
     }
 
     private fun showResult(){
@@ -78,6 +73,13 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
             Timber.e("------记录的数据="+Gson().toJson(it))
             dateList.clear()
             dateList.addAll(it)
+            if(it == null){
+                //默认日
+                showDayCheck(0)
+            }else{
+                dayStr = it[it.size-1]
+                getDayData()
+            }
         }
 
 

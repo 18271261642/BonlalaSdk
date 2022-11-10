@@ -135,7 +135,6 @@ class LaunchActivity : AppActivity() {
             MmkvUtils.saveGuideUrl(url+typeId)
         }
         viewModel.getGuideUrl(this)
-        viewModel.getGuideTypeList(this)
         viewModel.getConnErrorDesc(this,"W560B")
     }
 

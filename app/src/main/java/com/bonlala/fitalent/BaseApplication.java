@@ -217,6 +217,6 @@ public class BaseApplication extends BleApplication {
     }
 
     public boolean getIsChinese(){
-        return isChinese;
+        return LanguageUtils.isChinese();
     }
 }

@@ -9,9 +9,13 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.bonlala.fitalent.BaseApplication;
+import com.bonlala.fitalent.R;
 import com.bonlala.fitalent.bean.ChartSpo2Bean;
 import com.bonlala.fitalent.utils.BikeUtils;
 import com.bonlala.widget.utils.MiscUtil;
+
+import java.util.Locale;
 
 import androidx.annotation.Nullable;
 
@@ -42,6 +46,9 @@ public class CustomizeSingleSpo2View extends View {
 
     //柱子的宽度
     private float mBarWidth;
+
+    /**是否是中文状态**/
+    private boolean isChinese;
 
     private ChartSpo2Bean chartSpo2Bean;
 
@@ -104,6 +111,8 @@ public class CustomizeSingleSpo2View extends View {
         clickStatusPaint.setTextSize(MiscUtil.dipToPx(getContext(),10f));
         clickStatusPaint.setAntiAlias(true);
 
+        isChinese = BaseApplication.getInstance().getIsChinese();
+
     }
 
 
@@ -144,7 +153,7 @@ public class CustomizeSingleSpo2View extends View {
         long timeStr = Long.parseLong(chartSpo2Bean.getxValue());
         float tH = MiscUtil.measureTextHeight(txtPaint);
         //年
-        String year = BikeUtils.getFormatDate(timeStr,"yyyy-MM-dd");
+        String year = isChinese ? BikeUtils.getFormatDate(timeStr,"yyyy-MM-dd") : BikeUtils.getFormatDate(timeStr,"MMM dd,yyyy", Locale.ENGLISH);
         String seconds = BikeUtils.getFormatDate(timeStr,"HH:mm:ss");
 
         canvas.drawText(year,mWidth/2,-tH*1.5f,txtPaint);
@@ -163,13 +172,13 @@ public class CustomizeSingleSpo2View extends View {
         canvas.drawRoundRect(rectF,5f,5f,barPaint);
 
         if(chartSpo2Bean.isChecked()){
-            canvasClickBg(canvas);
+            canvasClickBg(canvas,year,seconds);
         }
     }
 
 
     //绘制点击的效果
-    private void canvasClickBg(Canvas canvas){
+    private void canvasClickBg(Canvas canvas,String year,String seconds){
         float paddingWidth = MiscUtil.dipToPx(getContext(),5f);
         String bpStr = chartSpo2Bean.getSpo2Value()+"%";
         clickTxtPaint.setTextAlign(Paint.Align.CENTER);
@@ -183,15 +192,15 @@ public class CustomizeSingleSpo2View extends View {
         canvas.drawRoundRect(rectF,10f,10f,clickBgPaint);
 
         clickStatusPaint.setColor(Color.parseColor("#FF4DCC4B"));
-        canvas.drawText("Normal",mWidth/2,-mHeight+txtHeight*2.2f+paddingWidth*2,clickStatusPaint);
+        canvas.drawText(getResources().getString(R.string.string_normal),mWidth/2,-mHeight+txtHeight*2.2f+paddingWidth*2,clickStatusPaint);
 
         canvas.drawText(bpStr,mWidth/2,-mHeight+txtHeight+paddingWidth*2,clickTxtPaint);
 
         clickStatusPaint.setColor(Color.parseColor("#FF676767"));
         long timeStr = Long.parseLong(chartSpo2Bean.getxValue());
         //年
-        String year = BikeUtils.getFormatDate(timeStr,"yyyy-MM-dd");
-        String seconds = BikeUtils.getFormatDate(timeStr,"HH:mm:ss");
+//        String year = BikeUtils.getFormatDate(timeStr,"yyyy-MM-dd");
+//        String seconds = BikeUtils.getFormatDate(timeStr,"HH:mm:ss");
         canvas.drawText(year,mWidth/2,-mHeight+txtHeight*3.5f+paddingWidth*2,clickStatusPaint);
         canvas.drawText(seconds,mWidth/2,-mHeight+txtHeight*4.5f+paddingWidth*2,clickStatusPaint);
 

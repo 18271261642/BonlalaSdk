@@ -77,7 +77,7 @@ class MsgNotifyActivity : AppActivity(){
 //            })
 
 
-            BleOperateManager.getInstance().sendAPPNoticeMessage(inputStr.toString().toInt(),"18888888888","55",object : WriteBackDataListener{
+            BleOperateManager.getInstance().sendAPPNoticeMessage(inputStr.toString().toInt()," ","55",object : WriteBackDataListener{
                 override fun backWriteData(data: ByteArray?) {
 
                 }

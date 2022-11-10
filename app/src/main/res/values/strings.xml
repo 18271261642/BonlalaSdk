@@ -5,7 +5,19 @@
     <string name="title_dashboard">device</string>
     <string name="title_notifications">mine</string>
 
+    <string name="string_unbind_alert">Are you sure you want to unbind?</string>
+    <string name="string_open_noti_desc">To use the message reminder function, you need to turn on the notification switch of the mobile phone. Is it turned on?</string>
+    <string name="string_scan_complete">Scan complete</string>
+    <string name="string_sync">sync..</string>
 
+    <string name="string_normal">Normal</string>
+    <string name="string_km">km</string>
+    <string name="string_min">Min</string>
+    <string name="string_max">Max</string>
+    <string name="string_hr_bp_unit">bpm</string>
+    <string name="string_bp_unit">mmHg</string>
+    <string name="string_times">times</string>
+    <string name="string_kcal">kcal</string>
     <string name="string_device_cant_conn">Equipment cannot be connected</string>
     <string name="string_download_success">Download successful</string>
     <string name="string_skip">Skip</string>
@@ -61,7 +73,7 @@
     <string name="string_spo2_abnormal">Abnormal:&lt;95%</string>
     
     
-    <string name="string_kcal_consumption">Calorie Consumption</string>
+    <string name="string_kcal_consumption">Calorie burn</string>
     <string name="string_real_time_hr">Real-time Heart Rate</string>
     <string name="string_data_sync">Data synchronization..</string>
     <string name="string_add_device">Add Device</string>
@@ -69,10 +81,10 @@
     <string name="string_daily_avg">Daily avg:</string>
     <string name="string_systolic_pressure">systolic pressure</string>
     <string name="string_diastolic_pressure">diastolic pressure</string>
-    <string name="string_exercise_record">Exercise Record</string>
+    <string name="string_exercise_record">Sports record</string>
     <string name="string_exercise_time">Exercise Time</string>
     <string name="string_operate_guide">Operate guide</string>
-    <string name="string_not_bond_device">未绑定设备</string>
+    <string name="string_not_bond_device">Not bond device</string>
     <string name="string_help">Help</string>
     <string name="string_personal_center">Personal Center</string>
     <string name="string_feedback">Feedback</string>
@@ -98,7 +110,7 @@
     <string name="string_save_success">save success</string>
     <string name="string_share">Share</string>
     <string name="string_sport_detail">Sport detail</string>
-    <string name="string_history">history</string>
+    <string name="string_history">History</string>
     <string name="string_hr_txt_desc">HRrest: The number of heartbeats per minute in a normal person is generally 60 to 100 in a quiet state. Exercise Heart Rate: During exercise, the body\'s exercise state can be judged according to the heart rate interval. Only by selecting an appropriate heart rate interval can a better exercise state be achieved, and an appropriate heart rate interval can be used to achieve a better exercise effect. \n*The data and suggestions provided are for reference only and cannot be used as a basis for clinical diagnosis and treatment</string>
     <string name="string_bp_txt_desc">Normal Range: \n Systolic blood pressure: 90-139 mmHg\n/ diastolic blood pressure: 60-89 mmHg"\n * The data and recommendations provided are for reference only and cannot be used as a basis for clinical diagnosis and treatment</string>
     <string name="string_sleep_txt_desc">Sleep is one of the important life-sustaining behaviors of beings. The hardware device records your sleep status, analyzes the sleep quality, and helps you understand and adjust your sleep habits. \n*The data suggestions provided are for reference only and cannot be used as a basis for clinical diagnosis and treatment</string>
@@ -107,7 +119,7 @@
 
 
     <string name="string_about">About</string>
-    <string name="string_measure">measure</string>
+    <string name="string_measure">Measure</string>
     <string name="string_scan_ing">scan..</string>
     <string name="string_personal_data">Personal information</string>
     <string name="string_last_version">Last Version</string>
@@ -120,10 +132,10 @@
     <string name="string_mail">Mail</string>
     <string name="string_wechat">Wechat</string>
 
-    <string name="string_distance">distance</string>
-    <string name="string_consumption">consumption</string>
+    <string name="string_distance">Distance</string>
+    <string name="string_consumption">Consumption</string>
     <string name="string_count_step">step count</string>
-    <string name="string_avg_hr">avg HR:</string>
+    <string name="string_avg_hr">Avg HR:</string>
     <string name="string_place">pace</string>
     <string name="string_speed">speed</string>
 
@@ -243,13 +255,13 @@
     <string name="fri">Fri</string>
     <string name="sat">Sat</string>
     <string name="every_day">Everyday</string>
-    <string name="work_day">Monday to Friday</string>
+    <string name="work_day">Weekday</string>
     <string name="wenkend_day">Weekend</string>
     <string name="string_common_week">week</string>
     <string name="once">Once</string>
     <string name="frequently_tip">Do not operate frequently</string>
 
-    <string name="string_scan_device">search device</string>
+    <string name="string_scan_device">Search device</string>
     <string name="string_not_connect">not connected</string>
     <string name="string_connected">connected</string>
     <string name="string_conning">connecting</string>
@@ -281,7 +293,7 @@
     <string name="string_save">Save</string>
 
     <string name="string_step">step</string>
-    <string name="string_steps">steps</string>
+    <string name="string_steps">Steps</string>
     <string name="string_step_target">Step target</string>
     <string name="string_confirm">confirm</string>
     <string name="string_cancel">cancel</string>

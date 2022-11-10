@@ -160,7 +160,7 @@ class TurnWristActivity : AppActivity(),View.OnClickListener{
             deviceSetModel?.turnWrist= if(timeBean?.switchStatus == 0) "0" else  String.format("%02d",timeBean?.startHour)+":"+String.format("%02d",timeBean?.startMinute)+"-"+String.format("%02d",timeBean?.endHour)+":"+String.format("%02d",timeBean?.endMinute)
             BleOperateManager.getInstance().setClearListener()
 
-            ToastUtils.show("设置成功!")
+            ToastUtils.show(resources.getString(R.string.string_save_success))
         }
         saveData()
     }

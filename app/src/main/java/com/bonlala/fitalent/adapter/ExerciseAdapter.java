@@ -67,7 +67,7 @@ public class ExerciseAdapter extends AppAdapter<ExerciseShowBean>{
         public void onBindView(int position) {
             ExerciseShowBean exerciseShowBean = getItem(position);
             itemExerciseDateTv.setText(exerciseShowBean.getDayStr());
-            itemExerciseTotalTv.setText(exerciseShowBean.getExerciseModelList().size()+"个");
+            itemExerciseTotalTv.setText(exerciseShowBean.getExerciseModelList().size()+""+getContext().getResources().getString(R.string.string_times));
 
             ExerciseItemAdapter exerciseItemAdapter = new ExerciseItemAdapter(getContext());
             exerciseItemAdapter.setOnItemClickListener(new OnItemClickListener() {

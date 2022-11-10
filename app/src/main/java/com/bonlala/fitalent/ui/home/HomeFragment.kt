@@ -148,7 +148,8 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
 
     private fun homeDeviceClick(){
         val userMac = DBManager.getBindMac()
-        if(BikeUtils.isEmpty(userMac)){  //未连接过
+        val connMac = MmkvUtils.getConnDeviceMac()
+        if(BikeUtils.isEmpty(connMac)){  //未连接过
             homeDeviceStatusView.setOnClickListener {
                 startActivity(MainActivity::class.java)
             }
@@ -308,7 +309,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
             homeUiAdapter?.notifyItemChanged(4)
         }
 
-        //心率 单次+详细
+        //心率 详细
         viewModel.detailHr.observe(viewLifecycleOwner){
             Timber.e("-------心率="+gson.toJson(it))
             if(homeHrB == null){

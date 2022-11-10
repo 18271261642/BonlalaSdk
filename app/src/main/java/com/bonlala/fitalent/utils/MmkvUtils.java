@@ -232,6 +232,21 @@ public class MmkvUtils {
     }
 
 
+    /**
+     * 保存消息提醒的状态
+     */
+    public static void saveW560BAppsStatus(boolean isOpen){
+        setSaveObjParams(W560B_APPS_KEY,isOpen);
+    }
+    /**
+     * 获取消息提醒状态
+     */
+    public static boolean getW560BAppsStatus(){
+        return (boolean) getSaveParams(W560B_APPS_KEY,false);
+    }
+
+
+
     /**保存电话提醒的状态**/
     public static void saveW560BPhoneStatus(boolean isOpen){
         setSaveObjParams(W560B_PHONE_CALL_KEY,isOpen);
