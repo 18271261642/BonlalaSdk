@@ -43,7 +43,7 @@ class HistorySleepFragment : TitleBarFragment<RecordHistoryActivity>(),OnRecordH
     override fun initView() {
 
         val isChinese = BaseApplication.getInstance().isChinese
-        historySleepThumbImg.setImageResource(if(isChinese) R.mipmap.ic_hr_humb_chinese else R.mipmap.ic_hr_humb)
+        historySleepThumbImg.setImageResource(if(isChinese) R.mipmap.ic_thum_sleep_cn else R.mipmap.ic_thum_sleep_en)
 
         setOnClickListener(R.id.commonHistoryLeftImg,R.id.commonHistoryRightImg,
             R.id.commonHistoryCurrentTv,R.id.historySleepThumbImg,R.id.commonHistoryCalendarImg)

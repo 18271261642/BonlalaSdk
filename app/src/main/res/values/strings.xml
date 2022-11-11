@@ -5,6 +5,9 @@
     <string name="title_dashboard">device</string>
     <string name="title_notifications">mine</string>
 
+    <string name="string_time_second">s</string>
+    <string name="string_time_min">m</string>
+    <string name="string_time_hour">h</string>
     <string name="string_unbind_alert">Are you sure you want to unbind?</string>
     <string name="string_open_noti_desc">To use the message reminder function, you need to turn on the notification switch of the mobile phone. Is it turned on?</string>
     <string name="string_scan_complete">Scan complete</string>
@@ -52,7 +55,7 @@
 
 
 
-    <string name="string_please_keep_device_stable">*Please keep the device stable</string>
+    <string name="string_please_keep_device_stable">*Please wear the device correctly and keep it up and still</string>
     <string name="string_update_time">update time:</string>
     <string name="string_update_2hou_weather">Automatically update device weather information every two hours</string>
     <string name="string_7_day_weather">7 day weather forecast</string>
@@ -111,10 +114,10 @@
     <string name="string_share">Share</string>
     <string name="string_sport_detail">Sport detail</string>
     <string name="string_history">History</string>
-    <string name="string_hr_txt_desc">HRrest: The number of heartbeats per minute in a normal person is generally 60 to 100 in a quiet state. Exercise Heart Rate: During exercise, the body\'s exercise state can be judged according to the heart rate interval. Only by selecting an appropriate heart rate interval can a better exercise state be achieved, and an appropriate heart rate interval can be used to achieve a better exercise effect. \n*The data and suggestions provided are for reference only and cannot be used as a basis for clinical diagnosis and treatment</string>
-    <string name="string_bp_txt_desc">Normal Range: \n Systolic blood pressure: 90-139 mmHg\n/ diastolic blood pressure: 60-89 mmHg"\n * The data and recommendations provided are for reference only and cannot be used as a basis for clinical diagnosis and treatment</string>
+    <string name="string_hr_txt_desc">"HRrest: The number of heartbeats per minute of a normal person is generally 60 to 100 in a quiet state.. Exercise Heart Rate: During exercise, the body\'s exercise state can be judged according to the heart rate interval. Only by selecting an appropriate heart rate interval can a better exercise state be achieved, and an appropriate heart rate interval can be used to achieve a better exercise effect. \n*The data and suggestions provided are for reference only and cannot be used as a basis for clinical diagnosis and treatment</string>
+    <string name="string_bp_txt_desc">"Blood pressure is the pressure that blood exerts on the walls of blood vessels as it flows through the blood vessels.\n The blood pressure range of Normal adults at rest state is relatively stable, with normal systolic blood pressure ranging from 90 to 139 mmHg and diastolic blood pressure from 60 to 89 mmHg.\n*The data and suggestions provided are for reference only and cannot be used as a basis for clinical diagnosis and treatment."</string>
     <string name="string_sleep_txt_desc">Sleep is one of the important life-sustaining behaviors of beings. The hardware device records your sleep status, analyzes the sleep quality, and helps you understand and adjust your sleep habits. \n*The data suggestions provided are for reference only and cannot be used as a basis for clinical diagnosis and treatment</string>
-    <string name="string_spo2_txt_desc">About blood oxygen saturation data: Blood oxygen saturation is the percentage of the capacity of oxygen-bound oxyhemoglobin in the blood to the total bound hemoglobin capacity, that is, the concentration of blood oxygen in the blood, which is an important biological parameter of breathing and circulation. The oxygen saturation of normal arteries is about 95% to 99%. \n*The data and suggestions provided are for reference only and cannot be used as a basis for clinical diagnosis and treatment</string>
+    <string name="string_spo2_txt_desc">Blood oxygen saturation refers to the concentration of blood oxygen in the blood, which is an indicator of the ability of the blood to carry oxygen. The higher the oxygen content in the blood is, the metabolism of a person is better. It will change due to personal physical condition, altitude, etc.\nThe normal blood oxygen saturation of the human body is above 95%.\n* The data and suggestions provided are for reference only and cannot be used as a basis for clinical diagnosis and treatment.</string>
 
 
 

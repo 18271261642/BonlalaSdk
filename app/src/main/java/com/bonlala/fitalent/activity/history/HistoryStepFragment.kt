@@ -77,7 +77,7 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
                 //默认日
                 showDayCheck(0)
             }else{
-                dayStr = it[it.size-1]
+                dayStr = it[0]
                 getDayData()
             }
         }
@@ -130,13 +130,18 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
     private fun getDayData(){
         if(BikeUtils.daySize(dayStr,BikeUtils.getCurrDate())){
             commonHistoryCurrentTv.visibility = View.GONE
+            commonHistoryRightImg.visibility = View.INVISIBLE
+            dayStr = BikeUtils.getCurrDate()
             return
         }
+
+        commonHistoryRightImg.visibility = View.VISIBLE
         if(!BikeUtils.isEqualDay(dayStr,BikeUtils.getCurrDate())){
             commonHistoryCurrentTv.visibility = View.VISIBLE
         }else{
             commonHistoryCurrentTv.visibility = View.GONE
         }
+
 
         val mac =DBManager.getBindMac()
         dayStr?.let { viewModel.getOnDayStepByDay(it,mac) }
@@ -195,7 +200,6 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
             }
         }
 
-
         oneDayStepModel.detailStep =Gson().toJson(tempList.reversed())
         oneDayStepModel.dayStr = dayStr
         oneDayStepModel.dayStep = dayStep
@@ -244,8 +248,6 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
             }
 
         }
-
-
 
 
         if(type == StepType.WEEK){

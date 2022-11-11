@@ -852,6 +852,27 @@ public class BikeUtils {
     }
 
 
+
+    /**
+     * 将分钟格式化成HH时mm分:ss秒格式
+     * @param minute 分钟
+     * @return
+     */
+    public static String formatMinuteStr(int second,Context context){
+        if(second == 0){
+            return "--";
+        }
+        int hour = second / 3600;
+        int minute = (second - hour * 3600) / 60;
+        int secondes = second % 60;
+
+        String hourStr = hour == 0 ? "":(hour+context.getResources().getString(R.string.string_time_hour)+":");
+        String minuteStr = minute == 0 ? "" : (minute+context.getResources().getString(R.string.string_time_min)+":");
+        String secondStr = secondes == 0 ? "" : (secondes+context.getResources().getString(R.string.string_time_second));
+
+        return hourStr+minuteStr+secondStr;
+    }
+
     /**
      * 将分钟格式化成HH:mm格式
      * @param minute 分钟

@@ -1,5 +1,6 @@
 package com.bonlala.fitalent.ui.home
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -97,7 +98,7 @@ class HomeViewModel : HistorySleepViewModel() {
 
 
     /**获取当天的锻炼数据**/
-    fun getTodayExerciseData(mac: String){
+    fun getTodayExerciseData(mac: String,context: Context){
         val allDbTime = DBManager.getInstance().getLastDayOfType(userId,mac,DbType.DB_TYPE_EXERCISE)
         Timber.e("---dddadfsd="+allDbTime)
         if(allDbTime == null){
@@ -112,13 +113,18 @@ class HomeViewModel : HistorySleepViewModel() {
         var totalTime = 0
         var totalKcal = 0
         todayExerciseList.forEach {
-            totalTime += it.exerciseTime
+            totalTime += it.exerciseMinute
             totalKcal += it.kcal
         }
+
+
+        //时间秒，格式化成HH:mm:ss格式
+        val timeStr = BikeUtils.formatMinuteStr(totalTime,context)
 
         val str = "$totalTime+$totalKcal"
         val map = HashMap<String,String>()
         map.put(allDbTime,str)
+        Timber.e("-----str-="+str+" "+map.toString())
         todayExercise.postValue(map)
     }
 

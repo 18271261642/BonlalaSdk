@@ -363,7 +363,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
         viewModel.queryLastDetailHr(mac)
 
         //锻炼数据
-        viewModel.getTodayExerciseData(mac)
+        viewModel.getTodayExerciseData(mac,attachActivity)
         /**
          * 获取最近一次的睡眠数据
          */

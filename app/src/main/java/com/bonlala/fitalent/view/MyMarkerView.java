@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.bonlala.fitalent.R;
 import com.bonlala.fitalent.bean.ChartHrBean;
 import com.bonlala.fitalent.utils.BikeUtils;
+import com.bonlala.fitalent.utils.HeartRateConvertUtils;
 import com.bonlala.widget.utils.MiscUtil;
 import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.data.CandleEntry;
@@ -35,11 +36,14 @@ public class MyMarkerView extends MarkerView {
 
     private List<ChartHrBean> list;
 
+    private Context context;
+
     public MyMarkerView(Context context, int layoutResource,List<ChartHrBean> chartHrBeanList) {
         super(context, layoutResource);
         tvContent = findViewById(R.id.tvContent);
         timeTv = findViewById(R.id.hrTimeTv);
         this.list = chartHrBeanList;
+        this.context = context;
     }
 
 
@@ -49,21 +53,34 @@ public class MyMarkerView extends MarkerView {
     // content (user-interface)
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
+        try {
+            Timber.e("---e="+e.getX()+" "+e.getY()+" ");
+            if (e instanceof CandleEntry) {
 
-        Timber.e("---e="+e.getX()+" "+e.getY()+" ");
-        if (e instanceof CandleEntry) {
+                CandleEntry ce = (CandleEntry) e;
+                int index = (int) e.getX();
+                int time = list.get(index).getTime();
+                timeTv.setText(BikeUtils.formatMinute(time));
+                String v = Utils.formatNumber(ce.getHigh(), 0, true);
+                int hrValue = Integer.parseInt(v);
+                int color = HeartRateConvertUtils.getColorByPoint(context,hrValue);
+                tvContent.setText(Utils.formatNumber(ce.getHigh(), 0, true));
+                tvContent.setTextColor(color);
+            } else {
+                int index = (int) e.getX();
+                int time = list.get(index).getTime();
 
-            CandleEntry ce = (CandleEntry) e;
-            int index = (int) e.getX();
-            int time = list.get(index).getTime();
-            timeTv.setText(BikeUtils.formatMinute(time));
-            tvContent.setText(Utils.formatNumber(ce.getHigh(), 0, true));
-        } else {
-            int index = (int) e.getX();
-            int time = list.get(index).getTime();
-            timeTv.setText(BikeUtils.formatMinute(time));
-            tvContent.setText(Utils.formatNumber(e.getY(), 0, true));
+                String v = Utils.formatNumber(e.getY(), 0, true);
+                int hrValue = Integer.parseInt(v);
+                int color = HeartRateConvertUtils.getColorByPoint(context,hrValue);
+                timeTv.setText(BikeUtils.formatMinute(time));
+                tvContent.setText(Utils.formatNumber(e.getY(), 0, true));
+                tvContent.setTextColor(color);
+            }
+        }catch (Exception es){
+            es.printStackTrace();
         }
+
 
         super.refreshContent(e, highlight);
     }

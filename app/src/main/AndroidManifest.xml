@@ -104,7 +104,8 @@
         <activity android:name=".activity.PersonalActivity"/>
         <activity android:name=".activity.WeatherActivity"/>
         <activity android:name=".activity.CompleteUserInfoActivity"/>
-        <activity android:name=".activity.ShowWebActivity"/>
+        <activity android:name=".activity.ShowWebActivity"
+          android:windowSoftInputMode="stateHidden"/>
         <!--消息提醒-->
         <activity android:name=".activity.MsgNotifyActivity"/>
         <activity android:name="com.bonlala.fitalent.activity.history.TestA" />

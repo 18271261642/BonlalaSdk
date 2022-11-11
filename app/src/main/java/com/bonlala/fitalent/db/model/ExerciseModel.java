@@ -101,8 +101,8 @@ public class ExerciseModel extends LitePalSupport {
     }
 
     /**获取锻炼的时间，秒**/
-    public float getExerciseMinute(){
-        return (float) (sportHour*60 + sportMinute+(CalculateUtils.div(sportSecond,60,3)));
+    public int getExerciseMinute(){
+        return sportHour*60*60 + sportMinute*60+sportSecond;
     }
 
 

@@ -13,6 +13,7 @@ import com.bonlala.fitalent.dialog.DateDialog
 import com.bonlala.fitalent.dialog.HeightSelectDialog
 import com.bonlala.fitalent.utils.BikeUtils
 import com.bonlala.fitalent.utils.CalculateUtils
+import com.bonlala.fitalent.utils.MmkvUtils
 import kotlinx.android.synthetic.main.activity_complete_user_info_layout.*
 import timber.log.Timber
 
@@ -50,6 +51,7 @@ class CompleteUserInfoActivity : AppActivity() {
     }
 
     private fun showUserInfoData(){
+        MmkvUtils.saveUnit(userInfo?.userUnit == 0)
         //性别
         val sex = userInfo?.sex
         completeWomenImg.setImageResource(if(sex == 1) R.mipmap.ic_women_check else R.mipmap.ic_women_normal)

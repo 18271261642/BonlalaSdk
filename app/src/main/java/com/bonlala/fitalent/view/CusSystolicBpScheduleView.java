@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
  * 收缩压的指示进度+收缩压值
  * Created by Admin
  * Date 2022/9/21
+ * @author Admin
  */
 public class CusSystolicBpScheduleView extends LinearLayout {
 
@@ -78,7 +79,7 @@ public class CusSystolicBpScheduleView extends LinearLayout {
         //刻度图片的宽度
         float scaleWidth = scaleBitmap.getWidth();
 
-        //间隔值 40-90；90-120；120-140；140-160；160-180
+        //收缩压40-90/90-120/120-140/140-160/160-180
         float coefficientValue = bgWidth / (180-40);
 
         //搜索压值的进度

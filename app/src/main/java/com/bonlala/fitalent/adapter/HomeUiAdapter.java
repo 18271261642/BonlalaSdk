@@ -197,8 +197,8 @@ public class HomeUiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             //心率点数，根据点数设置背景和颜色
             int point = HeartRateConvertUtils.hearRate2Point(value,hrPercent);
-
             int color = HeartRateConvertUtils.getColorByPoint(context,point);
+
 
             realHrBarChartView.addData(value,color,false);
             ((HomeRealHrViewHolder) holder).itemHomeRealHrValue.setText(value+"");
@@ -418,12 +418,19 @@ public class HomeUiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 //日期
                 String dayStr = m.getKey();
 
-                ((HomeSportRecordViewHolder) holder).itemSportRecordLastTimeTv.setText(BikeUtils.isEqualDay(dayStr,BikeUtils.getCurrDate()) ? context.getResources().getString(R.string.string_today) : dayStr);
+                String dayLanguage = BaseApplication.getInstance().getIsChinese() ? dayStr : BikeUtils.getFormatEnglishDate(dayStr);
+               //BikeUtils.isEqualDay(dayStr,BikeUtils.getCurrDate()) ? context.getResources().getString(R.string.string_today) : dayStr
+
+                ((HomeSportRecordViewHolder) holder).itemSportRecordLastTimeTv.setText(dayLanguage);
                 String vStr = m.getValue();
                 String time = StringUtils.substringBefore(vStr,"+");
                 String kcal = StringUtils.substringAfter(vStr,"+");
+                int timeInteger = Integer.parseInt(time.trim());
+                String timeStr = BikeUtils.formatMinuteStr(timeInteger,context);
+
+
                 ((HomeSportRecordViewHolder) holder).itemSportRecordKcalTv.setText(getTargetType(kcal+"",context.getResources().getString(R.string.string_kcal)));
-                ((HomeSportRecordViewHolder) holder).itemSportRecordTimeTv.setText(getTargetType(time+"",context.getResources().getString(R.string.string_minute)));
+                ((HomeSportRecordViewHolder) holder).itemSportRecordTimeTv.setText(getTargetType(timeStr+"",""));
 
             }
 

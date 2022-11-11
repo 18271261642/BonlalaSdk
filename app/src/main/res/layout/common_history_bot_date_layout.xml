@@ -18,7 +18,7 @@
 
     <com.hjq.shape.view.ShapeTextView
         android:id="@+id/commonHistoryDateTv"
-        android:layout_width="@dimen/dp_150"
+        android:layout_width="@dimen/dp_180"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="5dp"

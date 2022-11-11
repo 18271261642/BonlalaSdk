@@ -198,7 +198,7 @@ public class CustomizeSingleBpView extends View {
         float txtHeight = MiscUtil.measureTextHeight(clickTxtPaint);
 
 
-        float rectFBottom = -mHeight+txtHeight*6f;
+        float rectFBottom = -mHeight+txtHeight*4f;
 
         RectF rectF = new RectF(0,-mHeight+paddingWidth*2/2,mWidth,rectFBottom);
         canvas.drawRoundRect(rectF,10f,10f,clickBgPaint);
@@ -214,11 +214,11 @@ public class CustomizeSingleBpView extends View {
         //年
 //        String year = BikeUtils.getFormatDate(timeStr,"yyyy-MM-dd");
 //        String seconds = BikeUtils.getFormatDate(timeStr,"HH:mm:ss");
-        canvas.drawText(year,mWidth/2,-mHeight+txtHeight*3.5f+paddingWidth*2,clickStatusPaint);
-        canvas.drawText(seconds,mWidth/2,-mHeight+txtHeight*4.5f+paddingWidth*2,clickStatusPaint);
+//        canvas.drawText(year,mWidth/2,-mHeight+txtHeight*3.5f+paddingWidth*2,clickStatusPaint);
+//        canvas.drawText(seconds,mWidth/2,-mHeight+txtHeight*4.5f+paddingWidth*2,clickStatusPaint);
 
-
-        canvas.drawLine(mWidth/2,0,mWidth/2,-mHeight+txtHeight*4f+paddingWidth*2,clickLinePaint);
+        float tH = MiscUtil.measureTextHeight(txtPaint);
+        canvas.drawLine(mWidth/2,-tH*3f,mWidth/2,-mHeight+txtHeight*4f+paddingWidth*2,clickLinePaint);
     }
 
     public ChartBpBean getChartBpBean() {

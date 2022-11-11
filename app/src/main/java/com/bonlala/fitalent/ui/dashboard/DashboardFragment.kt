@@ -661,6 +661,11 @@ import timber.log.Timber
         //消息提醒
         appsMsgCheckView.setCheckListener { button, checked ->
             //openMsgSwitch()
+            if(checked){
+
+                XXPermissions.with(attachActivity).permission(arrayOf(Manifest.permission.READ_SMS)).request { permissions, all ->  }
+
+            }
             appsMsgCheckView.setCheckStatus(checked)
             MmkvUtils.saveW560BAppsStatus(checked)
         }

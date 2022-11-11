@@ -14,6 +14,7 @@ import java.util.Calendar;
  * 心率计算类
  * Created by Admin
  * Date 2022/9/27
+ * @author Admin
  */
 public class HeartRateConvertUtils {
 
@@ -109,24 +110,24 @@ public class HeartRateConvertUtils {
     //根据点数设置背景图片
     public static Drawable setDrawable(Context context,int point){
         if(point == 0){
-            return context.getResources().getDrawable(R.mipmap.ic_real_time_hr_bg1);
+            return context.getResources().getDrawable(R.mipmap.ic_real_time_hr_bg_1);
         }
         if(point == 1){
-            return context.getResources().getDrawable(R.mipmap.ic_real_time_hr_bg2);
+            return context.getResources().getDrawable(R.mipmap.ic_real_time_hr_bg_2);
         }
         if(point == 2){
-            return context.getResources().getDrawable(R.mipmap.ic_real_time_hr_bg3);
+            return context.getResources().getDrawable(R.mipmap.ic_real_time_hr_bg_3);
         }
         if(point == 3){
-            return context.getResources().getDrawable(R.mipmap.ic_real_time_hr_bg4);
+            return context.getResources().getDrawable(R.mipmap.ic_real_time_hr_bg_4);
         }
         if(point == 4){
-            return context.getResources().getDrawable(R.mipmap.ic_real_time_hr_bg5);
+            return context.getResources().getDrawable(R.mipmap.ic_real_time_hr_bg_5);
         }
         if(point == 5){
-            return context.getResources().getDrawable(R.mipmap.ic_real_time_hr_bg5);
+            return context.getResources().getDrawable(R.mipmap.ic_real_time_hr_bg_6);
         }
-        return context.getResources().getDrawable(R.mipmap.ic_real_time_hr_bg1);
+        return context.getResources().getDrawable(R.mipmap.ic_real_time_hr_bg_1);
     }
 
 

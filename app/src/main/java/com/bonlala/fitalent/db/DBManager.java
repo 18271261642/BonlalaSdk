@@ -69,7 +69,7 @@ public class DBManager {
         userInfoModel.setStepGoal(8000);
         userInfoModel.setNickName("nickName");
         userInfoModel.setSex(0);
-        userInfoModel.setUserBirthday("1900-06-01");
+        userInfoModel.setUserBirthday("1990-01-01");
         if(getUserInfo() == null){
             userInfoModel.save();
         }

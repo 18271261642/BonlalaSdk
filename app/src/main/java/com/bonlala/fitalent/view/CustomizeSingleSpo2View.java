@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
  * 单个的血氧，
  * Created by Admin
  * Date 2022/10/11
+ * @author Admin
  */
 public class CustomizeSingleSpo2View extends View {
 
@@ -186,7 +187,7 @@ public class CustomizeSingleSpo2View extends View {
         float txtHeight = MiscUtil.measureTextHeight(clickTxtPaint);
 
 
-        float rectFBottom = -mHeight+txtHeight*6f;
+        float rectFBottom = -mHeight+txtHeight*4f;
 
         RectF rectF = new RectF(0,-mHeight+paddingWidth*2/2,mWidth,rectFBottom);
         canvas.drawRoundRect(rectF,10f,10f,clickBgPaint);
@@ -201,11 +202,11 @@ public class CustomizeSingleSpo2View extends View {
         //年
 //        String year = BikeUtils.getFormatDate(timeStr,"yyyy-MM-dd");
 //        String seconds = BikeUtils.getFormatDate(timeStr,"HH:mm:ss");
-        canvas.drawText(year,mWidth/2,-mHeight+txtHeight*3.5f+paddingWidth*2,clickStatusPaint);
-        canvas.drawText(seconds,mWidth/2,-mHeight+txtHeight*4.5f+paddingWidth*2,clickStatusPaint);
+//        canvas.drawText(year,mWidth/2,-mHeight+txtHeight*3.5f+paddingWidth*2,clickStatusPaint);
+//        canvas.drawText(seconds,mWidth/2,-mHeight+txtHeight*4.5f+paddingWidth*2,clickStatusPaint);
 
 
-        canvas.drawLine(mWidth/2,0,mWidth/2,-mHeight+txtHeight*4f+paddingWidth*2,clickLinePaint);
+        canvas.drawLine(mWidth/2,-txtHeight*2.5f,mWidth/2,-mHeight+txtHeight*2f+paddingWidth*2,clickLinePaint);
     }
 
 

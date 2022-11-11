@@ -128,7 +128,7 @@ class MainActivity : AppActivity() ,OnItemClickListener{
                 scanStatusTv.text = resources.getString(R.string.string_scan_ing)
 
                 val bleName = p0.name
-                if(TextUtils.isEmpty(bleName) || bleName.equals("NULL"))
+                if(BikeUtils.isEmpty(bleName) || bleName.equals("NULL"))
                     return
                 if(!bleName.lowercase(Locale.ROOT).contains("w560b"))
                     return

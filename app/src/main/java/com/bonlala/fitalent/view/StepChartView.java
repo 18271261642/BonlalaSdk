@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.bonlala.fitalent.R;
 import com.bonlala.fitalent.db.model.OneDayStepModel;
 import com.bonlala.fitalent.db.model.StepItem;
 import com.bonlala.fitalent.emu.StepType;
@@ -28,6 +29,7 @@ import timber.log.Timber;
 /**
  * Created by Admin
  * Date 2022/9/29
+ * @author Admin
  */
 public class StepChartView extends View {
 
@@ -107,9 +109,10 @@ public class StepChartView extends View {
         emptyPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         emptyPaint.setAntiAlias(true);
         emptyPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        emptyPaint.setColor(Color.GREEN);
-        emptyPaint.setTextSize(MiscUtil.dipToPx(context,15f));
+        emptyPaint.setColor(Color.parseColor("#FF6E6E77"));
+        emptyPaint.setTextSize(MiscUtil.dipToPx(context,18f));
         emptyPaint.setStrokeWidth(1f);
+        emptyPaint.setTextAlign(Paint.Align.CENTER);
 
 
         rectPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -177,6 +180,16 @@ public class StepChartView extends View {
         }
 
         maxValue = CalculateUtils.calculateStepChartMaxValue(maxValue);
+
+        /**
+         * 最大值为0表明无数据
+         */
+        if(maxValue == 0){
+            float emptyHeight = MiscUtil.measureTextHeight(emptyPaint);
+            canvas.drawText(getResources().getString(R.string.string_no_data),mWidth/2,-mHeight/2+emptyHeight/2,emptyPaint);
+
+        }
+
 
         Timber.e("---max="+maxValue);
 
@@ -349,7 +362,7 @@ public class StepChartView extends View {
 
 
                 //点击到了
-                if(x>barX && x<barX+singleBarWidth){
+                if(x>barX- barAvgWidth/2 && x<barX+singleBarWidth){
                     Timber.e("-----点击到了="+(barX+singleBarWidth/2));
                     list.get(i).setChecked(true);
                     list.get(i).setPoint(new Point((int)((barX+singleBarWidth/2)),(int)y));

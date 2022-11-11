@@ -85,7 +85,7 @@ public class CusDiastolicBpScheduleView extends LinearLayout {
         //刻度图片的宽度
         float scaleWidth = scaleBitmap.getWidth();
 
-        //间隔值 40-90；90-120；120-140；140-160；160-180
+        //舒张压40-60/60-80/80-90/90-100/100-120
         float coefficientValue = bgWidth / (120-40);
 
         //搜索压值的进度
