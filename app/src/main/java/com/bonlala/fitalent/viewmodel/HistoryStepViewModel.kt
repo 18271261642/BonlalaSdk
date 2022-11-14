@@ -30,7 +30,7 @@ class HistoryStepViewModel : ViewModel() {
     val onWeekStepList = MutableLiveData<OneDayStepModel>()
 
 
-    //查询一年的数据，12个月，不够补0
+    //查询一年的数据，12个月，不够补0 map-key-年的达标天数
     val oneYearStepData = MutableLiveData<OneDayStepModel>()
 
 
@@ -186,7 +186,7 @@ class HistoryStepViewModel : ViewModel() {
      * 获取自然月的数据
      * month yyyy-MM格式日期
      */
-    fun getOneMonthStepBack(month : String,mac: String) : OneDayStepModel{
+    private fun getOneMonthStepBack(month : String,mac: String) : OneDayStepModel{
         //当月的第一天
         val firstMonthDay = BikeUtils.getMonthFirstOrLastDay(month,true)
         //当月的最后一天
@@ -229,6 +229,7 @@ class HistoryStepViewModel : ViewModel() {
     fun getAllStepRecord(mac: String){
         val stepRecord = DBManager.getInstance().getAllRecordByType("user_1001",mac,DbType.DB_TYPE_STEP)
         if(stepRecord != null){
+            stepRecord.sortByDescending { it->it.toString() }
             allStepRecord.postValue(stepRecord)
         }
     }

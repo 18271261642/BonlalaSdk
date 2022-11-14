@@ -119,4 +119,27 @@
     </com.hjq.shape.layout.ShapeLinearLayout>
 
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="广西奔啦啦智能科技有限公司"
+        android:textColor="#ffafafaf"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Guangxi Million Concept BHL Co.Co.,Ltd.
+Rights Reservrd"
+        android:textColor="#ffafafaf"
+        android:textSize="12sp"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:gravity="center"/>
 </LinearLayout>

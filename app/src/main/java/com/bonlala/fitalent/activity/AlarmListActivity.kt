@@ -185,7 +185,7 @@ class AlarmListActivity : AppActivity() {
                     }
                 }
               //  Log.e("AA", "-----周=" + data.toString())
-                timeDialog?.setChooseRepeat(stringBuilder.toString())
+//                timeDialog?.setChooseRepeat(stringBuilder.toString())
                 saveAlarm(tempWMap)
             }
             .create().show()
@@ -212,7 +212,7 @@ class AlarmListActivity : AppActivity() {
 
         }
         timeDialog?.weekRepestValue = resultRepeat
-
+        timeDialog?.setChooseRepeat(getRepeat(resultRepeat.toByte()))
     }
 
 

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:paddingBottom="@dimen/dp_8">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10">
+
+
+        <ImageView
+            android:id="@+id/itemDetailSportTypeImg"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:layout_margin="@dimen/dp_5"
+            android:src="@mipmap/ic_sport_walk"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <View
+            android:id="@+id/itemTempMiddleView"
+            android:layout_width="1dp"
+            android:layout_height="2dp"
+            app:layout_constraintBottom_toBottomOf="@id/itemDetailSportTypeImg"
+            app:layout_constraintLeft_toRightOf="@id/itemDetailSportTypeImg"
+            app:layout_constraintTop_toTopOf="@id/itemDetailSportTypeImg" />
+
+        <TextView
+            android:id="@+id/itemDetailSportTypeNameTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_5"
+            android:text="Walk"
+            android:textColor="#ff000000"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/itemDetailSportDateTv"
+            app:layout_constraintLeft_toRightOf="@id/itemDetailSportTypeImg"
+            app:layout_constraintTop_toTopOf="@id/itemDetailSportTypeImg" />
+
+
+        <TextView
+            android:id="@+id/itemDetailSportDateTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_5"
+            android:text="2022-08-08"
+            android:textColor="#ff000000"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/itemDetailSportTypeImg"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/itemDetailStartTimeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_5"
+            android:text="11:36:10~11:41:13"
+            android:textColor="#ff97979f"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toRightOf="@id/itemDetailSportTypeImg"
+            app:layout_constraintTop_toBottomOf="@id/itemDetailSportDateTv" />
+
+        <ImageView
+            android:id="@+id/itemDetailSportTempBackImg"
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:src="@drawable/ic_gray_right_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/itemDetailSportTimeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:text="00:05:03"
+            android:textColor="#ff000000"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/itemDetailSportTempBackImg"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/itemDetailSportTypeRy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+</LinearLayout>

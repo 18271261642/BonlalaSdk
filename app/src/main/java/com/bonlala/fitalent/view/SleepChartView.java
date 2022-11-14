@@ -241,7 +241,7 @@ public class SleepChartView extends View {
         canvas.drawText(typeStr,point.x,txtHeight*2.3f+marginTop,clickTxtPaint);
 
         //时长
-        String timeLengthStr = BikeUtils.formatHourAndMinute(sleepItem.getSleepLength());
+        String timeLengthStr = BikeUtils.formatMinute(sleepItem.getSleepLength(),getContext());
         canvas.drawText(timeLengthStr,point.x,txtHeight*3.5f+marginTop,clickTxtPaint);
 
 

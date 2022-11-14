@@ -64,10 +64,11 @@ public class WeatherAdapter extends AppAdapter<WeatherRecordApi.WeatherRecordBea
             String lowStr = isTemp ? lowTemp+"℃"  : CalculateUtils.celsiusToFahrenheit(lowTemp)+"℉";
             String hStr = isTemp ? hiTemp+"℃" : CalculateUtils.celsiusToFahrenheit(hiTemp)+"℉";
 
-
             itemRecordWeatherScopeTv.setText(lowStr+"~"+hStr);
             itemRecordWeatherDateTv.setText(wb.getCurrentDate());
-            itemRecordWeekTv.setText(BikeUtils.getWeekForDay(getContext(),wb.getCurrentDate()));
+            //当天的日期改为当天
+
+            itemRecordWeekTv.setText(position == 0 ? getContext().getResources().getString(R.string.string_today) : BikeUtils.getWeekForDay(getContext(),wb.getCurrentDate()));
             Glide.with(getContext()).load(wb.getWeatherImgUrl()).into(itemRecordWeatherImgView);
 
         }

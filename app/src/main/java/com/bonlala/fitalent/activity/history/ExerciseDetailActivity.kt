@@ -12,6 +12,7 @@ import androidx.core.content.FileProvider
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bonlala.action.AppActivity
+import com.bonlala.fitalent.BaseApplication
 import com.bonlala.fitalent.R
 import com.bonlala.fitalent.adapter.ItemExerciseAdapter
 import com.bonlala.fitalent.bean.ExerciseItemBean
@@ -22,7 +23,8 @@ import com.bonlala.fitalent.emu.W560BExerciseType
 import com.bonlala.fitalent.utils.*
 import com.hjq.permissions.XXPermissions
 import kotlinx.android.synthetic.main.activity_exercise_detail_layout.*
-import kotlinx.android.synthetic.main.item_sport_record_item_layout.*
+import kotlinx.android.synthetic.main.item_detail_sport_top_layout.*
+import kotlinx.android.synthetic.main.item_sport_record_item_layout.itemSportTypeImg
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -46,7 +48,7 @@ class ExerciseDetailActivity : AppActivity() {
     }
 
     override fun initView() {
-        itemSportTempBackImg.visibility = View.INVISIBLE
+        itemDetailSportTempBackImg.visibility = View.INVISIBLE
         
         XXPermissions.with(this).permission(Manifest.permission.WRITE_EXTERNAL_STORAGE).request { permissions, all ->  }
 
@@ -54,9 +56,9 @@ class ExerciseDetailActivity : AppActivity() {
         val gridLayoutManager = GridLayoutManager(
             context, 3
         )
-        itemExerciseTypeRy.layoutManager = gridLayoutManager
+        itemDetailSportTypeRy.layoutManager = gridLayoutManager
         itemAdapter = ItemExerciseAdapter(this,list)
-        itemExerciseTypeRy.adapter = itemAdapter
+        itemDetailSportTypeRy.adapter = itemAdapter
     }
 
     @OptIn(DelicateCoroutinesApi::class)
@@ -105,9 +107,10 @@ class ExerciseDetailActivity : AppActivity() {
 
 
     private fun showDetail(exerciseModel: ExerciseModel){
-        itemSportTypeImg.setImageResource(getTypeResource(exerciseModel.type))
 
+        val isChinese = BaseApplication.getInstance().isChinese
 
+        itemDetailSportDateTv.text = if(isChinese) exerciseModel.dayStr else BikeUtils.getFormatEnglishData(exerciseModel.dayStr,"MMM dd,yyyy")
         val tempList = getTypeMap(exerciseModel)
         list?.clear()
         if (tempList != null) {
@@ -116,13 +119,13 @@ class ExerciseDetailActivity : AppActivity() {
         itemAdapter?.notifyDataSetChanged()
 
 
-        itemSportTypeImg.setImageResource(W560BExerciseType.getTypeResource(exerciseModel.type))
-        itemExerciseTypeNameTv.text = W560BExerciseType.getW560BTypeName(
+        itemDetailSportTypeImg.setImageResource(W560BExerciseType.getTypeResource(exerciseModel.type))
+        itemDetailSportTypeNameTv.text = W560BExerciseType.getW560BTypeName(
             exerciseModel.type,
             context
         )
-        itemExerciseStartTimeTv.text = exerciseModel.startTimeStr + "~" + exerciseModel.endTimeStr
-        itemSportTimeTv.text = exerciseModel.hourMinute
+        itemDetailStartTimeTv.text = exerciseModel.startTimeStr + "~" + exerciseModel.endTimeStr
+        itemDetailSportTimeTv.text = exerciseModel.hourMinute
         //心率
         val hrArray = exerciseModel.hrArray
         if(hrArray != null){
@@ -341,7 +344,7 @@ class ExerciseDetailActivity : AppActivity() {
                     resources.getString(R.string.string_place),
                     getTargetType(
                         CalculateUtils.getFloatPace(pace.toFloat()),
-                        if (isKm) "/km" else "/mi"
+                        ""
                     )
                 )
             )

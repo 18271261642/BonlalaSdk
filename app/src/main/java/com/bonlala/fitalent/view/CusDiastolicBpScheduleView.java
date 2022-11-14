@@ -20,6 +20,7 @@ import androidx.annotation.Nullable;
  * 舒张压的指示进度+收缩压值
  * Created by Admin
  * Date 2022/9/21
+ * @author Admin
  */
 public class CusDiastolicBpScheduleView extends LinearLayout {
 

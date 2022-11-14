@@ -6,6 +6,9 @@
     <string name="string_imperial">英制</string>
 
 
+    <string name="string_back_today">回到当天</string>
+    <string name="string_dfu_notify">更新提示:</string>
+    <string name="string_dfu_desc">1、固件更新预计需要5-10分钟，请耐心等待；\n2、升级过程中，不能关闭蓝牙，手机屏幕保持常亮\n3、设备靠近手机，请勿走远，请勿退出APP；\n4、升级前请确保设备电量大于40%或充电中;\n5、升级成功后，请在系统蓝牙忽略设备;\n6、升级失败后，需要选择DFU设备名进行连接再升级。</string>
     <string name="string_time_second">秒</string>
     <string name="string_time_min">分</string>
     <string name="string_time_hour">时</string>
@@ -119,7 +122,7 @@
     <string name="string_sport_detail">运动详情</string>
 
     <string name="string_history">历史</string>
-    <string name="string_hr_txt_desc">安静心率：正常人在安静状态下每分钟心跳次数一般为60~100次。运动心率：运动过程中根据心率区间可以判断身体的运动状态，选择合适的心率区间才能达到较佳的运动状态，选择合适的心率区间才能达到较佳的运动效果。*所提供的数据及建议仅供参考，不可作为临床诊断和治疗依据</string>
+    <string name="string_hr_txt_desc">静息心率：正常人在静息状态下每分钟心跳次数一般为60~100次。运动过程中可根据心率区间可以判断身体的运动状态，选择合适的心率区间才能达到较佳的运动效果。\n*所提供的数据及建议仅供参考，不可作为临床诊断和治疗依据</string>
     <string name="string_bp_txt_desc">血压是血液在血管内流动的过程中，对血管壁产生的压力。\n正常成人在静息状态下的血压范围较稳定，正常范围收缩压90～139mmHg，舒张压60～89mmHg\n*所提供的数据及建议仅供参考，不可作为临床诊断和治疗依据</string>
     <string name="string_sleep_txt_desc">睡眠是生物维持生命的重要行为之一，通过硬件设备录您的睡眠状况，对睡眠质量进行分析，帮助您了解和调整睡眠习惯。\n*所提供的数据建议仅供参考，不可作为临床诊断和治疗依据。</string>
     <string name="string_spo2_txt_desc">血氧饱和度，是指血液中血氧的浓度，是衡量血液携带氧的能力指标。血液中含氧量越高，人的新陈代谢就越好。受个人身体状态、海拔等影响会有所不同。\n人体正常血氧饱和度为95%以上。\n*所提供的数据及建议仅供参考，不可作为临床诊断和治疗依据</string>
@@ -143,7 +146,7 @@
     <string name="string_wechat">微信</string>
 
     <string name="string_distance">距离</string>
-    <string name="string_consumption">能量消耗</string>
+    <string name="string_consumption">消耗</string>
     <string name="string_count_step">步数</string>
     <string name="string_avg_hr">平均心率:</string>
     <string name="string_place">配速</string>
@@ -235,7 +238,7 @@
     <string name="string_awake">清醒</string>
     <string name="string_rem">快速眼动</string>
 
-
+    <string name="string_daily_day">日</string>
     <string name="string_day">日</string>
     <string name="string_week">周</string>
     <string name="string_month">月</string>

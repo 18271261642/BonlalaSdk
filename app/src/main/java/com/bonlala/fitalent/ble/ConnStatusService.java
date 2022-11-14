@@ -192,15 +192,14 @@ public class ConnStatusService extends Service {
                 MmkvUtils.saveConnDeviceName(bleName);
 
                 //同步时间
-                //同步时间
-               // BleOperateManager.getInstance().syncDeviceTime(writeBackDataListener);
+                BleOperateManager.getInstance().syncDeviceTime(writeBackDataListener);
 
 
-                sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
-                BleOperateManager.getInstance().setClearListener();
-
-                DataOperateManager.getInstance(ConnStatusService.this).setMeasureDataSave(BleOperateManager.getInstance());
-                DataOperateManager.getInstance(ConnStatusService.this).readAllDataSet(BleOperateManager.getInstance(),false);
+//                sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
+//                BleOperateManager.getInstance().setClearListener();
+//
+//                DataOperateManager.getInstance(ConnStatusService.this).setMeasureDataSave(BleOperateManager.getInstance());
+//                DataOperateManager.getInstance(ConnStatusService.this).readAllDataSet(BleOperateManager.getInstance(),false);
             }
         });
     }
@@ -224,12 +223,14 @@ public class ConnStatusService extends Service {
                 MmkvUtils.saveConnDeviceMac(bleMac);
                 MmkvUtils.saveConnDeviceName(name);
 
+                //同步时间
+                BleOperateManager.getInstance().syncDeviceTime(writeBackDataListener);
 
-                sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
-                BleOperateManager.getInstance().setClearListener();
-
-                DataOperateManager.getInstance(ConnStatusService.this).setMeasureDataSave(BleOperateManager.getInstance());
-                DataOperateManager.getInstance(ConnStatusService.this).readAllDataSet(BleOperateManager.getInstance(),false);
+//                sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
+//                BleOperateManager.getInstance().setClearListener();
+//
+//                DataOperateManager.getInstance(ConnStatusService.this).setMeasureDataSave(BleOperateManager.getInstance());
+//                DataOperateManager.getInstance(ConnStatusService.this).readAllDataSet(BleOperateManager.getInstance(),false);
 
                 //同步时间
                 //BleOperateManager.getInstance().syncDeviceTime(writeBackDataListener);
@@ -249,7 +250,7 @@ public class ConnStatusService extends Service {
     }
 
 
-    private WriteBackDataListener writeBackDataListener = new WriteBackDataListener() {
+    private final WriteBackDataListener writeBackDataListener = new WriteBackDataListener() {
         @Override
         public void backWriteData(byte[] data) {
             //设备回复: 02 FF 30 00
@@ -261,20 +262,21 @@ public class ConnStatusService extends Service {
                     DeviceSetModel deviceSetModel = DBManager.dbManager.getDeviceSetModel("user_1001", mac);
                     if(deviceSetModel != null){
                         commBleSetBean.setIs24Heart(deviceSetModel.isIs24Heart() ? 0 : 1);
-                        commBleSetBean.setLanguage(1);
                         commBleSetBean.setMetric(deviceSetModel.getIsKmUnit());
                     }
                 }
 
 
+
                 commBleSetBean.setTimeType(DateFormat.is24HourFormat(ConnStatusService.this) ? 1 : 0);
+                commBleSetBean.setLanguage(BaseApplication.getInstance().getIsChinese() ? 1 : 0);
                 BleOperateManager.getInstance().setCommonSetting(commBleSetBean,writeBackDataListener);
 
                 sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
                 BleOperateManager.getInstance().setClearListener();
-//
-//                DataOperateManager.getInstance(ConnStatusService.this).setMeasureDataSave(BleOperateManager.getInstance());
-//                DataOperateManager.getInstance(ConnStatusService.this).readAllDataSet(BleOperateManager.getInstance());
+
+                DataOperateManager.getInstance(ConnStatusService.this).setMeasureDataSave(BleOperateManager.getInstance());
+                DataOperateManager.getInstance(ConnStatusService.this).readAllDataSet(BleOperateManager.getInstance(),false);
             }
         }
     };

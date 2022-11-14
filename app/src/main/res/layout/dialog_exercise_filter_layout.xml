@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:rightIcon="@mipmap/ic_sport_filter"
-            app:title="运动详情"
+            app:title="@string/string_exercise_record"
             app:lineVisible="true"
             app:leftIcon="@drawable/ic_black_back"
             app:titleColor="#000000" />

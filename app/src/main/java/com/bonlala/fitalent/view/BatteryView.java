@@ -122,7 +122,7 @@ public class BatteryView extends View {
 
 
 
-        canvas.drawText(mPower+"",(width/2)-(MiscUtil.getTextWidth(powerTxtPaint,mPower+"")/2),height/2+MiscUtil.measureTextHeight(powerTxtPaint)/2,powerTxtPaint);
+//        canvas.drawText(mPower+"",(width/2)-(MiscUtil.getTextWidth(powerTxtPaint,mPower+"")/2),height/2+MiscUtil.measureTextHeight(powerTxtPaint)/2,powerTxtPaint);
 
 
 

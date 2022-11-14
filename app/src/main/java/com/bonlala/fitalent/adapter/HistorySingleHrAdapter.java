@@ -4,9 +4,13 @@ import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.bonlala.base.BaseAdapter;
+import com.bonlala.fitalent.BaseApplication;
 import com.bonlala.fitalent.R;
 import com.bonlala.fitalent.db.model.SingleHeartModel;
 import com.bonlala.fitalent.utils.BikeUtils;
+
+import java.util.Locale;
+
 import androidx.annotation.NonNull;
 
 /**
@@ -17,11 +21,14 @@ import androidx.annotation.NonNull;
  */
 public class HistorySingleHrAdapter extends AppAdapter<SingleHeartModel>{
 
-    public HistorySingleHrAdapter(@NonNull Context context) {
-        super(context);
-    }
 
     private boolean isChinese ;
+    public HistorySingleHrAdapter(@NonNull Context context) {
+        super(context);
+        isChinese = BaseApplication.getInstance().getIsChinese();
+    }
+
+
 
     @NonNull
     @Override
@@ -44,8 +51,8 @@ public class HistorySingleHrAdapter extends AppAdapter<SingleHeartModel>{
         @Override
         public void onBindView(int position) {
             SingleHeartModel singleHeartModel = getItem(position);
-
-            timeTv.setText(BikeUtils.getFormatDate(singleHeartModel.getSaveLongTime(),"yyyy-MM-dd HH:mm:ss"));
+            String timeTxt = isChinese ? BikeUtils.getFormatDate(singleHeartModel.getSaveLongTime(),"yyyy-MM-dd HH:mm:ss") : BikeUtils.getFormatDate(singleHeartModel.getSaveLongTime(),"MMM dd,yyyy HH:mm:ss", Locale.ENGLISH);
+            timeTv.setText(timeTxt);
            if(singleHeartModel.getHeartValue() != 255){
                valueTv.setText(singleHeartModel.getHeartValue()+"bpm");
            }

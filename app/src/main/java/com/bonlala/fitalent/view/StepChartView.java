@@ -110,7 +110,7 @@ public class StepChartView extends View {
         emptyPaint.setAntiAlias(true);
         emptyPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         emptyPaint.setColor(Color.parseColor("#FF6E6E77"));
-        emptyPaint.setTextSize(MiscUtil.dipToPx(context,18f));
+        emptyPaint.setTextSize(MiscUtil.dipToPx(context,16f));
         emptyPaint.setStrokeWidth(1f);
         emptyPaint.setTextAlign(Paint.Align.CENTER);
 

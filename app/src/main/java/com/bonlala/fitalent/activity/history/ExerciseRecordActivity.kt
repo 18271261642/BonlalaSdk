@@ -125,7 +125,7 @@ class ExerciseRecordActivity : AppActivity(){
 
 
     //获取所有的锻炼数据
-    fun getAllExerciseData(){
+    private fun getAllExerciseData(){
 
         val mac = DBManager.getBindMac()
         if(BikeUtils.isEmpty(mac))
@@ -154,7 +154,7 @@ class ExerciseRecordActivity : AppActivity(){
         var count = 0
         list.forEach { it ->
             it.exerciseModelList.forEach {
-                totalTime+=it.exerciseTime
+                totalTime+=it.exerciseMinute
                 distance += it.distance
                 kcal += it.kcal
                 count++
@@ -167,7 +167,7 @@ class ExerciseRecordActivity : AppActivity(){
 
         exerciseTotalKmTv.text = if(isKm) disStr.toString() else CalculateUtils.kmToMiValue(disStr).toString()
 
-        exerciseTotalTimeTv.text = getTargetType(totalTime.toString(),resources.getString(R.string.string_minute))
+        exerciseTotalTimeTv.text = getTargetType(BikeUtils.formatMinuteStr(totalTime,this),"")
         exerciseTotalTimesTv.text = getTargetType(count.toString(),resources.getString(R.string.string_times))
         exerciseTotalKcalTv.text = getTargetType(kcal.toString(),resources.getString(R.string.string_kcal))
     }

@@ -5,6 +5,9 @@
     <string name="title_dashboard">device</string>
     <string name="title_notifications">mine</string>
 
+    <string name="string_back_today">back today</string>
+    <string name="string_dfu_notify">Notice:</string>
+    <string name="string_dfu_desc">1. The firmware upgrade is expected to take 5 to 10 minutes, please wait patiently;\n2. During the upgrade process, please do not turn off the phone\'s bluetooth and keep the screen on.\n3. Please keep the device close to the mobile phone,and do not walk far away or exit the APP;\ n4. Before upgrading, please make sure that the battery of the device is more than 40% or on charging;\n5. After the upgrade done, please ignore the device in the system Bluetooth setting;\n6. If the upgrade fails, please select the DFU device name to connect and try again.</string>
     <string name="string_time_second">s</string>
     <string name="string_time_min">m</string>
     <string name="string_time_hour">h</string>
@@ -49,7 +52,7 @@
     <string name="string_total_distance">Total mileage</string>
     <string name="string_total_times">Total</string>
     <string name="string_total_duration">Total duration</string>
-    <string name="string_total_consumption">Total consumption</string>
+    <string name="string_total_consumption">Total calorie</string>
     <string name="string_hr_histogram">HR histogram</string>
     <string name="string_hr_data_analysis">HR data analysis diagram</string>
 
@@ -104,7 +107,7 @@
     
     <string name="string_time_ratio">Time ratio</string>
     <string name="string_string_download">Download</string>
-    <string name="string_i_konw">I know</string>
+    <string name="string_i_konw">OK</string>
     <string name="string_download_ing">Downloading</string>
     <string name="string_upgrade_ing">Upgrading</string>
 
@@ -114,7 +117,7 @@
     <string name="string_share">Share</string>
     <string name="string_sport_detail">Sport detail</string>
     <string name="string_history">History</string>
-    <string name="string_hr_txt_desc">"HRrest: The number of heartbeats per minute of a normal person is generally 60 to 100 in a quiet state.. Exercise Heart Rate: During exercise, the body\'s exercise state can be judged according to the heart rate interval. Only by selecting an appropriate heart rate interval can a better exercise state be achieved, and an appropriate heart rate interval can be used to achieve a better exercise effect. \n*The data and suggestions provided are for reference only and cannot be used as a basis for clinical diagnosis and treatment</string>
+    <string name="string_hr_txt_desc">"HRrest: The number of heartbeats per minute in a normal person is generally 60 to 100 in a quiet state.\n Only by selecting an appropriate heart rate interval can a better exercise state be achieved, and an appropriate heart rate interval can be used to achieve a better exercise effect. \n*The data and suggestions provided are for reference only and cannot be used as a basis for clinical diagnosis and treatment</string>
     <string name="string_bp_txt_desc">"Blood pressure is the pressure that blood exerts on the walls of blood vessels as it flows through the blood vessels.\n The blood pressure range of Normal adults at rest state is relatively stable, with normal systolic blood pressure ranging from 90 to 139 mmHg and diastolic blood pressure from 60 to 89 mmHg.\n*The data and suggestions provided are for reference only and cannot be used as a basis for clinical diagnosis and treatment."</string>
     <string name="string_sleep_txt_desc">Sleep is one of the important life-sustaining behaviors of beings. The hardware device records your sleep status, analyzes the sleep quality, and helps you understand and adjust your sleep habits. \n*The data suggestions provided are for reference only and cannot be used as a basis for clinical diagnosis and treatment</string>
     <string name="string_spo2_txt_desc">Blood oxygen saturation refers to the concentration of blood oxygen in the blood, which is an indicator of the ability of the blood to carry oxygen. The higher the oxygen content in the blood is, the metabolism of a person is better. It will change due to personal physical condition, altitude, etc.\nThe normal blood oxygen saturation of the human body is above 95%.\n* The data and suggestions provided are for reference only and cannot be used as a basis for clinical diagnosis and treatment.</string>
@@ -136,18 +139,18 @@
     <string name="string_wechat">Wechat</string>
 
     <string name="string_distance">Distance</string>
-    <string name="string_consumption">Consumption</string>
+    <string name="string_consumption">calorie</string>
     <string name="string_count_step">step count</string>
     <string name="string_avg_hr">Avg HR:</string>
     <string name="string_place">pace</string>
     <string name="string_speed">speed</string>
 
-    <string name="string_hr_6_desc">LTHR</string>
-    <string name="string_hr_5_desc">Anaerobic Threshold</string>
-    <string name="string_hr_4_desc">Aerobic Threshold</string>
-    <string name="string_hr_3_desc">Fat Burning Threshold</string>
-    <string name="string_hr_2_desc">Warm Up Threshold</string>
-    <string name="strign_hr_1_desc">HRrest</string>
+    <string name="string_hr_6_desc">LTHR:</string>
+    <string name="string_hr_5_desc">Anaerobic Threshold:</string>
+    <string name="string_hr_4_desc">Aerobic Threshold:</string>
+    <string name="string_hr_3_desc">Fat Burning Threshold:</string>
+    <string name="string_hr_2_desc">Warm Up Threshold:</string>
+    <string name="strign_hr_1_desc">HRrest:</string>
 
 
     <string name="string_double_click_exit">Double click to exit!</string>
@@ -171,8 +174,8 @@
     <string name="string_birthday">Birthday</string>
     <string name="string_height">Height</string>
     <string name="string_weight">Weight</string>
-    <string name="string_men">Men</string>
-    <string name="string_women">Women</string>
+    <string name="string_men">male</string>
+    <string name="string_women">female</string>
 
     <string name="string_all_sport">All sports</string>
     <string name="string_exericse_walk">Walk</string>
@@ -234,9 +237,10 @@
 
     <string name="string_deep">Deep sleep</string>
     <string name="string_light_sleep">Light sleep</string>
-    <string name="string_awake">Wide awake</string>
+    <string name="string_awake">Awake</string>
     <string name="string_rem">REM</string>
 
+    <string name="string_daily_day">Daily</string>
     <string name="string_day">Day</string>
     <string name="string_week">Week</string>
     <string name="string_month">Month</string>

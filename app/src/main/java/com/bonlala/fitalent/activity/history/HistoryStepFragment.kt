@@ -116,7 +116,7 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
         val stepList = GsonUtils.getGsonObject<List<StepItem>>(stepDetail)
         var count = 0
         stepList?.forEachIndexed { index, stepItem ->
-
+            Timber.e("------年="+stepItem.step+" "+stepGoal)
             if(stepItem.step>=stepGoal){
                 count++
             }
@@ -332,7 +332,7 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
 //            dayStr = BikeUtils.getCurrDate()
 //            getDayData()
             stepAvgLayout.visibility = View.GONE
-            attachActivity.setTypeGoal(resources.getString(R.string.string_day))
+            attachActivity.setTypeGoal(resources.getString(R.string.string_daily_day))
         }
         if(code == 1){  //周
             stepWeekView.visibility = View.VISIBLE

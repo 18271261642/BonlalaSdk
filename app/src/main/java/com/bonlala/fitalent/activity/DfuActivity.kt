@@ -127,6 +127,7 @@ class DfuActivity : AppActivity() {
 
         dfuCompleteTv.visibility = View.GONE
         dfuDownloadTv.visibility = View.GONE
+        dfuNotifyLayout.visibility = View.GONE
 
         DfuServiceListenerHelper.registerProgressListener(this, mDfuProgressListener)
         fileSaveUrl = getExternalFilesDir(null)?.path
@@ -200,13 +201,14 @@ class DfuActivity : AppActivity() {
 
             dfuCompleteTv.visibility = View.GONE
             dfuDownloadTv.visibility = View.GONE
-
+            dfuNotifyLayout.visibility = View.GONE
             return
         }
         dfuCompleteTv.visibility = View.VISIBLE
         dfuDownloadTv.visibility = View.GONE
         dfuBtnStatusView.visibility = View.GONE
 
+        dfuNotifyLayout.visibility = View.VISIBLE
         dfuNoUpdateTv.visibility = View.GONE
         dfuNetLastVersionTv.text = resources.getString(R.string.string_last_version)+":"+versionInfo.versionName
         dfuFileSizeTv.text = resources.getString(R.string.string_version_file_size)+""+(versionInfo.fileSize/1000)+"kb"
