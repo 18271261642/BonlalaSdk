@@ -10,6 +10,8 @@ import com.bonlala.fitalent.db.model.UserInfoModel;
 
 import java.util.Calendar;
 
+import timber.log.Timber;
+
 /**
  * 心率计算类
  * Created by Admin
@@ -26,10 +28,11 @@ public class HeartRateConvertUtils {
         if(userInfoModel == null){
             userInfoModel = new UserInfoModel();
             userInfoModel.setSex(0);
-            userInfoModel.setUserBirthday("2000-01-01");
+            userInfoModel.setUserBirthday("1990-01-01");
         }
         //年龄
         int age =getAge(userInfoModel.getUserBirthday());
+//        Timber.e("----age="+age+" "+userInfoModel.getUserBirthday());
         //男性 220-年龄
         return userInfoModel.getSex() == 0 ? 220 - age : 226 - age;
     }

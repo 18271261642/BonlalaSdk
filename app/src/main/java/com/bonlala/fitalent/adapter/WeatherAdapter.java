@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bonlala.base.BaseAdapter;
+import com.bonlala.fitalent.BaseApplication;
 import com.bonlala.fitalent.R;
 import com.bonlala.fitalent.http.api.WeatherRecordApi;
 import com.bonlala.fitalent.utils.BikeUtils;
@@ -23,6 +24,7 @@ import androidx.annotation.NonNull;
  */
 public class WeatherAdapter extends AppAdapter<WeatherRecordApi.WeatherRecordBean.WeathersBean>{
 
+    private boolean isChinese;
 
     public WeatherAdapter(@NonNull Context context) {
         super(context);
@@ -31,6 +33,7 @@ public class WeatherAdapter extends AppAdapter<WeatherRecordApi.WeatherRecordBea
     @NonNull
     @Override
     public BaseAdapter<?>.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        isChinese = BaseApplication.getInstance().getIsChinese();
         return new WeatherViewHolder();
     }
 
@@ -65,10 +68,10 @@ public class WeatherAdapter extends AppAdapter<WeatherRecordApi.WeatherRecordBea
             String hStr = isTemp ? hiTemp+"℃" : CalculateUtils.celsiusToFahrenheit(hiTemp)+"℉";
 
             itemRecordWeatherScopeTv.setText(lowStr+"~"+hStr);
-            itemRecordWeatherDateTv.setText(wb.getCurrentDate());
+            itemRecordWeatherDateTv.setText(isChinese ? wb.getCurrentDate() : BikeUtils.getFormatEnglishDate(wb.getCurrentDate()));
             //当天的日期改为当天
-
-            itemRecordWeekTv.setText(position == 0 ? getContext().getResources().getString(R.string.string_today) : BikeUtils.getWeekForDay(getContext(),wb.getCurrentDate()));
+            String dy =  BikeUtils.getWeekForDay(getContext(),wb.getCurrentDate());
+            itemRecordWeekTv.setText(position == 0 ? getContext().getResources().getString(R.string.string_today) : dy);
             Glide.with(getContext()).load(wb.getWeatherImgUrl()).into(itemRecordWeatherImgView);
 
         }

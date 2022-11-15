@@ -10,9 +10,11 @@ import com.bonlala.base.BaseDialog
 import com.bonlala.fitalent.BaseApplication
 import com.bonlala.fitalent.R
 import com.bonlala.fitalent.db.DBManager
+import com.bonlala.fitalent.db.model.CommDbTimeModel
 import com.bonlala.fitalent.db.model.DeviceSetModel
 import com.bonlala.fitalent.dialog.TimeDialog
 import com.bonlala.fitalent.emu.ConnStatus
+import com.bonlala.fitalent.emu.DeviceNotifyType
 import com.bonlala.fitalent.utils.BikeUtils
 import com.bonlala.fitalent.utils.MmkvUtils
 import com.hjq.toast.ToastUtils
@@ -28,6 +30,9 @@ class DNTActivity : AppActivity(),View.OnClickListener{
 
     var timeBean : CommTimeBean?= null
     var deviceSetModel : DeviceSetModel ?= null
+
+    //勿扰
+    var commDbTimeModel : CommDbTimeModel ?= null
 
     override fun getLayoutId(): Int {
       return R.layout.activity_trun_wrist_layout
@@ -45,6 +50,8 @@ class DNTActivity : AppActivity(),View.OnClickListener{
 
             contentLayout.visibility = if(checked) View.VISIBLE else View.GONE
             deviceSetModel?.dnt = if(!checked) "0" else deviceSetModel?.dnt
+            commDbTimeModel?.switchStatus = if(checked) 1 else 0
+
             setDntData()
         }
         alertDescTv.text = resources.getString(R.string.string_dnt_desc)
@@ -57,9 +64,21 @@ class DNTActivity : AppActivity(),View.OnClickListener{
         if(BikeUtils.isEmpty(mac))
             return
         showDialog()
-        deviceSetModel = DBManager.getInstance().getDeviceSetModel("user_1001",mac)
+
+        commDbTimeModel = DBManager.getInstance().getDbNotifyType("user_1001",mac,DeviceNotifyType.DB_DNT_TYPE)
         BaseApplication.getInstance().bleOperate.getDNTStatus(OnCommTimeSetListener {
             hideDialog()
+            if(commDbTimeModel == null){
+                commDbTimeModel = CommDbTimeModel()
+            }
+
+            commDbTimeModel?.startHour = it.startHour
+            commDbTimeModel?.startMinute = it.startMinute
+            commDbTimeModel?.endHour = it.endHour
+            commDbTimeModel?.endMinute = it.endMinute
+            commDbTimeModel?.switchStatus = it.switchStatus
+
+
             timeBean = CommTimeBean()
             timeBean?.startHour = it.startHour
             timeBean?.startMinute = it.startMinute
@@ -73,12 +92,12 @@ class DNTActivity : AppActivity(),View.OnClickListener{
             turnWristStartTimeBar.rightText = String.format("%02d",it.startHour)+":"+String.format("%02d",it.startMinute)
             turnWristEndTimeBar.rightText = String.format("%02d",it.endHour)+":"+String.format("%02d",it.endMinute)
 
-            //判断结束时间是否小于开始时间
-            val startTime = it.startHour*60+it.startMinute
-            val endTime = it.endHour * 60 + it.endMinute
-            val endStr = String.format("%02d",it.endHour)+":"+String.format("%02d",it.endMinute)
-            deviceSetModel?.dnt= if(it.switchStatus == 0) "0" else  ( String.format("%02d",it.startHour)+":"+String.format("%02d",it.startMinute)+"-"+if(endTime<startTime) resources.getString(R.string.string_next_day)+endStr else endStr)
-            setDntData()
+//            //判断结束时间是否小于开始时间
+//            val startTime = it.startHour*60+it.startMinute
+//            val endTime = it.endHour * 60 + it.endMinute
+//            val endStr = String.format("%02d",it.endHour)+":"+String.format("%02d",it.endMinute)
+//            deviceSetModel?.dnt= if(it.switchStatus == 0) "0" else  ( String.format("%02d",it.startHour)+":"+String.format("%02d",it.startMinute)+"-"+if(endTime<startTime) resources.getString(R.string.string_next_day)+endStr else endStr)
+                setDntData()
 
         })
     }
@@ -111,16 +130,25 @@ class DNTActivity : AppActivity(),View.OnClickListener{
                         turnWristStartTimeBar.rightText = timeStr
                         timeBean?.startHour = hour
                         timeBean?.startMinute = minute
+
+                        commDbTimeModel?.startHour = hour
+                        commDbTimeModel?.startMinute = minute
                     }else{
                         turnWristEndTimeBar.rightText = timeStr
                         timeBean?.endHour = hour
                         timeBean?.endMinute = minute
+
+                        commDbTimeModel?.endHour = hour
+                        commDbTimeModel?.endMinute = minute
                     }
                     //判断结束时间是否小于开始时间
                     val startTime = (timeBean?.startHour ?: 0) *60+ (timeBean?.startMinute ?: 0)
                     val endTime = (timeBean?.endHour ?: 0) * 60 + (timeBean?.endMinute ?: 0)
                     val endStr = String.format("%02d",timeBean?.endHour)+":"+String.format("%02d",timeBean?.endMinute)
                     deviceSetModel?.dnt= if(timeBean?.switchStatus == 0) "0" else  ( String.format("%02d",timeBean?.startHour)+":"+String.format("%02d",timeBean?.startMinute)+"-"+if(endTime<startTime) resources.getString(R.string.string_next_day)+endStr else endStr)
+
+
+
                     setDntData()
                 }
 
@@ -159,7 +187,7 @@ class DNTActivity : AppActivity(),View.OnClickListener{
         BaseApplication.getInstance().bleOperate.setDNTStatus(timeBean){
             deviceSetModel?.dnt= if(timeBean?.switchStatus == 0) "0" else  String.format("%02d",timeBean?.startHour)+":"+String.format("%02d",timeBean?.startMinute)+"-"+String.format("%02d",timeBean?.endHour)+":"+String.format("%02d",timeBean?.endMinute)
             BleOperateManager.getInstance().setClearListener()
-            saveData()
+//            saveData()
             ToastUtils.show(resources.getString(R.string.string_save_success))
         }
 
@@ -167,9 +195,11 @@ class DNTActivity : AppActivity(),View.OnClickListener{
     }
 
     private fun saveData(){
-        if(deviceSetModel == null)
+        if(commDbTimeModel == null)
             return
         val mac = MmkvUtils.getConnDeviceMac() ?: return
-        DBManager.dbManager.saveDeviceSetData("user_1001",mac,deviceSetModel)
+       // DBManager.dbManager.saveDeviceSetData("user_1001",mac,deviceSetModel)
+
+        DBManager.dbManager.saveDeviceNotifyForType("user_1001",mac,DeviceNotifyType.DB_DNT_TYPE,commDbTimeModel)
     }
 }

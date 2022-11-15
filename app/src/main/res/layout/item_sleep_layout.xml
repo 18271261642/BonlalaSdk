@@ -86,7 +86,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="h"
+                android:text="@string/string_time_hour"
                 android:textColor="#ffacacac"
                 android:textSize="22sp"
                 android:gravity="center" />
@@ -102,7 +102,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="m"
+                android:text="@string/string_time_min"
                 android:textColor="#ffacacac"
                 android:textSize="22sp"
                 android:gravity="center" />

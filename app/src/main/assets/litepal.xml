@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <dbname  value = "bonlala_single_db"/>
-    <version value="6"/>
+    <version value="7"/>
 
     <list>
         <mapping class="com.bonlala.fitalent.db.model.DeviceSetModel"/>
@@ -17,6 +17,8 @@
         <mapping class="com.bonlala.fitalent.db.model.SingleBpModel"/>
 
         <mapping class="com.bonlala.fitalent.db.model.ExerciseModel"/>
+
+        <mapping class="com.bonlala.fitalent.db.model.CommDbTimeModel"/>
 
     </list>
     <storage value="external" />

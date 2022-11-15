@@ -151,13 +151,18 @@ class HistoryHeartFragment : TitleBarFragment<RecordHistoryActivity>(),OnRecordH
                 return
             }
 
+         if(BikeUtils.daySizeOrEqual(dayStr,BikeUtils.getCurrDate())){
+             dayStr = BikeUtils.getCurrDate()
+             commonHistoryRightImg.visibility = View.INVISIBLE
+             viewModel.queryOneDayHeart(mac,dayStr.toString())
+             return
+         }
+
+         commonHistoryRightImg.visibility = View.VISIBLE
+
 
         viewModel.queryOneDayHeart(mac,dayStr.toString())
 
-         commonHistoryDateTv.text = if(BaseApplication.getInstance().isChinese) dayStr else BikeUtils.getFormatEnglishDate(dayStr)
-         //判断回到当前是否显示
-         commonHistoryCurrentTv.visibility =
-             if (!dayStr.equals(BikeUtils.getCurrDate())) View.VISIBLE else View.GONE
 
      }
 
@@ -175,6 +180,13 @@ class HistoryHeartFragment : TitleBarFragment<RecordHistoryActivity>(),OnRecordH
     //展示平均、最大、最小心率
     private fun showAvgHeart(){
         Timber.e("----analys="+Gson().toJson(analysisHeartList))
+
+
+        commonHistoryDateTv.text = if(BaseApplication.getInstance().isChinese) dayStr else BikeUtils.getFormatEnglishDate(dayStr)
+        //判断回到当前是否显示
+        commonHistoryCurrentTv.visibility =
+            if (!dayStr.equals(BikeUtils.getCurrDate())) View.VISIBLE else View.GONE
+
         if(analysisHeartList.isEmpty()){
             historyAvgTv.text = "--"
             historyMaxHrTv.text = "--"
@@ -302,10 +314,8 @@ class HistoryHeartFragment : TitleBarFragment<RecordHistoryActivity>(),OnRecordH
     private fun selectDate(isPreview : Boolean){
         val timeLong = BikeUtils.getBeforeOrAfterDay(dayStr,isPreview)
         dayStr = BikeUtils.getFormatDate(timeLong,"yyyy-MM-dd")
+        val mac = DBManager.getBindMac()
 
-        if(timeLong>System.currentTimeMillis()){
-            return
-        }
         getDayHeart("selectDate"+isPreview)
     }
 

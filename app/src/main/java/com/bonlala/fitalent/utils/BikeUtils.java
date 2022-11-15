@@ -23,6 +23,8 @@ import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import timber.log.Timber;
+
 /**
  * Created by Admin
  * Date 2022/3/25
@@ -296,6 +298,23 @@ public class BikeUtils {
     }
 
 
+    public static long getBeforeOrAfterDay2(String day,int dayNumber){
+        try {
+            long time = simpleDateFormat.parse(day).getTime();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(time);
+            calendar.add(Calendar.DATE,dayNumber);
+
+
+            return calendar.getTimeInMillis();
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return onDay;
+        }
+    }
+
+
     /**
      * 获取日期的月
      * @param dayStr yyyy-MM-dd格式
@@ -488,6 +507,46 @@ public class BikeUtils {
         }
     }
 
+
+    /**
+     * 比较两个日期大小
+     * @param  format 格式化
+     * @param leftDay yyyy-MM
+     * @param rightDay yyyy-MM
+     * @return
+     */
+    public static boolean daySizeOrEqual(String format,String leftDay,String rightDay){
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat(format,Locale.CHINA);
+            long left = sdf.parse(leftDay).getTime();
+            long right = sdf.parse(rightDay).getTime();
+            return left >= right;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    /**
+     * 比较两个日期大小
+     * @param leftDay yyyy-MM-dd
+     * @param rightDay yyyy-MM-dd
+     * @return
+     */
+    public static boolean daySizeOrEqual(String leftDay,String rightDay){
+        try {
+            long left = simpleDateFormat.parse(leftDay).getTime();
+            long right = simpleDateFormat.parse(rightDay).getTime();
+            return left >= right;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+
     //当前前的日期 yyyy-MM-dd转long 0当前，1昨天，2前天
     public static String getBeforeDayStr(int day){
         long date = transToDate(getCurrDate()) + (day * 86400000L);
@@ -595,19 +654,31 @@ public class BikeUtils {
     //周日到周六
     public static String getWeekSunToStaForEnglish(long time){
         String wFormat = "MMM dd";
-        String wFormat2 = "d,yyyy";
+        String wFormat2 = "dd,yyyy";
         Calendar start = Calendar.getInstance();
         start.setTimeInMillis(time);
         Calendar firstW = getWeekFirstDate(start);
         Calendar end = getWeekLastDate(start);
 
+        Timber.e("--------周="+getFormatDate(firstW.getTimeInMillis(), "yyyy-MM-dd")+"\n"+getFormatDate(end.getTimeInMillis(), "yyyy-MM-dd"));
+
         int lefYear = start.get(Calendar.YEAR);
         int endYear = end.get(Calendar.YEAR);
+
+        int leftMonth = start.get(Calendar.MONTH)+1;
+        int rightMonth = end.get(Calendar.MONTH)+1;
+
         if(lefYear != endYear){
-            String result = lefYear+" "+getFormatDate(firstW.getTimeInMillis(),wFormat,Locale.ENGLISH)+"~"+endYear+" "+getFormatDate(end.getTimeInMillis(),wFormat2,Locale.ENGLISH);
+            String result = getFormatDate(firstW.getTimeInMillis(),wFormat,Locale.ENGLISH)+" "+lefYear+"~"+getFormatDate(end.getTimeInMillis(),wFormat2,Locale.ENGLISH)+" "+endYear;
             return result;
         }else{
-            String result = getFormatDate(firstW.getTimeInMillis(),wFormat,Locale.ENGLISH)+"~"+getFormatDate(end.getTimeInMillis(),wFormat2,Locale.ENGLISH);
+            String result;
+            if(leftMonth != rightMonth){
+                result = getFormatDate(firstW.getTimeInMillis(),wFormat,Locale.ENGLISH)+"~"+getFormatDate(end.getTimeInMillis(),"MMM dd,yyyy",Locale.ENGLISH);
+            }else{
+                result = getFormatDate(firstW.getTimeInMillis(),wFormat,Locale.ENGLISH)+"~"+getFormatDate(end.getTimeInMillis(),wFormat2,Locale.ENGLISH);
+            }
+
             return result;
         }
 
@@ -726,7 +797,7 @@ public class BikeUtils {
     public static Calendar getWeekLastDate(Calendar calendar) {
         Calendar ca = Calendar.getInstance(Locale.CHINA);
         ca.setTimeInMillis(calendar.getTimeInMillis());
-        ca.setFirstDayOfWeek(Calendar.WEDNESDAY);
+        ca.setFirstDayOfWeek(Calendar.SUNDAY);
         ca.set(Calendar.HOUR_OF_DAY, 23);
         ca.set(Calendar.SECOND, 59);
         ca.set(Calendar.MINUTE, 59);
@@ -743,7 +814,7 @@ public class BikeUtils {
     public static String getWeekLastDateStr(Calendar calendar) {
         Calendar ca = Calendar.getInstance(Locale.CHINA);
         ca.setTimeInMillis(calendar.getTimeInMillis());
-        ca.setFirstDayOfWeek(Calendar.WEDNESDAY);
+        ca.setFirstDayOfWeek(Calendar.SUNDAY);
         ca.set(Calendar.HOUR_OF_DAY, 23);
         ca.set(Calendar.SECOND, 59);
         ca.set(Calendar.MINUTE, 59);
@@ -864,8 +935,8 @@ public class BikeUtils {
         int hour = second / 3600;
         int minute = (second - hour * 3600) / 60;
 
-        String hourStr = hour == 0 ? "":(hour+context.getResources().getString(R.string.string_time_hour)+":");
-        String minuteStr = minute == 0 ? "" : (minute+context.getResources().getString(R.string.string_time_min)+":");
+        String hourStr = hour == 0 ? "":(hour+context.getResources().getString(R.string.string_time_hour));
+        String minuteStr = minute == 0 ? "" : (minute+context.getResources().getString(R.string.string_time_min));
 
 
         return hourStr+minuteStr;
@@ -884,8 +955,8 @@ public class BikeUtils {
         int minute = (second - hour * 3600) / 60;
         int secondes = second % 60;
 
-        String hourStr = hour == 0 ? "":(hour+context.getResources().getString(R.string.string_time_hour)+":");
-        String minuteStr = minute == 0 ? "" : (minute+context.getResources().getString(R.string.string_time_min)+":");
+        String hourStr = hour == 0 ? "":(hour+context.getResources().getString(R.string.string_time_hour));
+        String minuteStr = minute == 0 ? "" : (minute+context.getResources().getString(R.string.string_time_min));
         String secondStr = secondes == 0 ? "" : (secondes+context.getResources().getString(R.string.string_time_second));
 
         return hourStr+minuteStr+secondStr;

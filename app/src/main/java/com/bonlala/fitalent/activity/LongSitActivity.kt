@@ -8,14 +8,17 @@ import com.bonlala.base.BaseDialog
 import com.bonlala.fitalent.BaseApplication
 import com.bonlala.fitalent.R
 import com.bonlala.fitalent.db.DBManager
+import com.bonlala.fitalent.db.model.CommDbTimeModel
 import com.bonlala.fitalent.db.model.DeviceSetModel
 import com.bonlala.fitalent.dialog.HeightSelectDialog
 import com.bonlala.fitalent.dialog.TimeDialog
 import com.bonlala.fitalent.emu.ConnStatus
+import com.bonlala.fitalent.emu.DeviceNotifyType
 import com.bonlala.fitalent.utils.MmkvUtils
 import com.hjq.toast.ToastUtils
 import kotlinx.android.synthetic.main.activity_trun_wrist_layout.*
 import timber.log.Timber
+import kotlin.math.min
 
 /**
  * 久坐提醒
@@ -27,6 +30,8 @@ class LongSitActivity : AppActivity(),View.OnClickListener{
 
     var timeBean : CommTimeBean ?= null
     var deviceSetModel : DeviceSetModel ?= null
+
+    var commDbTimeModel : CommDbTimeModel ?= null
 
     override fun getLayoutId(): Int {
         return R.layout.activity_trun_wrist_layout
@@ -61,10 +66,21 @@ class LongSitActivity : AppActivity(),View.OnClickListener{
         if(BaseApplication.getInstance().connStatus != ConnStatus.CONNECTED)
             return
         val mac = MmkvUtils.getConnDeviceMac()
+        commDbTimeModel = DBManager.getInstance().getDbNotifyType("user_1001",mac,DeviceNotifyType.DB_LONG_DOWN_SIT_TYPE)
         deviceSetModel = DBManager.getInstance().getDeviceSetModel("user_1001",mac)
         BaseApplication.getInstance().bleOperate.getLongSitData(OnCommTimeSetListener { commTimeBean ->
             Timber.e("----久坐="+commTimeBean.toString())
             timeBean = commTimeBean
+            if(commDbTimeModel == null){
+                commDbTimeModel = CommDbTimeModel()
+            }
+
+
+            commDbTimeModel?.startHour = commTimeBean.startHour
+            commDbTimeModel?.startMinute = commTimeBean.startMinute
+            commDbTimeModel?.endHour = commTimeBean.endHour
+            commDbTimeModel?.endMinute = commTimeBean.endMinute
+            commDbTimeModel?.level = commTimeBean.level
 
             /**
              * 判断开关是否打开，开关关闭是开始时间00结束时间23:59
@@ -77,10 +93,10 @@ class LongSitActivity : AppActivity(),View.OnClickListener{
             turnWristEndTimeBar.rightText = String.format("%02d",commTimeBean.endHour)+":"+String.format("%02d",commTimeBean.endMinute)
             turnWristLevelBar.rightText =  "${commTimeBean.level} "+resources.getString(R.string.string_minute)
 
-            val startT = commTimeBean.startHour*60 + commTimeBean.startMinute
-            val endT = commTimeBean.endHour *60 + commTimeBean.endMinute
-            val endStr = String.format("%02d",commTimeBean.endHour)+":"+String.format("%02d",commTimeBean.endMinute)
-            deviceSetModel?.longSitStr=    String.format("%02d",commTimeBean.startHour)+":"+String.format("%02d",commTimeBean.startMinute)+"-"+(if(startT > endT) resources.getString(R.string.string_next_day)+endStr else endStr)
+//            val startT = commTimeBean.startHour*60 + commTimeBean.startMinute
+//            val endT = commTimeBean.endHour *60 + commTimeBean.endMinute
+//            val endStr = String.format("%02d",commTimeBean.endHour)+":"+String.format("%02d",commTimeBean.endMinute)
+//            deviceSetModel?.longSitStr=    String.format("%02d",commTimeBean.startHour)+":"+String.format("%02d",commTimeBean.startMinute)+"-"+(if(startT > endT) resources.getString(R.string.string_next_day)+endStr else endStr)
             saveData()
         })
     }
@@ -114,16 +130,21 @@ class LongSitActivity : AppActivity(),View.OnClickListener{
                         turnWristStartTimeBar.rightText = timeStr
                         timeBean?.startHour = hour
                         timeBean?.startMinute = minute
+                        commDbTimeModel?.startMinute = minute
+                        commDbTimeModel?.startHour = hour
                     }else{
                         turnWristEndTimeBar.rightText = timeStr
                         timeBean?.endHour = hour
                         timeBean?.endMinute = minute
-                    }
-                    val startM =  (timeBean?.startHour?.times(60) ?: 0) + minute
-                    val endM = (timeBean?.endHour?.times(60) ?: 0) + minute
 
-                    val endStr = String.format("%02d",timeBean?.endHour)+":"+String.format("%02d",timeBean?.endMinute)
-                    deviceSetModel?.longSitStr=  String.format("%02d",timeBean?.startHour)+":"+String.format("%02d",timeBean?.startMinute)+"-"+(if(endM<startM) resources.getString(R.string.string_next_day) +endStr else endStr)
+                        commDbTimeModel?.endHour = hour
+                        commDbTimeModel?.endMinute = minute
+                    }
+//                    val startM =  (timeBean?.startHour?.times(60) ?: 0) + minute
+//                    val endM = (timeBean?.endHour?.times(60) ?: 0) + minute
+//
+//                    val endStr = String.format("%02d",timeBean?.endHour)+":"+String.format("%02d",timeBean?.endMinute)
+//                    deviceSetModel?.longSitStr=  String.format("%02d",timeBean?.startHour)+":"+String.format("%02d",timeBean?.startMinute)+"-"+(if(endM<startM) resources.getString(R.string.string_next_day) +endStr else endStr)
                     setLongSitData()
                 }
 
@@ -155,6 +176,7 @@ class LongSitActivity : AppActivity(),View.OnClickListener{
             .setSignalSelectListener {
                 turnWristLevelBar.rightText = it+resources.getString(R.string.string_minute)
                 timeBean?.level = it.toInt()
+                commDbTimeModel?.level = it.toInt()
                 setLongSitData()
             }
             .show()
@@ -193,11 +215,11 @@ class LongSitActivity : AppActivity(),View.OnClickListener{
     }
 
     private fun saveData(){
-        if(deviceSetModel == null)
+        if(commDbTimeModel == null)
             return
         val mac = MmkvUtils.getConnDeviceMac() ?: return
 
-
+        DBManager.dbManager.saveDeviceNotifyForType("user_1001",mac,DeviceNotifyType.DB_LONG_DOWN_SIT_TYPE,commDbTimeModel)
 
         DBManager.dbManager.saveDeviceSetData("user_1001",mac,deviceSetModel)
     }

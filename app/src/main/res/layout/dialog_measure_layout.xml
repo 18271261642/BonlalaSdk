@@ -24,7 +24,7 @@
 
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
@@ -53,7 +53,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/string_measure"
+                    android:text="@string/string_dialog_measure"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:textColor="#ff3f3f3f"
@@ -78,18 +78,25 @@
         </LinearLayout>
 
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/string_please_keep_device_stable"
+            android:textColor="#ff3f3f3f"
+            android:textSize="14sp"
+
+            android:layout_gravity="center" />
 
     </com.hjq.shape.layout.ShapeLinearLayout>
 
 
-
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/string_please_keep_device_stable"
         android:textColor="#ff3f3f3f"
         android:textSize="14sp"
-        android:layout_marginTop="-25dp"
+        android:visibility="invisible"
         android:layout_gravity="center" />
 
 

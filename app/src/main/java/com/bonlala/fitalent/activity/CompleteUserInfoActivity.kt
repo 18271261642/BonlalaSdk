@@ -87,6 +87,7 @@ class CompleteUserInfoActivity : AppActivity() {
             }
         completeWeightTv.text =  if(unit == 0) ("$weight kg") else (CalculateUtils.kgToLbValue(weight).toString()+" lb")
 
+            MmkvUtils.saveUnit(unit == 0)
     }
 
     override fun onClick(view: View?) {

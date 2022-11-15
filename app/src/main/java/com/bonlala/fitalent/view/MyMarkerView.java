@@ -38,6 +38,8 @@ public class MyMarkerView extends MarkerView {
 
     private Context context;
 
+
+
     public MyMarkerView(Context context, int layoutResource,List<ChartHrBean> chartHrBeanList) {
         super(context, layoutResource);
         tvContent = findViewById(R.id.tvContent);
@@ -63,7 +65,8 @@ public class MyMarkerView extends MarkerView {
                 timeTv.setText(BikeUtils.formatMinute(time));
                 String v = Utils.formatNumber(ce.getHigh(), 0, true);
                 int hrValue = Integer.parseInt(v);
-                int color = HeartRateConvertUtils.getColorByPoint(context,hrValue);
+                int point = HeartRateConvertUtils.hearRate2Point(hrValue);
+                int color = HeartRateConvertUtils.getColorByPoint(context,point);
                 tvContent.setText(Utils.formatNumber(ce.getHigh(), 0, true));
                 tvContent.setTextColor(color);
             } else {
@@ -72,7 +75,11 @@ public class MyMarkerView extends MarkerView {
 
                 String v = Utils.formatNumber(e.getY(), 0, true);
                 int hrValue = Integer.parseInt(v);
-                int color = HeartRateConvertUtils.getColorByPoint(context,hrValue);
+
+                int point = HeartRateConvertUtils.hearRate2Point(hrValue);
+                int color = HeartRateConvertUtils.getColorByPoint(context,point);
+
+
                 timeTv.setText(BikeUtils.formatMinute(time));
                 tvContent.setText(Utils.formatNumber(e.getY(), 0, true));
                 tvContent.setTextColor(color);

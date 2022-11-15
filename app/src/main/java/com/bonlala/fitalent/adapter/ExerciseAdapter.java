@@ -8,11 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bonlala.base.BaseAdapter;
+import com.bonlala.fitalent.BaseApplication;
 import com.bonlala.fitalent.R;
 import com.bonlala.fitalent.activity.history.ExerciseDetailActivity;
 import com.bonlala.fitalent.bean.ExerciseShowBean;
 import com.bonlala.fitalent.db.DBManager;
 import com.bonlala.fitalent.db.model.ExerciseModel;
+import com.bonlala.fitalent.utils.BikeUtils;
 import com.bonlala.fitalent.utils.MmkvUtils;
 import com.google.gson.Gson;
 
@@ -32,6 +34,7 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public class ExerciseAdapter extends AppAdapter<ExerciseShowBean>{
 
+    boolean isChinese = BaseApplication.getInstance().getIsChinese();
 
     public ExerciseAdapter(@NonNull Context context) {
         super(context);
@@ -66,8 +69,9 @@ public class ExerciseAdapter extends AppAdapter<ExerciseShowBean>{
         @Override
         public void onBindView(int position) {
             ExerciseShowBean exerciseShowBean = getItem(position);
-            itemExerciseDateTv.setText(exerciseShowBean.getDayStr());
-            itemExerciseTotalTv.setText(exerciseShowBean.getExerciseModelList().size()+""+getContext().getResources().getString(R.string.string_times));
+
+            itemExerciseDateTv.setText(isChinese ? exerciseShowBean.getDayStr() : BikeUtils.getFormatEnglishData(exerciseShowBean.getDayStr(),"MMM dd,yyyy"));
+            itemExerciseTotalTv.setText(exerciseShowBean.getExerciseModelList().size()+""+getContext().getResources().getString(R.string.string_exercise_times));
 
             ExerciseItemAdapter exerciseItemAdapter = new ExerciseItemAdapter(getContext());
             exerciseItemAdapter.setOnItemClickListener(new OnItemClickListener() {

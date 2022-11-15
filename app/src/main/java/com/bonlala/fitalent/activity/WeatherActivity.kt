@@ -16,6 +16,7 @@ import com.blala.blalable.BleOperateManager
 import com.blala.blalable.bean.WeatherBean
 import com.blala.blalable.listener.WriteBackDataListener
 import com.bonlala.action.AppActivity
+import com.bonlala.fitalent.BaseApplication
 import com.bonlala.fitalent.R
 import com.bonlala.fitalent.adapter.WeatherAdapter
 import com.bonlala.fitalent.http.api.WeatherRecordApi
@@ -26,6 +27,7 @@ import com.bonlala.fitalent.viewmodel.WeatherViewModel
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_weather_layout.*
 import timber.log.Timber
+import java.util.*
 
 /**
  * 天气页面
@@ -228,7 +230,10 @@ class WeatherActivity : AppActivity() {
 
         weatherAqiTv.text = resources.getString(R.string.string_air_quality)+": "+aqiValue
        weatherQualityView.setQualitySchedule(aqiValue)
-        weatherUpdateTv.text = resources.getString(R.string.string_update_time)+": "+BikeUtils.getFormatDate(System.currentTimeMillis(),"MM-dd HH:mm")
+        val isChinese = BaseApplication.getInstance().isChinese
+        val str = if(isChinese) BikeUtils.getFormatDate(System.currentTimeMillis(),"MM-dd HH:mm") else BikeUtils.getFormatDate(System.currentTimeMillis(),"MMM dd HH:mm",
+            Locale.ENGLISH)
+        weatherUpdateTv.text = resources.getString(R.string.string_update_time)+": "+str
 
     }
 

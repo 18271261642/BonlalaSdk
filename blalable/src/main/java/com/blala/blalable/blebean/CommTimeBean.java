@@ -3,6 +3,7 @@ package com.blala.blalable.blebean;
 /**
  * Created by Admin
  * Date 2022/9/5
+ * @author Admin
  */
 public class CommTimeBean {
 

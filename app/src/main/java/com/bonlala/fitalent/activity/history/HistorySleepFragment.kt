@@ -93,6 +93,15 @@ class HistorySleepFragment : TitleBarFragment<RecordHistoryActivity>(),OnRecordH
         detailSleepView.isNeedClick = true
         detailSleepView.sleepModel = null
 
+        commonHistoryRightImg.visibility = View.VISIBLE
+
+        commonHistoryDateTv.text = if(BaseApplication.getInstance().isChinese) dayStr else BikeUtils.getFormatEnglishDate(dayStr)
+        if(!BikeUtils.isEqualDay(dayStr,BikeUtils.getCurrDate())){
+            commonHistoryCurrentTv.visibility = View.VISIBLE
+        }else{
+            commonHistoryCurrentTv.visibility = View.GONE
+        }
+
     }
 
     //展示睡眠数据
@@ -104,6 +113,15 @@ class HistorySleepFragment : TitleBarFragment<RecordHistoryActivity>(),OnRecordH
         val countTime =  sleepModel.countSleepTime/60
         historySleepHourTv.text = countTime.toString()
         historySleepMinuteTv.text = ( sleepModel.countSleepTime % 60).toString()
+
+        commonHistoryRightImg.visibility = View.VISIBLE
+
+        commonHistoryDateTv.text = if(BaseApplication.getInstance().isChinese) dayStr else BikeUtils.getFormatEnglishDate(dayStr)
+        if(!BikeUtils.isEqualDay(dayStr,BikeUtils.getCurrDate())){
+            commonHistoryCurrentTv.visibility = View.VISIBLE
+        }else{
+            commonHistoryCurrentTv.visibility = View.GONE
+        }
     }
 
 
@@ -146,24 +164,23 @@ class HistorySleepFragment : TitleBarFragment<RecordHistoryActivity>(),OnRecordH
         val mac = DBManager.getBindMac()
         if(BikeUtils.isEmpty(mac))
             return
+
+        if(BikeUtils.daySizeOrEqual(dayStr,BikeUtils.getCurrDate())){
+            commonHistoryCurrentTv.visibility = View.GONE
+            commonHistoryRightImg.visibility = View.INVISIBLE
+            dayStr = BikeUtils.getCurrDate()
+            viewModel.getSleepForDay(mac,dayStr.toString())
+            return
+        }
+
         viewModel.getSleepForDay(mac,dayStr.toString())
 
-        commonHistoryDateTv.text = if(BaseApplication.getInstance().isChinese) dayStr else BikeUtils.getFormatEnglishDate(dayStr)
-        if(!BikeUtils.isEqualDay(dayStr,BikeUtils.getCurrDate())){
-            commonHistoryCurrentTv.visibility = View.VISIBLE
-        }else{
-            commonHistoryCurrentTv.visibility = View.GONE
-        }
     }
 
 
     private fun checkSleepData(date : Boolean){
         val timeLong = BikeUtils.getBeforeOrAfterDay(dayStr,date)
         dayStr = BikeUtils.getFormatDate(timeLong,"yyyy-MM-dd")
-        if(BikeUtils.daySize(dayStr,BikeUtils.getCurrDate())){
-            commonHistoryCurrentTv.visibility = View.GONE
-            return
-        }
         getDbSleep()
     }
 

@@ -1,6 +1,7 @@
 package com.bonlala.fitalent.viewmodel
 
 import android.content.Context
+import android.os.Build
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bonlala.fitalent.R
@@ -31,7 +32,7 @@ class HistoryStepViewModel : ViewModel() {
 
 
     //查询一年的数据，12个月，不够补0 map-key-年的达标天数
-    val oneYearStepData = MutableLiveData<OneDayStepModel>()
+    val oneYearStepData = MutableLiveData<Map<Int,OneDayStepModel>>()
 
 
     //查询所有的计步记录
@@ -108,6 +109,8 @@ class HistoryStepViewModel : ViewModel() {
         //最后一天
         val weekLastDay = BikeUtils.getWeekLastDateStr(calendar)
 
+        Timber.e("------周="+weekFirstDay+" "+weekLastDay)
+
         val weekList = DBManager.getInstance().getStartAndEndTimeStepData("user_1001",mac,weekFirstDay,weekLastDay)
         Timber.e("----周="+weekFirstDay+" "+weekLastDay+" "+Gson().toJson(weekList))
         val stepIteList = mutableListOf<StepItem>()
@@ -145,9 +148,10 @@ class HistoryStepViewModel : ViewModel() {
     }
 
 
-
+    var yearCountList = mutableListOf<Int>()
     //查询一年的数据
-    fun getOneYearStep(context: Context,mac: String, dayStr : String){
+    fun getOneYearStep(context: Context,mac: String, dayStr : String,goalStep : Int){
+        yearCountList.clear()
         val yearStr = BikeUtils.getDayOfYear(dayStr)
         val list = mutableListOf<StepItem>()
 
@@ -155,21 +159,27 @@ class HistoryStepViewModel : ViewModel() {
         var yearCountDistance = 0
         var yearCountKcal = 0
 
+        var monthArray = context.resources.getStringArray(com.haibin.calendarview.R.array.month_string_array)
+
         for(i in 1..12){
-            val monthResource = String.format(context.resources.getString(R.string.string_number_month),i)
+            val monthResource = monthArray[i]//String.format(context.resources.getString(R.string.string_number_month),i)
             val tempMonth = yearStr.toString()+"-"+String.format("%02d",i)
 
-            Timber.e("---mmm="+monthResource)
+            val monthData = getOneMonthStepBack(tempMonth,mac,goalStep)
 
-            val monthData = getOneMonthStepBack(tempMonth,mac)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                monthData.forEach { i, oneDayStepModel ->
+                    val stepItem = StepItem()
+                    stepItem.step = oneDayStepModel.dayStep
+                    stepItem.weekXStr = monthResource
+                    yearCountStep+=oneDayStepModel.dayStep
+                    yearCountDistance+=oneDayStepModel.dayDistance
+                    yearCountKcal+=oneDayStepModel.dayCalories
+                    list.add(stepItem)
+                    yearCountList.add(i)
+                }
+            }
 
-            val stepItem = StepItem()
-            stepItem.step = monthData.dayStep
-            stepItem.weekXStr = monthResource
-            yearCountStep+=monthData.dayStep
-            yearCountDistance+=monthData.dayDistance
-            yearCountKcal+=monthData.dayCalories
-            list.add(stepItem)
         }
 
         val yearStepB = OneDayStepModel()
@@ -177,16 +187,25 @@ class HistoryStepViewModel : ViewModel() {
         yearStepB.dayDistance = yearCountDistance
         yearStepB.dayCalories = yearCountKcal
         yearStepB.detailStep = Gson().toJson(list)
+        val map = HashMap<Int,OneDayStepModel>()
 
-        oneYearStepData.postValue(yearStepB)
+        var tempV = 0
+        yearCountList.forEach {
+            tempV+=it
+        }
+        map[tempV] = yearStepB
+        oneYearStepData.postValue(map)
     }
 
+
+    val monthList = mutableListOf<Int>()
 
     /**
      * 获取自然月的数据
      * month yyyy-MM格式日期
      */
-    private fun getOneMonthStepBack(month : String,mac: String) : OneDayStepModel{
+    private fun getOneMonthStepBack(month : String,mac: String,goalStep: Int) : Map<Int,OneDayStepModel>{
+        monthList.clear()
         //当月的第一天
         val firstMonthDay = BikeUtils.getMonthFirstOrLastDay(month,true)
         //当月的最后一天
@@ -201,26 +220,36 @@ class HistoryStepViewModel : ViewModel() {
         var countKcal = 0
         var countStep = 0
 
+
         for(i in 0 until lastDay){
+
             //日期 yyyy-MM-dd格式
             val tempDayStr = BikeUtils.getBeforeOrAfterDay(firstMonthDay,i)
             listStep?.forEachIndexed { index, oneDayStepModel ->
+
                 val isEqual = tempDayStr == BikeUtils.transToDate(oneDayStepModel.dayStr)
                 if(isEqual){
                     countStep += oneDayStepModel.dayStep
                     countDistance+=oneDayStepModel.dayDistance
                     countKcal+=oneDayStepModel.dayCalories
 
+                    if(oneDayStepModel.dayStep>=goalStep){
+                        monthList.add(1);
+
+                    }
                 }
             }
         }
 
+
+        val map = HashMap<Int,OneDayStepModel>()
         val oneDayB = OneDayStepModel()
         oneDayB.detailStep = Gson().toJson(listStepItem)
         oneDayB.dayDistance = countDistance
         oneDayB.dayCalories = countKcal
         oneDayB.dayStep = countStep
-        return oneDayB
+        map[monthList.size] = oneDayB
+        return map
 
     }
 

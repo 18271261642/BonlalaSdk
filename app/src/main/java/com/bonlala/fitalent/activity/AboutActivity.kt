@@ -25,12 +25,14 @@ class AboutActivity : AppActivity() {
             val privacyUrl = MmkvUtils.getPrivacyUrl()
            val intent = Intent(this@AboutActivity,ShowWebActivity::class.java)
             intent.putExtra("url",privacyUrl)
+            intent.putExtra("title",resources.getString(R.string.privacy_agreement_tips))
             startActivity(intent)
         }
         userAgreementLayout.setOnClickListener {
             val agreeUrl = MmkvUtils.getUserAgreement()
             val intent = Intent(this@AboutActivity,ShowWebActivity::class.java)
             intent.putExtra("url",agreeUrl)
+            intent.putExtra("title",resources.getString(R.string.user_agreement_tips))
             startActivity(intent)
         }
 

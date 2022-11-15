@@ -38,19 +38,22 @@ class HrDescByAgeView : LinearLayout{
 
     private fun setHrByAge(){
 
+        //最大心率
         val max = HeartRateConvertUtils.getUserMaxHt()
-
-        val hr5 = (max * 0.9f).toInt().toString()+"~"+(max-1)
+        Timber.e("----max="+max)
+        //极限心率
+        val maxValue = (max * 0.9f).toInt()
+        val hr5 = (max * 0.8).toInt().toString()+"~"+(maxValue-1)
         Timber.e("---hr="+hr5)
-        val hr4 = (max * 0.8).toInt().toString()+"~"+((max * 0.9f).toInt()-1)
+        val hr4 = (max * 0.7).toInt().toString()+"~"+((max * 0.8f).toInt()-1)
 
-        val hr3 = (max * 0.7).toInt().toString()+"~"+((max * 0.8).toInt()-1)
+        val hr3 = (max * 0.6).toInt().toString()+"~"+((max * 0.7).toInt()-1)
 
-        val hr2 = (max * 0.6).toInt().toString()+"~"+((max * 0.7).toInt()-1)
+        val hr2 = (max * 0.5).toInt().toString()+"~"+((max * 0.6).toInt()-1)
 
-        val hr1 = (max * 0.5).toInt().toString()
+        val hr1 = ((max * 0.5).toInt()-1).toString()
 
-        hr6ValueTv.text = ">"+max+" bpm"
+        hr6ValueTv.text = "≥"+(maxValue)+" bpm"
         hr5ValueTv.text = hr5+" bpm"
         hr4ValueTv.text = hr4+" bpm"
         hr3ValueTv.text = hr3+" bpm"

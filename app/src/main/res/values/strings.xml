@@ -5,9 +5,11 @@
     <string name="title_dashboard">device</string>
     <string name="title_notifications">mine</string>
 
+    <string name="string_exercise_times"> exercise record</string>
+    <string name="string_not_opened">not opened</string>
     <string name="string_back_today">back today</string>
     <string name="string_dfu_notify">Notice:</string>
-    <string name="string_dfu_desc">1. The firmware upgrade is expected to take 5 to 10 minutes, please wait patiently;\n2. During the upgrade process, please do not turn off the phone\'s bluetooth and keep the screen on.\n3. Please keep the device close to the mobile phone,and do not walk far away or exit the APP;\ n4. Before upgrading, please make sure that the battery of the device is more than 40% or on charging;\n5. After the upgrade done, please ignore the device in the system Bluetooth setting;\n6. If the upgrade fails, please select the DFU device name to connect and try again.</string>
+    <string name="string_dfu_desc">1. The firmware upgrade is expected to take 5 to 10 minutes, please wait patiently;\n2. During the upgrade process, please do not turn off the phone\'s bluetooth and keep the screen on.\n3. Please keep the device close to the mobile phone,and do not walk far away or exit the APP;\ n4. Before upgrading, please make sure that the battery of the device is more than 40% ;\n5. After the upgrade done, please ignore the device in the system Bluetooth setting;\n6. If the upgrade fails, please select the DFU device name to connect and try again.</string>
     <string name="string_time_second">s</string>
     <string name="string_time_min">m</string>
     <string name="string_time_hour">h</string>
@@ -123,7 +125,7 @@
     <string name="string_spo2_txt_desc">Blood oxygen saturation refers to the concentration of blood oxygen in the blood, which is an indicator of the ability of the blood to carry oxygen. The higher the oxygen content in the blood is, the metabolism of a person is better. It will change due to personal physical condition, altitude, etc.\nThe normal blood oxygen saturation of the human body is above 95%.\n* The data and suggestions provided are for reference only and cannot be used as a basis for clinical diagnosis and treatment.</string>
 
 
-
+    <string name="string_dialog_measure">Measurements:</string>
     <string name="string_about">About</string>
     <string name="string_measure">Measure</string>
     <string name="string_scan_ing">scan..</string>
@@ -160,7 +162,7 @@
     <string name="string_hour">hour</string>
     <string name="string_minute">min</string>
     <string name="string_time_interval">Time interval</string>
-    <string name="string_dnt_desc">In Do Not Disturb mode, sedentary reminder, SMS reminder, phone call reminder, and APP reminder are turned off</string>
+    <string name="string_dnt_desc">When no-disturb mode on, the sedentary reminder, SMS reminder, phone call reminder and APP reminder are invalidated during the set time.</string>
     <string name="string_turn_wrist_desc">During the set time, raise your wrist and point the watch screen towards you to light up the screen</string>
 
     <string name="string_last_txt">latest</string>
@@ -223,6 +225,8 @@
         <item>Fri</item>
         <item>Sat</item>
     </string-array>
+
+
 
     <string name="string_number_month">%1$d月</string>
 

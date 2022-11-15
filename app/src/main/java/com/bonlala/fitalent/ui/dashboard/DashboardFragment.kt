@@ -109,6 +109,7 @@ import timber.log.Timber
 
 
 
+
     }
 
 
@@ -153,12 +154,27 @@ import timber.log.Timber
         menuTempUnitBar.rightText = if(deviceSetModel!!.tempStyle==0) "℃" else "℉"
         //固件版本
         menuFirmwareBar.rightText = deviceSetModel!!.deviceVersionName
-        //转腕亮屏
-        menuSwitchLightBar.rightText = if(deviceSetModel!!.turnWrist=="0") "未开启" else deviceSetModel!!.turnWrist
-        //勿扰
-        menuDntBar.rightText = if(deviceSetModel!!.dnt == "0") "未开启" else deviceSetModel!!.dnt
-        //久坐
-        menuLongSitBar.rightText = if(deviceSetModel!!.longSitStr == "0") "未开启" else deviceSetModel!!.longSitStr
+//        //转腕亮屏
+//        menuSwitchLightBar.rightText = if(deviceSetModel!!.turnWrist=="0") "未开启" else deviceSetModel!!.turnWrist
+//        //勿扰
+//        menuDntBar.rightText = if(deviceSetModel!!.dnt == "0") "未开启" else deviceSetModel!!.dnt
+//        //久坐
+//        menuLongSitBar.rightText = if(deviceSetModel!!.longSitStr == "0") "未开启" else deviceSetModel!!.longSitStr
+
+        //久坐，勿扰，抬腕
+        viewModel.deviceNotifyData.observe(this){
+            val list = it
+            Timber.e("-----勿扰="+Gson().toJson(it))
+            //勿扰
+            menuDntBar.rightText = list[0]
+            //久坐
+            menuLongSitBar.rightText = list[1]
+            //转腕亮屏
+            menuSwitchLightBar.rightText = list[2]
+
+        }
+        //获取勿扰等信息
+        viewModel.getDeviceNotifyData("user_1001",saveMac,attachActivity)
 
         viewModel.serverVersion.observe(this){
             if(deviceSetModel != null){
@@ -171,6 +187,8 @@ import timber.log.Timber
         }
         //获取后台的固件信息
         viewModel.getServerVersionInfo(this)
+
+
     }
 
 

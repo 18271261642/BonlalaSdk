@@ -6,9 +6,11 @@
     <string name="string_imperial">英制</string>
 
 
+    <string name="string_exercise_times"> 条锻炼记录</string>
+    <string name="string_not_opened">未打开</string>
     <string name="string_back_today">回到当天</string>
     <string name="string_dfu_notify">更新提示:</string>
-    <string name="string_dfu_desc">1、固件更新预计需要5-10分钟，请耐心等待；\n2、升级过程中，不能关闭蓝牙，手机屏幕保持常亮\n3、设备靠近手机，请勿走远，请勿退出APP；\n4、升级前请确保设备电量大于40%或充电中;\n5、升级成功后，请在系统蓝牙忽略设备;\n6、升级失败后，需要选择DFU设备名进行连接再升级。</string>
+    <string name="string_dfu_desc">1、固件更新预计需要5-10分钟，请耐心等待；\n2、升级过程中，不能关闭蓝牙，手机屏幕保持常亮\n3、设备靠近手机，请勿走远，请勿退出APP；\n4、升级前请确保设备电量大于40%;\n5、升级成功后，请在系统蓝牙忽略设备;\n6、升级失败后，需要选择DFU设备名进行连接再升级。</string>
     <string name="string_time_second">秒</string>
     <string name="string_time_min">分</string>
     <string name="string_time_hour">时</string>
@@ -128,7 +130,7 @@
     <string name="string_spo2_txt_desc">血氧饱和度，是指血液中血氧的浓度，是衡量血液携带氧的能力指标。血液中含氧量越高，人的新陈代谢就越好。受个人身体状态、海拔等影响会有所不同。\n人体正常血氧饱和度为95%以上。\n*所提供的数据及建议仅供参考，不可作为临床诊断和治疗依据</string>
 
 
-
+    <string name="string_dialog_measure">测量:</string>
     <string name="string_about">关于</string>
     <string name="string_measure">测量</string>
     <string name="string_scan_ing">扫描中..</string>
@@ -157,7 +159,7 @@
     <string name="string_hour">小时</string>
     <string name="string_minute">分钟</string>
     <string name="string_time_interval">间隔</string>
-    <string name="string_dnt_desc">勿扰模式下，久坐提醒、短信提醒、来电提醒、APP提醒关闭</string>
+    <string name="string_dnt_desc">勿扰模式开启后，在设定时间范围内，久坐提醒、消息提醒将不再提醒</string>
     <string name="string_turn_wrist_desc">在设定的时间内，抬起手腕，将手表屏幕指向自己，屏幕亮起</string>
 
     <string name="string_last_txt">最新的</string>
@@ -221,6 +223,7 @@
         <item>周五</item>
         <item>周六</item>
     </string-array>
+
 
     <string name="string_number_month">%1$d月</string>
 
@@ -291,7 +294,7 @@
     <string name="string_real_heart">24小时心率</string>
     <string name="string_bright_screen_time">亮屏时间</string>
     <string name="string_bright_level">亮度等级</string>
-    <string name="string_rasie_to_wake">转腕亮屏</string>
+    <string name="string_rasie_to_wake">抬腕亮屏</string>
     <string name="string_long_sit">久坐提醒</string>
     <string name="string_phone_call">来电提醒</string>
     <string name="string_message_notify">消息提醒</string>

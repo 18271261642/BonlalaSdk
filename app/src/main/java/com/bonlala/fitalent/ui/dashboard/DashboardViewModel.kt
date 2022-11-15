@@ -12,9 +12,11 @@ import com.blala.blalable.blebean.CommBleSetBean
 import com.blala.blalable.listener.OnCommBackDataListener
 import com.blala.blalable.listener.WriteBack24HourDataListener
 import com.blala.blalable.listener.WriteBackDataListener
+import com.bonlala.fitalent.R
 import com.bonlala.fitalent.ble.DataOperateManager
 import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.db.model.DeviceSetModel
+import com.bonlala.fitalent.emu.DeviceNotifyType
 import com.bonlala.fitalent.http.RequestServer
 import com.bonlala.fitalent.http.api.VersionApi
 import com.bonlala.fitalent.utils.GsonUtils
@@ -44,6 +46,11 @@ class DashboardViewModel : ViewModel() {
     //获取是否有固件新版本
     var serverVersion = MutableLiveData<String>()
 
+    //获取转腕亮屏、久坐提醒、勿扰模式的信息，数据库中获取
+    var deviceNotifyData = MutableLiveData<MutableList<String>>()
+
+
+
     //设置亮度等级和时长
     fun setLightAndInterval(bleOperateManager: BleOperateManager,light : Int,level : Int){
         bleOperateManager.setBackLight(light, level,writeBackDataListener)
@@ -53,6 +60,56 @@ class DashboardViewModel : ViewModel() {
     fun setCommSet(bleOperateManager: BleOperateManager,commBleSetBean: CommBleSetBean){
         bleOperateManager.setCommonSetting(commBleSetBean,writeBackDataListener)
     }
+
+
+    /**
+     * 查询勿扰、久坐、抬腕提醒
+     */
+    fun getDeviceNotifyData(userId: String,mac: String,context: Context){
+
+        val list = mutableListOf<String>()
+        //勿扰
+        val dnt = DBManager.getInstance().getDbNotifyType(userId,mac,DeviceNotifyType.DB_DNT_TYPE);
+        var dntStr :String?=null
+        if(dnt != null){
+            dntStr = dnt.getStartAndEndTime(context)
+        }else{
+            dntStr = " ";
+        }
+        if (dntStr != null) {
+            list.add(dntStr)
+        }
+        //久坐
+        var sedentaryStr : String ?= null
+        val sedentary = DBManager.getInstance().getDbNotifyType(userId,mac,DeviceNotifyType.DB_LONG_DOWN_SIT_TYPE)
+        if(sedentary !=null){
+            sedentaryStr = sedentary.getStartAndEndTime(context)
+        }else{
+            sedentaryStr = " "
+        }
+
+        if (sedentaryStr != null) {
+            list.add(sedentaryStr)
+        }
+
+        //转腕
+        var raiseStr : String ?= null
+        var raise = DBManager.getInstance().getDbNotifyType(userId,mac,DeviceNotifyType.DB_RAISE_TO_WAKE)
+        if(raise == null){
+            raiseStr = " ";
+        }else{
+            raiseStr = raise.getStartAndEndTime(context)
+        }
+
+        if (raiseStr != null) {
+            list.add(raiseStr)
+        }
+
+        Timber.e("------list="+Gson().toJson(list))
+        deviceNotifyData.postValue(list)
+
+    }
+
 
 
 
@@ -85,7 +142,7 @@ class DashboardViewModel : ViewModel() {
                     val dataStr = jsonObject.getString("data")
                     val verBean = GsonUtils.getGsonObject<VersionApi.VersionInfo>(dataStr)
 
-                    Timber.e("----固件版本="+verBean.toString())
+//                    Timber.e("----固件版本="+verBean.toString())
                     serverVersion.postValue(verBean?.versionName)
                 }
             }

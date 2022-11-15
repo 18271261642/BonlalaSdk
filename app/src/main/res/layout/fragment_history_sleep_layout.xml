@@ -182,7 +182,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="H"
+                            android:text="@string/string_time_hour"
                             android:textColor="#ff6e6e77"
                             android:textSize="14sp" />
 
@@ -197,7 +197,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="min"
+                            android:text="@string/string_time_min"
                             android:textColor="#ff6e6e77"
                             android:textSize="14sp" />
                     </LinearLayout>

@@ -1,5 +1,8 @@
 package com.bonlala.fitalent.ble;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -8,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -23,6 +27,7 @@ import com.blala.blalable.listener.BleConnStatusListener;
 import com.blala.blalable.listener.ConnStatusListener;
 import com.blala.blalable.listener.WriteBackDataListener;
 import com.bonlala.fitalent.BaseApplication;
+import com.bonlala.fitalent.R;
 import com.bonlala.fitalent.db.DBManager;
 import com.bonlala.fitalent.db.model.DeviceSetModel;
 import com.bonlala.fitalent.emu.ConnStatus;
@@ -35,6 +40,8 @@ import com.tencent.mmkv.MMKV;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import timber.log.Timber;
 
 /**
@@ -72,6 +79,8 @@ public class ConnStatusService extends Service {
         intentFilter.addAction(BluetoothDevice.ACTION_PAIRING_REQUEST);
         registerReceiver(broadcastReceiver,intentFilter);
 
+        regeditBackService();
+
     }
 
 
@@ -92,6 +101,57 @@ public class ConnStatusService extends Service {
             return ConnStatusService.this;
         }
     }
+
+
+
+    //启动前台服务
+    private void regeditBackService() {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                String channelID = "com.bonlala.fitalent";
+                String channelName = "fitalent";
+                NotificationChannel channel = new NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_HIGH);
+                NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                manager.createNotificationChannel(channel);
+                Notification.Builder builder = new Notification.Builder(this);
+
+                //Notification builder = new Notification();
+
+//            builder.setSmallIcon(R.drawable.ic_noti_s);
+                builder.setSmallIcon(R.drawable.ic_notify_small);
+                builder.setContentText("Fitalent");
+                builder.setContentTitle("Fitalent");
+                //创建通知时指定channelID
+                builder.setChannelId(channelID);
+                Notification notification = builder.build();
+
+//            // 通知行为（点击后能进入应用界面）
+//            Intent intent = new Intent(this, B30HomeActivity.class);
+//            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//            builder.setContentIntent(pendingIntent);
+
+
+                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+                notificationManagerCompat.notify(11, notification);
+                startForeground(11, notification);
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+                    //Notification.Builder builder = new Notification.Builder(this,11);
+                    builder.setSmallIcon(R.drawable.ic_notify_small);
+                    builder.setContentText("Fitalent");
+                    builder.setContentTitle("Fitalent");
+                    // 设置通知的点击行为：自动取消/跳转等
+                    builder.setAutoCancel(false);
+                    startForeground(11, builder.build());
+                }
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 
 
     //是否扫描到了

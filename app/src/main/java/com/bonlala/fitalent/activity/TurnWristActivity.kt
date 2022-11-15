@@ -9,13 +9,16 @@ import com.bonlala.base.BaseDialog
 import com.bonlala.fitalent.BaseApplication
 import com.bonlala.fitalent.R
 import com.bonlala.fitalent.db.DBManager
+import com.bonlala.fitalent.db.model.CommDbTimeModel
 import com.bonlala.fitalent.db.model.DeviceSetModel
 import com.bonlala.fitalent.dialog.TimeDialog
 import com.bonlala.fitalent.emu.ConnStatus
+import com.bonlala.fitalent.emu.DeviceNotifyType
 import com.bonlala.fitalent.utils.MmkvUtils
 import com.hjq.toast.ToastUtils
 import kotlinx.android.synthetic.main.activity_trun_wrist_layout.*
 import timber.log.Timber
+import kotlin.math.min
 
 
 /**
@@ -29,6 +32,8 @@ class TurnWristActivity : AppActivity(),View.OnClickListener{
     var timeBean : CommTimeBean ?= null
 
     var deviceSetModel : DeviceSetModel ?= null
+
+    var commDbTimeModel : CommDbTimeModel ?= null
 
     override fun getLayoutId(): Int {
        return R.layout.activity_trun_wrist_layout
@@ -45,6 +50,7 @@ class TurnWristActivity : AppActivity(),View.OnClickListener{
             turnWristSwitchBtn.isChecked = checked
             timeBean?.switchStatus = if (checked) 1 else 0
             contentLayout.visibility = if(checked) View.VISIBLE else View.GONE
+            commDbTimeModel?.switchStatus = if (checked) 1 else 0
             setTurnWristData()
         }
 
@@ -55,10 +61,22 @@ class TurnWristActivity : AppActivity(),View.OnClickListener{
         if(BaseApplication.getInstance().connStatus != ConnStatus.CONNECTED)
             return
         val mac = MmkvUtils.getConnDeviceMac()
+
+        commDbTimeModel = DBManager.getInstance().getDbNotifyType("user_1001",mac,DeviceNotifyType.DB_RAISE_TO_WAKE)
         deviceSetModel = DBManager.getInstance().getDeviceSetModel("user_1001",mac)
 
         BaseApplication.getInstance().bleOperate.getWristData(OnCommTimeSetListener {
             timeBean = CommTimeBean()
+            if(commDbTimeModel == null){
+                commDbTimeModel = CommDbTimeModel()
+            }
+
+            commDbTimeModel?.startHour = it.startHour
+            commDbTimeModel?.startMinute = it.startMinute
+            commDbTimeModel?.endHour = it.endHour
+            commDbTimeModel?.endMinute = it.endMinute
+            commDbTimeModel?.level = it.level
+
             Timber.e("-------comm="+it.toString())
             contentLayout.visibility = if(it.switchStatus == 1) View.VISIBLE else View.GONE
             timeBean?.startHour = it.startHour
@@ -70,13 +88,13 @@ class TurnWristActivity : AppActivity(),View.OnClickListener{
             turnWristStartTimeBar.rightText = String.format("%02d",it.startHour)+":"+String.format("%02d",it.startMinute)
             turnWristEndTimeBar.rightText = String.format("%02d",it.endHour)+":"+String.format("%02d",it.endMinute)
 
-            //判断结束时间是否小于开始时间
-            val startTime = it.startHour*60+it.startMinute
-            val endTime = it.endHour * 60 + it.endMinute
-
-            val endStr = String.format("%02d",it.endHour)+":"+String.format("%02d",it.endMinute)
-
-            deviceSetModel?.turnWrist= if(it.switchStatus == 0) "0" else  (String.format("%02d",it.startHour)+":"+String.format("%02d",it.startMinute)+"-"+if(endTime<startTime) resources.getString(R.string.string_next_day)+endStr else endStr)
+//            //判断结束时间是否小于开始时间
+//            val startTime = it.startHour*60+it.startMinute
+//            val endTime = it.endHour * 60 + it.endMinute
+//
+//            val endStr = String.format("%02d",it.endHour)+":"+String.format("%02d",it.endMinute)
+//
+//            deviceSetModel?.turnWrist= if(it.switchStatus == 0) "0" else  (String.format("%02d",it.startHour)+":"+String.format("%02d",it.startMinute)+"-"+if(endTime<startTime) resources.getString(R.string.string_next_day)+endStr else endStr)
             saveData()
         })
 
@@ -108,19 +126,25 @@ class TurnWristActivity : AppActivity(),View.OnClickListener{
                         turnWristStartTimeBar.rightText = timeStr
                         timeBean?.startHour = hour
                         timeBean?.startMinute = minute
+
+                        commDbTimeModel?.startHour = hour
+                        commDbTimeModel?.startMinute = minute
                     }else{
                         turnWristEndTimeBar.rightText = timeStr
                         timeBean?.endHour = hour
                         timeBean?.endMinute = minute
+
+                        commDbTimeModel?.endHour = hour
+                        commDbTimeModel?.endMinute = minute
                     }
 
-                    //判断结束时间是否小于开始时间
-                    val startTime = (timeBean?.startHour?.times(60) ?: 0) + (timeBean?.startMinute
-                        ?: 0)
-                    val endTime = (timeBean?.endHour ?: 0) * 60 + (timeBean?.endMinute ?: 0)
-
-                    val endStr = String.format("%02d",timeBean?.endHour)+":"+String.format("%02d",timeBean?.endMinute)
-                    deviceSetModel?.turnWrist= if(timeBean?.switchStatus == 0) "0" else  (String.format("%02d",timeBean?.startHour)+":"+String.format("%02d",timeBean?.startMinute)+"-"+if(endTime<startTime) resources.getString(R.string.string_next_day)+endStr else endStr )
+//                    //判断结束时间是否小于开始时间
+//                    val startTime = (timeBean?.startHour?.times(60) ?: 0) + (timeBean?.startMinute
+//                        ?: 0)
+//                    val endTime = (timeBean?.endHour ?: 0) * 60 + (timeBean?.endMinute ?: 0)
+//
+//                    val endStr = String.format("%02d",timeBean?.endHour)+":"+String.format("%02d",timeBean?.endMinute)
+//                    deviceSetModel?.turnWrist= if(timeBean?.switchStatus == 0) "0" else  (String.format("%02d",timeBean?.startHour)+":"+String.format("%02d",timeBean?.startMinute)+"-"+if(endTime<startTime) resources.getString(R.string.string_next_day)+endStr else endStr )
 
                     setTurnWristData()
                 }
@@ -166,9 +190,11 @@ class TurnWristActivity : AppActivity(),View.OnClickListener{
     }
 
     private fun saveData(){
-        if(deviceSetModel == null)
+        if(commDbTimeModel == null)
             return
         val mac = MmkvUtils.getConnDeviceMac() ?: return
-        DBManager.dbManager.saveDeviceSetData("user_1001",mac,deviceSetModel)
+        DBManager.dbManager.saveDeviceNotifyForType("user_1001",mac,DeviceNotifyType.DB_RAISE_TO_WAKE,commDbTimeModel)
+
+//        DBManager.dbManager.saveDeviceSetData("user_1001",mac,deviceSetModel)
     }
 }

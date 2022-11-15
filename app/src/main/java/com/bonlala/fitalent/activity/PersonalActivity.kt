@@ -78,11 +78,11 @@ class PersonalActivity : AppActivity() {
             R.id.personalHeightBar->{
                 val list = mutableListOf<String>()
                 if(!isKmUnit){
-                    for(i in CalculateUtils.cmToInchValue(30)..CalculateUtils.cmToInchValue(300)){
+                    for(i in CalculateUtils.cmToInchValue(80)..CalculateUtils.cmToInchValue(254)){
                         list.add(i.toString())
                     }
                 }else{
-                    for(i in 30..300){
+                    for(i in 80..254){
                         list.add(i.toString())
                     }
                 }
@@ -98,11 +98,11 @@ class PersonalActivity : AppActivity() {
             R.id.personalWeightBar->{
                 val list = mutableListOf<String>()
                 if(isKmUnit){
-                    for(i in 80..254){
+                    for(i in 30..300){
                         list.add(i.toString())
                     }
                 }else{
-                    for(i in CalculateUtils.kgToLbValue(80)..CalculateUtils.kgToLbValue(254)){
+                    for(i in CalculateUtils.kgToLbValue(30)..CalculateUtils.kgToLbValue(300)){
                         list.add(i.toString())
                     }
                 }

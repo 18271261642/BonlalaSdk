@@ -149,12 +149,15 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
     private fun homeDeviceClick(){
         val userMac = DBManager.getBindMac()
         val connMac = MmkvUtils.getConnDeviceMac()
-        if(BikeUtils.isEmpty(connMac)){  //未连接过
-            homeDeviceStatusView.setOnClickListener {
+
+        homeDeviceStatusView.setOnClickListener {
+            if(BikeUtils.isEmpty(connMac)){
                 startActivity(MainActivity::class.java)
+                return@setOnClickListener
             }
-            return
+
         }
+
 
         //连接状态不可点击
         if(BaseApplication.getInstance().connStatus == ConnStatus.CONNECTED){

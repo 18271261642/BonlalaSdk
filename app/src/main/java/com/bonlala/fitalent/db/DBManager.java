@@ -2,6 +2,7 @@ package com.bonlala.fitalent.db;
 
 import android.database.sqlite.SQLiteDatabase;
 
+import com.bonlala.fitalent.db.model.CommDbTimeModel;
 import com.bonlala.fitalent.db.model.DataRecordModel;
 import com.bonlala.fitalent.db.model.DeviceSetModel;
 import com.bonlala.fitalent.db.model.ExerciseModel;
@@ -734,6 +735,55 @@ public class DBManager {
 
         }catch (Exception e){
             e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 保存不同类型的提醒
+     * @param userId userId
+     * @param mac mac
+     * @param type 类型
+     * @param commDbTimeModel 数据
+     */
+    public void saveDeviceNotifyForType(String userId, String mac, String type, CommDbTimeModel commDbTimeModel){
+        CommDbTimeModel saveDb = getDbNotifyType(userId,mac,type);
+        CommDbTimeModel db = new CommDbTimeModel();
+        db.setUserId(userId);
+        db.setDeviceMac(mac);
+        db.setDbType(type);
+        db.setStartHour(commDbTimeModel.getStartHour());
+        db.setStartMinute(commDbTimeModel.getStartMinute());
+        db.setEndHour(commDbTimeModel.getEndHour());
+        db.setEndMinute(commDbTimeModel.getEndMinute());
+        db.setLevel(commDbTimeModel.getLevel());
+        db.setSwitchStatus(commDbTimeModel.getSwitchStatus());
+
+        boolean isSave = false;
+
+        if(saveDb == null){
+            isSave =  db.save();
+        }else{
+            isSave = db.saveOrUpdate("userId = ? and deviceMac = ? and dbType = ?",userId,mac,type);
+        }
+        Timber.e("-----isSave="+isSave);
+    }
+
+
+    /**
+     * 获取设备提醒的数据
+     * @param userId ueserId
+     * @param mac mac
+     * @param type 类型
+     * @return 是否有数据
+     */
+    public CommDbTimeModel getDbNotifyType(String userId, String mac, String type ){
+        try {
+            List<CommDbTimeModel> dbTimeModelList = LitePal.where("userId = ? and deviceMac = ? and dbType = ?",userId,mac,type).find(CommDbTimeModel.class);
+            return dbTimeModelList == null || dbTimeModelList.isEmpty() ? null : dbTimeModelList.get(0);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
         }
     }
 }

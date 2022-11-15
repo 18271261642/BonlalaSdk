@@ -1,6 +1,7 @@
 package com.bonlala.fitalent.activity.history
 
 
+import android.os.Build
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.bonlala.action.TitleBarFragment
@@ -94,12 +95,27 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
             showValidData(StepType.DAY,it.detailStep,it.dayStep,it.dayDistance,it.dayCalories)
 
         }
+
+        //月
+        viewModel.oneMonthStepList.observe(viewLifecycleOwner){
+            val stepStr = it.detailStep
+            showStepGoal(stepStr,BikeUtils.getMonthLastDay(dayStr,false),MmkvUtils.getStepGoal())
+            showValidData(StepType.MONTH,it.detailStep,it.dayStep,it.dayDistance,it.dayCalories)
+        }
+
+
         //年
         viewModel.oneYearStepData.observe(viewLifecycleOwner){
-            val stepStr = it.detailStep
-            showStepGoal(stepStr,365,stepGoal)
+            val map = it
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                map.forEach { i, oneDayStepModel ->
+                    val stepStr = oneDayStepModel.detailStep
+//                    showStepGoal(stepStr,365,stepGoal)
+                    attachActivity.setStepSchedule(i.toFloat(),365f)
+                    showValidData(StepType.YEAR,oneDayStepModel.detailStep,oneDayStepModel.dayStep,oneDayStepModel.dayDistance,oneDayStepModel.dayCalories)
+                }
+            }
 
-            showValidData(StepType.YEAR,it.detailStep,it.dayStep,it.dayDistance,it.dayCalories)
         }
 
         //周
@@ -128,10 +144,12 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
 
     //日的数据
     private fun getDayData(){
-        if(BikeUtils.daySize(dayStr,BikeUtils.getCurrDate())){
+        val mac =DBManager.getBindMac()
+        if(BikeUtils.daySizeOrEqual(dayStr,BikeUtils.getCurrDate())){
             commonHistoryCurrentTv.visibility = View.GONE
             commonHistoryRightImg.visibility = View.INVISIBLE
             dayStr = BikeUtils.getCurrDate()
+            dayStr?.let { viewModel.getOnDayStepByDay(it,mac) }
             return
         }
 
@@ -142,8 +160,6 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
             commonHistoryCurrentTv.visibility = View.GONE
         }
 
-
-        val mac =DBManager.getBindMac()
         dayStr?.let { viewModel.getOnDayStepByDay(it,mac) }
 
     }
@@ -151,36 +167,70 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
 
     //年的数据
     private fun getYearData(){
-        if(BikeUtils.daySize(dayStr,BikeUtils.getCurrDate())){
+        val mac = DBManager.getBindMac()
+
+        //目标步数
+        val goalStep = MmkvUtils.getStepGoal()
+
+        if(BikeUtils.daySizeOrEqual(dayStr,BikeUtils.getCurrDate())){
             commonHistoryCurrentTv.visibility = View.GONE
+            commonHistoryRightImg.visibility = View.INVISIBLE
+            dayStr = BikeUtils.getCurrDate()
+            viewModel.getOneYearStep(attachActivity,mac,dayStr.toString(),goalStep)
             return
         }
+
+        commonHistoryRightImg.visibility = View.VISIBLE
+
         if(!BikeUtils.isEqualDay(dayStr,BikeUtils.getCurrDate())){
             commonHistoryCurrentTv.visibility = View.VISIBLE
         }else{
             commonHistoryCurrentTv.visibility = View.GONE
         }
-
-        val mac = DBManager.getBindMac()
-
-        viewModel.getOneYearStep(attachActivity,mac,dayStr.toString())
+        viewModel.getOneYearStep(attachActivity,mac,dayStr.toString(),goalStep)
     }
 
 
     //周的数据
     private fun getWeekData(){
-        if(BikeUtils.daySize(dayStr,BikeUtils.getCurrDate())){
+        val mac = DBManager.getBindMac()
+        if(BikeUtils.daySizeOrEqual(dayStr,BikeUtils.getCurrDate())){
             commonHistoryCurrentTv.visibility = View.GONE
+            commonHistoryRightImg.visibility = View.INVISIBLE
+            dayStr = BikeUtils.getCurrDate()
+            viewModel.getOneWeekStepData(attachActivity, mac,dayStr.toString())
             return
         }
+        commonHistoryRightImg.visibility = View.VISIBLE
         if(!BikeUtils.isEqualDay(dayStr,BikeUtils.getCurrDate())){
             commonHistoryCurrentTv.visibility = View.VISIBLE
         }else{
             commonHistoryCurrentTv.visibility = View.GONE
         }
-
-        val mac = DBManager.getBindMac()
         viewModel.getOneWeekStepData(attachActivity, mac,dayStr.toString())
+    }
+
+
+    //组装月的数据，自然月
+    private fun getMonthData(){
+        Timber.e("-------月="+dayStr)
+        if(BikeUtils.daySizeOrEqual("yyyy-MM",dayStr,BikeUtils.getDayByMonth(BikeUtils.getCurrDate()))){
+            commonHistoryCurrentTv.visibility = View.GONE
+            commonHistoryRightImg.visibility = View.INVISIBLE
+            dayStr = BikeUtils.getDayByMonth(BikeUtils.getCurrDate())
+            viewModel.getOneMonthStep(dayStr.toString(),DBManager.getBindMac())
+            return
+        }
+
+        commonHistoryRightImg.visibility = View.VISIBLE
+
+        if(!BikeUtils.isEqualDay("yyyy-MM",dayStr,BikeUtils.getDayByMonth(BikeUtils.getCurrDate()))){
+            commonHistoryCurrentTv.visibility = View.VISIBLE
+        }else{
+            commonHistoryCurrentTv.visibility = View.GONE
+        }
+
+        viewModel.getOneMonthStep(dayStr.toString(),DBManager.getBindMac())
     }
 
 
@@ -294,26 +344,6 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
     }
 
 
-    //组装月的数据，自然月
-    private fun getMonthData(){
-        if(BikeUtils.daySize("yyyy-MM",dayStr,BikeUtils.getDayByMonth(BikeUtils.getCurrDate()))){
-            commonHistoryCurrentTv.visibility = View.GONE
-            return
-        }
-
-        if(!BikeUtils.isEqualDay("yyyy-MM",dayStr,BikeUtils.getDayByMonth(BikeUtils.getCurrDate()))){
-            commonHistoryCurrentTv.visibility = View.VISIBLE
-        }else{
-            commonHistoryCurrentTv.visibility = View.GONE
-        }
-        viewModel.oneMonthStepList.observe(viewLifecycleOwner){
-            val stepStr = it.detailStep
-            showStepGoal(stepStr,BikeUtils.getMonthLastDay(dayStr,false),MmkvUtils.getStepGoal())
-            showValidData(StepType.MONTH,it.detailStep,it.dayStep,it.dayDistance,it.dayCalories)
-
-        }
-        viewModel.getOneMonthStep(dayStr.toString(),DBManager.getBindMac())
-    }
 
 
 
@@ -424,7 +454,7 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
         }
 
         if(dataType == StepType.WEEK){
-            val beforeOrAfterDay = BikeUtils.getBeforeOrAfterDay(dayStr,if(date) -7 else 7)
+            val beforeOrAfterDay = BikeUtils.getBeforeOrAfterDay2(dayStr,if(date) -7 else 7)
             dayStr = BikeUtils.getFormatDate(beforeOrAfterDay,"yyyy-MM-dd")
             getWeekData()
         }
