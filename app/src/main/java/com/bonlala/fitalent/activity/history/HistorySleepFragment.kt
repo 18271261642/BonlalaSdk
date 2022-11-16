@@ -52,7 +52,7 @@ class HistorySleepFragment : TitleBarFragment<RecordHistoryActivity>(),OnRecordH
     }
 
     override fun initData() {
-
+        dayStr = BikeUtils.getCurrDate()
         getSleepRecord()
         showEmptyData()
 
@@ -70,10 +70,11 @@ class HistorySleepFragment : TitleBarFragment<RecordHistoryActivity>(),OnRecordH
 
     //获取记录
     private fun getSleepRecord(){
-        viewModel.recordSleep.observe(viewLifecycleOwner){
+        viewModel.recordSleep.observe(viewLifecycleOwner){ it ->
             recordList = it
+            Timber.e("------睡眠记录="+Gson().toJson(it))
             if(it != null){
-                dayStr = it[it.size-1]
+                dayStr = it[0]
                 getDbSleep()
             }else{
                 backCurrentDay()

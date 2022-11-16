@@ -638,7 +638,7 @@ public class BikeUtils {
         Calendar firstW = getWeekFirstDate(start);
         Calendar end = getWeekLastDate(start);
 
-        int lefYear = start.get(Calendar.YEAR);
+        int lefYear = firstW.get(Calendar.YEAR);
         int endYear = end.get(Calendar.YEAR);
         if(lefYear != endYear){
             String result = lefYear+" "+getFormatDate(firstW.getTimeInMillis(),wFormat)+"~"+endYear+" "+getFormatDate(end.getTimeInMillis(),wFormat);
@@ -662,14 +662,16 @@ public class BikeUtils {
 
         Timber.e("--------周="+getFormatDate(firstW.getTimeInMillis(), "yyyy-MM-dd")+"\n"+getFormatDate(end.getTimeInMillis(), "yyyy-MM-dd"));
 
-        int lefYear = start.get(Calendar.YEAR);
+        int lefYear = firstW.get(Calendar.YEAR);
         int endYear = end.get(Calendar.YEAR);
 
-        int leftMonth = start.get(Calendar.MONTH)+1;
+        int leftMonth = firstW.get(Calendar.MONTH)+1;
         int rightMonth = end.get(Calendar.MONTH)+1;
 
+        Timber.e("-----leftMonth="+leftMonth+" "+rightMonth+" "+getFormatDate(start.getTimeInMillis(),"yyyy-MM-dd")+" "+getFormatDate(end.getTimeInMillis(),"yyyy-MM-dd"));
+
         if(lefYear != endYear){
-            String result = getFormatDate(firstW.getTimeInMillis(),wFormat,Locale.ENGLISH)+" "+lefYear+"~"+getFormatDate(end.getTimeInMillis(),wFormat2,Locale.ENGLISH)+" "+endYear;
+            String result = getFormatDate(firstW.getTimeInMillis(),wFormat,Locale.ENGLISH)+" "+lefYear+"~"+getFormatDate(end.getTimeInMillis(),"MMM dd,yyyy",Locale.ENGLISH);
             return result;
         }else{
             String result;
@@ -924,6 +926,24 @@ public class BikeUtils {
 
 
     /**
+     * 将分钟格式化成HH:mm格式
+     * @param minute 分钟
+     * @return
+     */
+    public static String formatMinuteNoHour(int minute,Context context){
+        if(minute == 0)
+            return "--";
+        int hour = minute / 60;
+        if(hour>=24)
+            hour = hour-24;
+        int minuteStr = minute % 60;
+        String hourStr = hour == 0 ? "":(hour+context.getResources().getString(R.string.string_time_hour));
+        String resultMinuteStr = minuteStr == 0 ? "" : (minuteStr+context.getResources().getString(R.string.string_time_min));
+        return hourStr+resultMinuteStr;
+    }
+
+
+    /**
      * 将分钟格式化成HH时mm分:ss秒格式
      * @param
      * @return
@@ -969,13 +989,31 @@ public class BikeUtils {
      */
     public static String formatMinute(int minute){
         if(minute == 0)
+            return "--";
+        int hour = minute / 60;
+        if(hour>=24)
+            hour = hour-24;
+        int minuteStr = minute % 60;
+
+        return hour == 0 ? "":(String.format("%02d",hour)+":")+String.format("%02d",minuteStr<0?1:minuteStr);
+    }
+
+    /**
+     * 将分钟格式化成HH:mm格式
+     * @param minute 分钟
+     * @return
+     */
+    public static String formatMinuteSleep(int minute){
+        if(minute == 0)
             return "00:00";
         int hour = minute / 60;
         if(hour>=24)
             hour = hour-24;
         int minuteStr = minute % 60;
-        return String.format("%02d",hour)+":"+String.format("%02d",minuteStr<0?1:minuteStr);
+
+        return (String.format("%02d",hour)+":")+String.format("%02d",minuteStr<0?1:minuteStr);
     }
+
 
     /**
      * 格式化时间

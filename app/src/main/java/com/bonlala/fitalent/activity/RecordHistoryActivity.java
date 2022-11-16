@@ -1,5 +1,9 @@
 package com.bonlala.fitalent.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -10,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blala.blalable.BleConstant;
 import com.bonlala.action.AppActivity;
 import com.bonlala.action.SingleClick;
 import com.bonlala.fitalent.R;
@@ -21,6 +26,7 @@ import com.bonlala.fitalent.activity.history.HistoryStepFragment;
 import com.bonlala.fitalent.adapter.HistoryTypeSpinnerAdapter;
 import com.bonlala.fitalent.bean.RecordTypeBean;
 import com.bonlala.fitalent.emu.HomeDateType;
+import com.bonlala.fitalent.listeners.OnMeasureStatusListener;
 import com.bonlala.fitalent.listeners.OnRecordHistoryRightListener;
 import com.bonlala.fitalent.view.LinearProgressView;
 import com.hjq.shape.view.ShapeTextView;
@@ -49,6 +55,14 @@ public class RecordHistoryActivity extends AppActivity implements View.OnClickLi
     private ShapeTextView recordHistoryTv;
     private TextView recordGoalTv;
 
+    /**
+     *
+     */
+    private OnMeasureStatusListener onMeasureStatusListener;
+
+    public void setOnMeasureStatusListener(OnMeasureStatusListener onMeasureStatusListener) {
+        this.onMeasureStatusListener = onMeasureStatusListener;
+    }
 
     private OnRecordHistoryRightListener onRecordHistoryRightListener;
 
@@ -154,8 +168,7 @@ public class RecordHistoryActivity extends AppActivity implements View.OnClickLi
 
     @Override
     protected void initData() {
-
-
+        registerReceiver(broadcastReceiver,new IntentFilter(BleConstant.COMM_BROADCAST_ACTION));
 
     }
 
@@ -251,4 +264,29 @@ public class RecordHistoryActivity extends AppActivity implements View.OnClickLi
     public void setTypeGoal(String type){
         recordGoalTv.setText(String.format(getResources().getString(R.string.string_params_goal),type));
     }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
+    }
+
+    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if(action == null)
+                return;
+            if(action.equals(BleConstant.COMM_BROADCAST_ACTION)){
+                int[] array = intent.getIntArrayExtra(BleConstant.COMM_BROADCAST_KEY);
+                if(array[0] == BleConstant.MEASURE_COMPLETE_VALUE){
+                    if(onMeasureStatusListener != null){
+                        onMeasureStatusListener.onMeasureStatus(0);
+                    }
+
+                }
+            }
+        }
+    };
 }

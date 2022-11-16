@@ -223,6 +223,7 @@ public class SleepChartView extends View {
         Point point = sleepItem.getPoint();
         if(point == null)
             return;
+        Timber.e("-----丁阿基="+sleepItem.toString());
         float txtWidth = MiscUtil.getTextWidth(clickTxtPaint,"23:30~23:59");
         float txtHeight = MiscUtil.measureTextHeight(clickTxtPaint);
         RectF rectF = new RectF(point.x-txtWidth/2 -paddingWidth,0,point.x+txtWidth/2+paddingWidth,txtHeight*4f+paddingWidth);
@@ -232,7 +233,7 @@ public class SleepChartView extends View {
 
         float marginTop = MiscUtil.dipToPx(getContext(),3f);
         //时间
-        String startTime = BikeUtils.formatMinute(sleepItem.getStartTime())+"~"+BikeUtils.formatMinute(sleepItem.getEndTime());
+        String startTime = BikeUtils.formatMinuteSleep(sleepItem.getStartTime())+"~"+BikeUtils.formatMinuteSleep(sleepItem.getEndTime());
         clickTxtPaint.setTextAlign(Paint.Align.CENTER);
         canvas.drawText(startTime,point.x,txtHeight+marginTop,clickTxtPaint);
 
@@ -241,8 +242,8 @@ public class SleepChartView extends View {
         canvas.drawText(typeStr,point.x,txtHeight*2.3f+marginTop,clickTxtPaint);
 
         //时长
-        String timeLengthStr = BikeUtils.formatMinute(sleepItem.getSleepLength(),getContext());
-        canvas.drawText(timeLengthStr,point.x,txtHeight*3.5f+marginTop,clickTxtPaint);
+        String timeLengthStr = BikeUtils.formatMinuteNoHour(sleepItem.getSleepLength(),getContext());
+        canvas.drawText(timeLengthStr,point.x,txtHeight*4f+marginTop,clickTxtPaint);
 
 
     }
@@ -253,8 +254,8 @@ public class SleepChartView extends View {
             return;
         if(!isCanvasStartTime)
             return;
-        String startTime = BikeUtils.formatMinute(sleepModel.getFallAsleepTime());
-        String endTime = BikeUtils.formatMinute(sleepModel.getWakeUpTime());
+        String startTime = BikeUtils.formatMinuteSleep(sleepModel.getFallAsleepTime());
+        String endTime = BikeUtils.formatMinuteSleep(sleepModel.getWakeUpTime());
         //文字的高度
         float txtHeight = MiscUtil.measureTextHeight(timePaint);
         //文字的宽度

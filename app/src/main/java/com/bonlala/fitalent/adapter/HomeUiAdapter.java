@@ -318,7 +318,7 @@ public class HomeUiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         if(holder instanceof  HomeSleepViewHolder){
             if(dataSource == null){
                 ((HomeSleepViewHolder) holder).itemHomeSleepAllTimeHourTv.setText("-");
-                ((HomeSleepViewHolder) holder).itemHomeSleepAllTimeMinuteTv.setText("--");
+                ((HomeSleepViewHolder) holder).itemHomeSleepAllTimeMinuteTv.setText("-");
                 ((HomeSleepViewHolder) holder).itemHomeSleepTimeTv.setText("");
                 ((HomeSleepViewHolder) holder).itemSleepChartView.setCanvasStartTime(false);
                 ((HomeSleepViewHolder) holder).itemSleepChartView.setSleepModel(null);

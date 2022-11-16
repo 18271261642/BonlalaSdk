@@ -56,13 +56,15 @@ public class MyMarkerView extends MarkerView {
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
         try {
-            Timber.e("---e="+e.getX()+" "+e.getY()+" ");
+//            Timber.e("---e="+e.getX()+" "+e.getY()+" ");
             if (e instanceof CandleEntry) {
 
                 CandleEntry ce = (CandleEntry) e;
                 int index = (int) e.getX();
                 int time = list.get(index).getTime();
-                timeTv.setText(BikeUtils.formatMinute(time));
+
+                Timber.e("--111--time="+time);
+                timeTv.setText(BikeUtils.formatMinuteSleep(time));
                 String v = Utils.formatNumber(ce.getHigh(), 0, true);
                 int hrValue = Integer.parseInt(v);
                 int point = HeartRateConvertUtils.hearRate2Point(hrValue);
@@ -72,7 +74,7 @@ public class MyMarkerView extends MarkerView {
             } else {
                 int index = (int) e.getX();
                 int time = list.get(index).getTime();
-
+                Timber.e("--22--time="+time);
                 String v = Utils.formatNumber(e.getY(), 0, true);
                 int hrValue = Integer.parseInt(v);
 
@@ -80,7 +82,7 @@ public class MyMarkerView extends MarkerView {
                 int color = HeartRateConvertUtils.getColorByPoint(context,point);
 
 
-                timeTv.setText(BikeUtils.formatMinute(time));
+                timeTv.setText(BikeUtils.formatMinuteSleep(time));
                 tvContent.setText(Utils.formatNumber(e.getY(), 0, true));
                 tvContent.setTextColor(color);
             }

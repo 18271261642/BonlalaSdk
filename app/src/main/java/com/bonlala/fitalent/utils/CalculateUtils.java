@@ -299,11 +299,13 @@ public class CalculateUtils {
         if(pace == 0.0f){
             return "--";
         }
-
+        double tempP = div(pace,60d,2);
         //保留两位小数
-        String temp = decimalFormat.format(pace);
+        String temp = decimalFormat.format(tempP);
         String beforeStr = StringUtils.substringBefore(temp,".");
         String afterStr = StringUtils.substringAfter(temp,".");
-        return beforeStr+"'"+afterStr+"''";
+        int m = BikeUtils.isEmpty(beforeStr) ? 0 : Integer.parseInt(beforeStr);
+        int s = BikeUtils.isEmpty(afterStr) ? 0 :Integer.parseInt(afterStr);
+        return m ==0 ? "":(beforeStr+"'")+(s == 0 ? "":(afterStr+"''"));
     }
 }

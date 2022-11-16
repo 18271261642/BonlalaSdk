@@ -98,12 +98,6 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
             //判断是否用户绑定Mac了，用户绑定了Mac可以点击
             val bindMac = DBManager.getBindMac()
 
-
-
-//            startActivity(TestA::class.java)
-//            return@setOnItemClickListener
-
-
             if(BikeUtils.isEmpty(bindMac)){
 
                 ToastUtils.show(resources.getString(R.string.string_not_connect))

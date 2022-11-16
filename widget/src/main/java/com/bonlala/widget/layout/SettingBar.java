@@ -85,7 +85,7 @@ public  class SettingBar extends FrameLayout {
 
         LinearLayout.LayoutParams leftParams = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT);
         leftParams.gravity = Gravity.CENTER_VERTICAL;
-        leftParams.weight = 1;
+        leftParams.weight = 1.4f;
         mLeftView.setLayoutParams(leftParams);
 
         LinearLayout.LayoutParams rightParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -100,7 +100,7 @@ public  class SettingBar extends FrameLayout {
         mLeftView.setSingleLine(true);
         mRightView.setSingleLine(true);
 
-        mLeftView.setEllipsize(TextUtils.TruncateAt.END);
+//        mLeftView.setEllipsize(TextUtils.TruncateAt.END);
         mRightView.setEllipsize(TextUtils.TruncateAt.END);
 
         mLeftView.setLineSpacing(getResources().getDimension(R.dimen.dp_5), mLeftView.getLineSpacingMultiplier());

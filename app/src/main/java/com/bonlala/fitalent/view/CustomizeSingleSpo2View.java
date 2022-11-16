@@ -161,8 +161,6 @@ public class CustomizeSingleSpo2View extends View {
         canvas.drawText(seconds,mWidth/2,0f,txtPaint);
 
 
-
-
         float middleV = -(spo2Value-85) * modulus-tH*2.5f;
 
         float rectFLeft = mWidth/2-mBarWidth/2;
@@ -206,7 +204,7 @@ public class CustomizeSingleSpo2View extends View {
 //        canvas.drawText(seconds,mWidth/2,-mHeight+txtHeight*4.5f+paddingWidth*2,clickStatusPaint);
 
 
-        canvas.drawLine(mWidth/2,-txtHeight*2.5f,mWidth/2,-mHeight+txtHeight*2f+paddingWidth*2,clickLinePaint);
+        canvas.drawLine(mWidth/2,-txtHeight*2f,mWidth/2,-mHeight+txtHeight*3f+paddingWidth*2,clickLinePaint);
     }
 
 

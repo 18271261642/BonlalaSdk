@@ -105,7 +105,9 @@
         <activity android:name=".activity.WeatherActivity"/>
         <activity android:name=".activity.CompleteUserInfoActivity"/>
         <activity android:name=".activity.ShowWebActivity"
-          android:windowSoftInputMode="stateHidden"/>
+            android:theme="@style/Theme.Design.Light.NoActionBar"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"/>
         <!--消息提醒-->
         <activity android:name=".activity.MsgNotifyActivity"/>
         <activity android:name="com.bonlala.fitalent.activity.history.TestA" />
@@ -135,6 +137,15 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
+
+        <!--获取系统变化的广播-->
+        <receiver android:name=".service.SystemStatusBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <!--语言变化-->
+                <action android:name="android.intent.action.LOCALE_CHANGED"/>
+            </intent-filter>
+        </receiver>
 
         <service android:name="com.bonlala.fitalent.service.DfuService"
             android:exported="true">

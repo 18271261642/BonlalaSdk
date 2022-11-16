@@ -72,7 +72,7 @@ public class CommDbTimeModel extends LitePalSupport {
         }
         String startMinStr = String.format("%02d",startMinute);
         String endMinStr = String.format("%02d",endMinute);
-        return end>=start ? ((startHour+":"+String.format("%02d",startMinute))+"~"+context.getResources().getString(R.string.string_next_day)+(endHour+":"+endMinute)) : ((startHour+":"+startMinute)+"~"+endHour+":"+endMinute);
+        return end<=start ? ((startHour+":"+String.format("%02d",startMinute))+"~"+context.getResources().getString(R.string.string_next_day)+(endHour+":"+endMinStr)) : ((startHour+":"+startMinStr)+"~"+endHour+":"+endMinStr);
     }
 
 

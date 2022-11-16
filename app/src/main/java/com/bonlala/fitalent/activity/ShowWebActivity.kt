@@ -1,18 +1,16 @@
 package com.bonlala.fitalent.activity
 
-import android.content.Context
-import android.content.res.Configuration
-import android.content.res.Resources
 import android.graphics.Bitmap
 import android.os.Build
+import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.webkit.*
 import com.bonlala.action.AppActivity
 import com.bonlala.fitalent.R
 import com.hjq.toast.ToastUtils
 import kotlinx.android.synthetic.main.activity_show_web_layout.*
 import timber.log.Timber
-import java.util.*
 
 /**
  * Created by Admin
@@ -23,6 +21,15 @@ class ShowWebActivity : AppActivity() {
 
     //是否使用网页的title,默认不使用
   private var isUsedUrlTitle = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        window.setSoftInputMode(
+            WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE or
+                    WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN
+        )
+
+    }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_show_web_layout

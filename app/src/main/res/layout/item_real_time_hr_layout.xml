@@ -13,6 +13,7 @@
         android:id="@+id/itemRealHrEmptyLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:padding="@dimen/dp_5"
         android:orientation="vertical">
 
@@ -47,8 +48,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/dp_5"
-        android:visibility="gone"
-        android:background="@mipmap/ic_home_real_hr_bg"
+        android:visibility="visible"
+        android:background="@mipmap/ic_real_time_hr_bg_1"
         android:orientation="vertical">
 
         <LinearLayout

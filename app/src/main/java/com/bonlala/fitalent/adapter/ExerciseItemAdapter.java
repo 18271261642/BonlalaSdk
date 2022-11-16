@@ -220,6 +220,8 @@ public class ExerciseItemAdapter extends AppAdapter<ExerciseModel> {
 
             //计算配速
             double pace = CalculateUtils.div(time,isKm ? disStr : CalculateUtils.kmToMiValue(disStr),3);
+
+            Timber.e("----配速="+pace);
             list.add(new ExerciseItemBean(getResources().getString(R.string.string_place), getTargetType(CalculateUtils.getFloatPace((float) pace),"")));
 
 

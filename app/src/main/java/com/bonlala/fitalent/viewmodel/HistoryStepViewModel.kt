@@ -159,10 +159,10 @@ class HistoryStepViewModel : ViewModel() {
         var yearCountDistance = 0
         var yearCountKcal = 0
 
-        var monthArray = context.resources.getStringArray(com.haibin.calendarview.R.array.month_string_array)
+        var monthArray = context.resources.getStringArray(R.array.month_array)
 
         for(i in 1..12){
-            val monthResource = monthArray[i]//String.format(context.resources.getString(R.string.string_number_month),i)
+            val monthResource = monthArray[i-1]//String.format(context.resources.getString(R.string.string_number_month),i)
             val tempMonth = yearStr.toString()+"-"+String.format("%02d",i)
 
             val monthData = getOneMonthStepBack(tempMonth,mac,goalStep)

@@ -59,8 +59,10 @@ public class ConnStatusService extends Service {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
-            if(msg.what == 0x00){
+            if(msg.what == 0x08){
+                BaseApplication.getInstance().setConnStatus(ConnStatus.CONNECTED);
 
+                sendActionBroad(BleConstant.BLE_24HOUR_SYNC_COMPLETE_ACTION);
             }
         }
     };
@@ -216,6 +218,7 @@ public class ConnStatusService extends Service {
                 // Constants.STATUS_DISCONNECTED
                 //连接失败
                 if(status == Constants.STATUS_DISCONNECTED){
+                    handler.removeMessages(0x08);
                     BaseApplication.getInstance().setConnStatus(ConnStatus.NOT_CONNECTED);
                     sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
 //                    BleOperateManager.getInstance().disConnYakDevice();
@@ -242,15 +245,15 @@ public class ConnStatusService extends Service {
 
             @Override
             public void setNoticeStatus(int code) {
-                if(bleConnStatusListener != null)
-                    bleConnStatusListener.onConnectStatusChanged(mac,code);
+
                 Timber.e("-------连接成功="+code);
                 //连接成功
                 BaseApplication.getInstance().setConnStatus(ConnStatus.CONNECTED);
                 BaseApplication.getInstance().setConnBleName(bleName);
                 MmkvUtils.saveConnDeviceMac(mac);
                 MmkvUtils.saveConnDeviceName(bleName);
-
+                if(bleConnStatusListener != null)
+                    bleConnStatusListener.onConnectStatusChanged(mac,code);
                 //同步时间
                 BleOperateManager.getInstance().syncDeviceTime(writeBackDataListener);
 
@@ -316,6 +319,8 @@ public class ConnStatusService extends Service {
             //设备回复: 02 FF 30 00
             //同步时间返回
             if(data.length == 4 && data[0] ==2 && (data[1] & 0xff) == 255 && (data[2] & 0xff) == 48){
+
+                handler.sendEmptyMessageDelayed(0x08,15 * 1000);
                 CommBleSetBean commBleSetBean = new CommBleSetBean();
                 String mac = MmkvUtils.getConnDeviceMac();
                 if(!TextUtils.isEmpty(mac)){

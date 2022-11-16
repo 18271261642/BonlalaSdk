@@ -17,6 +17,7 @@ import com.bonlala.fitalent.dialog.SleepTxtDescDialogView
 import com.bonlala.fitalent.emu.ConnStatus
 import com.bonlala.fitalent.emu.MeasureType
 import com.bonlala.fitalent.listeners.OnItemClickListener
+import com.bonlala.fitalent.listeners.OnMeasureStatusListener
 import com.bonlala.fitalent.listeners.OnRecordHistoryRightListener
 import com.bonlala.fitalent.utils.BikeUtils
 import com.bonlala.fitalent.view.CusBloadChartView
@@ -32,7 +33,7 @@ import timber.log.Timber
  *Date 2022/10/10
  */
 class HistoryBpFragment : TitleBarFragment<RecordHistoryActivity>() ,OnItemClickListener,
-    OnRecordHistoryRightListener {
+    OnRecordHistoryRightListener,OnMeasureStatusListener {
 
 
     private val viewModel by viewModels<SingleBpViewModel>()
@@ -59,6 +60,7 @@ class HistoryBpFragment : TitleBarFragment<RecordHistoryActivity>() ,OnItemClick
         adapter?.setOnItemClickListener(this)
 
         attachActivity.setOnRecordHistoryRightListener(this)
+        attachActivity.setOnMeasureStatusListener(this)
     }
 
     override fun initData() {
@@ -153,5 +155,9 @@ class HistoryBpFragment : TitleBarFragment<RecordHistoryActivity>() ,OnItemClick
 //
 //        layoutP?.width = widthW/2
 //        desc.window?.attributes = layoutP
+    }
+
+    override fun onMeasureStatus(status: Int) {
+        getAllDbData()
     }
 }

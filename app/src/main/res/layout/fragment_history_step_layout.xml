@@ -24,6 +24,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="right"
                 android:orientation="horizontal">
 
                 <TextView
@@ -31,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/dp_5"
-                    android:gravity="center"
+                    android:gravity="right"
                     android:padding="5dp"
                     android:text="@string/string_day"
                     android:textColor="#ff676767"
@@ -52,6 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:layout_gravity="right"
                 android:orientation="horizontal">
 
                 <TextView
@@ -59,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/dp_5"
-                    android:gravity="center"
+                    android:gravity="right"
                     android:padding="5dp"
                     android:text="@string/string_week"
                     android:textColor="#ff676767"
@@ -79,6 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:layout_gravity="right"
                 android:orientation="horizontal">
 
                 <TextView
@@ -86,7 +90,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/dp_5"
-                    android:gravity="center"
+                    android:gravity="right"
                     android:padding="5dp"
                     android:text="@string/string_month"
                     android:textColor="#ff676767"
@@ -106,6 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:layout_gravity="right"
                 android:orientation="horizontal">
 
                 <TextView
@@ -113,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/dp_5"
-                    android:gravity="center"
+                    android:gravity="right"
                     android:padding="5dp"
                     android:text="@string/string_year"
                     android:textColor="#ff676767"

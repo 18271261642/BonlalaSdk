@@ -42,7 +42,7 @@ public class BarXFormartValue implements IAxisValueFormatter {
 
             if (xListValues.size() > index) {
                 int time = xListValues.get(index).getTime();
-                return BikeUtils.formatMinute(time);
+                return BikeUtils.formatMinuteSleep(time);
             }
             return "";
         }

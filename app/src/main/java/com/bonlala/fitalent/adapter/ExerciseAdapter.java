@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -70,8 +71,8 @@ public class ExerciseAdapter extends AppAdapter<ExerciseShowBean>{
         public void onBindView(int position) {
             ExerciseShowBean exerciseShowBean = getItem(position);
 
-            itemExerciseDateTv.setText(isChinese ? exerciseShowBean.getDayStr() : BikeUtils.getFormatEnglishData(exerciseShowBean.getDayStr(),"MMM dd,yyyy"));
-            itemExerciseTotalTv.setText(exerciseShowBean.getExerciseModelList().size()+""+getContext().getResources().getString(R.string.string_exercise_times));
+            itemExerciseDateTv.setText(isChinese ? exerciseShowBean.getDayStr() : BikeUtils.getFormatEnglishDate(exerciseShowBean.getDayStr()));
+            itemExerciseTotalTv.setText(exerciseShowBean.getExerciseModelList().size()+" "+getContext().getResources().getString(R.string.string_exercise_times));
 
             ExerciseItemAdapter exerciseItemAdapter = new ExerciseItemAdapter(getContext());
             exerciseItemAdapter.setOnItemClickListener(new OnItemClickListener() {
@@ -114,25 +115,25 @@ public class ExerciseAdapter extends AppAdapter<ExerciseShowBean>{
 
             recyclerView.setVisibility(isShow ? View.VISIBLE : View.GONE);
 
-//            if(isShow){
-//                Animation animation = new RotateAnimation(0,-90,Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-//                animation.setDuration(100);
-//                animation.setRepeatCount(1);
-//                itemExerciseTempBackImg.startAnimation(animation);
-//            }
 
+            itemExerciseTitleCardView.setCardElevation(isShow ? 5f : 0f);
 
+            if(getItem(position).isShow()){
+                itemExerciseTempBackImg.setRotation(270);
+            }else{
+                itemExerciseTempBackImg.setRotation(90);
+            }
 
             itemExerciseTitleCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
 
-                    if(getItem(position).isShow()){
-                        itemExerciseTempBackImg.setRotation(90);
-                    }else{
-                        itemExerciseTempBackImg.setRotation(270);
-                    }
+//                    if(getItem(position).isShow()){
+//                        itemExerciseTempBackImg.setRotation(90);
+//                    }else{
+//                        itemExerciseTempBackImg.setRotation(270);
+//                    }
                     getItem(position).setShow(!isShow);
                     notifyItemChanged(position);
                 }

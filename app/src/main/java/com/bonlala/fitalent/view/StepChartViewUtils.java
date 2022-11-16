@@ -78,7 +78,6 @@ public class StepChartViewUtils {
         Timber.e("------daxiao ="+stepList.size());
         stepChartValueList.clear();
         lineChart.setNoDataTextColor(Color.parseColor("#6E6E77"));
-//        lineChart.setNoDataText(context.getResources().getString(R.string.string_no_data));
         lineChart.setExtraLeftOffset(15f);
         lineChart.setExtraRightOffset(15f);
 
@@ -102,6 +101,7 @@ public class StepChartViewUtils {
 
         //是否拖动
         lineChart.setDragEnabled(isDragEnabled);
+
         //右侧Y轴
         //得到图表的右侧Y轴实例
         YAxis leftAxis = lineChart.getAxisRight();
@@ -160,8 +160,8 @@ public class StepChartViewUtils {
 
 
         MyMarkerView myMarkerView = new MyMarkerView(context,R.layout.custom_marker_view,stepList);
-
         myMarkerView.setChartView(lineChart);
+
         lineChart.setMarker(myMarkerView);
 
 

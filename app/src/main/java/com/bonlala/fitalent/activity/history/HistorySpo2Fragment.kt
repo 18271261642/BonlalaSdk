@@ -17,6 +17,7 @@ import com.bonlala.fitalent.dialog.SleepTxtDescDialogView
 import com.bonlala.fitalent.emu.ConnStatus
 import com.bonlala.fitalent.emu.MeasureType
 import com.bonlala.fitalent.listeners.OnItemClickListener
+import com.bonlala.fitalent.listeners.OnMeasureStatusListener
 import com.bonlala.fitalent.listeners.OnRecordHistoryRightListener
 import com.bonlala.fitalent.utils.BikeUtils
 import com.bonlala.fitalent.view.CustomerScrollView
@@ -29,7 +30,7 @@ import kotlinx.android.synthetic.main.fragment_history_spo2_layout.*
  * Created by Admin
  *Date 2022/10/10
  */
-class HistorySpo2Fragment : TitleBarFragment<RecordHistoryActivity>(),OnItemClickListener,OnRecordHistoryRightListener {
+class HistorySpo2Fragment : TitleBarFragment<RecordHistoryActivity>(),OnItemClickListener,OnRecordHistoryRightListener,OnMeasureStatusListener {
 
     private val viewModel by viewModels<SingleSpo2ViewModel>()
 
@@ -56,6 +57,7 @@ class HistorySpo2Fragment : TitleBarFragment<RecordHistoryActivity>(),OnItemClic
         adapter?.setOnItemClickListener(this)
 
         attachActivity.setOnRecordHistoryRightListener(this)
+        attachActivity.setOnMeasureStatusListener(this)
     }
 
     override fun initData() {
@@ -148,5 +150,12 @@ class HistorySpo2Fragment : TitleBarFragment<RecordHistoryActivity>(),OnItemClic
 //
 //        layoutP?.width = widthW/2
 //        desc.window?.attributes = layoutP
+    }
+
+    /**
+     * 测量完成的状态
+     */
+    override fun onMeasureStatus(status: Int) {
+        getAllDbData()
     }
 }

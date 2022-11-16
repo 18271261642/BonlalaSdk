@@ -3,6 +3,7 @@ package com.bonlala.fitalent.listeners;
 /**
  * Created by Admin
  * Date 2022/10/9
+ * @author Admin
  */
 public interface OnRecordHistoryRightListener {
 

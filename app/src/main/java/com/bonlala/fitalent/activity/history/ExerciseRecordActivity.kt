@@ -14,6 +14,7 @@ import com.bonlala.fitalent.bean.ExerciseShowBean
 import com.bonlala.fitalent.ble.DataOperateManager
 import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.dialog.ExerciseFilterDialogView
+import com.bonlala.fitalent.emu.W560BExerciseType
 import com.bonlala.fitalent.utils.BikeUtils
 import com.bonlala.fitalent.utils.CalculateUtils
 import com.bonlala.fitalent.utils.MmkvUtils
@@ -50,7 +51,7 @@ class ExerciseRecordActivity : AppActivity(){
         exerciseRy.adapter = adapter
 
         val isKm = MmkvUtils.getUnit()
-        exerciseUnitTv.text = if(isKm) "km" else "mi"
+//        exerciseUnitTv.text = if(isKm) "km" else "mi"
     }
 
 
@@ -164,11 +165,17 @@ class ExerciseRecordActivity : AppActivity(){
         val disStr = CalculateUtils.mToKm(distance)
         val isKm = MmkvUtils.getUnit()
 
-
-        exerciseTotalKmTv.text = if(isKm) disStr.toString() else CalculateUtils.kmToMiValue(disStr).toString()
+        val kmStr = if(isKm) disStr.toString() else CalculateUtils.kmToMiValue(disStr).toString()
+        exerciseTotalKmTv.text = getTargetType(kmStr,if(isKm) "km" else "mi")
 
         exerciseTotalTimeTv.text = getTargetType(BikeUtils.formatMinuteStr(totalTime,this),"")
         exerciseTotalTimesTv.text = getTargetType(count.toString(),resources.getString(R.string.string_times))
         exerciseTotalKcalTv.text = getTargetType(kcal.toString(),resources.getString(R.string.string_kcal))
+
+        if(exerciseType == -1 || exerciseType == W560BExerciseType.TYPE_WALK || exerciseType == W560BExerciseType.TYPE_RUN){
+            recordKmLayout.visibility = View.VISIBLE
+        }else{
+            recordKmLayout.visibility = View.GONE
+        }
     }
 }

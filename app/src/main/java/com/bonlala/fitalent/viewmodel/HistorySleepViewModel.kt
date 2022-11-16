@@ -25,7 +25,7 @@ open class HistorySleepViewModel : ViewModel() {
     var onDaySleep = MutableLiveData<SleepModel?>()
 
     //记录的睡眠日期
-    var recordSleep = MutableLiveData<List<String>>()
+    var recordSleep = MutableLiveData<List<String>?>()
 
     //最近一次的睡眠数据
     val lastRecordSleep = MutableLiveData<SleepModel?>()
@@ -35,7 +35,14 @@ open class HistorySleepViewModel : ViewModel() {
     //获取睡眠的记录
     fun getSleepRecord(mac: String){
         val sleepRecord = DBManager.getInstance().getAllRecordByType("user_1001",mac, DbType.DB_TYPE_SLEEP)
-        recordSleep.postValue(sleepRecord)
+        if(sleepRecord != null){
+            sleepRecord.sortedByDescending { it->it.toString() }
+            recordSleep.postValue(sleepRecord)
+        }else{
+            recordSleep.postValue(null)
+        }
+
+
     }
 
     /**

@@ -82,6 +82,7 @@ class LaunchActivity : AppActivity() {
     private fun showPrivacyDialog(){
         val privacyDialog = ShowPrivacyDialogView(this@LaunchActivity, com.bonlala.base.R.style.BaseDialogTheme,this@LaunchActivity)
         privacyDialog.show()
+        privacyDialog.setCancelable(false)
         privacyDialog.setOnPrivacyClickListener(object : ShowPrivacyDialogView.OnPrivacyClickListener{
             override fun onCancelClick() {
                 privacyDialog.dismiss()

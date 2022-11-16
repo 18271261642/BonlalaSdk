@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 /**
+ * 血压的view，用于recyclerView中
  * Created by Admin
  * Date 2022/10/11
  * @author Admin
@@ -218,7 +219,7 @@ public class CustomizeSingleBpView extends View {
 //        canvas.drawText(seconds,mWidth/2,-mHeight+txtHeight*4.5f+paddingWidth*2,clickStatusPaint);
 
         float tH = MiscUtil.measureTextHeight(txtPaint);
-        canvas.drawLine(mWidth/2,-tH*3f,mWidth/2,-mHeight+txtHeight*4f+paddingWidth*2,clickLinePaint);
+        canvas.drawLine(mWidth/2,-tH*3f,mWidth/2,-mHeight+txtHeight*3f+paddingWidth*2,clickLinePaint);
     }
 
     public ChartBpBean getChartBpBean() {

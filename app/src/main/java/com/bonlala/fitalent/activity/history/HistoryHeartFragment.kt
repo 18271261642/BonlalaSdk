@@ -135,6 +135,7 @@ class HistoryHeartFragment : TitleBarFragment<RecordHistoryActivity>(),OnRecordH
             sleepNoDataTv.visibility = View.GONE
             // historyAvgTv.text =
             chartViewUtils!!.setChartData(activity, tempHrList, xList,true)
+
             showAvgHeart()
 
         }
