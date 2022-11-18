@@ -80,7 +80,28 @@
             android:layout_marginTop="@dimen/dp_5"
             android:orientation="horizontal">
 
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/dp_10">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/string_total_consumption"
+                    android:textColor="#ff000000"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/exerciseTotalKcalTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="--"
+                    android:textColor="#ff000000"
+                    android:textSize="22sp" />
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -103,6 +124,10 @@
                     android:textColor="#ff000000"
                     android:textSize="22sp" />
             </LinearLayout>
+
+
+
+
             <LinearLayout
                 android:id="@+id/recordKmLayout"
                 android:layout_width="0dp"
@@ -156,31 +181,6 @@
 
 
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:paddingStart="@dimen/dp_10">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/string_total_consumption"
-                    android:textColor="#ff000000"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/exerciseTotalKcalTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="--"
-                    android:textColor="#ff000000"
-                    android:textSize="22sp" />
-            </LinearLayout>
-
-
 
         </LinearLayout>
 

@@ -136,7 +136,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Guangxi Million Concept BHL Co.Co.,Ltd.
+        android:text="Guangxi Million Concept BHL Co.,Ltd.
 Rights Reservrd"
         android:textColor="#ffafafaf"
         android:textSize="12sp"

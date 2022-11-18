@@ -305,7 +305,6 @@ public class DataOperateManager {
                     deviceSetModel.setBattery(value[0]);
                 }
                 readDeviceInfo(bleOperateManager,isRefresh);
-
             }
 
             @Override

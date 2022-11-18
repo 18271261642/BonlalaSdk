@@ -24,6 +24,7 @@ import com.bonlala.fitalent.view.CustomerScrollView
 import com.bonlala.fitalent.viewmodel.SingleSpo2ViewModel
 import com.hjq.toast.ToastUtils
 import kotlinx.android.synthetic.main.fragment_history_spo2_layout.*
+import timber.log.Timber
 
 /**
  * 血氧页面
@@ -79,7 +80,6 @@ class HistorySpo2Fragment : TitleBarFragment<RecordHistoryActivity>(),OnItemClic
             showEmpty()
             return
         }
-
         viewModel.allSingleSpo2List.observe(viewLifecycleOwner){
             if(it == null){
                 showEmpty()
@@ -156,6 +156,7 @@ class HistorySpo2Fragment : TitleBarFragment<RecordHistoryActivity>(),OnItemClic
      * 测量完成的状态
      */
     override fun onMeasureStatus(status: Int) {
+        Timber.e("---------状态="+(activity?.isFinishing))
         getAllDbData()
     }
 }

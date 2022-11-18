@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bonlala.fitalent.R;
+import com.bonlala.fitalent.utils.BikeUtils;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -82,29 +83,29 @@ public class CusHrDescView extends LinearLayout {
     public void setEmptyData(){
         hrColor1View.setAllScheduleValue(100);
         hrColor1View.setCurrScheduleValue(0);
-        hr1TimeTv.setText("--"+getContext().getResources().getString(R.string.string_minute));
+        hr1TimeTv.setText("0"+getContext().getResources().getString(R.string.string_minute));
 
         hrColor2View.setAllScheduleValue(100);
         hrColor2View.setCurrScheduleValue(0);
-        hr2TimeTv.setText("--"+getContext().getResources().getString(R.string.string_minute));
+        hr2TimeTv.setText("0"+getContext().getResources().getString(R.string.string_minute));
 
         hrColor3View.setAllScheduleValue(100);
         hrColor3View.setCurrScheduleValue(0);
-        hr3TimeTv.setText("--"+getContext().getResources().getString(R.string.string_minute));
+        hr3TimeTv.setText("0"+getContext().getResources().getString(R.string.string_minute));
 
 
         hrColor4View.setAllScheduleValue(100);
         hrColor4View.setCurrScheduleValue(0);
-        hr4TimeTv.setText("--"+getContext().getResources().getString(R.string.string_minute));
+        hr4TimeTv.setText("0"+getContext().getResources().getString(R.string.string_minute));
 
 
         hrColor5View.setAllScheduleValue(100);
         hrColor5View.setCurrScheduleValue(0);
-        hr5TimeTv.setText("--"+getContext().getResources().getString(R.string.string_minute));
+        hr5TimeTv.setText("0"+getContext().getResources().getString(R.string.string_minute));
 
         hrColor6View.setAllScheduleValue(100);
         hrColor6View.setCurrScheduleValue(0);
-        hr6TimeTv.setText("--"+getContext().getResources().getString(R.string.string_minute));
+        hr6TimeTv.setText("0"+getContext().getResources().getString(R.string.string_minute));
     }
 
 
@@ -116,28 +117,34 @@ public class CusHrDescView extends LinearLayout {
             return;
         hrColor1View.setAllScheduleValue(maxValue);
         hrColor1View.setCurrScheduleValue(list.get(0));
-        hr1TimeTv.setText(list.get(0)+getContext().getResources().getString(R.string.string_minute));
+        String timeStr1 = BikeUtils.formatMinuteNoHour(list.get(0),getContext());
+        hr1TimeTv.setText(timeStr1);
 
         hrColor2View.setAllScheduleValue(maxValue);
         hrColor2View.setCurrScheduleValue(list.get(1));
-        hr2TimeTv.setText(list.get(1)+getContext().getResources().getString(R.string.string_minute));
+        String timeStr2 = BikeUtils.formatMinuteNoHour(list.get(1),getContext());
+        hr2TimeTv.setText(timeStr2);
 
         hrColor3View.setAllScheduleValue(maxValue);
         hrColor3View.setCurrScheduleValue(list.get(2));
-        hr3TimeTv.setText(list.get(2)+getContext().getResources().getString(R.string.string_minute));
+        String timeStr3 = BikeUtils.formatMinuteNoHour(list.get(2),getContext());
+        hr3TimeTv.setText(timeStr3);
 
 
         hrColor4View.setAllScheduleValue(maxValue);
         hrColor4View.setCurrScheduleValue(list.get(3));
-        hr4TimeTv.setText(list.get(3)+getContext().getResources().getString(R.string.string_minute));
+        String timeStr4 = BikeUtils.formatMinuteNoHour(list.get(3),getContext());
+        hr4TimeTv.setText(timeStr4);
 
 
         hrColor5View.setAllScheduleValue(maxValue);
         hrColor5View.setCurrScheduleValue(list.get(4));
-        hr5TimeTv.setText(list.get(4)+getContext().getResources().getString(R.string.string_minute));
+        String timeStr5 = BikeUtils.formatMinuteNoHour(list.get(4),getContext());
+        hr5TimeTv.setText(timeStr5);
 
         hrColor6View.setAllScheduleValue(maxValue);
         hrColor6View.setCurrScheduleValue(list.get(5));
-        hr6TimeTv.setText(list.get(5)+getContext().getResources().getString(R.string.string_minute));
+        String timeStr6 = BikeUtils.formatMinuteNoHour(list.get(5),getContext());
+        hr6TimeTv.setText(timeStr6);
     }
 }

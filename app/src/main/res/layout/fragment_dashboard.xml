@@ -364,7 +364,7 @@
                         android:id="@+id/appsMsgCheckView"
                         android:layout_width="match_parent"
                         android:visibility="visible"
-                        app:right_back_img="true"
+                        app:right_back_img="false"
                         android:layout_height="wrap_content" />
 
                     <com.bonlala.widget.layout.SettingBar

@@ -18,7 +18,7 @@ class GuideViewModel : ViewModel() {
 
 
     //获取玩转
-    var playDevice = MutableLiveData<List<PlaySpinApi.PlaySpinBean>>()
+    var playDevice = MutableLiveData<List<PlaySpinApi.PlaySpinBean>?>()
 
 
 

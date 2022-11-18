@@ -325,8 +325,8 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
     private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, p1: Intent?) {
             val action = p1?.action
-            if (action.equals(BleConstant.BLE_SEND_DUF_VERSION_ACTION)) {
-                showNotConnImg(BaseApplication.getInstance().connStatus != ConnStatus.CONNECTED || BaseApplication.getInstance().connStatus != ConnStatus.IS_SYNC_DATA)
+            if (action.equals(BleConstant.BLE_SEND_DUF_VERSION_ACTION) ) {
+               // showNotConnImg(BaseApplication.getInstance().connStatus != ConnStatus.CONNECTED || BaseApplication.getInstance().connStatus != ConnStatus.IS_SYNC_DATA)
                 isShowConnImg = false
                 val version = p1?.getStringExtra("comm_key")
                 if (version != null) {
@@ -357,7 +357,9 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
      fun showNotConnImg(isShow : Boolean){
 
         homeConnStateImgView.visibility = if(isShow) View.VISIBLE else View.GONE
-
+        if(BaseApplication.getInstance().connStatus == ConnStatus.CONNECTED){
+            homeConnStateImgView.visibility = View.GONE
+        }
     }
 
 

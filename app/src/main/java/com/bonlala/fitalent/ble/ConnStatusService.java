@@ -3,6 +3,7 @@ package com.bonlala.fitalent.ble;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -27,6 +28,7 @@ import com.blala.blalable.listener.BleConnStatusListener;
 import com.blala.blalable.listener.ConnStatusListener;
 import com.blala.blalable.listener.WriteBackDataListener;
 import com.bonlala.fitalent.BaseApplication;
+import com.bonlala.fitalent.HomeActivity;
 import com.bonlala.fitalent.R;
 import com.bonlala.fitalent.db.DBManager;
 import com.bonlala.fitalent.db.model.DeviceSetModel;
@@ -121,16 +123,16 @@ public class ConnStatusService extends Service {
 
 //            builder.setSmallIcon(R.drawable.ic_noti_s);
                 builder.setSmallIcon(R.drawable.ic_notify_small);
-                builder.setContentText("Fitalent");
-                builder.setContentTitle("Fitalent");
+                builder.setContentText(getResources().getString(R.string.string_notify_title_content));
+                builder.setContentTitle(getResources().getString(R.string.string_notify_title_title));
                 //创建通知时指定channelID
                 builder.setChannelId(channelID);
                 Notification notification = builder.build();
 
-//            // 通知行为（点击后能进入应用界面）
-//            Intent intent = new Intent(this, B30HomeActivity.class);
-//            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//            builder.setContentIntent(pendingIntent);
+            // 通知行为（点击后能进入应用界面）
+            Intent intent = new Intent(this, HomeActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.setContentIntent(pendingIntent);
 
 
                 NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
@@ -141,8 +143,8 @@ public class ConnStatusService extends Service {
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
                     //Notification.Builder builder = new Notification.Builder(this,11);
                     builder.setSmallIcon(R.drawable.ic_notify_small);
-                    builder.setContentText("Fitalent");
-                    builder.setContentTitle("Fitalent");
+                    builder.setContentText(getResources().getString(R.string.string_notify_title_content));
+                    builder.setContentTitle(getResources().getString(R.string.string_notify_title_title));
                     // 设置通知的点击行为：自动取消/跳转等
                     builder.setAutoCancel(false);
                     startForeground(11, builder.build());
@@ -257,12 +259,6 @@ public class ConnStatusService extends Service {
                 //同步时间
                 BleOperateManager.getInstance().syncDeviceTime(writeBackDataListener);
 
-
-//                sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
-//                BleOperateManager.getInstance().setClearListener();
-//
-//                DataOperateManager.getInstance(ConnStatusService.this).setMeasureDataSave(BleOperateManager.getInstance());
-//                DataOperateManager.getInstance(ConnStatusService.this).readAllDataSet(BleOperateManager.getInstance(),false);
             }
         });
     }
@@ -286,8 +282,14 @@ public class ConnStatusService extends Service {
                 MmkvUtils.saveConnDeviceMac(bleMac);
                 MmkvUtils.saveConnDeviceName(name);
 
-                //同步时间
-                BleOperateManager.getInstance().syncDeviceTime(writeBackDataListener);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //同步时间
+                        BleOperateManager.getInstance().syncDeviceTime(writeBackDataListener);
+                    }
+                },1000);
+
 
 //                sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
 //                BleOperateManager.getInstance().setClearListener();
@@ -316,6 +318,7 @@ public class ConnStatusService extends Service {
     private final WriteBackDataListener writeBackDataListener = new WriteBackDataListener() {
         @Override
         public void backWriteData(byte[] data) {
+
             //设备回复: 02 FF 30 00
             //同步时间返回
             if(data.length == 4 && data[0] ==2 && (data[1] & 0xff) == 255 && (data[2] & 0xff) == 48){

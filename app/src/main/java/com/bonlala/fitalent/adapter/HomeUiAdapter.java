@@ -426,7 +426,7 @@ public class HomeUiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 String time = StringUtils.substringBefore(vStr,"+");
                 String kcal = StringUtils.substringAfter(vStr,"+");
                 int timeInteger = Integer.parseInt(time.trim());
-                String timeStr = BikeUtils.formatMinuteStr(timeInteger,context);
+                String timeStr = BikeUtils.formatMinuteNoHour(timeInteger/60,context);
 
 
                 ((HomeSportRecordViewHolder) holder).itemSportRecordKcalTv.setText(getTargetType(kcal+"",context.getResources().getString(R.string.string_kcal)));

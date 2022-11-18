@@ -52,6 +52,9 @@ public class W560BExerciseType {
      * @return
      */
     public static String getW560BTypeName(int type, Context context){
+        if(type == -1){
+            return context.getResources().getString(R.string.string_exercise_record);
+        }
         map.clear();
         map.put(TYPE_WALK,context.getResources().getString(R.string.string_exericse_walk));
         map.put(TYPE_RUN,context.getResources().getString(R.string.string_exercise_run));

@@ -5,14 +5,15 @@
     <string name="string_metric">公制</string>
     <string name="string_imperial">英制</string>
 
-
+    <string name="string_notify_title_title">FITALENT正在运行</string>
+    <string name="string_notify_title_content">点击了解详情</string>
     <string name="string_exercise_times"> 条锻炼记录</string>
     <string name="string_not_opened">未打开</string>
     <string name="string_back_today">回到当天</string>
     <string name="string_dfu_notify">更新提示:</string>
     <string name="string_dfu_desc">1、固件更新预计需要5-10分钟，请耐心等待；\n2、升级过程中，不能关闭蓝牙，手机屏幕保持常亮\n3、设备靠近手机，请勿走远，请勿退出APP；\n4、升级前请确保设备电量大于40%;\n5、升级成功后，请在系统蓝牙忽略设备;\n6、升级失败后，需要选择DFU设备名进行连接再升级。</string>
     <string name="string_time_second">秒</string>
-    <string name="string_time_min">分</string>
+    <string name="string_time_min">分钟</string>
     <string name="string_time_hour">时</string>
     <string name="string_unbind_alert">是否确定解除绑定?</string>
     <string name="string_open_noti_desc">使用消息提醒功能需要打开手机的通知开关，是否打开?</string>
@@ -108,7 +109,7 @@
 
     <string name="string_conn_failed">连接失败</string>
     <string name="string_next_day">次日</string>
-    <string name="string_today">当天</string>
+    <string name="string_today">今天</string>
     <string name="string_play_equipment">玩转设备</string>
     <string name="string_time_ratio">时间比例</string>
     <string name="string_string_download">下载</string>
@@ -130,7 +131,7 @@
     <string name="string_spo2_txt_desc">血氧饱和度，是指血液中血氧的浓度，是衡量血液携带氧的能力指标。血液中含氧量越高，人的新陈代谢就越好。受个人身体状态、海拔等影响会有所不同。\n人体正常血氧饱和度为95%以上。\n*所提供的数据及建议仅供参考，不可作为临床诊断和治疗依据</string>
 
 
-    <string name="string_dialog_measure">测量:</string>
+    <string name="string_dialog_measure">测量结果:</string>
     <string name="string_about">关于</string>
     <string name="string_measure">测量</string>
     <string name="string_scan_ing">扫描中..</string>

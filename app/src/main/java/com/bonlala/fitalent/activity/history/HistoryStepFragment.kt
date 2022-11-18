@@ -266,7 +266,7 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
 
 
         //总的计步
-        stepTotalStepTv.text = oneDayStepModel.dayStep.toString()+resources.getString(R.string.string_step)
+        stepTotalStepTv.text = oneDayStepModel.dayStep.toString()
         //距离
         val distance = oneDayStepModel.dayDistance
         val kmDis = CalculateUtils.mToKm(distance)
@@ -303,7 +303,7 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
         if(type == StepType.WEEK){
             //val weekCalendar = BikeUtils.getDayCalendar(dayStr)
             //周的第一天和最后一天，周日到周六
-            val sunDay =if(isChinese) BikeUtils.getWeekSunToSta(BikeUtils.transToDate(dayStr)) else BikeUtils.getWeekSunToStaForEnglish(BikeUtils.transToDate(dayStr))
+            val sunDay =if(isChinese) BikeUtils.getWeekSunToStaChinese(BikeUtils.transToDate(dayStr)) else BikeUtils.getWeekSunToStaForEnglish(BikeUtils.transToDate(dayStr))
             commonHistoryDateTv.text = sunDay
         }
         else if(type == StepType.MONTH){
@@ -328,7 +328,7 @@ class HistoryStepFragment : TitleBarFragment<RecordHistoryActivity>() {
         attachActivity.setStepSchedule(0f,MmkvUtils.getStepGoal().toFloat())
         commonHistoryDateTv.text =if(isChinese) dayStr else BikeUtils.getFormatEnglishDate(dayStr)
         //总的计步
-        stepTotalStepTv.text = "-- "+resources.getString(R.string.string_step)
+        stepTotalStepTv.text = "-- "
         //距离
         stepHistoryDistanceTv.text = ":--"
         stepHistoryKcalTv.text = ":--"

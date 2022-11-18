@@ -21,6 +21,7 @@ import com.bonlala.fitalent.activity.ShowWebActivity
 import com.bonlala.fitalent.adapter.ScanDeviceAdapter
 import com.bonlala.fitalent.bean.BleBean
 import com.bonlala.fitalent.db.DBManager
+import com.bonlala.fitalent.dialog.ConnGuideDialogView
 import com.bonlala.fitalent.emu.ConnStatus
 import com.bonlala.fitalent.listeners.OnItemClickListener
 import com.bonlala.fitalent.utils.BikeUtils
@@ -229,15 +230,29 @@ class MainActivity : AppActivity() ,OnItemClickListener{
             val broadIntent = Intent()
             broadIntent.action = BleConstant.BLE_CONNECTED_ACTION
             sendBroadcast(broadIntent)
-            //进入玩转设备页面
-            startActivity(GuideActivity::class.java)
-            ActivityManager.getInstance().finishActivity(MainActivity::class.java)
-            finish()
+            showConnGuideDialog()
         }
 
     }
 
 
+    private fun showConnGuideDialog(){
+        val dialog = ConnGuideDialogView(this, com.bonlala.base.R.style.BaseDialogTheme)
+        dialog.show()
+        dialog.setOnItemClick {
+            dialog.dismiss()
+            if(it == 1){
+                ActivityManager.getInstance().finishActivity(MainActivity::class.java)
+                finish()
+                return@setOnItemClick
+            }
+            //进入玩转设备页面
+            startActivity(GuideActivity::class.java)
+            ActivityManager.getInstance().finishActivity(MainActivity::class.java)
+            finish()
+
+        }
+    }
 
     //开始GIF
     private fun startGif(){

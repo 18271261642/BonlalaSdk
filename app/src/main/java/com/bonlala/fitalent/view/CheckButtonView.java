@@ -85,7 +85,7 @@ public class CheckButtonView extends LinearLayout {
             leftTv.setText(leftTxt);
         }
 
-        rightImg.setVisibility(isShowRightImg ? View.VISIBLE : View.INVISIBLE);
+        rightImg.setVisibility(isShowRightImg ? View.VISIBLE : View.GONE);
 
     }
 

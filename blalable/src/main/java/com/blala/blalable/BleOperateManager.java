@@ -675,11 +675,35 @@ public class BleOperateManager {
     public void sendAPPNoticeMessage(int type,String title,String content,WriteBackDataListener writeBackDataListener){
         tempIndex = 0;
         appList.clear();
+
+        bleManager.clearRequest();
+
+        /**
+         * 01 10 04 00 35 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         * 02 10 E6 88 91 E7 9A 84 E7 94 B5 E8 84 91 20 28 32 E6 9D A1
+         * 04 10 36 36 36 36 36 00 00 00 00 00 00 00 00 00 00 00 00 00
+         * 03 10 32 30 32 32 31 31 31 38 54 31 36 35 33 34 34 00 00 00
+         */
+        String st1 = "0110040035000000000000000000000000000000";
+        String st2 = "0210E68891E79A84E794B5E88491202832E69DA1";
+        String st3 = "0310323032323131313854313635333434000000";
+        String st4 = "0410363636363600000000000000000000000000";
+        byte[] b1 = Utils.hexStringToByte(st1);
+        byte[] b2 = Utils.hexStringToByte(st2);
+        byte[] b3 = Utils.hexStringToByte(st3);
+        byte[] b4 = Utils.hexStringToByte(st4);
+
+
         List<byte[]> appByte = Utils.sendMessageData(type,title,content);
-        appList.addAll(appByte);
+//        appList.addAll(appByte);
+        appList.clear();
+        appList.add(b1);
+        appList.add(b2);
+        appList.add(b3);
+        appList.add(b4);
 
         Log.e(TAG,"------消息="+new Gson().toJson(appByte));
-//
+
 //        for(int i = 0 ;i<appByte.size();i++){
 //            byte[] bt = appByte.get(i);
 //          Log.e(TAG,"消息提醒="+Utils.formatBtArrayToString(bt));

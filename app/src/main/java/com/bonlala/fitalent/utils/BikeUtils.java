@@ -631,6 +631,30 @@ public class BikeUtils {
 
 
     //周日到周六
+    public static String getWeekSunToStaChinese(long time){
+        String wFormat = "yyy/MM/dd";
+        Calendar start = Calendar.getInstance();
+        start.setTimeInMillis(time);
+        Calendar firstW = getWeekFirstDate(start);
+        Calendar end = getWeekLastDate(start);
+
+        int lefYear = firstW.get(Calendar.YEAR);
+        int endYear = end.get(Calendar.YEAR);
+
+        return getFormatDate(firstW.getTimeInMillis(),wFormat)+"~"+getFormatDate(end.getTimeInMillis(),wFormat);
+
+//        if(lefYear != endYear){
+//            String result = lefYear+"/"+getFormatDate(firstW.getTimeInMillis(),wFormat)+"~"+endYear+"/"+getFormatDate(end.getTimeInMillis(),wFormat);
+//            return result;
+//        }else{
+//            String result = getFormatDate(firstW.getTimeInMillis(),wFormat)+"~"+getFormatDate(end.getTimeInMillis(),wFormat);
+//            return result;
+//        }
+
+    }
+
+
+    //周日到周六
     public static String getWeekSunToSta(long time){
         String wFormat = "MM/dd";
         Calendar start = Calendar.getInstance();
@@ -641,7 +665,7 @@ public class BikeUtils {
         int lefYear = firstW.get(Calendar.YEAR);
         int endYear = end.get(Calendar.YEAR);
         if(lefYear != endYear){
-            String result = lefYear+" "+getFormatDate(firstW.getTimeInMillis(),wFormat)+"~"+endYear+" "+getFormatDate(end.getTimeInMillis(),wFormat);
+            String result = lefYear+"/"+getFormatDate(firstW.getTimeInMillis(),wFormat)+"~"+endYear+"/"+getFormatDate(end.getTimeInMillis(),wFormat);
             return result;
         }else{
             String result = getFormatDate(firstW.getTimeInMillis(),wFormat)+"~"+getFormatDate(end.getTimeInMillis(),wFormat);
@@ -671,7 +695,7 @@ public class BikeUtils {
         Timber.e("-----leftMonth="+leftMonth+" "+rightMonth+" "+getFormatDate(start.getTimeInMillis(),"yyyy-MM-dd")+" "+getFormatDate(end.getTimeInMillis(),"yyyy-MM-dd"));
 
         if(lefYear != endYear){
-            String result = getFormatDate(firstW.getTimeInMillis(),wFormat,Locale.ENGLISH)+" "+lefYear+"~"+getFormatDate(end.getTimeInMillis(),"MMM dd,yyyy",Locale.ENGLISH);
+            String result = getFormatDate(firstW.getTimeInMillis(),"MMM dd,yyyy",Locale.ENGLISH)+"~"+getFormatDate(end.getTimeInMillis(),"MMM dd,yyyy",Locale.ENGLISH);
             return result;
         }else{
             String result;
@@ -932,7 +956,7 @@ public class BikeUtils {
      */
     public static String formatMinuteNoHour(int minute,Context context){
         if(minute == 0)
-            return "--";
+            return "0"+context.getResources().getString(R.string.string_time_min);
         int hour = minute / 60;
         if(hour>=24)
             hour = hour-24;
@@ -950,7 +974,7 @@ public class BikeUtils {
      */
     public static String formatMinute(int second,Context context){
         if(second == 0){
-            return "--";
+            return "0"+context.getResources().getString(R.string.string_time_min);
         }
         int hour = second / 3600;
         int minute = (second - hour * 3600) / 60;

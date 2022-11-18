@@ -68,7 +68,7 @@ public class ExerciseHrBarView extends LinearLayout {
     public void setExerciseTime(List<Integer> pointList){
         for(int i = 0;i<pointList.size();i++){
             int time = pointList.get(i);
-            String timeStr = BikeUtils.formatSecond(time*60);
+            String timeStr = BikeUtils.formatMinuteNoHour(time,getContext());
             textViewList.get(i).setText(timeStr);
         }
     }

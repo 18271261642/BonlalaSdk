@@ -136,7 +136,7 @@ class LaunchActivity : AppActivity() {
             MmkvUtils.saveGuideUrl(url+typeId)
         }
         viewModel.getGuideUrl(this)
-        viewModel.getConnErrorDesc(this,"W560B")
+
     }
 
     //获取H5链接

@@ -271,6 +271,7 @@ public class BleManager {
         if(TextUtils.isEmpty(mac))
             return;
         bluetoothClient.clearRequest(mac,Constants.REQUEST_WRITE);
+        bluetoothClient.clearRequest(mac,Constants.REQUEST_NOTIFY);
 
     }
 

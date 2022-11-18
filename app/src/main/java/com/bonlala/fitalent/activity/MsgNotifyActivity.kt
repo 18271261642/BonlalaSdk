@@ -65,8 +65,13 @@ class MsgNotifyActivity : AppActivity(){
         list!!.addAll(dealAppTypes())
         adapter!!.notifyDataSetChanged()
 
-
+        var contentStr = contentTv.text.toString()
         var inputStr = notifyTypeEdit.text
+
+//        if(BikeUtils.isEmpty(inputStr) || BikeUtils.isEmpty(contentStr)){
+//            return
+//        }
+        var cont = 0
         testNotifyBtn.setOnClickListener {
             BleOperateManager.getInstance().setClearListener()
 //            BleOperateManager.getInstance().getExerciseData(inputStr.toString().toInt(),object : WriteBackDataListener{
@@ -75,14 +80,11 @@ class MsgNotifyActivity : AppActivity(){
 //                }
 //
 //            })
+            cont++
 
-
-            BleOperateManager.getInstance().sendAPPNoticeMessage(inputStr.toString().toInt()," ","55",object : WriteBackDataListener{
-                override fun backWriteData(data: ByteArray?) {
-
-                }
-
-            })
+            BleOperateManager.getInstance().sendAPPNoticeMessage(inputStr.toString().toInt(),"00","00"+cont
+            ) {
+            }
         }
 
     }

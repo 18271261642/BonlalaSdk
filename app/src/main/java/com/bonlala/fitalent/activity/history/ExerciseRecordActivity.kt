@@ -70,6 +70,8 @@ class ExerciseRecordActivity : AppActivity(){
         dialog.setOnCommItemClickListener { position ->
             dialog.dismiss()
             exerciseType = position
+            title = W560BExerciseType.getW560BTypeName(position,this@ExerciseRecordActivity)
+
             getAllExerciseData()
         }
 
@@ -89,15 +91,6 @@ class ExerciseRecordActivity : AppActivity(){
 
 
     override fun initData() {
-
-        DataOperateManager.getInstance(this).setExerciseListener(BleOperateManager.getInstance())
-        testExerciseLayout.setOnClickListener {
-            BleOperateManager.getInstance().getExerciseData(0,object : WriteBackDataListener{
-                override fun backWriteData(data: ByteArray?) {
-                    Timber.e("----锻炼="+Utils.formatBtArrayToString(data))
-                }
-            })
-        }
 
         viewModel.allExerciseList.observe(this){
             if(it == null){
@@ -144,6 +137,12 @@ class ExerciseRecordActivity : AppActivity(){
         exerciseTotalKcalTv.text = "--"
         adapter?.data = ArrayList<ExerciseShowBean>()
         exerciseRy.visibility = View.GONE
+
+        if(exerciseType == -1 || exerciseType == W560BExerciseType.TYPE_WALK || exerciseType == W560BExerciseType.TYPE_RUN){
+            recordKmLayout.visibility = View.VISIBLE
+        }else{
+            recordKmLayout.visibility = View.INVISIBLE
+        }
     }
 
     //展示总的
@@ -168,14 +167,14 @@ class ExerciseRecordActivity : AppActivity(){
         val kmStr = if(isKm) disStr.toString() else CalculateUtils.kmToMiValue(disStr).toString()
         exerciseTotalKmTv.text = getTargetType(kmStr,if(isKm) "km" else "mi")
 
-        exerciseTotalTimeTv.text = getTargetType(BikeUtils.formatMinuteStr(totalTime,this),"")
+        exerciseTotalTimeTv.text = getTargetType(BikeUtils.formatMinuteNoHour(totalTime/60,this),"")
         exerciseTotalTimesTv.text = getTargetType(count.toString(),resources.getString(R.string.string_times))
         exerciseTotalKcalTv.text = getTargetType(kcal.toString(),resources.getString(R.string.string_kcal))
 
         if(exerciseType == -1 || exerciseType == W560BExerciseType.TYPE_WALK || exerciseType == W560BExerciseType.TYPE_RUN){
             recordKmLayout.visibility = View.VISIBLE
         }else{
-            recordKmLayout.visibility = View.GONE
+            recordKmLayout.visibility = View.INVISIBLE
         }
     }
 }

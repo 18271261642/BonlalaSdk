@@ -499,6 +499,7 @@ import timber.log.Timber
 
                 bleOperateManager?.disConnYakDevice()
 
+
                 showConnStatus()
 
             }
@@ -725,7 +726,15 @@ import timber.log.Timber
         deviceWatchDialLayout.setOnClickListener(this)
         menuFirmwareBar.setOnClickListener(this)
 
-        bleOperateManager = BaseApplication.getInstance().bleOperate;
+        bleOperateManager = BaseApplication.getInstance().bleOperate
+
+        appsMsgCheckView.setOnLongClickListener(object : View.OnLongClickListener{
+            override fun onLongClick(p0: View?): Boolean {
+               startActivity(MsgNotifyActivity::class.java)
+                return true
+            }
+
+        })
     }
 
 

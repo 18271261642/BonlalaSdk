@@ -188,6 +188,7 @@ public class StepChartView extends View {
             float emptyHeight = MiscUtil.measureTextHeight(emptyPaint);
             canvas.drawText(getResources().getString(R.string.string_no_data),mWidth/2,-mHeight/2+emptyHeight/2,emptyPaint);
 
+            return;
         }
 
 

@@ -1,11 +1,15 @@
 package com.blala.blalable;
 
 
+import android.util.Log;
+
 import org.apache.commons.lang.StringUtils;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Timer;
 
 /**
  * Created by Admin
@@ -288,11 +292,14 @@ public class Utils {
         }
         return listBytes;
     }
+    static ArrayList<byte[]> list = new ArrayList<>();
 
+
+    final static StringBuilder msgSb = new StringBuilder();
 
     public static ArrayList<byte[]> sendMessageData(int messageType, String title, String content) {
-        ArrayList<byte[]> list = new ArrayList<>();
-
+        list.clear();
+        msgSb.delete(0,msgSb.length());
 
       /*  if (true) {
             list.add(new byte[]{0x01, 0x10, 0x01, 0x00, (byte) 0x0B, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
@@ -321,16 +328,18 @@ public class Utils {
         int conntentLen = 0;
         if (title != null) {
             try {
-                titleByte = title.getBytes("UTF-8");
-                srccontentByte = content.getBytes("UTF-8");
+                titleByte = title.getBytes(StandardCharsets.UTF_8);
+                srccontentByte = content.getBytes(StandardCharsets.UTF_8);
 
-                final StringBuilder stringBuilder = new StringBuilder();
+                Log.e("内容直接",content+"内="+formatBtArrayToString(srccontentByte));
+
+
                 for (byte byteChar : srccontentByte) {
-                    stringBuilder.append(String.format("%02X ", byteChar));
+                    msgSb.append(String.format("%02X ", byteChar));
                 }
-
+                byte[] cBarr = hexStringToByte(msgSb.toString());
                 conntentLen = srccontentByte.length;
-              //  Logger.myLog("18664328616:" + title + ",srccontentByte:" + stringBuilder.toString() + "conntentLen:" + conntentLen);
+                Log.e("消息内容" , title + ",srccontentByte:" + msgSb.toString() + "conntentLen:" + conntentLen+" "+formatBtArrayToString(cBarr));
                 if (conntentLen > 91) {
                     conntentLen = 91;
                 }
@@ -339,11 +348,11 @@ public class Utils {
                     descontentByte[i] = srccontentByte[i];
                 }
                 descontentByte[conntentLen] = 0;
-                stringBuilder.delete(0, stringBuilder.length());
+
                 String contentByteLen = String.valueOf(conntentLen);
-                contentlen = contentByteLen.getBytes("UTF-8");
-                timeByte = time.getBytes("UTF-8");
-            } catch (UnsupportedEncodingException e) {
+                contentlen = contentByteLen.getBytes(StandardCharsets.UTF_8);
+                timeByte = time.getBytes(StandardCharsets.UTF_8);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

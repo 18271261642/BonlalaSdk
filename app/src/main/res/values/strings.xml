@@ -5,13 +5,16 @@
     <string name="title_dashboard">device</string>
     <string name="title_notifications">mine</string>
 
+
+    <string name="string_notify_title_title">FITALENT running</string>
+    <string name="string_notify_title_content">check detail</string>
     <string name="string_exercise_times">exercise record</string>
-    <string name="string_not_opened">not opened</string>
-    <string name="string_back_today">back today</string>
+    <string name="string_not_opened">off</string>
+    <string name="string_back_today">Back today</string>
     <string name="string_dfu_notify">Notice:</string>
     <string name="string_dfu_desc">1. The firmware upgrade is expected to take 5 to 10 minutes, please wait patiently;\n2. During the upgrade process, please do not turn off the phone\'s bluetooth and keep the screen on.\n3. Please keep the device close to the mobile phone,and do not walk far away or exit the APP;\ n4. Before upgrading, please make sure that the battery of the device is more than 40% ;\n5. After the upgrade done, please ignore the device in the system Bluetooth setting;\n6. If the upgrade fails, please select the DFU device name to connect and try again.</string>
     <string name="string_time_second">s</string>
-    <string name="string_time_min">m</string>
+    <string name="string_time_min">min</string>
     <string name="string_time_hour">h</string>
     <string name="string_unbind_alert">Are you sure you want to unbind?</string>
     <string name="string_open_noti_desc">To use the message reminder function, you need to turn on the notification switch of the mobile phone. Is it turned on?</string>

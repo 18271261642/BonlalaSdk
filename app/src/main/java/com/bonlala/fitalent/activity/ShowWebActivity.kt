@@ -24,10 +24,10 @@ class ShowWebActivity : AppActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.setSoftInputMode(
-            WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE or
-                    WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN
-        )
+//        window.setSoftInputMode(
+//            WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE or
+//                    WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN
+//        )
 
     }
 

@@ -86,9 +86,9 @@ public class NotifyConfig {
 
     public static final HashMap<String,String> notifyMap = new HashMap<>();
     static {
-        notifyMap.put(QQ_PACKAGE_NAME,"2");
-        notifyMap.put(QQ_FAST_PACK_NAME,"2");
-        notifyMap.put(WECHAT_PACKAGE_NAME,"2");
+        notifyMap.put(QQ_PACKAGE_NAME,"4");
+        notifyMap.put(QQ_FAST_PACK_NAME,"4");
+        notifyMap.put(WECHAT_PACKAGE_NAME,"3");
         notifyMap.put(FACEBOOK_PACKAGE_NAME,"2");
         notifyMap.put(FACEBOOK_PACKAGE_NAME1,"2");
         notifyMap.put(TWITTER_PACKAGE_NAME,"2");

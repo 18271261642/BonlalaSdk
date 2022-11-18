@@ -14,7 +14,7 @@ public class RequestServer implements IRequestServer {
 
     @Override
     public String getHost() {
-        return "http://192.168.1.203/test/bo/";
+        return "https://smartwear.fitalent.com.cn/";
     }
 
     @Override

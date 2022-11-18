@@ -12,6 +12,9 @@ import com.bonlala.fitalent.emu.NotifyConfig;
 import com.bonlala.fitalent.utils.BikeUtils;
 import com.bonlala.fitalent.utils.CalculateUtils;
 import com.bonlala.fitalent.utils.MmkvUtils;
+
+import org.apache.commons.lang.StringUtils;
+
 import timber.log.Timber;
 
 /**
@@ -94,9 +97,14 @@ public class AlertService extends MyNotificationListenerService {
                 return;
 
             Timber.e("-----消息="+msgCont+" title="+title);
+            if(BikeUtils.isEmpty(title)){
+                title = StringUtils.substringBefore(msgCont,":");
+            }
             Timber.e("----notify="+NotifyConfig.notifyMap.get(packageName));
-            if(NotifyConfig.notifyMap.get(packageName) != null){
-                BleOperateManager.getInstance().sendAPPNoticeMessage(2, " ", msgCont, new WriteBackDataListener() {
+            String type = NotifyConfig.notifyMap.get(packageName);
+            if(type != null){
+
+                BleOperateManager.getInstance().sendAPPNoticeMessage(Integer.parseInt(type.trim()), title, msgCont, new WriteBackDataListener() {
                     @Override
                     public void backWriteData(byte[] data) {
 
