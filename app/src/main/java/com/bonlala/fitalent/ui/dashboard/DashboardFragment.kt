@@ -629,8 +629,8 @@ import timber.log.Timber
     private fun setCommSet(){
         val commBleSetBean = CommBleSetBean()
         commBleSetBean.temperature = deviceSetModel?.tempStyle ?: 0
-        commBleSetBean.metric = deviceSetModel?.isKmUnit!!
-        commBleSetBean.timeType = if(DateFormat.is24HourFormat(context)) 1 else 0
+        commBleSetBean.metric = deviceSetModel?.isKmUnit?:0
+        commBleSetBean.timeType = if(DateFormat.is24HourFormat(attachActivity)) 1 else 0
         commBleSetBean.language = 1
         commBleSetBean.is24Heart = if(deviceSetModel?.isIs24Heart == true) 0 else 1
         viewModel.setCommSet(bleOperateManager!!,commBleSetBean)
@@ -701,7 +701,7 @@ import timber.log.Timber
                     XXPermissions.with(attachActivity).permission(arrayOf(Manifest.permission.ANSWER_PHONE_CALLS,Manifest.permission.READ_PHONE_NUMBERS,Manifest.permission.READ_CALL_LOG)).request { permissions, all ->  }
                 }
 
-                XXPermissions.with(attachActivity).permission(arrayOf(Manifest.permission.READ_PHONE_STATE,Manifest.permission.READ_CALL_LOG)).request { permissions, all ->  }
+                XXPermissions.with(attachActivity).permission(arrayOf(Manifest.permission.READ_PHONE_STATE,Manifest.permission.READ_CALL_LOG,Manifest.permission.READ_CONTACTS)).request { permissions, all ->  }
 
             }
         }

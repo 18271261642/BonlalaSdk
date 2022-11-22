@@ -4,16 +4,15 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Paint
-import android.os.*
-import android.text.TextUtils
+import android.os.Build
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blala.blalable.BleConstant
-import com.blala.blalable.BleOperateManager
-import com.blala.blalable.listener.BleConnStatusListener
-import com.blala.blalable.listener.ConnStatusListener
 import com.bonlala.action.ActivityManager
 import com.bonlala.action.AppActivity
 import com.bonlala.fitalent.activity.GuideActivity
@@ -32,13 +31,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.bumptech.glide.request.RequestOptions
-import com.hjq.toast.ToastUtils
+import com.hjq.permissions.XXPermissions
 import com.inuker.bluetooth.library.search.SearchResult
 import com.inuker.bluetooth.library.search.response.SearchResponse
 import kotlinx.android.synthetic.main.activity_main.*
-import timber.log.Timber
 import java.util.*
-import kotlin.collections.ArrayList
 
 /**搜索页面**/
 class MainActivity : AppActivity() ,OnItemClickListener{
@@ -78,13 +75,21 @@ class MainActivity : AppActivity() ,OnItemClickListener{
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.BLUETOOTH_CONNECT),0x01)
+
+            XXPermissions.with(this).permission(arrayOf(Manifest.permission.BLUETOOTH_CONNECT,
+                Manifest.permission.BLUETOOTH_SCAN,Manifest.permission.BLUETOOTH_ADVERTISE)).request { permissions, all ->
+                //verifyScanFun()
+            }
+            return
         }
 
         //判断权限
         val isPermission = ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
         if(!isPermission){
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION),0x00)
+            XXPermissions.with(this).permission(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION)).request { permissions, all ->
+                verifyScanFun()
+            }
+           // ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION),0x00)
             return
         }
 
@@ -129,7 +134,7 @@ class MainActivity : AppActivity() ,OnItemClickListener{
                 scanStatusTv.text = resources.getString(R.string.string_scan_ing)
 
                 val bleName = p0.name
-                if(BikeUtils.isEmpty(bleName) || bleName.equals("NULL"))
+                if(BikeUtils.isEmpty(bleName) || bleName.equals("NULL") || BikeUtils.isEmpty(p0.address))
                     return
                 if(!bleName.lowercase(Locale.ROOT).contains("w560b"))
                     return

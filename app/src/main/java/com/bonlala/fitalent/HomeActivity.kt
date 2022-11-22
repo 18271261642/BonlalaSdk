@@ -101,6 +101,7 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
 
         val intentFilter = IntentFilter(BleConstant.BLE_SCAN_COMPLETE_ACTION)
         intentFilter.addAction(BleConstant.BLE_SEND_DUF_VERSION_ACTION)
+        intentFilter.addAction(BleConstant.BLE_CONNECTED_ACTION)
         registerReceiver(broadcastReceiver, intentFilter)
 
         homeConnStateImgView.setOnClickListener {
@@ -325,7 +326,7 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
     private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, p1: Intent?) {
             val action = p1?.action
-            if (action.equals(BleConstant.BLE_SEND_DUF_VERSION_ACTION) ) {
+            if (action.equals(BleConstant.BLE_SEND_DUF_VERSION_ACTION) || action.equals(BleConstant.BLE_CONNECTED_ACTION )) {
                // showNotConnImg(BaseApplication.getInstance().connStatus != ConnStatus.CONNECTED || BaseApplication.getInstance().connStatus != ConnStatus.IS_SYNC_DATA)
                 isShowConnImg = false
                 val version = p1?.getStringExtra("comm_key")

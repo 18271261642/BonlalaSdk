@@ -192,6 +192,7 @@ public class PhoneBroadcastReceiver extends BroadcastReceiver {
 
         }catch (Exception e){
             e.printStackTrace();
+            sendCommVerticalPhone(tag, "", phoneName);
         }
     }
 

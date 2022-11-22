@@ -100,7 +100,7 @@ class HomeViewModel : HistorySleepViewModel() {
     /**获取当天的锻炼数据**/
     fun getTodayExerciseData(mac: String,context: Context){
         val allDbTime = DBManager.getInstance().getLastDayOfType(userId,mac,DbType.DB_TYPE_EXERCISE)
-        Timber.e("---dddadfsd="+allDbTime)
+       // Timber.e("---dddadfsd="+allDbTime)
         if(allDbTime == null){
             todayExercise.postValue(null)
             return
@@ -109,7 +109,7 @@ class HomeViewModel : HistorySleepViewModel() {
         val todayExerciseList = DBManager.getInstance().getDayExercise(userId,mac,allDbTime)
             ?: return
 
-        Timber.e("-----最近锻炼="+Gson().toJson(todayExerciseList))
+       // Timber.e("-----最近锻炼="+Gson().toJson(todayExerciseList))
         var totalTime = 0
         var totalKcal = 0
         todayExerciseList.forEach {

@@ -67,11 +67,6 @@ public class BleConstant {
     public UUID BATTERY_READ_UUID = UUID.fromString("00002a19-0000-1000-8000-00805f9b34fb");
 
 
-    public UUID TEST_SERVER_UUID = UUID.fromString("2F40EAF8-AAB4-14A3-F1BA-F61F35CDDBAA");
-    public UUID TEST_NOTIFY_UUID = UUID.fromString("2F400002-AAB4-14A3-F1BA-F61F35CDDBAA");
-    public UUID TEST_WRITE_UUID = UUID.fromString("2F400001-AAB4-14A3-F1BA-F61F35CDDBAA");
-
-
 
     /**获取当前时间**/
     public byte[] getCurrTime(){

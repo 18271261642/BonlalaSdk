@@ -5,7 +5,7 @@
     <string name="title_dashboard">device</string>
     <string name="title_notifications">mine</string>
 
-
+    <string name="string_conn_guide_desc">It can be used normally after pairing is successful, click to view the device operation guide</string>
     <string name="string_notify_title_title">FITALENT running</string>
     <string name="string_notify_title_content">check detail</string>
     <string name="string_exercise_times">exercise record</string>

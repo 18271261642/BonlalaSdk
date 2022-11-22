@@ -624,7 +624,7 @@ public class DBManager {
                     return t1.getDayStr().compareTo(dataRecordModel.getDayStr());
                 }
             });
-            Timber.e("-----dddd="+new Gson().toJson(list.get(0).getDayStr()));
+           // Timber.e("-----dddd="+new Gson().toJson(list.get(0).getDayStr()));
             String dayStr = list.get(0).getDayStr();
             int[] dayArray = BikeUtils.getDayArrayOfStr(dayStr);
             if(dayArray[1] == 0 || dayArray[2] >31){

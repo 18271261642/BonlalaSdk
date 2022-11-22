@@ -277,8 +277,12 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
 
             if(singleBpModel == null)
                 singleBpModel = SingleBpModel()
-            if(it == null)
+            if(it == null){
+                sourceList.get(5).dataSource = null
+                homeUiAdapter?.notifyItemChanged(5)
                 return@observe
+            }
+
             singleBpModel.sysBp = it.sysBp
             singleBpModel.diastolicBp = it.diastolicBp
             singleBpModel.saveLongTime = it.saveLongTime
@@ -288,8 +292,11 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
 
         //血氧
         viewModel.singleSpo2.observe(viewLifecycleOwner){
-            if(it == null)
+            if(it == null){
+                sourceList.get(4).dataSource = null
+                homeUiAdapter?.notifyItemChanged(4)
                 return@observe
+            }
             val str = sourceList.get(4).dataSource
             var singleBpSpo2 : SingleSpo2Model ?= null
             if(str == null){
@@ -331,6 +338,8 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
         //睡眠数据
         viewModel.lastRecordSleep.observe(viewLifecycleOwner){
             if(it == null){
+                sourceList.get(3).dataSource = null
+                homeUiAdapter?.notifyItemChanged(3)
                 return@observe
             }
 

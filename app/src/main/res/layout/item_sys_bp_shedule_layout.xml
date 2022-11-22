@@ -27,6 +27,7 @@
         android:src="@mipmap/ic_height_bp_shedule_img"
         app:layout_constraintBottom_toBottomOf="@id/bpScheduleHBpTv"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/bpScheduleHBpTv"
         app:layout_constraintTop_toTopOf="@id/bpScheduleHBpTv" />
 
     <ImageView

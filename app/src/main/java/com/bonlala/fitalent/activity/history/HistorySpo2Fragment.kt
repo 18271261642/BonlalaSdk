@@ -80,18 +80,23 @@ class HistorySpo2Fragment : TitleBarFragment<RecordHistoryActivity>(),OnItemClic
             showEmpty()
             return
         }
-        viewModel.allSingleSpo2List.observe(viewLifecycleOwner){
-            if(it == null){
-                showEmpty()
-                return@observe
+        try {
+            viewModel.allSingleSpo2List.observe(viewLifecycleOwner){
+                if(it == null){
+                    showEmpty()
+                    return@observe
+                }
+                historySpo2BgView.isNodata = false
+                list?.clear()
+                list?.addAll(it)
+                list?.reverse() //倒序
+                list?.get(0)?.isChecked = true
+                adapter?.notifyDataSetChanged()
             }
-            historySpo2BgView.isNodata = false
-            list?.clear()
-            list?.addAll(it)
-            list?.reverse() //倒序
-            list?.get(0)?.isChecked = true
-            adapter?.notifyDataSetChanged()
+        }catch (e : Exception){
+            e.printStackTrace()
         }
+
         viewModel.getAllDbSpo2("user_1001",mac)
     }
 
@@ -131,7 +136,6 @@ class HistorySpo2Fragment : TitleBarFragment<RecordHistoryActivity>(),OnItemClic
         measureDialog.startToMeasure(MeasureType.SPO2)
         measureDialog.setOnMeasureCancelListener {
             getAllDbData()
-
         }
     }
 

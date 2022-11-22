@@ -311,7 +311,7 @@ public class StepChartView extends View {
         canvas.drawRoundRect(rectF,10f,10f,rectPaint);
 
         float txtX = point.x-(mTxtWidth/2);
-        canvas.drawText(stepItem.getStep()+"step",txtX<0 ? paddingWidth/2: txtX,-mHeight+mTxtHeight+paddingWidth/2,clickPaint);
+        canvas.drawText(stepItem.getStep()+"steps",txtX<0 ? paddingWidth/2: txtX,-mHeight+mTxtHeight+paddingWidth/2,clickPaint);
 
         if(stepType == StepType.DAY){
 

@@ -95,8 +95,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="102"
-                android:textColor="#ff73d13d"
+                android:text="--"
+                android:textColor="@color/hr_color_1"
                 android:textSize="68sp"
                 android:id="@+id/itemHomeRealHrValue"/>
 
@@ -105,7 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="bpm"
-                android:textColor="#ff73d13d"
+                android:textColor="@color/hr_color_1"
                 android:textSize="20sp"
                 android:layout_marginStart="@dimen/dp_5"/>
 
@@ -118,8 +118,8 @@
                 android:id="@+id/itemRealHrPercentageTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="72%"
-                android:textColor="#ff73d13d"
+                android:text="--"
+                android:textColor="@color/hr_color_1"
                 android:textSize="38sp"
                 android:layout_marginEnd="@dimen/dp_15" />
 

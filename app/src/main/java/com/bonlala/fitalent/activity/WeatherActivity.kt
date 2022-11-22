@@ -233,7 +233,7 @@ class WeatherActivity : AppActivity() {
         val isChinese = BaseApplication.getInstance().isChinese
         val str = if(isChinese) BikeUtils.getFormatDate(System.currentTimeMillis(),"MM-dd HH:mm") else BikeUtils.getFormatDate(System.currentTimeMillis(),"MMM dd HH:mm",
             Locale.ENGLISH)
-        weatherUpdateTv.text = resources.getString(R.string.string_update_time)+": "+str
+        weatherUpdateTv.text = resources.getString(R.string.string_update_time)+" "+str
 
     }
 

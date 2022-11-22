@@ -282,6 +282,9 @@ public class RecordHistoryActivity extends AppActivity implements View.OnClickLi
                 int[] array = intent.getIntArrayExtra(BleConstant.COMM_BROADCAST_KEY);
                 if(array[0] == BleConstant.MEASURE_COMPLETE_VALUE){
                     if(onMeasureStatusListener != null){
+                        if(isFinishing()){
+                            return;
+                        }
                         onMeasureStatusListener.onMeasureStatus(0);
                     }
 

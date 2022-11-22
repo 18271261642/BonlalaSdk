@@ -45,6 +45,7 @@ public class NotifyConfig {
     /**短信 --- vivo Y85A**/
     private static final String SYS_SMS = "com.android.mms.service";
     private static final String XIAOMI_SMS_PACK_NAME = "com.xiaomi.xmsf";
+    private static final String ONE_PLUS_SMS = "com.oneplus.mms";
 
 
     private static final String SKYPE_PACKAGE_NAME = "com.skype.raider";
@@ -99,6 +100,7 @@ public class NotifyConfig {
         notifyMap.put(SAMSUNG_MSG_SRVERPCK_NAME,"2");
         notifyMap.put(MSG_PACKAGENAME,"2");
         notifyMap.put(SYS_SMS,"2");
+        notifyMap.put(ONE_PLUS_SMS,"2");
         notifyMap.put(XIAOMI_SMS_PACK_NAME,"2");
 
     }

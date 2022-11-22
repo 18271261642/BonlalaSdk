@@ -5,6 +5,8 @@
     <string name="string_metric">公制</string>
     <string name="string_imperial">英制</string>
 
+
+    <string name="string_conn_guide_desc">配对成功后才可以正常使用，点击可查看设备操作指引</string>
     <string name="string_notify_title_title">FITALENT正在运行</string>
     <string name="string_notify_title_content">点击了解详情</string>
     <string name="string_exercise_times"> 条锻炼记录</string>
