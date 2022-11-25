@@ -35,6 +35,7 @@ import com.hjq.permissions.XXPermissions
 import com.inuker.bluetooth.library.search.SearchResult
 import com.inuker.bluetooth.library.search.response.SearchResponse
 import kotlinx.android.synthetic.main.activity_main.*
+import timber.log.Timber
 import java.util.*
 
 /**搜索页面**/
@@ -66,7 +67,7 @@ class MainActivity : AppActivity() ,OnItemClickListener{
 
 
     private fun verifyScanFun(){
-
+        Timber.e("-------isBleEnable="+BikeUtils.isBleEnable(this))
         //判断蓝牙是否开启
         if(!BikeUtils.isBleEnable(this)){
             BikeUtils.openBletooth(this)
@@ -80,7 +81,7 @@ class MainActivity : AppActivity() ,OnItemClickListener{
                 Manifest.permission.BLUETOOTH_SCAN,Manifest.permission.BLUETOOTH_ADVERTISE)).request { permissions, all ->
                 //verifyScanFun()
             }
-            return
+
         }
 
         //判断权限
