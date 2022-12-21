@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/hrBeltWarnLayout"
+    android:orientation="horizontal"
+    android:background="@drawable/hr_belt_top_shap"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/icon_hr_belt_warn"/>
+
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="@dimen/dp_24"
+        android:layout_height="wrap_content"
+        android:text="Warning, high heart rate"/>
+
+</LinearLayout>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/hrBeltMenuLayout"
+    android:paddingBottom="@dimen/dp_10"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Heart rate zone"
+        android:textColor="#ff141418"
+        android:textSize="28sp"
+        android:padding="@dimen/dp_5"/>
+
+    <com.bonlala.fitalent.view.HeartRangeView
+        android:id="@+id/rangView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <com.bonlala.widget.layout.SettingBar
+        android:id="@+id/hrBeltMenuFirmwareBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bar_leftText="@string/string_firmware"
+        app:bar_leftTextSize="18sp"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        app:bar_lineVisible="false"
+        app:bar_rightDrawable="@drawable/ic_gray_right_back"
+        app:bar_rightText="" />
+
+</LinearLayout>
