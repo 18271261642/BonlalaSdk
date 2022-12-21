@@ -77,7 +77,7 @@
         <attr name="right_back_img" format="boolean"/>
     </declare-styleable>
 
-
+    <!--电池-->
     <declare-styleable name="Battery">
         <attr name="batteryOrientation">
             <enum name="horizontal" value="0"/>
@@ -85,5 +85,23 @@
         </attr>
         <attr name="batteryColor" format="color"/>
         <attr name="batteryPower" format="integer"/>
+    </declare-styleable>
+    
+    
+    <!--心率带的分组进度条-->
+    <declare-styleable name="HrBeltGroupView">
+        <!--当前进度的颜色-->
+        <attr name="hr_belt_group_current_color" format="color"/>
+
+    </declare-styleable>
+
+
+    <!--长按进度条-->
+    <declare-styleable name="CircleLongClickView">
+
+        <attr name="maxSeconds" format="integer" />
+        <attr name="annulusWidth" format="integer" />
+        <attr name="annulusColor" format="color" />
+        <attr name="delayMilliseconds" format="integer" />
     </declare-styleable>
 </resources>

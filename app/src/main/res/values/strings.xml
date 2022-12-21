@@ -5,6 +5,27 @@
     <string name="title_dashboard">device</string>
     <string name="title_notifications">mine</string>
 
+
+    <string name="string_hr_belt_customize">Custom name</string>
+    <string name="string_hr_blet_group">分组计时</string>
+    <string name="string_hr_belt_countdown">Countdown</string>
+    <string name="string_hr_belt_normal">Conventional</string>
+    <string name="string_current_group">当前组数:</string>
+    <string name="string_resting">resting:</string>
+    <string name="string_group">group</string>
+    <string name="string_next">next</string>
+    <string name="string_start">start</string>
+    <string name="string_select_groups">Select groups</string>
+    <string name="string_select_group_rest">选择组间休息时间</string>
+    <string name="string_select_time">Select time</string>
+    <string name="string_sport_end">Sports End</string>
+    <string name="string_rang_6">Range6</string>
+    <string name="string_rang_5">Range5</string>
+    <string name="string_rang_4">Range4</string>
+    <string name="string_rang_3">Range3</string>
+    <string name="string_rang_2">Range2</string>
+    <string name="string_rang_1">Range1</string>
+
     <string name="string_conn_guide_desc">It can be used normally after pairing is successful, click to view the device operation guide</string>
     <string name="string_notify_title_title">FITALENT running</string>
     <string name="string_notify_title_content">check detail</string>

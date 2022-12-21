@@ -40,6 +40,7 @@ import androidx.fragment.app.FragmentTransaction;
 import timber.log.Timber;
 
 /**
+ * 数据记录activity，加载不同的fragment
  * Created by Admin
  * Date 2022/9/27
  * @author Admin

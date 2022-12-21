@@ -12,9 +12,11 @@ import com.blala.blalable.BleOperateManager;
 import com.bonlala.action.DebugLoggerTree;
 import com.bonlala.fitalent.ble.ConnStatusService;
 import com.bonlala.fitalent.emu.ConnStatus;
+import com.bonlala.fitalent.emu.DeviceType;
 import com.bonlala.fitalent.http.RequestHandler;
 import com.bonlala.fitalent.http.RequestServer;
 import com.bonlala.fitalent.service.AlertService;
+import com.bonlala.fitalent.utils.BikeUtils;
 import com.bonlala.fitalent.utils.LanguageUtils;
 import com.bonlala.fitalent.utils.MmkvUtils;
 import com.hjq.http.EasyConfig;
@@ -29,6 +31,8 @@ import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.mmkv.MMKV;
 
 import org.litepal.LitePal;
+
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -219,4 +223,25 @@ public class BaseApplication extends BleApplication {
     public boolean getIsChinese(){
         return LanguageUtils.isChinese();
     }
+
+
+    /**
+     * 根据连接过的设备名称判断类型
+     * @param bleName 蓝牙名称
+     * @return 设备类型
+     */
+    public int getUserDeviceType(String bleName){
+        if(BikeUtils.isEmpty(bleName)){
+            return 0;
+        }
+
+        if(bleName.toLowerCase(Locale.CHINA).contains("w560b")){
+            return DeviceType.DEVICE_W560B;
+        }
+
+
+
+        return DeviceType.DEVICE_561;
+    }
+
 }

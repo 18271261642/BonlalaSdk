@@ -190,6 +190,21 @@ public class ExerciseItemAdapter extends AppAdapter<ExerciseModel> {
             return R.mipmap.ic_sport_badmination;
         }
 
+        //心率带普通计时
+        if(type == W560BExerciseType.HR_BELT_FORWARD_TYPE){
+            return R.mipmap.ic_hr_belt_forward;
+        }
+
+        //系列带倒计时
+        if(type == W560BExerciseType.HR_BELT_COUNTDOWN_TYPE){
+            return R.mipmap.ic_hr_belt_countdown;
+        }
+
+        //心率带分组计时
+        if(type == W560BExerciseType.HR_BELT_GROUP_TYPE){
+            return R.mipmap.ic_hr_belt_group;
+        }
+
         return R.mipmap.ic_sport_walk;
     }
 

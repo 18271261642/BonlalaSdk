@@ -5,6 +5,25 @@
     <string name="string_metric">公制</string>
     <string name="string_imperial">英制</string>
 
+    <string name="string_hr_belt_customize">自定义名称</string>
+    <string name="string_hr_blet_group">分组计时</string>
+    <string name="string_hr_belt_countdown">倒计时</string>
+    <string name="string_hr_belt_normal">常规</string>
+    <string name="string_current_group">当前组数:</string>
+    <string name="string_resting">休息中:</string>
+    <string name="string_group">组</string>
+    <string name="string_next">下一步</string>
+    <string name="string_start">开始</string>
+    <string name="string_select_groups">选择组数</string>
+    <string name="string_select_group_rest">选择组间休息时间</string>
+    <string name="string_select_time">选择时间</string>
+    <string name="string_sport_end">运动结束</string>
+    <string name="string_rang_6">区间6 极限无氧</string>
+    <string name="string_rang_5">区间5 力量强化</string>
+    <string name="string_rang_4">区间4 心肺有氧</string>
+    <string name="string_rang_3">区间3 燃脂耐力</string>
+    <string name="string_rang_2">区间2 热身恢复</string>
+    <string name="string_rang_1">区间1 静息</string>
 
     <string name="string_conn_guide_desc">配对成功后才可以正常使用，点击可查看设备操作指引</string>
     <string name="string_notify_title_title">FITALENT正在运行</string>

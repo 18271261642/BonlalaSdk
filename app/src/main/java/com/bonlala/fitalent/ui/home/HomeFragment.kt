@@ -32,6 +32,7 @@ import com.bonlala.fitalent.emu.ConnStatus
 import com.bonlala.fitalent.emu.HomeDateType
 import com.bonlala.fitalent.utils.BikeUtils
 import com.bonlala.fitalent.utils.GsonUtils
+import com.bonlala.fitalent.utils.LanguageUtils
 import com.bonlala.fitalent.utils.MmkvUtils
 import com.bonlala.fitalent.view.HomeDeviceStatusView
 import com.google.gson.Gson
@@ -40,6 +41,8 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import kotlinx.android.synthetic.main.fragment_home.*
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * 首页面
@@ -76,9 +79,10 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
 
         val gridLayoutManager = GridLayoutManager(activity,2)
+        //判断是否是显示一个或两个，一个满铺，两个均分
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup(){
             override fun getSpanSize(position: Int): Int {
-              if(position == 0 || position == 1 || position == 2)
+              if(position == 0 || position == 1 || position == 2 || position == 7 || position == 8)
                   return 2
                 else
                     return 1
@@ -88,7 +92,12 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
 
 
         homeRefreshLayout.setOnRefreshListener(this)
+        //设置刷新头部
+        val isChinese = LanguageUtils.isChinese()
+        val sdf = SimpleDateFormat(if(isChinese) "MM-dd HH:mm" else "MMM dd HH:mm",if(isChinese) Locale.CHINESE else Locale.ENGLISH)
+        homeRefreshHeader.setTimeFormat(sdf)
 
+        //取消动画
         homeRecyclerView?.itemAnimator = null
         homeRecyclerView?.layoutManager = gridLayoutManager
         homeUiAdapter = HomeUiAdapter(activity,sourceList)
@@ -126,6 +135,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
             startActivity(intent)
         }
 
+        //注册广播
         val intentFilter = IntentFilter()
         intentFilter.addAction(BleConstant.BLE_CONNECTED_ACTION)
         intentFilter.addAction(BleConstant.BLE_DIS_CONNECT_ACTION)
@@ -139,17 +149,21 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
 
     }
 
-
+    //连接设备的点击
     private fun homeDeviceClick(){
         val userMac = DBManager.getBindMac()
         val connMac = MmkvUtils.getConnDeviceMac()
 
         homeDeviceStatusView.setOnClickListener {
             if(BikeUtils.isEmpty(connMac)){
-                startActivity(MainActivity::class.java)
+              //  startActivity(MainActivity::class.java)
+                val intent = Intent()
+                intent.setClass(attachActivity,MainActivity::class.java)
+
+                startActivityForResult(intent,1001)
+
                 return@setOnClickListener
             }
-
         }
 
 
@@ -205,6 +219,8 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
         sourceList.add(HomeSourceBean(HomeDateType.HOME_TYPE_BP,Gson().toJson(singleBpModel)))
         sourceList.add(HomeSourceBean(HomeDateType.HOME_TYPE_SPORT_RECORD,null))
 
+
+
         homeUiAdapter?.notifyDataSetChanged()
 
         //实时数据
@@ -213,8 +229,8 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
             sumStepModel.sumKcal = kcal
             sumStepModel.sumDistance = distance
 
-            sourceList.get(0).dataSource = gson.toJson(HomeRealtimeBean(true,ht))
-            sourceList.get(1).dataSource = gson.toJson(sumStepModel)
+            sourceList[0].dataSource = gson.toJson(HomeRealtimeBean(true,ht))
+            sourceList[1].dataSource = gson.toJson(sumStepModel)
             homeUiAdapter?.notifyItemChanged(0)
             homeUiAdapter?.notifyItemChanged(1)
 
@@ -224,7 +240,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
 
     }
 
-
+    //展示空数据
     private fun showEmptyData(){
         sourceList.clear()
 
@@ -232,10 +248,8 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
 
         sourceList.add(HomeSourceBean(HomeDateType.HOME_TYPE_STEP,null))
         sourceList.add(HomeSourceBean(HomeDateType.HOME_TYPE_DETAIL_HR,null))
-
         //组装睡眠数据
         sourceList.add(HomeSourceBean(HomeDateType.HOME_TYPE_SLEEP,null))
-
         //血氧
         sourceList.add(HomeSourceBean(HomeDateType.HOME_TYPE_SPO2,null))
         sourceList.add(HomeSourceBean(HomeDateType.HOME_TYPE_BP,null))
@@ -424,7 +438,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
             }
 
             if(action == BleConstant.BLE_24HOUR_SYNC_COMPLETE_ACTION){
-                if(homeRefreshLayout.isRefreshing){
+                if(homeRefreshLayout != null && homeRefreshLayout.isRefreshing){
                     homeRefreshLayout.finishRefresh()
                 }
                 homeDeviceStatusView.setHomeConnStatus(BaseApplication.getInstance().connStatus)
@@ -436,7 +450,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
     }
 
 
-
+    //刷新
     override fun onRefresh(refreshLayout: RefreshLayout) {
         if(BaseApplication.getInstance().connStatus == ConnStatus.IS_SYNC_DATA){
             homeRefreshLayout.setEnableRefresh(false)

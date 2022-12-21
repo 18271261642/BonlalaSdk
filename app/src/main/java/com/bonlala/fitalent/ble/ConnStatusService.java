@@ -33,6 +33,7 @@ import com.bonlala.fitalent.R;
 import com.bonlala.fitalent.db.DBManager;
 import com.bonlala.fitalent.db.model.DeviceSetModel;
 import com.bonlala.fitalent.emu.ConnStatus;
+import com.bonlala.fitalent.emu.DeviceType;
 import com.bonlala.fitalent.utils.BikeUtils;
 import com.bonlala.fitalent.utils.MmkvUtils;
 import com.inuker.bluetooth.library.Constants;
@@ -256,6 +257,12 @@ public class ConnStatusService extends Service {
                 MmkvUtils.saveConnDeviceName(bleName);
                 if(bleConnStatusListener != null)
                     bleConnStatusListener.onConnectStatusChanged(mac,code);
+                //判断是否是心率带，心率带直接连接成功
+                if(BaseApplication.getInstance().getUserDeviceType(bleName) == DeviceType.DEVICE_561){
+                    sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
+                    BleOperateManager.getInstance().setClearListener();
+                    return;
+                }
                 //同步时间
                 BleOperateManager.getInstance().syncDeviceTime(writeBackDataListener);
 
@@ -282,6 +289,12 @@ public class ConnStatusService extends Service {
                 MmkvUtils.saveConnDeviceMac(bleMac);
                 MmkvUtils.saveConnDeviceName(name);
 
+                //判断是否是心率带，心率带直接连接成功
+                if(BaseApplication.getInstance().getUserDeviceType(name) == DeviceType.DEVICE_561){
+                    sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
+                    BleOperateManager.getInstance().setClearListener();
+                    return;
+                }
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -290,26 +303,6 @@ public class ConnStatusService extends Service {
                     }
                 },1000);
 
-
-//                sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
-//                BleOperateManager.getInstance().setClearListener();
-//
-//                DataOperateManager.getInstance(ConnStatusService.this).setMeasureDataSave(BleOperateManager.getInstance());
-//                DataOperateManager.getInstance(ConnStatusService.this).readAllDataSet(BleOperateManager.getInstance(),false);
-
-                //同步时间
-                //BleOperateManager.getInstance().syncDeviceTime(writeBackDataListener);
-//                BleOperateManager.getInstance().syncDeviceTime(new WriteBackDataListener() {
-//                    @Override
-//                    public void backWriteData(byte[] data) {
-//                        sendActionBroad(BleConstant.BLE_CONNECTED_ACTION,"");
-//                        BleOperateManager.getInstance().setClearListener();
-//                    }
-//                });
-//
-//                DataOperateManager.getInstance(ConnStatusService.this).setMeasureDataSave(BleOperateManager.getInstance());
-//                DataOperateManager.getInstance(ConnStatusService.this).readAllDataSet(BleOperateManager.getInstance());
-////                DataOperateManager.getInstance(ConnStatusService.this).setExerciseListener(BleOperateManager.getInstance());
             }
         });
     }

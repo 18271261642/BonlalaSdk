@@ -1,11 +1,15 @@
 package com.blala.blalable.listener;
 
+import androidx.fragment.app.FragmentManager;
+
 /**
  * Created by Admin
  * Date 2021/7/6
  * @author Admin
  */
 public class InterfaceManager {
+
+
 
     //连接状态
     public BleConnStatusListener bleConnStatusListener;

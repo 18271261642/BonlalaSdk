@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <dbname  value = "bonlala_single_db"/>
-    <version value="7"/>
+    <version value="8"/>
 
     <list>
         <mapping class="com.bonlala.fitalent.db.model.DeviceSetModel"/>

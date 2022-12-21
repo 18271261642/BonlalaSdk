@@ -1,11 +1,15 @@
 package com.blala.blalable;
 
 
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by Admin
@@ -46,7 +50,7 @@ public class BleConstant {
 
 
 
-    /**服务UUID**/
+    /**W560b服务UUID**/
     public UUID SERVICE_UUID = UUID.fromString("7658fd00-878a-4350-a93e-da553e719ed0");
 
     /**命令发送特征uuid**/
@@ -61,10 +65,15 @@ public class BleConstant {
     public UUID WATCH_FACE_UUID = UUID.fromString("7658fd05-878a-4350-a93e-da553e719ed0");
 
 
-
     /**电量的serviceUUID，主动读取**/
     public UUID BATTERY_SERVER_UUID = UUID.fromString("0000180f-0000-1000-8000-00805f9b34fb");
     public UUID BATTERY_READ_UUID = UUID.fromString("00002a19-0000-1000-8000-00805f9b34fb");
+
+
+    /**心率带 W561B的服务UUID **/
+     public UUID W561B_SERVER_UUID = UUID.fromString("0000180d-0000-1000-8000-00805f9b34fb");
+     /**心率带实时返回心率的uuid**/
+     public UUID W561B_REAL_HR_UUID = UUID.fromString("00002a37-0000-1000-8000-00805f9b34fb");
 
 
 

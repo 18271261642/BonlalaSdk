@@ -41,6 +41,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.UUID;
 
@@ -279,8 +280,6 @@ public class BleManager {
     private synchronized void connBleDevice(final String bleMac, final String bleName, final ConnStatusListener connectResponse){
         BleSpUtils.put(mContext,SAVE_BLE_MAC_KEY,bleMac);
 
-
-
         int status = bluetoothClient.getConnectStatus(bleMac);
 
         Log.e(TAG,"************连接处="+bleMac+"--连接状态="+status);
@@ -299,6 +298,12 @@ public class BleManager {
                     //判断是否是OTA升级状态，是OTA状态不保存地址
                     (new Handler(Looper.getMainLooper())).postDelayed(new Runnable() {
                         public void run() {
+
+                            if(bleName.toLowerCase(Locale.ROOT).contains("w561b")){
+                                w561BNotifyRealData(bleMac,bleConstant.W561B_SERVER_UUID,bleConstant.W561B_REAL_HR_UUID,connectResponse);
+                                return;
+                            }
+
                             //实时数据返回，主动通道
                             notifyRealtime(bleMac,bleConstant.SERVICE_UUID,bleConstant.REAL_TIME_UUID);
                             setNotifyData(bleMac,bleConstant.SERVICE_UUID,bleConstant.READ_UUID,connectResponse);
@@ -403,6 +408,29 @@ public class BleManager {
                     if(interfaceManager.onMeasureDataListener != null)
                         interfaceManager.onMeasureDataListener.onMeasureSpo2(bytes[2] & 0xff,System.currentTimeMillis());
                     handler.sendEmptyMessageDelayed(0x00,1500);
+                }
+            }
+
+            @Override
+            public void onResponse(int i) {
+                connStatusListener.setNoticeStatus(i);
+            }
+        });
+    }
+
+    /**W561B的实时心率返回**/
+    private synchronized void w561BNotifyRealData(String bleMac,UUID serverUUid,UUID uuid,ConnStatusListener connStatusListener){
+        bluetoothClient.notify(bleMac, serverUUid, uuid, new BleNotifyResponse() {
+            @Override
+            public void onNotify(UUID uuid, UUID uuid1, byte[] bytes) {
+                Log.e(TAG,"------w61b实时心率="+Utils.formatBtArrayToString(bytes));
+                if(bytes.length == 2 ){
+                    //实时心率
+                    int hr = bytes[1] & 0xff;
+                    if(interfaceManager.onRealTimeDataListener != null){
+                        interfaceManager.onRealTimeDataListener.realTimeData(hr,0,0,0);
+                    }
+
                 }
             }
 

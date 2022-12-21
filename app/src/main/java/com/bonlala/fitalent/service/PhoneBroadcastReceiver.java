@@ -108,7 +108,9 @@ public class PhoneBroadcastReceiver extends BroadcastReceiver {
             if (!BikeUtils.isEmpty(phoneNumber) ) {
                 Log.d(TAG, "------收到了来电广播---" + phoneNumber);
                 //H8
-                findPhoneContactsByNumber(phoneNumber,"bb");
+               // findPhoneContactsByNumber(phoneNumber,"bb");
+
+                sendCommVerticalPhone("1"," ",phoneNumber);
             }
         }catch (Exception e){
             e.printStackTrace();

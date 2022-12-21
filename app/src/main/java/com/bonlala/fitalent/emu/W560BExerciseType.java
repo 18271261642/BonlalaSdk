@@ -42,6 +42,17 @@ public class W560BExerciseType {
     public static final int  TYPE_BADMINTON= 0x05;
 
 
+
+
+    /**心率带的普通计时**/
+    public static final int HR_BELT_FORWARD_TYPE = -1;
+    /**心率带的倒计时**/
+    public static final int HR_BELT_COUNTDOWN_TYPE = -2;
+    /**心率带的分组计时**/
+    public static final int HR_BELT_GROUP_TYPE = -3;
+
+
+
     private final static Map<Integer,String> map = new HashMap<>();
 
 
@@ -66,10 +77,40 @@ public class W560BExerciseType {
         map.put(TYPE_PINGPONG,context.getResources().getString(R.string.string_exercise_pingpang));
         map.put(TYPE_BADMINTON,context.getResources().getString(R.string.string_exercise_badminton));
 
+        //心率带
+        map.put(HR_BELT_COUNTDOWN_TYPE,context.getResources().getString(R.string.string_hr_belt_countdown));
+        map.put(HR_BELT_FORWARD_TYPE,context.getResources().getString(R.string.string_hr_belt_normal));
+        map.put(HR_BELT_GROUP_TYPE,context.getResources().getString(R.string.string_hr_blet_group));
+
+
         return map.get(type);
 
 
     }
+
+
+    /**
+     * 根据状态获取心率带对应的code码
+     * @param countDownStatus 状态
+     * @return code
+     */
+    public static int getHrBeltSportType(CountDownStatus countDownStatus){
+        //普通计时
+        if(countDownStatus == CountDownStatus.FORWARD_STATUS){
+            return  HR_BELT_FORWARD_TYPE;
+        }
+        if(countDownStatus == CountDownStatus.COUNTDOWN_STATUS){
+            return HR_BELT_COUNTDOWN_TYPE;
+        }
+
+        if(countDownStatus == CountDownStatus.GROUP_STATUS){
+            return HR_BELT_GROUP_TYPE;
+        }
+
+        return HR_BELT_FORWARD_TYPE;
+    }
+
+
 
 
     public static int getTypeResource(int type){

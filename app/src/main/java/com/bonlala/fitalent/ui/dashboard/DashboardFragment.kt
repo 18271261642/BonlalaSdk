@@ -26,19 +26,23 @@ import com.bonlala.fitalent.HomeActivity
 import com.bonlala.fitalent.MainActivity
 import com.bonlala.fitalent.R
 import com.bonlala.fitalent.activity.*
+import com.bonlala.fitalent.bean.HrBeltGroupBean
 import com.bonlala.fitalent.ble.DataOperateManager
 import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.db.model.DeviceSetModel
 import com.bonlala.fitalent.dialog.HelpDialogView
 import com.bonlala.fitalent.dialog.SelectDialogView
 import com.bonlala.fitalent.emu.ConnStatus
+import com.bonlala.fitalent.emu.DeviceType
 import com.bonlala.fitalent.listeners.OnItemClickListener
 import com.bonlala.fitalent.utils.*
 import com.google.gson.Gson
 import com.hjq.permissions.XXPermissions
 import com.hjq.toast.ToastUtils
 import kotlinx.android.synthetic.main.fragment_dashboard.*
+import kotlinx.android.synthetic.main.fragment_dashboard.menuFirmwareBar
 import kotlinx.android.synthetic.main.item_device_top_layout.*
+import kotlinx.android.synthetic.main.item_heart_belt_set_layout.*
 import kotlinx.android.synthetic.main.layout_device_empty_layout.*
 import timber.log.Timber
 
@@ -108,8 +112,6 @@ import timber.log.Timber
         }
 
 
-
-
     }
 
 
@@ -141,7 +143,6 @@ import timber.log.Timber
             batteryView.power = 0
         }
 
-
         //计步目标
         menuStepGoalLayout.rightText = deviceSetModel!!.stepGoal.toString()+resources.getString(R.string.string_step)
         //亮屏时间
@@ -154,12 +155,6 @@ import timber.log.Timber
         menuTempUnitBar.rightText = if(deviceSetModel!!.tempStyle==0) "℃" else "℉"
         //固件版本
         menuFirmwareBar.rightText = deviceSetModel!!.deviceVersionName
-//        //转腕亮屏
-//        menuSwitchLightBar.rightText = if(deviceSetModel!!.turnWrist=="0") "未开启" else deviceSetModel!!.turnWrist
-//        //勿扰
-//        menuDntBar.rightText = if(deviceSetModel!!.dnt == "0") "未开启" else deviceSetModel!!.dnt
-//        //久坐
-//        menuLongSitBar.rightText = if(deviceSetModel!!.longSitStr == "0") "未开启" else deviceSetModel!!.longSitStr
 
         //久坐，勿扰，抬腕
         viewModel.deviceNotifyData.observe(this){
@@ -220,6 +215,8 @@ import timber.log.Timber
         if(BikeUtils.isEmpty(isSaveBle)){
             attachActivity.setImgStatus(false)
             attachActivity.showNotConnImg(false)
+        }else{
+            checkDeviceType(isSaveBle)
         }
 
 
@@ -237,9 +234,25 @@ import timber.log.Timber
         reConnTv.visibility = if(BaseApplication.getInstance().connStatus == ConnStatus.CONNECTED || BaseApplication.getInstance().connStatus == ConnStatus.IS_SYNC_DATA) View.GONE else View.VISIBLE
 
         //setIsCanClick(BaseApplication.getInstance().connStatus == ConnStatus.CONNECTED)
+
     }
 
 
+
+    //判断设备类型，560B手表和心率带
+    private fun checkDeviceType(deviceName : String){
+        val deviceType = BaseApplication.getInstance().getUserDeviceType(deviceName)
+
+        //心率带
+        hrBeltMenuLayout.visibility = if(deviceType ==DeviceType.DEVICE_561) View.VISIBLE else View.GONE
+        //560B
+        watchMenuLayout.visibility = if(deviceType == DeviceType.DEVICE_W560B) View.VISIBLE else View.GONE
+    }
+
+
+
+
+    //显示连接的状态
     private fun showStatus(connStatus: ConnStatus) : String? {
         var status: String? = null
         if (connStatus == ConnStatus.CONNECTED || connStatus == ConnStatus.IS_SYNC_COMPLETE) {
@@ -482,6 +495,8 @@ import timber.log.Timber
         }
     }
 
+
+    //解除绑定，删除连接的Mac，用户绑定的Mac不解除
     private fun unBindDevice() {
 
         val saveMac = MmkvUtils.getConnDeviceMac()
@@ -498,7 +513,6 @@ import timber.log.Timber
                 MmkvUtils.saveConnDeviceName("")
 
                 bleOperateManager?.disConnYakDevice()
-
 
                 showConnStatus()
 
@@ -664,6 +678,9 @@ import timber.log.Timber
 
     override fun initView() {
 
+        rangView.setUserMaxHeart(180)
+
+
         appsMsgCheckView.setLeftTitle(resources.getString(R.string.string_message_notify))
         realHeartCheckView.setLeftTitle(resources.getString(R.string.string_real_heart))
         phoneCallCheckView.setLeftTitle(resources.getString(R.string.string_phone_call))
@@ -680,11 +697,11 @@ import timber.log.Timber
         //消息提醒
         appsMsgCheckView.setCheckListener { button, checked ->
             //openMsgSwitch()
-            if(checked){
-
-                XXPermissions.with(attachActivity).permission(arrayOf(Manifest.permission.READ_SMS)).request { permissions, all ->  }
-
-            }
+//            if(checked){
+//
+//                XXPermissions.with(attachActivity).permission(arrayOf(Manifest.permission.READ_SMS)).request { permissions, all ->  }
+//
+//            }
             appsMsgCheckView.setCheckStatus(checked)
             MmkvUtils.saveW560BAppsStatus(checked)
         }
@@ -696,14 +713,14 @@ import timber.log.Timber
         //来电提醒
         phoneCallCheckView.setCheckListener{button,checked->
             MmkvUtils.saveW560BPhoneStatus(checked)
-            if(checked){
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-                    XXPermissions.with(attachActivity).permission(arrayOf(Manifest.permission.ANSWER_PHONE_CALLS,Manifest.permission.READ_PHONE_NUMBERS,Manifest.permission.READ_CALL_LOG)).request { permissions, all ->  }
-                }
-
-                XXPermissions.with(attachActivity).permission(arrayOf(Manifest.permission.READ_PHONE_STATE,Manifest.permission.READ_CALL_LOG,Manifest.permission.READ_CONTACTS)).request { permissions, all ->  }
-
-            }
+//            if(checked){
+//                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+//                    XXPermissions.with(attachActivity).permission(arrayOf(Manifest.permission.ANSWER_PHONE_CALLS,Manifest.permission.READ_PHONE_NUMBERS,Manifest.permission.READ_CALL_LOG)).request { permissions, all ->  }
+//                }
+//
+//                XXPermissions.with(attachActivity).permission(arrayOf(Manifest.permission.READ_PHONE_STATE,Manifest.permission.READ_CONTACTS)).request { permissions, all ->  }
+//
+//            }
         }
 
         menuMsgNotifyBar.setOnClickListener(this)

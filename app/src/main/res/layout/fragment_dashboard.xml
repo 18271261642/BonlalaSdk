@@ -44,430 +44,445 @@
             <include layout="@layout/item_device_top_layout" />
 
 
-            <TextView
-                android:id="@+id/commSetTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_10"
-                android:text="@string/string_general_setting"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
+            <!--心率带的设置布局-->
+            <include layout="@layout/item_heart_belt_set_layout" />
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
-            <com.hjq.shape.layout.ShapeLinearLayout
+            <!--560B的设置布局-->
+            <LinearLayout
+                android:id="@+id/watchMenuLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_8"
                 android:orientation="vertical"
-                app:shape_radius="@dimen/dp_10"
-                app:shape_solidColor="@color/white">
+                android:visibility="gone">
 
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/commSetTv"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp_10"
-                    android:orientation="horizontal"
-                    android:padding="3dp">
+                    android:text="@string/string_general_setting"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
 
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                     <com.hjq.shape.layout.ShapeLinearLayout
-                        android:id="@+id/deviceFindDeviceLayout"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center"
+                        android:layout_margin="@dimen/dp_8"
                         android:orientation="vertical"
-                        app:shape_solidColor="@color/white"
-                        app:shape_solidPressedColor="@color/checked_color">
+                        app:shape_radius="@dimen/dp_10"
+                        app:shape_solidColor="@color/white">
 
 
-                        <ImageView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:src="@mipmap/icon_device_find_device" />
+                            android:layout_margin="@dimen/dp_10"
+                            android:orientation="horizontal"
+                            android:padding="3dp">
 
 
-                        <TextView
-                            android:id="@+id/findDeviceTv"
-                            android:layout_width="wrap_content"
+                            <com.hjq.shape.layout.ShapeLinearLayout
+                                android:id="@+id/deviceFindDeviceLayout"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                app:shape_solidColor="@color/white"
+                                app:shape_solidPressedColor="@color/checked_color">
+
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@mipmap/icon_device_find_device" />
+
+
+                                <TextView
+                                    android:id="@+id/findDeviceTv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/string_find_device"
+                                    android:textSize="12sp" />
+
+                            </com.hjq.shape.layout.ShapeLinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/deviceShutterLayout"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@mipmap/icon_device_take_photo" />
+
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/string_take_phone"
+                                    android:textSize="12sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/deviceAlarmLayout"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@mipmap/icon_device_alarm" />
+
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/string_alarm_set"
+                                    android:textSize="12sp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/deviceWatchDialLayout"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@mipmap/icon_device_dial" />
+
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/string_dial"
+                                    android:textSize="12sp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/string_find_device"
-                            android:textSize="12sp" />
+                            android:layout_margin="@dimen/dp_10"
+                            android:orientation="horizontal"
+                            android:padding="3dp">
+
+                            <LinearLayout
+                                android:id="@+id/deviceWeatherLayout"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@mipmap/icon_device_weather" />
+
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/string_weather"
+                                    android:textSize="12sp" />
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="1dp"
+                                android:layout_weight="1" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="1dp"
+                                android:layout_weight="1" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="1dp"
+                                android:layout_weight="1" />
+                        </LinearLayout>
+                    </com.hjq.shape.layout.ShapeLinearLayout>
+
+                    <com.hjq.shape.layout.ShapeLinearLayout
+                        android:id="@+id/commNoConnLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/dp_8"
+                        android:orientation="vertical"
+                        app:shape_radius="@dimen/dp_10"
+                        app:shape_solidColor="#80FFFFFF" />
+
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/functionSetTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_10"
+                    android:text="@string/string_funcion_setting"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.hjq.shape.layout.ShapeLinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp_8"
+                        android:orientation="vertical"
+                        android:padding="5dp"
+                        app:shape_radius="@dimen/dp_10"
+                        app:shape_solidColor="@color/white">
+
+                        <com.bonlala.widget.layout.SettingBar
+                            android:id="@+id/menuStepGoalLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:bar_leftText="@string/string_step_target"
+                            app:bar_leftTextSize="18sp"
+                            app:bar_lineVisible="true"
+                            app:bar_rightDrawable="@drawable/ic_gray_right_back"
+                            app:bar_rightText="--" />
+
+                        <com.bonlala.fitalent.view.CheckButtonView
+                            android:id="@+id/realHeartCheckView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+
+                        <com.bonlala.widget.layout.SettingBar
+                            android:id="@+id/menuScreenTimeBar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:bar_leftText="@string/string_bright_screen_time"
+                            app:bar_leftTextSize="18sp"
+                            app:bar_lineVisible="true"
+                            app:bar_rightDrawable="@drawable/ic_gray_right_back"
+                            app:bar_rightText="--" />
+
+
+                        <com.bonlala.widget.layout.SettingBar
+                            android:id="@+id/menuScreenBrightnessBar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:bar_leftText="@string/string_bright_level"
+                            app:bar_leftTextSize="18sp"
+                            app:bar_lineVisible="true"
+                            app:bar_rightDrawable="@drawable/ic_gray_right_back"
+                            app:bar_rightText="--" />
+
+
+                        <com.bonlala.widget.layout.SettingBar
+                            android:id="@+id/menuSwitchLightBar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:bar_leftText="@string/string_rasie_to_wake"
+                            app:bar_leftTextSize="18sp"
+                            app:bar_lineVisible="false"
+                            app:bar_rightDrawable="@drawable/ic_gray_right_back" />
+
 
                     </com.hjq.shape.layout.ShapeLinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/deviceShutterLayout"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
 
+                    <com.hjq.shape.layout.ShapeLinearLayout
+                        android:id="@+id/functionNoConnLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/dp_8"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:orientation="vertical"
+                        android:padding="5dp"
+                        android:touchscreenBlocksFocus="false"
+                        app:shape_radius="@dimen/dp_10"
+                        app:shape_solidColor="#80FFFFFF" />
+                </FrameLayout>
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/icon_device_take_photo" />
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/string_take_phone"
-                            android:textSize="12sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/deviceAlarmLayout"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/icon_device_alarm" />
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/string_alarm_set"
-                            android:textSize="12sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/deviceWatchDialLayout"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/icon_device_dial" />
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/string_dial"
-                            android:textSize="12sp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/notifySetTv"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp_10"
-                    android:orientation="horizontal"
-                    android:padding="3dp">
-
-                    <LinearLayout
-                        android:id="@+id/deviceWeatherLayout"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/icon_device_weather" />
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/string_weather"
-                            android:textSize="12sp" />
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_weight="1" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_weight="1" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_weight="1" />
-                </LinearLayout>
-            </com.hjq.shape.layout.ShapeLinearLayout>
-
-                <com.hjq.shape.layout.ShapeLinearLayout
-                    android:id="@+id/commNoConnLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/dp_8"
-                    android:orientation="vertical"
-                    app:shape_radius="@dimen/dp_10"
-                    app:shape_solidColor="#80FFFFFF"/>
-
-            </FrameLayout>
-
-            <TextView
-                android:id="@+id/functionSetTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_10"
-                android:text="@string/string_funcion_setting"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.hjq.shape.layout.ShapeLinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dp_8"
-                    android:orientation="vertical"
                     android:padding="5dp"
-                    app:shape_radius="@dimen/dp_10"
-                    app:shape_solidColor="@color/white">
-
-                    <com.bonlala.widget.layout.SettingBar
-                        android:id="@+id/menuStepGoalLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:bar_leftText="@string/string_step_target"
-                        app:bar_leftTextSize="18sp"
-                        app:bar_lineVisible="true"
-                        app:bar_rightDrawable="@drawable/ic_gray_right_back"
-                        app:bar_rightText="--" />
-
-                    <com.bonlala.fitalent.view.CheckButtonView
-                        android:id="@+id/realHeartCheckView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                    android:text="@string/string_reminder_setting"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
 
 
-                    <com.bonlala.widget.layout.SettingBar
-                        android:id="@+id/menuScreenTimeBar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:bar_leftText="@string/string_bright_screen_time"
-                        app:bar_leftTextSize="18sp"
-                        app:bar_lineVisible="true"
-                        app:bar_rightDrawable="@drawable/ic_gray_right_back"
-                        app:bar_rightText="--" />
-
-
-                    <com.bonlala.widget.layout.SettingBar
-                        android:id="@+id/menuScreenBrightnessBar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:bar_leftText="@string/string_bright_level"
-                        app:bar_leftTextSize="18sp"
-                        app:bar_lineVisible="true"
-                        app:bar_rightDrawable="@drawable/ic_gray_right_back"
-                        app:bar_rightText="--" />
-
-
-                    <com.bonlala.widget.layout.SettingBar
-                        android:id="@+id/menuSwitchLightBar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:bar_leftText="@string/string_rasie_to_wake"
-                        app:bar_leftTextSize="18sp"
-                        app:bar_lineVisible="false"
-                        app:bar_rightDrawable="@drawable/ic_gray_right_back" />
-
-
-                </com.hjq.shape.layout.ShapeLinearLayout>
-
-
-                <com.hjq.shape.layout.ShapeLinearLayout
-                    android:id="@+id/functionNoConnLayout"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/dp_8"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:orientation="vertical"
-                    android:padding="5dp"
-                    android:touchscreenBlocksFocus="false"
-                    app:shape_radius="@dimen/dp_10"
-                    app:shape_solidColor="#80FFFFFF" />
-            </FrameLayout>
+                    android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/notifySetTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_10"
-                android:padding="5dp"
-                android:text="@string/string_reminder_setting"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
+                    <com.hjq.shape.layout.ShapeLinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp_8"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dp_5"
+                        app:shape_radius="@dimen/dp_10"
+                        app:shape_solidColor="@color/white">
+
+                        <com.bonlala.widget.layout.SettingBar
+                            android:id="@+id/menuLongSitBar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:bar_leftText="@string/string_long_sit"
+                            app:bar_leftTextSize="18sp"
+                            app:bar_lineVisible="true"
+                            app:bar_rightDrawable="@drawable/ic_gray_right_back" />
 
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                        <com.bonlala.fitalent.view.CheckButtonView
+                            android:id="@+id/phoneCallCheckView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
 
-                <com.hjq.shape.layout.ShapeLinearLayout
-                    android:layout_width="match_parent"
+                        <com.bonlala.fitalent.view.CheckButtonView
+                            android:id="@+id/appsMsgCheckView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="visible"
+                            app:right_back_img="false" />
+
+                        <com.bonlala.widget.layout.SettingBar
+                            android:id="@+id/menuMsgNotifyBar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            app:bar_leftText="@string/string_message_notify"
+                            app:bar_leftTextSize="18sp"
+                            app:bar_lineVisible="true"
+                            app:bar_rightDrawable="@drawable/ic_gray_right_back" />
+
+
+                        <com.bonlala.widget.layout.SettingBar
+                            android:id="@+id/menuDntBar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:bar_leftText="@string/string_dnt"
+                            app:bar_leftTextSize="18sp"
+                            app:bar_lineVisible="false"
+                            app:bar_rightDrawable="@drawable/ic_gray_right_back"
+                            app:bar_rightText="--" />
+
+                    </com.hjq.shape.layout.ShapeLinearLayout>
+
+
+                    <com.hjq.shape.layout.ShapeLinearLayout
+                        android:id="@+id/notifyNoConnLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/dp_8"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dp_5"
+                        app:shape_radius="@dimen/dp_10"
+                        app:shape_solidColor="#80FFFFFF" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/generalSetTv"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dp_8"
-                    android:orientation="vertical"
-                    android:padding="@dimen/dp_5"
-                    app:shape_radius="@dimen/dp_10"
-                    app:shape_solidColor="@color/white">
-
-                    <com.bonlala.widget.layout.SettingBar
-                        android:id="@+id/menuLongSitBar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:bar_leftText="@string/string_long_sit"
-                        app:bar_leftTextSize="18sp"
-                        app:bar_lineVisible="true"
-                        app:bar_rightDrawable="@drawable/ic_gray_right_back" />
+                    android:layout_margin="@dimen/dp_10"
+                    android:text="@string/string_general_setting"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
 
 
-                    <com.bonlala.fitalent.view.CheckButtonView
-                        android:id="@+id/phoneCallCheckView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <com.bonlala.fitalent.view.CheckButtonView
-                        android:id="@+id/appsMsgCheckView"
-                        android:layout_width="match_parent"
-                        android:visibility="visible"
-                        app:right_back_img="false"
-                        android:layout_height="wrap_content" />
-
-                    <com.bonlala.widget.layout.SettingBar
-                        android:id="@+id/menuMsgNotifyBar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:bar_leftText="@string/string_message_notify"
-                        app:bar_leftTextSize="18sp"
-                        app:bar_lineVisible="true"
-                        android:visibility="gone"
-                        app:bar_rightDrawable="@drawable/ic_gray_right_back" />
-
-
-                    <com.bonlala.widget.layout.SettingBar
-                        android:id="@+id/menuDntBar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:bar_leftText="@string/string_dnt"
-                        app:bar_leftTextSize="18sp"
-                        app:bar_lineVisible="false"
-                        app:bar_rightDrawable="@drawable/ic_gray_right_back"
-                        app:bar_rightText="--" />
-
-                </com.hjq.shape.layout.ShapeLinearLayout>
-
-
-                <com.hjq.shape.layout.ShapeLinearLayout
-                    android:id="@+id/notifyNoConnLayout"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/dp_8"
-                    android:orientation="vertical"
-                    android:padding="@dimen/dp_5"
-                    app:shape_radius="@dimen/dp_10"
-                    app:shape_solidColor="#80FFFFFF" />
-            </FrameLayout>
+                    android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/generalSetTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_10"
-                android:text="@string/string_general_setting"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
-
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.hjq.shape.layout.ShapeLinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dp_8"
-                    android:orientation="vertical"
-                    android:padding="@dimen/dp_5"
-                    app:shape_radius="@dimen/dp_10"
-                    app:shape_solidColor="@color/white">
-
-                    <com.bonlala.widget.layout.SettingBar
-                        android:id="@+id/menuUnitBar"
+                    <com.hjq.shape.layout.ShapeLinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:bar_leftText="@string/string_metric_unit"
-                        app:bar_leftTextSize="18sp"
-                        app:bar_lineVisible="true"
-                        app:bar_rightDrawable="@drawable/ic_gray_right_back"
-                        app:bar_rightText="@string/string_metric" />
+                        android:layout_margin="@dimen/dp_8"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dp_5"
+                        app:shape_radius="@dimen/dp_10"
+                        app:shape_solidColor="@color/white">
 
-                    <com.bonlala.widget.layout.SettingBar
-                        android:id="@+id/menuTempUnitBar"
+                        <com.bonlala.widget.layout.SettingBar
+                            android:id="@+id/menuUnitBar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:bar_leftText="@string/string_metric_unit"
+                            app:bar_leftTextSize="18sp"
+                            app:bar_lineVisible="true"
+                            app:bar_rightDrawable="@drawable/ic_gray_right_back"
+                            app:bar_rightText="@string/string_metric" />
+
+                        <com.bonlala.widget.layout.SettingBar
+                            android:id="@+id/menuTempUnitBar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:bar_leftText="@string/string_temp_unit"
+                            app:bar_leftTextSize="18sp"
+                            app:bar_lineVisible="true"
+                            app:bar_rightDrawable="@drawable/ic_gray_right_back"
+                            app:bar_rightText="--" />
+
+                        <com.bonlala.widget.layout.SettingBar
+                            android:id="@+id/menuFirmwareBar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:bar_leftText="@string/string_firmware"
+                            app:bar_leftTextSize="18sp"
+                            app:bar_lineVisible="false"
+                            app:bar_rightDrawable="@drawable/ic_gray_right_back"
+                            app:bar_rightText="" />
+
+
+                    </com.hjq.shape.layout.ShapeLinearLayout>
+
+                    <com.hjq.shape.layout.ShapeLinearLayout
+                        android:id="@+id/generalNoConnLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:bar_leftText="@string/string_temp_unit"
-                        app:bar_leftTextSize="18sp"
-                        app:bar_lineVisible="true"
-                        app:bar_rightDrawable="@drawable/ic_gray_right_back"
-                        app:bar_rightText="--" />
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/dp_8"
+                        android:orientation="vertical"
+                        android:padding="@dimen/dp_5"
+                        app:shape_radius="@dimen/dp_10"
+                        app:shape_solidColor="#80FFFFFF" />
+                </FrameLayout>
 
-                    <com.bonlala.widget.layout.SettingBar
-                        android:id="@+id/menuFirmwareBar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:bar_leftText="@string/string_firmware"
-                        app:bar_leftTextSize="18sp"
-                        app:bar_lineVisible="false"
-                        app:bar_rightDrawable="@drawable/ic_gray_right_back"
-                        app:bar_rightText="" />
+            </LinearLayout>
 
-
-                </com.hjq.shape.layout.ShapeLinearLayout>
-
-                <com.hjq.shape.layout.ShapeLinearLayout
-                    android:id="@+id/generalNoConnLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/dp_8"
-                    android:orientation="vertical"
-                    android:padding="@dimen/dp_5"
-                    app:shape_radius="@dimen/dp_10"
-                    app:shape_solidColor="#80FFFFFF" />
-            </FrameLayout>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

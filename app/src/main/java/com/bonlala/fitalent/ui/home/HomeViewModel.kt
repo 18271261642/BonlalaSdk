@@ -16,7 +16,7 @@ import com.bonlala.fitalent.viewmodel.HistorySleepViewModel
 import com.google.gson.Gson
 import timber.log.Timber
 
-class HomeViewModel : HistorySleepViewModel() {
+open class HomeViewModel : HistorySleepViewModel() {
 
     private val userId = "user_1001"
 

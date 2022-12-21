@@ -11,6 +11,8 @@ import com.hjq.shape.view.ShapeTextView;
 
 import java.util.List;
 
+import timber.log.Timber;
+
 /**
  * 身高选择dialog
  * Created by Admin
@@ -56,12 +58,6 @@ public class HeightSelectDialog {
             dialogHeightBorderTv = findViewById(R.id.dialogHeightBorderTv);
 
             stringScrollPicker.setIsCirculation(false);
-//
-//            List<String> hList = new ArrayList<>();
-//            for(int i = 100;i<300;i++){
-//                hList.add(i+"");
-//            }
-
             stringScrollPicker.setData(sourList);
 
             stringScrollPicker.setOnSelectedListener(new ScrollPickerView.OnSelectedListener() {
@@ -74,8 +70,15 @@ public class HeightSelectDialog {
         }
 
 
+        //设置标题
         public Builder setTitleTx(String txt){
             setTitle(txt);
+            return this;
+        }
+
+        //设置确定按钮文字
+        public Builder setConfirmTxt(String txt){
+            setConfirm(txt);
             return this;
         }
 
@@ -119,6 +122,7 @@ public class HeightSelectDialog {
 
         //设置默认的选中
         public Builder setDefaultSelect(int position){
+            selectPosition = position;
             stringScrollPicker.setSelectedPosition(position);
             return this;
         }
@@ -133,6 +137,8 @@ public class HeightSelectDialog {
             int viewId = view.getId();
             if (viewId == R.id.tv_ui_confirm) {
                 autoDismiss();
+               // Timber.e("-----确定="+(signalSelectListener == null)+" "+selectPosition);
+
                 if (signalSelectListener == null) {
                     return;
                 }

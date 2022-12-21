@@ -21,4 +21,14 @@ public class HomeDateType {
     public static final int HOME_TYPE_BP = 6;
     //运动记录
     public static final int HOME_TYPE_SPORT_RECORD = 7;
+
+
+    /**
+     * 心率带的运动记录
+     */
+    public static final int HOME_HR_WALL_SPORT_RECORD = 8;
+    /**
+     * 新率带 实时心率
+     */
+    public static final int HOME_HR_WALL_REAL_HR = 9;
 }

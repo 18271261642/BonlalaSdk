@@ -9,8 +9,14 @@ import com.bonlala.fitalent.activity.AboutActivity
 import com.bonlala.fitalent.activity.FeedbackActivity
 import com.bonlala.fitalent.activity.PersonalActivity
 import com.bonlala.fitalent.activity.ShowPermissionActivity
+import com.bonlala.fitalent.view.CircleLongClickView
+import com.bonlala.fitalent.view.PausePressView
 import kotlinx.android.synthetic.main.fragment_notifications.*
+import timber.log.Timber
 
+/**
+ * 我的页面
+ */
 class NotificationsFragment : TitleBarFragment<HomeActivity>() {
 
 

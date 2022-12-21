@@ -137,7 +137,7 @@ class MainActivity : AppActivity() ,OnItemClickListener{
                 val bleName = p0.name
                 if(BikeUtils.isEmpty(bleName) || bleName.equals("NULL") || BikeUtils.isEmpty(p0.address))
                     return
-                if(!bleName.lowercase(Locale.ROOT).contains("w560b"))
+                if(!bleName.lowercase(Locale.ROOT).contains("w561b") && !bleName.lowercase(Locale.ROOT).contains("w560b"))
                     return
                 if(repeatList?.contains(p0.address) == true)
                     return
@@ -229,8 +229,10 @@ class MainActivity : AppActivity() ,OnItemClickListener{
             MmkvUtils.saveConnDeviceMac(bleMac)
 
             //保存用户绑定的Mac
-            val userInfo = DBManager.getUserInfo();
+            val userInfo = DBManager.getUserInfo()
+            Timber.e("-----userInfo="+(userInfo))
             userInfo.userBindMac = bleMac
+            userInfo.userBindDeviceType = BaseApplication.getInstance().getUserDeviceType(bleName)
             DBManager.dbManager.updateUserInfo(userInfo)
 
             val broadIntent = Intent()

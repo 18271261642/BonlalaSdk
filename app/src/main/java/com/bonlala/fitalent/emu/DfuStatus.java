@@ -18,6 +18,12 @@ public enum DfuStatus {
 
     //固件下载完成，开始升级状态，还没有升级，点击按钮开始升级
     DFU_READY_UPGRADE,
+    ;
 
     //固件升级中状态
+
+    public void getq () {
+        DFU_READY_UPGRADE.ordinal();
+    }
+
 }

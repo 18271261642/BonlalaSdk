@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.bonlala.fitalent.BaseApplication;
 import com.bonlala.fitalent.R;
 import com.bonlala.fitalent.bean.ChartHrBean;
+import com.bonlala.fitalent.bean.ExerciseHomeBean;
 import com.bonlala.fitalent.bean.HomeHeartBean;
 import com.bonlala.fitalent.bean.HomeRealtimeBean;
 import com.bonlala.fitalent.bean.HomeSourceBean;
@@ -53,6 +54,7 @@ import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import timber.log.Timber;
 
 /**
  * 首页adapter
@@ -132,6 +134,18 @@ public class HomeUiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             view = LayoutInflater.from(context).inflate(R.layout.item_sport_record_layout,parent,false);
             return new HomeSportRecordViewHolder(view);
         }
+
+        //心率带 运动记录
+        if(viewType == HomeDateType.HOME_HR_WALL_SPORT_RECORD){
+            view = LayoutInflater.from(context).inflate(R.layout.item_home_wall_sport_record_layout,parent,false);
+            return new HomeHrWallViewHolder(view);
+        }
+        //心率带 实时心率
+        if(viewType == HomeDateType.HOME_HR_WALL_REAL_HR){
+            view = LayoutInflater.from(context).inflate(R.layout.item_home_wall_real_hr_layout,parent,false);
+            return new HomeWallRealHrViewHolder(view);
+        }
+
         return null;
     }
 
@@ -178,6 +192,19 @@ public class HomeUiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
 
             if(dataSource == null){
+
+                realHrBarChartView.clearData();
+                ((HomeRealHrViewHolder) holder).itemHomeRealHrValue.setText("--");
+                ((HomeRealHrViewHolder) holder).itemHomeRealHrValue.setTextColor(context.getResources().getColor(R.color.hr_color_1));
+
+                itemRealHrDataLayout.setBackground(HeartRateConvertUtils.setDrawable(context,0));
+
+                //心率强度百分比
+                ((HomeRealHrViewHolder) holder).itemRealHrPercentageTv.setText("--");
+                ((HomeRealHrViewHolder) holder).itemRealHrPercentageTv.setTextColor(context.getResources().getColor(R.color.hr_color_1));
+                ((HomeRealHrViewHolder) holder).itemRealHrUnitTv.setTextColor(context.getResources().getColor(R.color.hr_color_1));
+
+
                 emptyLayout.setVisibility(View.VISIBLE);
                 itemRealHrDataLayout.setVisibility(View.GONE);
                 return;
@@ -437,6 +464,31 @@ public class HomeUiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
 
 
+        //心率带的运动记录
+        if(holder instanceof HomeHrWallViewHolder){
+            if(dataSource == null){
+                ((HomeHrWallViewHolder) holder).itemHomeWallAvgTv.setText("--");
+                ((HomeHrWallViewHolder) holder).itemHomeWallTimesTv.setText("--");
+                ((HomeHrWallViewHolder) holder).itemWallKcalTv.setText("--");
+                ((HomeHrWallViewHolder) holder).itemWallDurationTv.setText("--");
+                ((HomeHrWallViewHolder) holder).homeHrBeltDateTv.setText("--");
+
+                return;
+            }
+
+            ExerciseHomeBean exerciseHomeBean = gson.fromJson(dataSource,ExerciseHomeBean.class);
+
+            Timber.e("-------锻炼Adapter="+gson.toJson(exerciseHomeBean));
+            String duration = exerciseHomeBean.getSportDuration();
+
+
+            ((HomeHrWallViewHolder) holder).itemHomeWallAvgTv.setText(exerciseHomeBean.getAvgHr()+"");
+            ((HomeHrWallViewHolder) holder).itemHomeWallTimesTv.setText(exerciseHomeBean.getSportTimes()+"");
+            ((HomeHrWallViewHolder) holder).itemWallKcalTv.setText(exerciseHomeBean.getKcal()+"");
+            ((HomeHrWallViewHolder) holder).itemWallDurationTv.setText(duration);
+            ((HomeHrWallViewHolder) holder).homeHrBeltDateTv.setText(exerciseHomeBean.getDay());
+
+        }
     }
 
     @Override
@@ -597,7 +649,46 @@ public class HomeUiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
 
+    /**
+     * 心率带实时心率
+     */
+    private class HomeWallRealHrViewHolder extends RecyclerView.ViewHolder{
 
+        public HomeWallRealHrViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+    }
+
+    /**
+     * 心率带运动记录
+     *
+     */
+    private class HomeHrWallViewHolder extends RecyclerView.ViewHolder{
+
+        //平均心率
+        private TextView itemHomeWallAvgTv;
+        //卡路里
+        private TextView itemWallKcalTv;
+        //时长
+        private TextView itemWallDurationTv;
+        //次数
+        private TextView itemHomeWallTimesTv;
+        //日期
+        private TextView homeHrBeltDateTv;
+
+
+        public HomeHrWallViewHolder(@NonNull View itemView) {
+            super(itemView);
+            itemHomeWallAvgTv = itemView.findViewById(R.id.itemHomeWallAvgTv);
+            itemWallDurationTv = itemView.findViewById(R.id.itemWallDurationTv);
+            itemWallKcalTv = itemView.findViewById(R.id.itemWallKcalTv);
+            itemHomeWallTimesTv = itemView.findViewById(R.id.itemHomeWallTimesTv);
+            homeHrBeltDateTv = itemView.findViewById(R.id.homeHrBeltDateTv);
+
+        }
+
+
+    }
 
 
 

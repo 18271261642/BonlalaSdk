@@ -3,6 +3,7 @@ package com.bonlala.fitalent.utils;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.bonlala.fitalent.R;
 import com.bonlala.fitalent.db.DBManager;
@@ -134,7 +135,33 @@ public class HeartRateConvertUtils {
     }
 
 
-
+    /**
+     * 心率带，根据点数设置背景图片
+     * @param context 上下文
+     * @param point 点数
+     * @return 背景图片drawable
+     */
+    public static Drawable setHrBeltDrawable(Context context,int point){
+        if(point == 0){
+            return context.getResources().getDrawable(R.mipmap.ic_real_time_hr_belt_bg_1);
+        }
+        if(point == 1){
+            return context.getResources().getDrawable(R.mipmap.ic_real_time_hr_belt_bg_2);
+        }
+        if(point == 2){
+            return context.getResources().getDrawable(R.mipmap.ic_real_time_hr_belt_bg_3);
+        }
+        if(point == 3){
+            return context.getResources().getDrawable(R.mipmap.ic_real_time_hr_belt_bg_4);
+        }
+        if(point == 4){
+            return context.getResources().getDrawable(R.mipmap.ic_real_time_hr_belt_bg_5);
+        }
+        if(point == 5){
+            return context.getResources().getDrawable(R.mipmap.ic_real_time_hr_belt_bg_6);
+        }
+        return context.getResources().getDrawable(R.mipmap.ic_real_time_hr_belt_bg_1);
+    }
 
 
     //心率强度
@@ -145,6 +172,24 @@ public class HeartRateConvertUtils {
         return percent;
     }
 
+    /**
+     * 获取用户的身高和体重
+     * @return
+     */
+    public static int[] getUserAgeAndWeight(){
+        UserInfoModel userInfoModel = DBManager.getUserInfo();
+        if(userInfoModel == null){
+            userInfoModel = new UserInfoModel();
+            userInfoModel.setSex(0);
+            userInfoModel.setUserWeight(60);
+            userInfoModel.setUserBirthday("1990-01-01");
+        }
+        //年龄
+        int age =getAge(userInfoModel.getUserBirthday());
+        //体重
+        int weight = userInfoModel.getUserWeight();
+        return new int[]{age,weight};
+    }
 
     //根据生日获取年龄
     public static int getAge(String birthday) {
@@ -174,5 +219,50 @@ public class HeartRateConvertUtils {
         }
 
         return age;
+    }
+
+
+    /**
+     * 计算男性卡路里
+     * @param heartRate 心率
+     * @param age 年龄
+     * @param weight 体重
+     * @param time 运动时长 分钟
+     * @param util 单位
+     * @return 卡路里
+     */
+    public static double hearRate2CaloriForMan(int heartRate, int age, float weight) {
+//        if (!isValid(heartRate, age)) {
+//            return 0;
+//        }
+        /**
+         * 连上的时间和当前时间段
+         *
+         */
+        double ageD = CalculateUtils.mul((double) age, 0.2017);
+        double weightD = CalculateUtils.mul((double) weight, 0.1988);
+        double heartRateD = CalculateUtils.mul((double) heartRate, 0.6309);
+
+        double calori = 0.0000000;
+        calori = ((age * 0.2017) + (weight * 0.1988) + (heartRate * 0.6309) - 55.0969) / 4.184;
+        Log.e("hearRate2CaloriFor", "Man Calori UNIT_MILLS=" + calori);
+
+        if (calori < 0) {
+            calori = 0;
+        }
+        return calori;
+    }
+
+    public static boolean isValid(int heartRate, int age) {
+        if (hearRate2Percent(heartRate, getMaxHeartRate(age)) >= 50) {
+            return true;
+        }
+        return false;
+    }
+
+    //最大心率
+    public static int getMaxHeartRate(int age) {
+        int maxHeartRate = 220 - age;
+        return maxHeartRate;
     }
 }

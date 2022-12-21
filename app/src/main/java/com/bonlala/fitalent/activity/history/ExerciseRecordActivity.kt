@@ -89,7 +89,6 @@ class ExerciseRecordActivity : AppActivity(){
 
 
 
-
     override fun initData() {
 
         viewModel.allExerciseList.observe(this){

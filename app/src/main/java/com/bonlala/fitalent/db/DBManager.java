@@ -97,6 +97,17 @@ public class DBManager {
         return userInfoModel.getUserBindMac();
     }
 
+    /**
+     * 获取用户绑定的设备类型，未绑定为0
+     * @return
+     */
+    public static int getBindDeviceType(){
+        UserInfoModel  userInfoModel = getUserInfo();
+        if(userInfoModel == null){
+            return 0;
+        }
+        return userInfoModel.getUserBindDeviceType();
+    }
 
     //查询用户的信息，单机版实际上就只有一条用户信息
     public static UserInfoModel getUserInfo(){

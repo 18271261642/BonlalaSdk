@@ -217,6 +217,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:src="@mipmap/ic_share_logo"/>
                 <View
                     android:layout_width="0dp"
@@ -225,8 +226,8 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="invisible"
-                    android:src="@mipmap/ic_share_logo"/>
+                    android:visibility="visible"
+                    android:src="@mipmap/fitalent_download_qr"/>
                 <View
                     android:layout_width="0dp"
                     android:layout_height="1dp"

@@ -81,7 +81,7 @@ class HistoryHeartFragment : TitleBarFragment<RecordHistoryActivity>(),OnRecordH
         chartViewUtils = StepChartViewUtils(detailHeartView)
         viewModel.getAllHrRecord(mac)
 
-        getDayHeart("innitData")
+
     }
 
 
@@ -92,8 +92,16 @@ class HistoryHeartFragment : TitleBarFragment<RecordHistoryActivity>(),OnRecordH
     private fun showResult() {
 
         viewModel.hrRecordList.observe(viewLifecycleOwner){
+            Timber.e("--------记录="+Gson().toJson(it))
             hrRecordList.clear()
             hrRecordList.addAll(it)
+            if(it != null){
+                dayStr = it[0]
+            }else{
+                dayStr = BikeUtils.getCurrDate()
+            }
+
+            getDayHeart("innitData")
         }
 
 

@@ -20,7 +20,7 @@ import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 /**
- * Created by Admin
+ * 绘制进度条
  *
  * @author Admin
  */
@@ -41,8 +41,6 @@ public class CusScheduleView extends View {
     private int allShceduleColor;
     //当前进度颜色
     private int currShceduleColor;
-
-
 
     //宽度
     private float mWidth,mHeight;
@@ -66,6 +64,10 @@ public class CusScheduleView extends View {
     private boolean isShowTxt =true;
 
 
+
+    //分组计时
+
+
     public CusScheduleView(Context context) {
         super(context);
     }
@@ -80,6 +82,7 @@ public class CusScheduleView extends View {
         initAttar(context,attrs);
     }
 
+    //初始化默认配置
     private void initAttar(Context context, AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CusScheduleView);
         allShceduleColor = typedArray.getColor(R.styleable.CusScheduleView_cus_all_schedule_color,Color.BLUE);
@@ -92,7 +95,7 @@ public class CusScheduleView extends View {
     }
 
 
-
+    //初始化画笔
     private void initPaint() {
         allSchedulePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         allSchedulePaint.setStyle(Paint.Style.FILL_AND_STROKE);
@@ -138,6 +141,7 @@ public class CusScheduleView extends View {
         drawSchedule(canvas);
     }
 
+    //开始绘制
     RectF currRectf;
     private void drawSchedule(Canvas canvas) {
         float currV = (currScheduleValue / allScheduleValue *mWidth);
@@ -200,6 +204,7 @@ public class CusScheduleView extends View {
 
 
 
+    //属性动画效果
     public void setCurrScheduleValue(float currScheduleValues, final long time){
         float currV = currScheduleValue >= allScheduleValue ? getMeasuredWidth() : currScheduleValue / allScheduleValue * getMeasuredWidth();
         objectAnimator = ObjectAnimator.ofFloat(0,currV);//new TranslateAnimation(0,currV, Animation.ABSOLUTE,Animation.ABSOLUTE);

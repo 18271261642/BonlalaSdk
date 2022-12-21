@@ -45,6 +45,12 @@ public class UserInfoModel extends LitePalSupport {
      */
     private String userBindMac;
 
+    /**
+     * 新增字段 2022-12-13
+     * 用户绑定的设备类型，整数型类型，eg:W560B -> 56011,根据蓝牙名称判断类型
+     */
+    private int userBindDeviceType;
+
     //备注
     private String remark;
 
@@ -167,5 +173,13 @@ public class UserInfoModel extends LitePalSupport {
 
     public void setUserBindMac(String userBindMac) {
         this.userBindMac = userBindMac;
+    }
+
+    public int getUserBindDeviceType() {
+        return userBindDeviceType;
+    }
+
+    public void setUserBindDeviceType(int userBindDeviceType) {
+        this.userBindDeviceType = userBindDeviceType;
     }
 }

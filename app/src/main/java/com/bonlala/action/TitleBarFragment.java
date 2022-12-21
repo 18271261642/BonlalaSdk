@@ -1,6 +1,11 @@
 package com.bonlala.action;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ForegroundColorSpan;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
@@ -121,6 +126,7 @@ public abstract class TitleBarFragment<A extends AppActivity> extends AppFragmen
         WindowManager.LayoutParams layoutParams  = window.getAttributes();
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         layoutParams.height = displayMetrics.heightPixels;
+        window.getDecorView().setPadding(0,0,0,0);
         window.setAttributes(layoutParams);
 
         calendarSelectDialog.setMarkCalendarDate(dayList);
@@ -134,5 +140,24 @@ public abstract class TitleBarFragment<A extends AppActivity> extends AppFragmen
     protected void hidCalendarDialog(){
         if(calendarSelectDialog != null)
             calendarSelectDialog.dismiss();
+    }
+
+
+    /**
+     * 设置大小
+     * @param value 值
+     * @param unitType 单位 eg: km ,kcal ..
+     * @return eg:100 km
+     */
+    protected SpannableString getTargetType(String value, String unitType){
+
+        String distance = value;
+
+        distance = distance+" "+unitType;
+        SpannableString spannableString = new SpannableString(distance);
+        spannableString.setSpan(new AbsoluteSizeSpan(14,true),distance.length()-unitType.length(),distance.length(),SpannableString.SPAN_INCLUSIVE_EXCLUSIVE);
+
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#ACACAC")),distance.length()-unitType.length(),distance.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return spannableString;
     }
 }

@@ -26,13 +26,17 @@ import com.bonlala.base.FragmentPagerAdapter
 import com.bonlala.fitalent.activity.DfuActivity
 import com.bonlala.fitalent.activity.ShowWebActivity
 import com.bonlala.fitalent.adapter.NavigationAdapter
+import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.dialog.AppUpdateDialog
 import com.bonlala.fitalent.dialog.ConnTimeOutDialogView
 import com.bonlala.fitalent.dialog.DfuUpgradeDialog
 import com.bonlala.fitalent.emu.ConnStatus
+import com.bonlala.fitalent.emu.DeviceType
 import com.bonlala.fitalent.http.api.AppVersionApi
 import com.bonlala.fitalent.ui.dashboard.DashboardFragment
+import com.bonlala.fitalent.ui.home.BaseHomeFragment
 import com.bonlala.fitalent.ui.home.HomeFragment
+import com.bonlala.fitalent.ui.home.HrBeltHomeFragment
 import com.bonlala.fitalent.ui.notifications.NotificationsFragment
 import com.bonlala.fitalent.utils.BikeUtils
 import com.bonlala.fitalent.utils.MmkvUtils
@@ -113,13 +117,7 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
 
     override fun initData() {
 
-
-        mPagerAdapter = FragmentPagerAdapter(this)
-        mPagerAdapter?.addFragment(HomeFragment().newInstance())
-        mPagerAdapter?.addFragment(DashboardFragment().getInstance())
-
-        mPagerAdapter?.addFragment(NotificationsFragment().getInstance())
-        mViewPager?.adapter = mPagerAdapter
+        checkDeviceTypeFragment()
 
         onNewIntent(intent)
         val mac = MmkvUtils.getConnDeviceMac()
@@ -138,6 +136,35 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
     }
 
 
+    //显示不同的设备类型fragment
+    fun checkDeviceTypeFragment(){
+        val type = DBManager.getBindDeviceType()
+        Timber.e("------deviceType="+type)
+        mPagerAdapter = FragmentPagerAdapter(this)
+        if(type == DeviceType.DEVICE_561){
+            mPagerAdapter?.addFragment(HrBeltHomeFragment().getInstance())
+        }else{
+            mPagerAdapter?.addFragment(HomeFragment().newInstance())
+        }
+
+        mPagerAdapter?.addFragment(DashboardFragment().getInstance())
+
+        mPagerAdapter?.addFragment(NotificationsFragment().getInstance())
+        mViewPager?.adapter = mPagerAdapter
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        Timber.e("-------homeActivityResult="+requestCode+" "+resultCode)
+
+        checkDeviceTypeFragment()
+    }
+
+
+
+    //验证设备的版本
     private fun verticalDeviceVersion() {
         viewModel.getAppVersion(this)
         viewModel.isShowDfuAlert.observe(this) {
@@ -387,5 +414,13 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
 
     fun setImgStatus(isShow: Boolean){
         isShowConnImg = isShow
+    }
+
+
+
+
+    //显示和隐藏底部菜单，心率带使用
+    fun setVisibilityBottomMenu(isShow : Boolean){
+        mNavigationView?.visibility = if(isShow) View.VISIBLE else View.GONE
     }
 }
