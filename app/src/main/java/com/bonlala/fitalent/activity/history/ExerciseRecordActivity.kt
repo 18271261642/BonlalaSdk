@@ -14,6 +14,7 @@ import com.bonlala.fitalent.bean.ExerciseShowBean
 import com.bonlala.fitalent.ble.DataOperateManager
 import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.dialog.ExerciseFilterDialogView
+import com.bonlala.fitalent.emu.DeviceType
 import com.bonlala.fitalent.emu.W560BExerciseType
 import com.bonlala.fitalent.utils.BikeUtils
 import com.bonlala.fitalent.utils.CalculateUtils
@@ -52,6 +53,14 @@ class ExerciseRecordActivity : AppActivity(){
 
         val isKm = MmkvUtils.getUnit()
 //        exerciseUnitTv.text = if(isKm) "km" else "mi"
+
+
+        //判断是哪个设备，
+        //是否是心率带
+        val isHrBelt = DBManager.getBindDeviceType() == DeviceType.DEVICE_561
+        hrBeltHrLayout.visibility = if(isHrBelt) View.VISIBLE else View.GONE
+
+
     }
 
 
@@ -63,6 +72,7 @@ class ExerciseRecordActivity : AppActivity(){
     }
 
 
+    //显示过滤的跳槽
     private fun showFilterDialog(){
         val dialog = ExerciseFilterDialogView(this, com.bonlala.base.R.style.BaseDialogTheme)
         dialog.show()
@@ -149,6 +159,11 @@ class ExerciseRecordActivity : AppActivity(){
         var totalTime =0
         var distance = 0
         var kcal = 0
+
+        //计算心率带最大最小平均心率
+        var hrBeltMaxHr = 0
+        var hrBeltMinHr = 0
+        var hrBeltAvgHr = 0
 
         var count = 0
         list.forEach { it ->

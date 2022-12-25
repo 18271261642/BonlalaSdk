@@ -18,13 +18,13 @@ import com.bonlala.fitalent.adapter.ItemExerciseAdapter
 import com.bonlala.fitalent.bean.ExerciseItemBean
 import com.bonlala.fitalent.chartview.LineChartEntity
 import com.bonlala.fitalent.chartview.PieChartUtils
+import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.db.model.ExerciseModel
 import com.bonlala.fitalent.emu.W560BExerciseType
 import com.bonlala.fitalent.utils.*
 import com.hjq.permissions.XXPermissions
 import kotlinx.android.synthetic.main.activity_exercise_detail_layout.*
 import kotlinx.android.synthetic.main.item_detail_sport_top_layout.*
-import kotlinx.android.synthetic.main.item_sport_record_item_layout.itemSportTypeImg
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -289,90 +289,136 @@ class ExerciseDetailActivity : AppActivity() {
     private fun getTypeMap(exerciseModel: ExerciseModel): List<ExerciseItemBean>? {
         val type = exerciseModel.type
         val isKm = MmkvUtils.getUnit()
+        val isW560 = DBManager.getBindDeviceType() == 56011
+        if(isW560){
+            return if (type == W560BExerciseType.TYPE_WALK || type == W560BExerciseType.TYPE_RUN) {
+                val distance = exerciseModel.distance
+                val disStr = CalculateUtils.mToKm(distance)
+                val list: MutableList<ExerciseItemBean> = ArrayList()
 
-        return if (type == W560BExerciseType.TYPE_WALK || type == W560BExerciseType.TYPE_RUN) {
-            val distance = exerciseModel.distance
-            val disStr = CalculateUtils.mToKm(distance)
+
+                list.add(
+                    ExerciseItemBean(
+                        resources.getString(R.string.string_distance),
+                        getTargetType(if(isKm) disStr.toString() else CalculateUtils.kmToMiValue(disStr).toString(), if(isKm) "km" else "mi")
+                    )
+                )
+                list.add(
+                    ExerciseItemBean(
+                        resources.getString(R.string.string_consumption),
+                        getTargetType(exerciseModel.kcal.toString() + "", "kcal")
+                    )
+                )
+                list.add(
+                    ExerciseItemBean(
+                        resources.getString(R.string.string_count_step),
+                        getTargetType(
+                            exerciseModel.countStep.toString() + "",
+                            resources.getString(R.string.string_step)
+                        )
+                    )
+                )
+                list.add(
+                    ExerciseItemBean(
+                        resources.getString(R.string.string_avg_hr),
+                        getTargetType(exerciseModel.avgHr.toString() + "", "bpm")
+                    )
+                )
+
+                //计算速度
+                val time = exerciseModel.exerciseMinute
+                //速度=距离/时间
+                //速度=距离/时间
+                //速度=距离/时间
+                val speed = CalculateUtils.div(exerciseModel.avgSpeed.toDouble(), 10.0, 2)
+
+
+                //计算配速
+
+
+                //计算配速
+
+                val pace = CalculateUtils.div(time.toDouble(),if(isKm) disStr.toDouble() else CalculateUtils.kmToMiValue(disStr).toDouble(),3)
+
+                list.add(
+                    ExerciseItemBean(
+                        resources.getString(R.string.string_place),
+                        getTargetType(
+                            CalculateUtils.getFloatPace(pace.toFloat()),
+                            ""
+                        )
+                    )
+                )
+
+                list.add(
+                    ExerciseItemBean(
+                        resources.getString(R.string.string_speed),
+                        getTargetType(if(isKm)CalculateUtils.keepPoint(speed, 2).toString() else CalculateUtils.keepPoint(
+                            CalculateUtils.kmToMiValue(speed.toFloat()).toDouble(),2).toString(), if(isKm) "km/h" else "mi/h")
+                    )
+                )
+                list
+            } else {
+                val list: MutableList<ExerciseItemBean> = ArrayList()
+                list.add(
+                    ExerciseItemBean(
+                        resources.getString(R.string.string_avg_hr),
+                        getTargetType(exerciseModel.avgHr.toString() + "", "bpm")
+                    )
+                )
+                list.add(
+                    ExerciseItemBean(
+                        resources.getString(R.string.string_consumption),
+                        getTargetType(exerciseModel.kcal.toString() + "", "kcal")
+                    )
+                )
+                list
+            }
+        }else{
             val list: MutableList<ExerciseItemBean> = ArrayList()
+            //心率的集合
+            val hrList = exerciseModel.hrList
+            //最大心率
+            val maxValue = if (hrList == null) 0 else Collections.max(hrList)
+            //最小心率
+            val minValue = if (hrList == null) 0 else Collections.min(hrList)
 
-
+            //平均心率
             list.add(
                 ExerciseItemBean(
-                    resources.getString(R.string.string_distance),
-                    getTargetType(if(isKm) disStr.toString() else CalculateUtils.kmToMiValue(disStr).toString(), if(isKm) "km" else "mi")
+                    resources.getString(R.string.string_avg_hr),
+                    getTargetType(
+                        if (exerciseModel.avgHr == 0) "--" else exerciseModel.avgHr.toString() + "",
+                        "bpm"
+                    )
                 )
             )
+            //最大心率
+            list.add(
+                ExerciseItemBean(
+                    resources.getString(R.string.string_max_hr),
+                    getTargetType(if (maxValue == 0) "--" else maxValue.toString() + "", "bpm")
+                )
+            )
+
+            //最小心率
+            list.add(
+                ExerciseItemBean(
+                    resources.getString(R.string.string_min_hr),
+                    getTargetType(if (minValue == 0) "--" else minValue.toString() + "", "bpm")
+                )
+            )
+            //卡路里
             list.add(
                 ExerciseItemBean(
                     resources.getString(R.string.string_consumption),
                     getTargetType(exerciseModel.kcal.toString() + "", "kcal")
                 )
             )
-            list.add(
-                ExerciseItemBean(
-                    resources.getString(R.string.string_count_step),
-                    getTargetType(
-                        exerciseModel.countStep.toString() + "",
-                        resources.getString(R.string.string_step)
-                    )
-                )
-            )
-            list.add(
-                ExerciseItemBean(
-                    resources.getString(R.string.string_avg_hr),
-                    getTargetType(exerciseModel.avgHr.toString() + "", "bpm")
-                )
-            )
 
-            //计算速度
-            val time = exerciseModel.exerciseMinute
-            //速度=距离/时间
-            //速度=距离/时间
-            //速度=距离/时间
-            val speed = CalculateUtils.div(exerciseModel.avgSpeed.toDouble(), 10.0, 2)
-
-
-            //计算配速
-
-
-            //计算配速
-
-            val pace = CalculateUtils.div(time.toDouble(),if(isKm) disStr.toDouble() else CalculateUtils.kmToMiValue(disStr).toDouble(),3)
-
-            list.add(
-                ExerciseItemBean(
-                    resources.getString(R.string.string_place),
-                    getTargetType(
-                        CalculateUtils.getFloatPace(pace.toFloat()),
-                        ""
-                    )
-                )
-            )
-
-            list.add(
-                ExerciseItemBean(
-                    resources.getString(R.string.string_speed),
-                    getTargetType(if(isKm)CalculateUtils.keepPoint(speed, 2).toString() else CalculateUtils.keepPoint(
-                        CalculateUtils.kmToMiValue(speed.toFloat()).toDouble(),2).toString(), if(isKm) "km/h" else "mi/h")
-                )
-            )
-            list
-        } else {
-            val list: MutableList<ExerciseItemBean> = ArrayList()
-            list.add(
-                ExerciseItemBean(
-                    resources.getString(R.string.string_avg_hr),
-                    getTargetType(exerciseModel.avgHr.toString() + "", "bpm")
-                )
-            )
-            list.add(
-                ExerciseItemBean(
-                    resources.getString(R.string.string_consumption),
-                    getTargetType(exerciseModel.kcal.toString() + "", "kcal")
-                )
-            )
-            list
+            return list
         }
+
     }
 
 

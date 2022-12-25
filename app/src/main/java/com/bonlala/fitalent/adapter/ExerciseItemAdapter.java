@@ -13,8 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bonlala.base.BaseAdapter;
+import com.bonlala.fitalent.BaseApplication;
 import com.bonlala.fitalent.R;
 import com.bonlala.fitalent.bean.ExerciseItemBean;
+import com.bonlala.fitalent.db.DBManager;
 import com.bonlala.fitalent.db.model.ExerciseModel;
 import com.bonlala.fitalent.emu.W560BExerciseType;
 import com.bonlala.fitalent.utils.CalculateUtils;
@@ -22,12 +24,14 @@ import com.bonlala.fitalent.utils.MmkvUtils;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import timber.log.Timber;
@@ -44,6 +48,8 @@ public class ExerciseItemAdapter extends AppAdapter<ExerciseModel> {
         super(context);
     }
 
+
+
     @NonNull
     @Override
     public BaseAdapter<?>.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -52,35 +58,57 @@ public class ExerciseItemAdapter extends AppAdapter<ExerciseModel> {
 
     private final class ExerciseItemViewHolder extends AppAdapter<?>.ViewHolder{
 
+        private ConstraintLayout itemRecordWatchLayout;
         private TextView itemExerciseTypeNameTv;
         private ImageView itemSportTypeImg;
         private TextView itemExerciseStartTimeTv;
         private TextView itemSportTimeTv;
-        private TextView itemExerciseDistanceTv;
-        private TextView itemExerciseKcalTv;
-        private TextView itemExerciseStepTv;
-        private  TextView itemExerciseAvgHrTv;
-        private TextView itemExercisePaceTv;
-        private TextView itemExerciseSpeedTv;
+
+
+        //心率带的布局 ，非心率带时隐藏
+        private ConstraintLayout itemHrBeltTitleLayout;
+        //类型图片
+        private ImageView itemHrSportTypeImg;
+        //普通计时或分组计时
+        private TextView itemHrTypeTv;
+        //运动时长
+        private TextView itemHrSportTimeTv;
+        //开始和结束时间
+        private TextView itemHrSportStartEndTimeTv;
+
+
 
         private RecyclerView itemExerciseTypeRy;
 
         public ExerciseItemViewHolder() {
             super(R.layout.item_sport_record_item_layout);
 
+            itemRecordWatchLayout = findViewById(R.id.itemRecordWatchLayout);
             itemExerciseTypeRy = findViewById(R.id.itemExerciseTypeRy);
 
             itemExerciseTypeNameTv = findViewById(R.id.itemExerciseTypeNameTv);
             itemSportTypeImg = findViewById(R.id.itemSportTypeImg);
             itemExerciseStartTimeTv = findViewById(R.id.itemExerciseStartTimeTv);
             itemSportTimeTv = findViewById(R.id.itemSportTimeTv);
-            itemExerciseDistanceTv = findViewById(R.id.itemExerciseDistanceTv);
-            itemExerciseKcalTv = findViewById(R.id.itemExerciseKcalTv);
-            itemExerciseStepTv = findViewById(R.id.itemExerciseStepTv);
-            itemExerciseAvgHrTv = findViewById(R.id.itemExerciseAvgHrTv);
-            itemExercisePaceTv = findViewById(R.id.itemExercisePaceTv);
+//            itemExerciseDistanceTv = findViewById(R.id.itemExerciseDistanceTv);
+//            itemExerciseKcalTv = findViewById(R.id.itemExerciseKcalTv);
+//            itemExerciseStepTv = findViewById(R.id.itemExerciseStepTv);
+//            itemExerciseAvgHrTv = findViewById(R.id.itemExerciseAvgHrTv);
+//            itemExercisePaceTv = findViewById(R.id.itemExercisePaceTv);
+//
+//            itemExerciseSpeedTv = findViewById(R.id.itemExerciseSpeedTv);
 
-            itemExerciseSpeedTv = findViewById(R.id.itemExerciseSpeedTv);
+
+
+            itemHrBeltTitleLayout = findViewById(R.id.itemHrBeltTitleLayout);
+            itemHrSportTypeImg = findViewById(R.id.itemHrSportTypeImg);
+            itemHrTypeTv = findViewById(R.id.itemHrTypeTv);
+            itemHrSportTimeTv = findViewById(R.id.itemHrSportTimeTv);
+            itemHrSportStartEndTimeTv = findViewById(R.id.itemHrSportStartEndTimeTv);
+
+
+
+
         }
 
         @Override
@@ -93,10 +121,7 @@ public class ExerciseItemAdapter extends AppAdapter<ExerciseModel> {
             itemExerciseTypeRy.setAdapter(itemAdapter);
 
 
-            itemExerciseTypeNameTv.setText(W560BExerciseType.getW560BTypeName(exerciseModel.getType(),getContext()));
-            itemExerciseStartTimeTv.setText(exerciseModel.getStartTimeStr()+"~"+exerciseModel.getEndTimeStr());
-            itemSportTimeTv.setText(exerciseModel.getHourMinute());
-//
+
 //
 //            int distance = exerciseModel.getDistance();
 //            float disStr = CalculateUtils.mToKm(distance);
@@ -112,7 +137,25 @@ public class ExerciseItemAdapter extends AppAdapter<ExerciseModel> {
 
             //显示类型的图片
             int imgType = getTypeResource(exerciseModel.getType());
-            Glide.with(getContext()).load(imgType).into(itemSportTypeImg);
+
+            Timber.e("----------类型="+DBManager.getBindDeviceType());
+            //560B手表
+            if(DBManager.getBindDeviceType() == 56011){
+                itemRecordWatchLayout.setVisibility(View.VISIBLE);
+                itemHrBeltTitleLayout.setVisibility(View.GONE);
+                itemExerciseTypeNameTv.setText(W560BExerciseType.getW560BTypeName(exerciseModel.getType(),getContext()));
+                itemExerciseStartTimeTv.setText(exerciseModel.getStartTimeStr()+"~"+exerciseModel.getEndTimeStr());
+                itemSportTimeTv.setText(exerciseModel.getHourMinute());
+
+                Glide.with(getContext()).load(imgType).into(itemSportTypeImg);
+            }else{  //心率带
+                itemRecordWatchLayout.setVisibility(View.GONE);
+                itemHrBeltTitleLayout.setVisibility(View.VISIBLE);
+                itemHrTypeTv.setText(W560BExerciseType.getW560BTypeName(exerciseModel.getType(),getContext()));
+                itemHrSportTimeTv.setText(exerciseModel.getHourMinute());
+                itemHrSportStartEndTimeTv.setText(exerciseModel.getStartTimeStr()+"~"+exerciseModel.getEndTimeStr());
+                Glide.with(getContext()).load(imgType).into(itemHrSportTypeImg);
+            }
 
         }
     }
@@ -210,48 +253,77 @@ public class ExerciseItemAdapter extends AppAdapter<ExerciseModel> {
 
 
     private List<ExerciseItemBean> getTypeMap(ExerciseModel exerciseModel){
-
         int type = exerciseModel.getType();
-        if(type == W560BExerciseType.TYPE_WALK || type == W560BExerciseType.TYPE_RUN){
-            int distance = exerciseModel.getDistance();
-            float disStr = CalculateUtils.mToKm(distance);
+        /**
+         * 判断是否是心率带，心率带有4组，最大、最小、平均心率和消耗
+         */
+        if(DBManager.getBindDeviceType() != 56011){
             List<ExerciseItemBean> list = new ArrayList<>();
 
-            //公英制
-            boolean isKm = MmkvUtils.getUnit();
+            //心率的集合
+            List<Integer> hrList = exerciseModel.getHrList();
+            //最大心率
+            int maxValue = hrList == null ? 0 : Collections.max(hrList);
+            //最小心率
+            int minValue = hrList == null ? 0 : Collections.min(hrList);
 
 
-            list.add(new ExerciseItemBean(getResources().getString(R.string.string_distance),getTargetType((isKm ? disStr : CalculateUtils.kmToMiValue(disStr))+"",isKm ? "km" : "mi")));
-            list.add(new ExerciseItemBean(getResources().getString(R.string.string_consumption),getTargetType(exerciseModel.getKcal()+"","kcal")));
-            list.add(new ExerciseItemBean(getResources().getString(R.string.string_count_step),getTargetType(exerciseModel.getCountStep()+"",getResources().getString(R.string.string_step))));
+            //平均心率
             list.add(new ExerciseItemBean(getResources().getString(R.string.string_avg_hr),getTargetType(exerciseModel.getAvgHr() == 0 ? "--":
                     exerciseModel.getAvgHr()+"","bpm")));
 
-            //计算速度
-            float time = exerciseModel.getExerciseMinute();
-            //速度=距离/时间
-            double speed = CalculateUtils.div(exerciseModel.getAvgSpeed(),10,2);
+            //最大心率
+            list.add(new ExerciseItemBean(getResources().getString(R.string.string_max_hr),getTargetType(maxValue == 0 ? "--":
+                    maxValue+"","bpm")));
 
 
-            //计算配速
-            double pace = CalculateUtils.div(time,isKm ? disStr : CalculateUtils.kmToMiValue(disStr),3);
-
-            Timber.e("----配速="+pace);
-            list.add(new ExerciseItemBean(getResources().getString(R.string.string_place), getTargetType(CalculateUtils.getFloatPace((float) pace),"")));
-
-
-            list.add(new ExerciseItemBean(getResources().getString(R.string.string_speed),getTargetType((isKm ? CalculateUtils.keepPoint(speed,2) : CalculateUtils.keepPoint(CalculateUtils.kmToMiValue((float) speed),2))+"",isKm ? "km/h" : "mi/h")));
-
-            return list;
-
-        }else{
-            List<ExerciseItemBean> list = new ArrayList<>();
-            list.add(new ExerciseItemBean(getResources().getString(R.string.string_avg_hr),getTargetType(exerciseModel.getAvgHr() == 0 ? "--":exerciseModel.getAvgHr()+"","bpm")));
+            //最小心率
+            list.add(new ExerciseItemBean(getResources().getString(R.string.string_min_hr),getTargetType(minValue == 0 ? "--":
+                    minValue+"","bpm")));
+            //卡路里
             list.add(new ExerciseItemBean(getResources().getString(R.string.string_consumption),getTargetType(exerciseModel.getKcal()+"","kcal")));
-
             return list;
-        }
+        }else{
+            if(type == W560BExerciseType.TYPE_WALK || type == W560BExerciseType.TYPE_RUN){
+                int distance = exerciseModel.getDistance();
+                float disStr = CalculateUtils.mToKm(distance);
+                List<ExerciseItemBean> list = new ArrayList<>();
 
+                //公英制
+                boolean isKm = MmkvUtils.getUnit();
+
+
+                list.add(new ExerciseItemBean(getResources().getString(R.string.string_distance),getTargetType((isKm ? disStr : CalculateUtils.kmToMiValue(disStr))+"",isKm ? "km" : "mi")));
+                list.add(new ExerciseItemBean(getResources().getString(R.string.string_consumption),getTargetType(exerciseModel.getKcal()+"","kcal")));
+                list.add(new ExerciseItemBean(getResources().getString(R.string.string_count_step),getTargetType(exerciseModel.getCountStep()+"",getResources().getString(R.string.string_step))));
+                list.add(new ExerciseItemBean(getResources().getString(R.string.string_avg_hr),getTargetType(exerciseModel.getAvgHr() == 0 ? "--":
+                        exerciseModel.getAvgHr()+"","bpm")));
+
+                //计算速度
+                float time = exerciseModel.getExerciseMinute();
+                //速度=距离/时间
+                double speed = CalculateUtils.div(exerciseModel.getAvgSpeed(),10,2);
+
+
+                //计算配速
+                double pace = CalculateUtils.div(time,isKm ? disStr : CalculateUtils.kmToMiValue(disStr),3);
+
+                Timber.e("----配速="+pace);
+                list.add(new ExerciseItemBean(getResources().getString(R.string.string_place), getTargetType(CalculateUtils.getFloatPace((float) pace),"")));
+
+
+                list.add(new ExerciseItemBean(getResources().getString(R.string.string_speed),getTargetType((isKm ? CalculateUtils.keepPoint(speed,2) : CalculateUtils.keepPoint(CalculateUtils.kmToMiValue((float) speed),2))+"",isKm ? "km/h" : "mi/h")));
+
+                return list;
+
+            }else{
+                List<ExerciseItemBean> list = new ArrayList<>();
+                list.add(new ExerciseItemBean(getResources().getString(R.string.string_avg_hr),getTargetType(exerciseModel.getAvgHr() == 0 ? "--":exerciseModel.getAvgHr()+"","bpm")));
+                list.add(new ExerciseItemBean(getResources().getString(R.string.string_consumption),getTargetType(exerciseModel.getKcal()+"","kcal")));
+
+                return list;
+            }
+        }
     }
 
 

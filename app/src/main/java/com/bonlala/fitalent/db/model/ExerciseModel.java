@@ -1,9 +1,13 @@
 package com.bonlala.fitalent.db.model;
 
 import com.bonlala.fitalent.utils.CalculateUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.apache.commons.lang.StringUtils;
 import org.litepal.crud.LitePalSupport;
+
+import java.util.List;
 
 /**
  * 锻炼数据
@@ -71,6 +75,16 @@ public class ExerciseModel extends LitePalSupport {
     private String kcalArray;
 
 
+    /**
+     * 新增字段 最大、最小心率 心率带需要用到
+     */
+    private int maxHeartValue;
+    /**最小心率**/
+    private int minHeartValue;
+
+
+
+
 
 
     /**获取时分秒**/
@@ -114,6 +128,21 @@ public class ExerciseModel extends LitePalSupport {
 //    public float calculateSpeed(int distance){
 //         int allDistance =
 //    }
+
+
+    /**
+     * 获取心率的集合
+     * @return 集合
+     */
+    public List<Integer> getHrList(){
+        if(hrArray == null || hrArray.equals("[]")){
+            return null;
+        }
+        List<Integer> list = new Gson().fromJson(hrArray,new TypeToken<List<Integer>>(){}.getType());
+        return list == null || list.isEmpty() ? null : list;
+    }
+
+
 
 
     public String getHrArray() {
