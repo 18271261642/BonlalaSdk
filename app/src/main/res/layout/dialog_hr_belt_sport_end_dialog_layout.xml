@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/dp_300"
+    android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_gravity="center"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -24,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/string_sport_end"
+            android:layout_marginTop="@dimen/dp_15"
             android:textColor="#ff141418"
             android:textSize="28sp"
             android:layout_gravity="center"/>
@@ -52,7 +53,14 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="@string/string_avg_hr"
-                    android:textColor="#ffeb7f4c"
+                    android:textSize="14sp"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1.3"
+                    android:layout_height="wrap_content"
+                    android:text="@string/string_total_duration"
                     android:textSize="14sp"
                     />
 
@@ -60,17 +68,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="@string/string_max_hr"
-                    android:textColor="#ffeb7f4c"
-                    android:textSize="14sp"
-                    />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="@string/string_min_hr"
-                    android:textColor="#ffeb7f4c"
+                    android:text="@string/string_total_consumption"
                     android:textSize="14sp"
                     />
 
@@ -89,16 +87,16 @@
                     android:layout_height="wrap_content"
                     android:text="--"
                     android:textColor="@color/black"
-                    android:textSize="30sp"
+                    android:textSize="26sp"
                     android:id="@+id/dialogEndAvgHr"/>
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="1.3"
                     android:layout_height="wrap_content"
                     android:text="--"
                     android:textColor="@color/black"
-                    android:textSize="30sp"
+                    android:textSize="26sp"
                     android:id="@+id/dialogEndMaxHr"/>
 
                 <TextView
@@ -107,7 +105,7 @@
                     android:layout_height="wrap_content"
                     android:text="--"
                     android:textColor="@color/black"
-                    android:textSize="30sp"
+                    android:textSize="26sp"
                     android:id="@+id/dialogEndMinHr"/>
 
 
@@ -126,9 +124,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:shape_radius="@dimen/dp_10"
+            android:maxLength="20"
+            android:singleLine="true"
             android:paddingLeft="@dimen/dp_5"
             app:shape_solidColor="#FFF4F6FA"
             android:hint="输入运动名称"/>
+
+
+        <com.bonlala.fitalent.view.NaviTxt
+            android:id="@+id/noValidDataTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:gravity="center"
+            android:textColor="@color/common_text_color"
+            android:padding="@dimen/dp_5"
+            android:text="@string/string_hr_no_saved"/>
 
 
         <LinearLayout

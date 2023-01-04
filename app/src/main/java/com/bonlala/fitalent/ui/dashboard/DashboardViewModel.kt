@@ -39,7 +39,7 @@ class DashboardViewModel : ViewModel() {
     var deviceSetModel : DeviceSetModel?=null
 
     //电量
-     var batteryStr = MutableLiveData<String>()
+     var batteryStr = MutableLiveData<Int>()
 
      val byteArray = MutableLiveData<ByteArray>()
 
@@ -118,7 +118,7 @@ class DashboardViewModel : ViewModel() {
     fun getDeviceBattery(bleOperateManager: BleOperateManager){
         bleOperateManager.readBattery(object : OnCommBackDataListener{
             override fun onIntDataBack(value: IntArray?) {
-                batteryStr.postValue("电量:"+ (value?.get(0) ?: "--"))
+                batteryStr.postValue((value?.get(0)))
             }
 
             override fun onStrDataBack(vararg value: String?) {

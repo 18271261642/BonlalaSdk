@@ -7,6 +7,13 @@ import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
+
+import com.hjq.permissions.OnPermissionCallback;
+import com.hjq.permissions.XXPermissions;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.core.app.ActivityCompat;
 
@@ -63,6 +70,14 @@ public class BonlalaUtils {
                 //                                          int[] grantResults)
                 // to handle the case where the user grants the permission. See the documentation
                 // for ActivityCompat#requestPermissions for more details.
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    XXPermissions.with(activity).permission(Manifest.permission.BLUETOOTH_CONNECT).request(new OnPermissionCallback() {
+                        @Override
+                        public void onGranted(List<String> permissions, boolean all) {
+
+                        }
+                    });
+                }
                 return;
             }
             activity.startActivityForResult(requestBluetoothOn,

@@ -45,7 +45,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- * 首页面
+ * W560B首页面
  */
 class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
 
@@ -53,6 +53,8 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
     val viewModel by viewModels<HomeViewModel>()
     //数据源
     private var sourceList = mutableListOf<HomeSourceBean>()
+
+    private var homeDeviceStatusView : HomeDeviceStatusView ?= null
 
     private var homeRecyclerView : RecyclerView ?= null
     private var homeUiAdapter : HomeUiAdapter ?= null
@@ -74,6 +76,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
     }
 
     override fun initView() {
+        homeDeviceStatusView = findViewById(R.id.homeDeviceStatusView)
         homeRecyclerView = findViewById(R.id.homeRecyclerView)
         val linearLayoutManager = LinearLayoutManager(activity)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -151,12 +154,13 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
 
     //连接设备的点击
     private fun homeDeviceClick(){
-        val userMac = DBManager.getBindMac()
-        val connMac = MmkvUtils.getConnDeviceMac()
 
-        homeDeviceStatusView.setOnClickListener {
+
+        homeDeviceStatusView?.setOnClickListener {
+            val connMac = MmkvUtils.getConnDeviceMac()
+
             if(BikeUtils.isEmpty(connMac)){
-              //  startActivity(MainActivity::class.java)
+                //  startActivity(MainActivity::class.java)
                 val intent = Intent()
                 intent.setClass(attachActivity,MainActivity::class.java)
 
@@ -172,9 +176,9 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
             return
         }
 
-        homeDeviceStatusView.setCanClickStatus(BaseApplication.getInstance().connStatus == ConnStatus.CONNECTED,object : HomeDeviceStatusView.OnStatusViewClick{
+        homeDeviceStatusView?.setCanClickStatus(BaseApplication.getInstance().connStatus == ConnStatus.CONNECTED,object : HomeDeviceStatusView.OnStatusViewClick{
             override fun onStatusClick() {
-
+                val userMac = DBManager.getBindMac()
 
                 if(BikeUtils.isEmpty(userMac)){
                     startActivity(MainActivity::class.java)
@@ -187,7 +191,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
 
                 BaseApplication.getInstance().connStatus = ConnStatus.CONNECTING
                 attachActivity.autoConnDevice()
-                homeDeviceStatusView.setHomeConnStatus(ConnStatus.CONNECTING)
+                homeDeviceStatusView?.setHomeConnStatus(ConnStatus.CONNECTING)
             }
         })
 
@@ -264,8 +268,6 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
         super.onActivityResume()
         showDeviceStatus();
 
-        //查询数据库中的数据
-        getDataForDb()
     }
 
 
@@ -273,8 +275,8 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
         super.onFragmentResume(first)
         showDeviceStatus();
 
-        //查询数据库中的数据
-        getDataForDb()
+//        //查询数据库中的数据
+//        getDataForDb()
     }
 
 
@@ -394,8 +396,8 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
     private fun showDeviceStatus(){
         //判断是否连接过
         val bindMac = MmkvUtils.getConnDeviceMac()
-        if(BikeUtils.isEmpty(bindMac)){  //未连接过
-            homeDeviceStatusView.setIsConnRecord(false,"")
+        if(BikeUtils.isEmpty(bindMac) && homeDeviceStatusView != null){  //未连接过
+            homeDeviceStatusView!!.setIsConnRecord(false,"")
             showEmptyData()
             return
         }
@@ -406,27 +408,41 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
         }
         getDataForDb()
         val bleName = MmkvUtils.getConnDeviceName()
-        homeDeviceStatusView.setIsConnRecord(true,bleName)
+        homeDeviceStatusView?.setIsConnRecord(true,bleName)
         //连接过，判断状态
-        homeDeviceStatusView.setHomeConnStatus(BaseApplication.getInstance().connStatus)
+        homeDeviceStatusView?.setHomeConnStatus(BaseApplication.getInstance().connStatus)
         if(BaseApplication.getInstance().connStatus == ConnStatus.CONNECTED){
-            homeRefreshLayout.setEnableRefresh(true)
+            if(homeRefreshLayout != null){
+                homeRefreshLayout.setEnableRefresh(true)
+            }
+
         }
     }
 
 
     override fun onDestroy() {
         super.onDestroy()
-        activity?.unregisterReceiver(broadcastReceiver)
+        try {
+            activity?.unregisterReceiver(broadcastReceiver)
+        }catch (e : Exception){
+            e.printStackTrace()
+        }
     }
 
     private val broadcastReceiver : BroadcastReceiver = object : BroadcastReceiver(){
         override fun onReceive(p0: Context?, p1: Intent?) {
-            var action = p1?.action
-            Timber.e("--------action="+action)
+            val action = p1?.action
+
+            Timber.e("--------action="+action+" "+(activity?.isFinishing))
+
+
+
             //连接状态
             if (action == BleConstant.BLE_CONNECTED_ACTION || action == BleConstant.BLE_DIS_CONNECT_ACTION || action == BleConstant.BLE_SCAN_COMPLETE_ACTION){
-                showDeviceStatus()
+                if(activity?.isFinishing == false){
+                    showDeviceStatus()
+                }
+
             }
 
             if(action == BleConstant.COMM_BROADCAST_ACTION){
@@ -441,7 +457,7 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
                 if(homeRefreshLayout != null && homeRefreshLayout.isRefreshing){
                     homeRefreshLayout.finishRefresh()
                 }
-                homeDeviceStatusView.setHomeConnStatus(BaseApplication.getInstance().connStatus)
+                homeDeviceStatusView?.setHomeConnStatus(BaseApplication.getInstance().connStatus)
 
                 getDataForDb()
             }
@@ -466,6 +482,6 @@ class HomeFragment : TitleBarFragment<HomeActivity>() , OnRefreshListener {
         homeRefreshLayout.setEnableRefresh(true)
 
         DataOperateManager.getInstance(attachActivity).readAllDataSet(BleOperateManager.getInstance(),true)
-        homeDeviceStatusView.setHomeConnStatus(BaseApplication.getInstance().connStatus)
+        homeDeviceStatusView?.setHomeConnStatus(BaseApplication.getInstance().connStatus)
     }
 }

@@ -41,6 +41,11 @@ class HelpDialogView : AppCompatDialog ,View.OnClickListener{
     }
 
 
+    //是否显示操作指引
+    fun setIsShowGuid(isShow : Boolean){
+        helpGuideTv.visibility = if(isShow) View.VISIBLE else View.GONE
+    }
+
 
     override fun onClick(p0: View?) {
         val id = p0?.id

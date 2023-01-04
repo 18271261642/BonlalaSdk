@@ -950,6 +950,27 @@ public class BikeUtils {
 
 
     /**
+     * 格式化分钟
+     * @param minute 分钟
+     * @return
+     */
+    public static int[] formatHourAndMinuteArray(int minute){
+        int[] array = new int[2];
+        if(minute == 0){
+            return array;
+        }
+
+        int hour = minute / 60;
+        if(hour>=24){
+            hour = hour-24;
+        }
+        int m = minute % 60;
+        array[0] = hour;
+        array[1] = m;
+        return array;
+    }
+
+    /**
      * 将分钟格式化成HH:mm格式
      * @param minute 分钟
      * @return

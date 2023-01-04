@@ -243,8 +243,11 @@ public class HeartRateConvertUtils {
         double weightD = CalculateUtils.mul((double) weight, 0.1988);
         double heartRateD = CalculateUtils.mul((double) heartRate, 0.6309);
 
-        double calori = 0.0000000;
-        calori = ((age * 0.2017) + (weight * 0.1988) + (heartRate * 0.6309) - 55.0969) / 4.184;
+        double calori =0;
+
+
+
+        calori = ((age * 0.2017) + (weight * 0.1988) + (heartRate * 0.6309) - 55.0969) * 1 / 60/4.184;
         Log.e("hearRate2CaloriFor", "Man Calori UNIT_MILLS=" + calori);
 
         if (calori < 0) {

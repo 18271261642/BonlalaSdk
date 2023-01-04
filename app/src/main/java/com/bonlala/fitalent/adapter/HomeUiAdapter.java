@@ -30,6 +30,7 @@ import com.bonlala.fitalent.utils.BikeUtils;
 import com.bonlala.fitalent.utils.CalculateUtils;
 import com.bonlala.fitalent.utils.HeartRateConvertUtils;
 import com.bonlala.fitalent.utils.MmkvUtils;
+import com.bonlala.fitalent.utils.SpannableUtils;
 import com.bonlala.fitalent.view.CusDiastolicBpScheduleView;
 import com.bonlala.fitalent.view.CusSystolicBpScheduleView;
 import com.bonlala.fitalent.view.RealHrBarChartView;
@@ -481,12 +482,14 @@ public class HomeUiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             Timber.e("-------锻炼Adapter="+gson.toJson(exerciseHomeBean));
             String duration = exerciseHomeBean.getSportDuration();
 
+            SpannableString avgHr = SpannableUtils.getTargetType(exerciseHomeBean.getAvgHr()+"","bpm");
+            SpannableString kcalS = SpannableUtils.getTargetType(exerciseHomeBean.getKcal()+"","kcal");
 
-            ((HomeHrWallViewHolder) holder).itemHomeWallAvgTv.setText(exerciseHomeBean.getAvgHr()+"");
+            ((HomeHrWallViewHolder) holder).itemHomeWallAvgTv.setText(avgHr);
             ((HomeHrWallViewHolder) holder).itemHomeWallTimesTv.setText(exerciseHomeBean.getSportTimes()+"");
-            ((HomeHrWallViewHolder) holder).itemWallKcalTv.setText(exerciseHomeBean.getKcal()+"");
+            ((HomeHrWallViewHolder) holder).itemWallKcalTv.setText(kcalS);
             ((HomeHrWallViewHolder) holder).itemWallDurationTv.setText(duration);
-            ((HomeHrWallViewHolder) holder).homeHrBeltDateTv.setText(exerciseHomeBean.getDay());
+            ((HomeHrWallViewHolder) holder).homeHrBeltDateTv.setText(BikeUtils.isEqualDay(exerciseHomeBean.getDay(),BikeUtils.getCurrDate()) ? context.getResources().getString(R.string.string_today) : exerciseHomeBean.getDay());
 
         }
     }

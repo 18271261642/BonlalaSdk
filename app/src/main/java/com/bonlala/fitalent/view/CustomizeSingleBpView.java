@@ -107,7 +107,7 @@ public class CustomizeSingleBpView extends View {
         clickTxtPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         clickTxtPaint.setColor(Color.parseColor("#FF676767"));
         clickTxtPaint.setStrokeWidth(MiscUtil.dipToPx(getContext(),0.5f));
-        clickTxtPaint.setTextSize(MiscUtil.dipToPx(getContext(),13f));
+        clickTxtPaint.setTextSize(MiscUtil.dipToPx(getContext(),10f));
         clickTxtPaint.setAntiAlias(true);
 
 
@@ -121,7 +121,7 @@ public class CustomizeSingleBpView extends View {
         clickStatusPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         clickStatusPaint.setTextAlign(Paint.Align.CENTER);
         clickStatusPaint.setColor(Color.parseColor("#FF4DCC4B"));
-        clickStatusPaint.setStrokeWidth(MiscUtil.dipToPx(getContext(),0.8f));
+        clickStatusPaint.setStrokeWidth(MiscUtil.dipToPx(getContext(),0.5f));
         clickStatusPaint.setTextSize(MiscUtil.dipToPx(getContext(),10f));
         clickStatusPaint.setAntiAlias(true);
 
@@ -180,7 +180,7 @@ public class CustomizeSingleBpView extends View {
         String seconds = BikeUtils.getFormatDate(timeStr,"HH:mm:ss");
 
         canvas.drawText(year,mWidth/2,-tH*1.5f,txtPaint);
-        canvas.drawText(seconds,mWidth/2,0f,txtPaint);
+        canvas.drawText(seconds,mWidth/2,-2f,txtPaint);
 
         if(chartBpBean.isChecked()){
             canvasClickBg(canvas,year,seconds);
@@ -199,7 +199,7 @@ public class CustomizeSingleBpView extends View {
         float txtHeight = MiscUtil.measureTextHeight(clickTxtPaint);
 
 
-        float rectFBottom = -mHeight+txtHeight*4f;
+        float rectFBottom = -mHeight+txtHeight*5f;
 
         RectF rectF = new RectF(0,-mHeight+paddingWidth*2/2,mWidth,rectFBottom);
         canvas.drawRoundRect(rectF,10f,10f,clickBgPaint);
@@ -208,7 +208,7 @@ public class CustomizeSingleBpView extends View {
         canvas.drawText(bpStr,mWidth/2,-mHeight+txtHeight+paddingWidth*2,clickTxtPaint);
 
         clickStatusPaint.setColor(Color.parseColor("#FF4DCC4B"));
-        canvas.drawText(getContext().getString(R.string.string_normal),mWidth/2,-mHeight+txtHeight*2.2f+paddingWidth*2,clickStatusPaint);
+        canvas.drawText(getContext().getString(R.string.string_normal),mWidth/2,-mHeight+txtHeight*2.5f+paddingWidth*2,clickStatusPaint);
 
         clickStatusPaint.setColor(Color.parseColor("#FF676767"));
         long timeStr = Long.parseLong(chartBpBean.getxValue());

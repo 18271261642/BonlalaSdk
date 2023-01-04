@@ -130,6 +130,7 @@ public class BleManager {
 
 
 
+
     /**
      * 搜索设备
      * @param searchResponse 回调
@@ -138,6 +139,7 @@ public class BleManager {
      *   eg:duration=10 * 1000;times=1 表示：10s搜索一次，每次10s
      */
     public void startScanBleDevice(final SearchResponse searchResponse, int duration, int times){
+
         final SearchRequest searchRequest = new SearchRequest.Builder()
                 .searchBluetoothLeDevice(duration,times)
                 .build();

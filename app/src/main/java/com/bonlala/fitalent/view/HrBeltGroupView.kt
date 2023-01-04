@@ -134,8 +134,8 @@ class HrBeltGroupView : View {
         //当前进度
         val currentWidth = currentSchedule * unitLengthWidth
         val scheduleRectF = RectF(0f,0f,currentWidth,mHeight)
-        schedulePath?.addRoundRect(scheduleRectF,mHeight/2,mHeight/2,Path.Direction.CW)
-        schedulePath?.let { canvas?.clipPath(it) }
+//        schedulePath?.addRoundRect(scheduleRectF,mHeight/2,mHeight/2,Path.Direction.CW)
+//        schedulePath?.let { canvas?.clipPath(it) }
         currentPaint?.let { canvas?.drawRect(RectF(0f,0f,currentWidth,mHeight), it) }
 
     }

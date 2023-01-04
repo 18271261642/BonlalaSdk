@@ -7,6 +7,7 @@ import android.content.IntentFilter
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,27 +23,19 @@ import com.bonlala.fitalent.bean.HomeSourceBean
 import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.db.model.DataRecordModel
 import com.bonlala.fitalent.db.model.ExerciseModel
-import com.bonlala.fitalent.dialog.HeightSelectDialog
-import com.bonlala.fitalent.emu.ConnStatus
-import com.bonlala.fitalent.emu.DbType
-import com.bonlala.fitalent.emu.HomeDateType
-import com.bonlala.fitalent.emu.W560BExerciseType
+import com.bonlala.fitalent.dialog.HrBletDisconnDialog
+import com.bonlala.fitalent.emu.*
 import com.bonlala.fitalent.listeners.OnItemClickListener
 import com.bonlala.fitalent.listeners.OnStartOrEndListener
 import com.bonlala.fitalent.utils.BikeUtils
 import com.bonlala.fitalent.utils.MmkvUtils
 import com.bonlala.fitalent.view.HomeDeviceStatusView
+import com.bonlala.fitalent.view.HrBeltRealTimeView
 import com.bonlala.fitalent.viewmodel.HrBeltViewModel
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_home.homeDeviceStatusView
-import kotlinx.android.synthetic.main.fragment_hr_belt_home_layout.*
 import kotlinx.android.synthetic.main.item_home_wall_real_hr_layout.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import timber.log.Timber
-import kotlin.math.min
+
 
 /**
  * 心率带W561B设备
@@ -58,6 +51,9 @@ class HrBeltHomeFragment : TitleBarFragment<HomeActivity>(){
         return HrBeltHomeFragment()
     }
 
+
+    private var hrBeltRealTimeView : HrBeltRealTimeView ?= null
+    private var homeDeviceStatusView : HomeDeviceStatusView ?= null
 
     //实时心率的临时集合，用于计算最大最小心率
     private var realTimeHrList = mutableListOf<Int>()
@@ -99,6 +95,8 @@ class HrBeltHomeFragment : TitleBarFragment<HomeActivity>(){
         val linearLayoutManager = LinearLayoutManager(activity)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
 
+        homeDeviceStatusView = findViewById(R.id.homeDeviceStatusView)
+        hrBeltRealTimeView = findViewById(R.id.hrBeltRealTimeView)
         //取消动画
         homeRecyclerView?.itemAnimator = null
         homeRecyclerView?.layoutManager = linearLayoutManager
@@ -113,35 +111,33 @@ class HrBeltHomeFragment : TitleBarFragment<HomeActivity>(){
         val intentFilter = IntentFilter()
         intentFilter.addAction(BleConstant.BLE_CONNECTED_ACTION)
         intentFilter.addAction(BleConstant.BLE_DIS_CONNECT_ACTION)
-        intentFilter.addAction(BleConstant.BLE_SYNC_COMPLETE_SET_ACTION)
         intentFilter.addAction(BleConstant.COMM_BROADCAST_ACTION)
-        intentFilter.addAction(BleConstant.BLE_24HOUR_SYNC_COMPLETE_ACTION)
         intentFilter.addAction(BleConstant.BLE_SCAN_COMPLETE_ACTION)
         activity?.registerReceiver(broadcastReceiver, intentFilter)
 
         homeDeviceClick()
 
        //开始或结束的状态
-        hrBeltRealTimeView.setOnStartEndListener(object : OnStartOrEndListener{
+        hrBeltRealTimeView?.setOnStartEndListener(object : OnStartOrEndListener{
             //开始
             override fun startOrEndStatus(isStart: Boolean) {
                 isStartSport = true
                 recordExerciseHrList.clear()
                 //将柱状图的数据清0
-                hrBeltRealTimeView.setClearRealHrBarChartView()
+                hrBeltRealTimeView?.setClearRealHrBarChartView()
                 //将运动的累计卡路里清0
-                hrBeltRealTimeView.setInitTotalKcal()
+                hrBeltRealTimeView?.setInitTotalKcal()
                 //隐藏底部菜单
                 attachActivity.setVisibilityBottomMenu(false)
+                //将锻炼记录隐藏掉
+                homeRecyclerView?.visibility = View.GONE
             }
             //结束
             override fun endSportStatus(startTime: Long, sportTime: Int) {
                 endSport(startTime,sportTime)
-
             }
 
         })
-
 
     }
 
@@ -156,9 +152,11 @@ class HrBeltHomeFragment : TitleBarFragment<HomeActivity>(){
         isStartSport = false
         //计算数据，保存到数据库
         attachActivity.setVisibilityBottomMenu(true)
+        //将锻炼记录隐藏掉
+        homeRecyclerView?.visibility = View.VISIBLE
         val recordModel = DataRecordModel()
         recordModel.dayStr = BikeUtils.getCurrDate()
-        val status = hrBeltRealTimeView.getCountDownStatus()
+        val status = hrBeltRealTimeView?.getCountDownStatus()
         recordModel.dataType = DbType.DB_TYPE_EXERCISE
         recordModel.deviceMac = MmkvUtils.getConnDeviceMac()
         recordModel.deviceName = MmkvUtils.getConnDeviceName()
@@ -166,15 +164,13 @@ class HrBeltHomeFragment : TitleBarFragment<HomeActivity>(){
 
 
         //计算最大最小，平均心率
-        //最大心率
-        val maxValue = recordExerciseHrList.maxOf { i : Int -> i }
-        //最小值
-        val minValue = recordExerciseHrList.minOf { i : Int -> i }
         val avgValue = recordExerciseHrList.average().toInt()
 
-
         val exerciseModel = ExerciseModel()
-        exerciseModel.kcal = hrBeltRealTimeView.getSportTotalKcal().toInt()
+        val allKcal = hrBeltRealTimeView?.getSportTotalKcal()?.toInt()
+        if (allKcal != null) {
+            exerciseModel.kcal = allKcal
+        }
         exerciseModel.userId = "user_1001"
         exerciseModel.endTime = BikeUtils.getFormatDate(System.currentTimeMillis(),"yyyy-MM-dd HH:mm:ss")
         exerciseModel.avgHr = avgValue
@@ -188,20 +184,25 @@ class HrBeltHomeFragment : TitleBarFragment<HomeActivity>(){
         //运动类型
         exerciseModel.type = W560BExerciseType.getHrBeltSportType(status)
 
-
-        hrBeltRealTimeView.showAlertIsSave(avgValue,maxValue,minValue,exerciseModel
-        ) { mHandler.sendEmptyMessageDelayed(0x00, 500) }
-
+        if (allKcal != null) {
+            hrBeltRealTimeView?.showAlertIsSave(avgValue,exerciseModel.hourMinute,allKcal,exerciseModel
+            ) { mHandler.sendEmptyMessageDelayed(0x00, 500) }
+        }
 
     }
 
 
     //连接设备的点击
     private fun homeDeviceClick(){
-        val userMac = DBManager.getBindMac()
-        val connMac = MmkvUtils.getConnDeviceMac()
 
-        homeDeviceStatusView.setOnClickListener {
+        //设置显示的图片
+        homeDeviceStatusView?.setRightImgView(DeviceType.DEVICE_561)
+
+
+        homeDeviceStatusView?.setOnClickListener {
+
+            val connMac = MmkvUtils.getConnDeviceMac()
+
             if(BikeUtils.isEmpty(connMac)){
                 startActivity(MainActivity::class.java)
                 return@setOnClickListener
@@ -214,9 +215,9 @@ class HrBeltHomeFragment : TitleBarFragment<HomeActivity>(){
             return
         }
 
-        homeDeviceStatusView.setCanClickStatus(BaseApplication.getInstance().connStatus == ConnStatus.CONNECTED,object : HomeDeviceStatusView.OnStatusViewClick{
+        homeDeviceStatusView?.setCanClickStatus(BaseApplication.getInstance().connStatus == ConnStatus.CONNECTED,object : HomeDeviceStatusView.OnStatusViewClick{
             override fun onStatusClick() {
-
+                val userMac = DBManager.getBindMac()
                 if(BikeUtils.isEmpty(userMac)){
                     startActivity(MainActivity::class.java)
                     return
@@ -228,7 +229,7 @@ class HrBeltHomeFragment : TitleBarFragment<HomeActivity>(){
 
                 BaseApplication.getInstance().connStatus = ConnStatus.CONNECTING
                 attachActivity.autoConnDevice()
-                homeDeviceStatusView.setHomeConnStatus(ConnStatus.CONNECTING)
+                homeDeviceStatusView?.setHomeConnStatus(ConnStatus.CONNECTING)
             }
         })
 
@@ -241,7 +242,7 @@ class HrBeltHomeFragment : TitleBarFragment<HomeActivity>(){
         showDeviceStatus()
 
         showEmptyData()
-        hrBeltRealTimeView.setClearRealHrBarChartView()
+        hrBeltRealTimeView?.setClearRealHrBarChartView()
         realTimeHrList.clear()
         BaseApplication.getInstance().bleOperate.setRealTimeDataListener { ht, step, kcal, distance ->
             Timber.e("----实时心率="+ht)
@@ -262,6 +263,7 @@ class HrBeltHomeFragment : TitleBarFragment<HomeActivity>(){
     //计算实时的心率
     private fun showRealHr(ht : Int){
         if(ht<30){
+            hrBeltRealTimeView?.setZeroRealChart()
             return
         }
         realTimeHrList.add(ht)
@@ -274,7 +276,7 @@ class HrBeltHomeFragment : TitleBarFragment<HomeActivity>(){
         //最小值
         val minValue = realTimeHrList.minOf { i : Int -> i }
         val avgValue = realTimeHrList.average().toInt()
-        hrBeltRealTimeView.setRealTimeHrValue(ht,maxValue,minValue,avgValue,isStartSport)
+        hrBeltRealTimeView?.setRealTimeHrValue(ht,maxValue,minValue,avgValue,isStartSport)
     }
 
     //展示空数据，可以作为初始化使用
@@ -285,7 +287,26 @@ class HrBeltHomeFragment : TitleBarFragment<HomeActivity>(){
         //运动记录
         sourceList.add(HomeSourceBean(HomeDateType.HOME_HR_WALL_SPORT_RECORD,null))
         homeUiAdapter?.notifyDataSetChanged()
+
+        //将柱状图的数据清0
+        hrBeltRealTimeView?.setClearRealHrBarChartView()
+        //将运动的累计卡路里清0
+        hrBeltRealTimeView?.setInitTotalKcal()
     }
+
+
+    override fun onActivityResume() {
+        super.onActivityResume()
+        Timber.e("------onActivityResume")
+
+    }
+
+    override fun onFragmentResume(first: Boolean) {
+        super.onFragmentResume(first)
+        Timber.e("------onFragmentResume"+(activity?.isFinishing)+" "+first)
+        showDeviceStatus()
+    }
+
 
 
 
@@ -294,21 +315,35 @@ class HrBeltHomeFragment : TitleBarFragment<HomeActivity>(){
         //判断是否连接过
         val bindMac = MmkvUtils.getConnDeviceMac()
         if(BikeUtils.isEmpty(bindMac)){  //未连接过
-            homeDeviceStatusView.setIsConnRecord(false,"")
+            homeDeviceStatusView?.setIsConnRecord(false,"")
+            hrBeltRealTimeView?.visibility = View.GONE
             showEmptyData()
             return
         }
         val userMac = DBManager.getBindMac()
         if(BikeUtils.isEmpty(userMac)){
-
+            if(hrBeltRealTimeView != null){
+                hrBeltRealTimeView?.visibility = View.GONE
+            }
             return
         }
+        if(hrBeltRealTimeView != null){
+            hrBeltRealTimeView?.visibility = View.VISIBLE
+        }
+
         getDataForDb()
         val bleName = MmkvUtils.getConnDeviceName()
-        homeDeviceStatusView.setIsConnRecord(true,bleName)
+        homeDeviceStatusView?.setIsConnRecord(true,bleName)
         //连接过，判断状态
-        homeDeviceStatusView.setHomeConnStatus(BaseApplication.getInstance().connStatus)
+        homeDeviceStatusView?.setHomeConnStatus(BaseApplication.getInstance().connStatus)
 
+        val status = hrBeltRealTimeView?.getCountDownStatus()
+        //如果未连接就不显示实时心率
+        if(BaseApplication.getInstance().connStatus == ConnStatus.CONNECTED || status != CountDownStatus.DEFAULT_STATUS){
+            hrBeltRealTimeView?.visibility = View.VISIBLE
+        }else{
+            hrBeltRealTimeView?.visibility = View.GONE
+        }
     }
 
 
@@ -335,31 +370,44 @@ class HrBeltHomeFragment : TitleBarFragment<HomeActivity>(){
 
     private val broadcastReceiver : BroadcastReceiver = object : BroadcastReceiver(){
         override fun onReceive(p0: Context?, p1: Intent?) {
-            var action = p1?.action
-            Timber.e("--------action="+action)
+            val action = p1?.action
+            Timber.e("------心率带--action="+action)
             //连接状态
             if (action == BleConstant.BLE_CONNECTED_ACTION || action == BleConstant.BLE_DIS_CONNECT_ACTION || action == BleConstant.BLE_SCAN_COMPLETE_ACTION){
-                showDeviceStatus()
-            }
 
-            if(action == BleConstant.COMM_BROADCAST_ACTION){
-                val value = p1?.getIntArrayExtra(BleConstant.COMM_BROADCAST_KEY) as IntArray
-                Timber.e("------测量完查询="+value[0])
-                if(value[0] == BleConstant.MEASURE_COMPLETE_VALUE){
-                    //getDataForDb()
+
+                val isConn = BaseApplication.getInstance().connStatus == ConnStatus.CONNECTED || BaseApplication.getInstance().connStatus ==ConnStatus.IS_SYNC_DATA
+                if(!isConn ){
+                    showReconnDialog()
                 }
-            }
 
-            if(action == BleConstant.BLE_24HOUR_SYNC_COMPLETE_ACTION){
-
-                homeDeviceStatusView.setHomeConnStatus(BaseApplication.getInstance().connStatus)
-
-              //  getDataForDb()
+                showDeviceStatus()
             }
         }
 
     }
 
+    var reconnDialog : HrBletDisconnDialog ?= null
+
+    //展示重连的弹窗
+    private fun showReconnDialog(){
+        if(reconnDialog == null){
+            reconnDialog = HrBletDisconnDialog(attachActivity, com.bonlala.base.R.style.BaseDialogTheme)
+        }
+        reconnDialog!!.show()
+        reconnDialog!!.setOnSportSaveClickListener(object : OnItemClickListener{
+            override fun onIteClick(position: Int) {
+
+                if(position == 0x00){   //结束运动
+                    reconnDialog!!.dismiss()
+                }
+
+                if(position == 0x01){   //重连
+
+                }
+            }
+        })
+    }
 
 
     private var forwardCountTime = 0
@@ -376,37 +424,8 @@ class HrBeltHomeFragment : TitleBarFragment<HomeActivity>(){
     }
 
 
-    //开始正向计时
-    private fun showForwardTime(){
-        handlers.postDelayed(runnable,0)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Timber.e("----onDestroyView----")
     }
-
-
-    var runnable: Runnable = object : Runnable {
-        override fun run() {
-            handlers.sendEmptyMessage(0x00)
-            handlers.postDelayed(this, 1000)
-        }
-    }
-
-
-
-
-    //选择时间或者分组的弹窗
-    private fun showTimeOrGroupDialog(){
-        var sourceList = mutableListOf<String>()
-        for(i in 1..150){
-            sourceList.add(i.toString())
-        }
-
-
-        val dialog = HeightSelectDialog.Builder(attachActivity,sourceList)
-            .setUnitShow(true,resources.getString(R.string.string_minute))
-            .setDefaultSelect(19)
-            .setTitleTx(resources.getString(R.string.string_select_time))
-            .setSignalSelectListener {
-
-            }.show()
-    }
-
 }

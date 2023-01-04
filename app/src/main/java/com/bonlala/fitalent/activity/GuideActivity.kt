@@ -9,8 +9,10 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.bonlala.action.ActivityManager
 import com.bonlala.action.AppActivity
 import com.bonlala.action.SingleClick
+import com.bonlala.fitalent.BaseApplication
 import com.bonlala.fitalent.R
 import com.bonlala.fitalent.adapter.GuideAdapter
+import com.bonlala.fitalent.utils.MmkvUtils
 import com.bonlala.fitalent.viewmodel.GuideViewModel
 import me.relex.circleindicator.CircleIndicator3
 
@@ -52,7 +54,9 @@ class GuideActivity : AppActivity(){
             mViewPager!!.adapter = mAdapter
             mIndicatorView!!.setViewPager(mViewPager)
         }
-        viewModel.getDevicePlay(this)
+        val deviceName = MmkvUtils.getConnDeviceName()
+        val type = BaseApplication.getInstance().getUserDeviceType(deviceName)
+        viewModel.getDevicePlay(this,type)
     }
 
 

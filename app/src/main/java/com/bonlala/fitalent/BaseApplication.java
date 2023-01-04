@@ -64,6 +64,10 @@ public class BaseApplication extends BleApplication {
     /**是否是中文状态**/
     private boolean isChinese = false;
 
+
+    /**是否需要重新加载页面，用于连接成功后重新加载页面**/
+    private boolean isNeedReloadPage = false;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -77,8 +81,8 @@ public class BaseApplication extends BleApplication {
     private void initApps(){
         Timber.plant(new DebugLoggerTree());
         LitePal.initialize(this);
-        SQLiteDatabase sqLiteDatabase = LitePal.getDatabase();
-        Timber.e("---------sql="+sqLiteDatabase.getPath());
+//        SQLiteDatabase sqLiteDatabase = LitePal.getDatabase();
+//        Timber.e("---------sql="+sqLiteDatabase.getPath());
         isChinese = LanguageUtils.isChinese();
         //腾讯mmkv
         MMKV.initialize(this);
@@ -110,14 +114,14 @@ public class BaseApplication extends BleApplication {
 
         boolean isPrivacy = MmkvUtils.getPrivacy();
         if(isPrivacy){
-            CrashReport.initCrashReport(getApplicationContext(), "396d1bb894", false);
+            CrashReport.initCrashReport(this, "396d1bb894", false);
         }
     }
 
 
     /**用户同意隐私协议后初始化bugly**/
     public void setInitBugly(){
-        CrashReport.initCrashReport(getApplicationContext(), "396d1bb894", false);
+        CrashReport.initCrashReport(this, "396d1bb894", false);
     }
 
 
@@ -244,4 +248,18 @@ public class BaseApplication extends BleApplication {
         return DeviceType.DEVICE_561;
     }
 
+
+    public boolean isNeedReloadPage() {
+        return isNeedReloadPage;
+    }
+
+    public void setNeedReloadPage(boolean needReloadPage) {
+        isNeedReloadPage = needReloadPage;
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        Timber.e("----------onTerminate");
+    }
 }

@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import org.apache.commons.lang.StringUtils;
 import org.litepal.crud.LitePalSupport;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -76,16 +77,18 @@ public class ExerciseModel extends LitePalSupport {
 
 
     /**
-     * 新增字段 最大、最小心率 心率带需要用到
+     * 新增字段 心率带运动 输入的名称
      */
-    private int maxHeartValue;
-    /**最小心率**/
-    private int minHeartValue;
+    private String hrBeltInputName;
 
 
+    public String getHrBeltInputName() {
+        return hrBeltInputName;
+    }
 
-
-
+    public void setHrBeltInputName(String hrBeltInputName) {
+        this.hrBeltInputName = hrBeltInputName;
+    }
 
     /**获取时分秒**/
     public String getHourMinute(){
@@ -142,6 +145,54 @@ public class ExerciseModel extends LitePalSupport {
         return list == null || list.isEmpty() ? null : list;
     }
 
+    private List<Integer> hourList = new ArrayList<>();
+    public List<Integer> getHourHrList(){
+        hourList.clear();
+        List<Integer> hrList = getHrList();
+        if(hrList == null){
+            return hourList;
+        }
+
+        //判断有多少条数据
+        int size = hrList.size();
+
+        int beforeV = size / 60;
+        int overValue = size % 60;
+        //不够60的情况
+        if(beforeV ==0 && overValue > 0){
+            int avgHr = getAvgValue(hrList);
+            hourList.add(avgHr);
+            return hourList;
+        }
+
+        for(int i = 0;i<hrList.size();i+=60){
+            if(i + 60 <hrList.size()){
+                List<Integer> tempList = hrList.subList(i,i+60);
+                int hr = getAvgValue(tempList);
+                hourList.add(hr);
+            }else{
+                int v = hrList.size() % 60;
+                int vHr = getAvgValue(hrList.subList(i,i + v));
+                hourList.add(vHr);
+            }
+        }
+
+        return hourList;
+
+    }
+
+
+
+    /**计算平均值**/
+    private int getAvgValue(List<Integer> list){
+        int count = 0;
+        for(int i = 0;i<list.size();i++){
+            count += list.get(i);
+        }
+
+
+        return count == 0 ? 0 : count / list.size();
+    }
 
 
 

@@ -20,6 +20,7 @@ import com.bonlala.fitalent.chartview.LineChartEntity
 import com.bonlala.fitalent.chartview.PieChartUtils
 import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.db.model.ExerciseModel
+import com.bonlala.fitalent.emu.DeviceType
 import com.bonlala.fitalent.emu.W560BExerciseType
 import com.bonlala.fitalent.utils.*
 import com.hjq.permissions.XXPermissions
@@ -120,10 +121,20 @@ class ExerciseDetailActivity : AppActivity() {
 
 
         itemDetailSportTypeImg.setImageResource(W560BExerciseType.getTypeResource(exerciseModel.type))
-        itemDetailSportTypeNameTv.text = W560BExerciseType.getW560BTypeName(
+
+        val cusName = exerciseModel.hrBeltInputName
+
+        itemDetailSportTypeNameTv.text = if(BikeUtils.isEmpty(cusName)) this.resources.getString(R.string.string_hr_belt_common)
+        else W560BExerciseType.getHrBeltInputType(
             exerciseModel.type,
             context
         )
+
+
+//        itemDetailSportTypeNameTv.text = W560BExerciseType.getW560BTypeName(
+//            exerciseModel.type,
+//            context
+//        )
         itemDetailStartTimeTv.text = exerciseModel.startTimeStr + "~" + exerciseModel.endTimeStr
         itemDetailSportTimeTv.text = exerciseModel.hourMinute
         //心率
@@ -155,8 +166,19 @@ class ExerciseDetailActivity : AppActivity() {
             var point5 = 0
             var point6 = 0
 
+            val tempList = mutableListOf<Int>()
+            tempList.addAll(hrList)
 
-            hrList.forEachIndexed { index, i ->
+            //是否是心率带
+            val isHrBelt = DBManager.getBindDeviceType() == DeviceType.DEVICE_561
+            //是心率带
+            if(isHrBelt){
+                tempList.clear()
+                val hrBeltList = exerciseModel.hourHrList
+                tempList.addAll(hrBeltList)
+            }
+
+            tempList.forEachIndexed { index, i ->
                 //心率强度百分比
                 //心率强度百分比
                 val hrPercent = HeartRateConvertUtils.hearRate2Percent(i, maxHr)
@@ -236,9 +258,35 @@ class ExerciseDetailActivity : AppActivity() {
         if (type == W560BExerciseType.TYPE_PINGPONG) {
             return R.mipmap.ic_sport_pingpong
         }
+
+
+        //心率带普通计时
+
+        //心率带普通计时
+        if (type == W560BExerciseType.HR_BELT_FORWARD_TYPE) {
+            return R.mipmap.ic_hr_belt_forward
+        }
+
+        //系列带倒计时
+
+        //系列带倒计时
+        if (type == W560BExerciseType.HR_BELT_COUNTDOWN_TYPE) {
+            return R.mipmap.ic_hr_belt_countdown
+        }
+
+        //心率带分组计时
+
+        //心率带分组计时
+        if (type == W560BExerciseType.HR_BELT_GROUP_TYPE) {
+            return R.mipmap.ic_hr_belt_group
+        }
+
         return if (type == W560BExerciseType.TYPE_BADMINTON) {
             R.mipmap.ic_sport_badmination
-        } else R.mipmap.ic_sport_walk
+        }
+
+
+        else R.mipmap.ic_sport_walk
     }
 
 
@@ -384,30 +432,30 @@ class ExerciseDetailActivity : AppActivity() {
             val minValue = if (hrList == null) 0 else Collections.min(hrList)
 
             //平均心率
-            list.add(
-                ExerciseItemBean(
-                    resources.getString(R.string.string_avg_hr),
-                    getTargetType(
-                        if (exerciseModel.avgHr == 0) "--" else exerciseModel.avgHr.toString() + "",
-                        "bpm"
-                    )
-                )
-            )
-            //最大心率
-            list.add(
-                ExerciseItemBean(
-                    resources.getString(R.string.string_max_hr),
-                    getTargetType(if (maxValue == 0) "--" else maxValue.toString() + "", "bpm")
-                )
-            )
-
-            //最小心率
-            list.add(
-                ExerciseItemBean(
-                    resources.getString(R.string.string_min_hr),
-                    getTargetType(if (minValue == 0) "--" else minValue.toString() + "", "bpm")
-                )
-            )
+//            list.add(
+//                ExerciseItemBean(
+//                    resources.getString(R.string.string_avg_hr),
+//                    getTargetType(
+//                        if (exerciseModel.avgHr == 0) "--" else exerciseModel.avgHr.toString() + "",
+//                        "bpm"
+//                    )
+//                )
+//            )
+//            //最大心率
+//            list.add(
+//                ExerciseItemBean(
+//                    resources.getString(R.string.string_max_hr),
+//                    getTargetType(if (maxValue == 0) "--" else maxValue.toString() + "", "bpm")
+//                )
+//            )
+//
+//            //最小心率
+//            list.add(
+//                ExerciseItemBean(
+//                    resources.getString(R.string.string_min_hr),
+//                    getTargetType(if (minValue == 0) "--" else minValue.toString() + "", "bpm")
+//                )
+//            )
             //卡路里
             list.add(
                 ExerciseItemBean(

@@ -79,6 +79,7 @@ public class RealHrBarChartView extends View {
         hrList.clear();
         hrColorList.clear();
         clear();
+        invalidate();
     }
 
 

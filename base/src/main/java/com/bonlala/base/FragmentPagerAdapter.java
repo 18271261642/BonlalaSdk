@@ -78,6 +78,20 @@ public final class FragmentPagerAdapter<F extends Fragment> extends androidx.fra
         }
     }
 
+
+    public void clearFragment(){
+        mFragmentSet.clear();
+        mFragmentTitle.clear();
+
+        if (mViewPager == null) {
+            return;
+        }
+
+        notifyDataSetChanged();
+    }
+
+
+
     /**
      * 添加 Fragment
      */

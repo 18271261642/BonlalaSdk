@@ -19,6 +19,7 @@ import com.bonlala.fitalent.bean.ExerciseItemBean;
 import com.bonlala.fitalent.db.DBManager;
 import com.bonlala.fitalent.db.model.ExerciseModel;
 import com.bonlala.fitalent.emu.W560BExerciseType;
+import com.bonlala.fitalent.utils.BikeUtils;
 import com.bonlala.fitalent.utils.CalculateUtils;
 import com.bonlala.fitalent.utils.MmkvUtils;
 import com.bumptech.glide.Glide;
@@ -71,6 +72,8 @@ public class ExerciseItemAdapter extends AppAdapter<ExerciseModel> {
         private ImageView itemHrSportTypeImg;
         //普通计时或分组计时
         private TextView itemHrTypeTv;
+        //运动的名称
+        private TextView itemHrExerciseTypeNameTv;
         //运动时长
         private TextView itemHrSportTimeTv;
         //开始和结束时间
@@ -83,6 +86,7 @@ public class ExerciseItemAdapter extends AppAdapter<ExerciseModel> {
         public ExerciseItemViewHolder() {
             super(R.layout.item_sport_record_item_layout);
 
+            itemHrExerciseTypeNameTv = findViewById(R.id.itemHrExerciseTypeNameTv);
             itemRecordWatchLayout = findViewById(R.id.itemRecordWatchLayout);
             itemExerciseTypeRy = findViewById(R.id.itemExerciseTypeRy);
 
@@ -151,6 +155,11 @@ public class ExerciseItemAdapter extends AppAdapter<ExerciseModel> {
             }else{  //心率带
                 itemRecordWatchLayout.setVisibility(View.GONE);
                 itemHrBeltTitleLayout.setVisibility(View.VISIBLE);
+
+                String cusName = exerciseModel.getHrBeltInputName();
+                Timber.e("----cusName="+cusName);
+                itemHrExerciseTypeNameTv.setText(BikeUtils.isEmpty(cusName) ? W560BExerciseType.getHrBeltInputType(exerciseModel.getType(),getContext()) : cusName);
+
                 itemHrTypeTv.setText(W560BExerciseType.getW560BTypeName(exerciseModel.getType(),getContext()));
                 itemHrSportTimeTv.setText(exerciseModel.getHourMinute());
                 itemHrSportStartEndTimeTv.setText(exerciseModel.getStartTimeStr()+"~"+exerciseModel.getEndTimeStr());

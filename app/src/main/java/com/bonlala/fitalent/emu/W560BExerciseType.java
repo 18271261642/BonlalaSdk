@@ -89,6 +89,16 @@ public class W560BExerciseType {
     }
 
 
+
+    public static String getHrBeltInputType(int type,Context context){
+        //心率带
+        map.put(HR_BELT_COUNTDOWN_TYPE,context.getResources().getString(R.string.string_hr_belt_common));
+        map.put(HR_BELT_FORWARD_TYPE,context.getResources().getString(R.string.string_hr_belt_common));
+        map.put(HR_BELT_GROUP_TYPE,context.getResources().getString(R.string.string_hr_belt_common));
+        return map.get(type);
+    }
+
+
     /**
      * 根据状态获取心率带对应的code码
      * @param countDownStatus 状态
@@ -141,6 +151,21 @@ public class W560BExerciseType {
 
         if(type == W560BExerciseType.TYPE_BADMINTON){
             return R.mipmap.ic_sport_badmination;
+        }
+
+        //心率带普通计时
+        if(type == W560BExerciseType.HR_BELT_FORWARD_TYPE){
+            return R.mipmap.ic_hr_belt_forward;
+        }
+
+        //系列带倒计时
+        if(type == W560BExerciseType.HR_BELT_COUNTDOWN_TYPE){
+            return R.mipmap.ic_hr_belt_countdown;
+        }
+
+        //心率带分组计时
+        if(type == W560BExerciseType.HR_BELT_GROUP_TYPE){
+            return R.mipmap.ic_hr_belt_group;
         }
 
         return R.mipmap.ic_sport_walk;

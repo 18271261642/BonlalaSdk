@@ -20,6 +20,7 @@ import com.bonlala.fitalent.activity.ShowWebActivity
 import com.bonlala.fitalent.adapter.ScanDeviceAdapter
 import com.bonlala.fitalent.bean.BleBean
 import com.bonlala.fitalent.db.DBManager
+import com.bonlala.fitalent.db.model.UserInfoModel
 import com.bonlala.fitalent.dialog.ConnGuideDialogView
 import com.bonlala.fitalent.emu.ConnStatus
 import com.bonlala.fitalent.listeners.OnItemClickListener
@@ -31,6 +32,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.bumptech.glide.request.RequestOptions
+import com.google.gson.Gson
 import com.hjq.permissions.XXPermissions
 import com.inuker.bluetooth.library.search.SearchResult
 import com.inuker.bluetooth.library.search.response.SearchResponse
@@ -229,15 +231,22 @@ class MainActivity : AppActivity() ,OnItemClickListener{
             MmkvUtils.saveConnDeviceMac(bleMac)
 
             //保存用户绑定的Mac
-            val userInfo = DBManager.getUserInfo()
-            Timber.e("-----userInfo="+(userInfo))
+            var userInfo = DBManager.getUserInfo()
+            Timber.e("-----userInfo="+(userInfo == null)+(Gson().toJson(userInfo)))
+            if(userInfo == null){
+                userInfo = UserInfoModel()
+            }
             userInfo.userBindMac = bleMac
             userInfo.userBindDeviceType = BaseApplication.getInstance().getUserDeviceType(bleName)
-            DBManager.dbManager.updateUserInfo(userInfo)
+            DBManager.getInstance().updateUserInfo(userInfo)
+
+
+            BaseApplication.getInstance().isNeedReloadPage = true
 
             val broadIntent = Intent()
             broadIntent.action = BleConstant.BLE_CONNECTED_ACTION
             sendBroadcast(broadIntent)
+
             showConnGuideDialog()
         }
 

@@ -10,6 +10,7 @@ import com.bonlala.fitalent.dialog.DateDialog
 import com.bonlala.fitalent.dialog.HeightSelectDialog
 import com.bonlala.fitalent.utils.BikeUtils
 import com.bonlala.fitalent.utils.CalculateUtils
+import com.bonlala.fitalent.utils.HeartRateConvertUtils
 import com.bonlala.fitalent.utils.MmkvUtils
 import kotlinx.android.synthetic.main.activity_personal_layout.*
 
@@ -169,6 +170,9 @@ class PersonalActivity : AppActivity() {
                 val birthdayStr = year.toString()+"-"+String.format("%02d",month)+"-"+String.format("%02d",day)
                 personalBirthdayBar.rightText = birthdayStr
                 userInfo?.userBirthday = birthdayStr
+                val age = HeartRateConvertUtils.getAge(birthdayStr)
+                val maxHr = HeartRateConvertUtils.getMaxHeartRate(age)
+                MmkvUtils.saveUserMaxHeart(maxHr)
                 saveUserInfo()
             }
             .show()

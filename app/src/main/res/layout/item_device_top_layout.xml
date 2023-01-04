@@ -15,13 +15,13 @@
         android:paddingStart="@dimen/dp_10"
         android:layout_weight="1">
 
-        <TextView
+        <com.bonlala.fitalent.view.NaviTxt
             android:id="@+id/menuDeviceNameTv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Device name"
             android:textColor="#ff000000"
-            android:textSize="23sp"
+            android:textSize="25sp"
             android:padding="3dp"/>
 
 
@@ -51,8 +51,10 @@
 
 
         <LinearLayout
+            android:id="@+id/deviceSetBatteryLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:orientation="horizontal">
 
             <com.bonlala.fitalent.view.BatteryView
@@ -87,6 +89,7 @@
 
     </LinearLayout>
     <ImageView
+        android:id="@+id/deviceSetTypeImgView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

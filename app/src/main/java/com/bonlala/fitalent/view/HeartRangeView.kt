@@ -9,6 +9,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.bonlala.fitalent.R
 import com.bonlala.fitalent.dialog.HeightSelectDialog
 import com.bonlala.fitalent.utils.HeartRateConvertUtils
+import com.bonlala.fitalent.utils.MediaPlayerUtils
+import com.bonlala.fitalent.utils.MmkvUtils
 import kotlinx.android.synthetic.main.item_wall_heart_rate_rang_layout.view.*
 import timber.log.Timber
 
@@ -49,6 +51,7 @@ class HeartRangeView : LinearLayout {
         maxHrLayout.setOnClickListener {
             showMaxHrSelect()
         }
+
     }
 
 
@@ -58,7 +61,7 @@ class HeartRangeView : LinearLayout {
     fun setUserMaxHeart(maxHr : Int){
         this.maxUserHeartValue = maxHr
         maxHrValueTv?.text = maxHr.toString()+"bpm"
-
+        calculateHrRange(maxHr)
     }
 
     //点击事件
@@ -70,15 +73,29 @@ class HeartRangeView : LinearLayout {
 
         val hrList = mutableListOf<String>()
 
-        for(i in maxUserHeartValue!! -20 .. maxUserHeartValue!! +20){
+        //根据年龄计算的最大心率
+        val userMaxHeart = HeartRateConvertUtils.getUserMaxHt()
+
+        for(i in userMaxHeart -20 .. userMaxHeart +20){
             hrList.add(i.toString())
         }
+
+        //计算下标
+        var position = 0
+        for(i in 0 until hrList.size){
+            if(hrList[i] == maxUserHeartValue.toString()){
+                position = i
+            }
+        }
+
 
         val heightSelectDialog = HeightSelectDialog.Builder(context,hrList)
             .setUnitShow(true,"bpm")
             .setTitleTx(context.resources.getString(R.string.string_max_hr))
+            .setDefaultSelect(position)
             .setSignalSelectListener {
                 maxHrValueTv?.text = it+"bpm"
+                MmkvUtils.saveUserMaxHeart(it.toInt())
                 calculateHrRange(it.toInt())
             }.show()
 

@@ -9,9 +9,11 @@ import android.text.style.AbsoluteSizeSpan
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import androidx.appcompat.app.AppCompatDialog
+import com.blala.blalable.listener.OnCommBackDataListener
 import com.bonlala.fitalent.R
-import com.bonlala.fitalent.listeners.OnItemClickListener
 import com.bonlala.fitalent.utils.BikeUtils
+import com.bonlala.fitalent.utils.LanguageUtils
+import com.hjq.toast.ToastUtils
 import kotlinx.android.synthetic.main.dialog_hr_belt_sport_end_dialog_layout.*
 
 /**
@@ -22,10 +24,14 @@ import kotlinx.android.synthetic.main.dialog_hr_belt_sport_end_dialog_layout.*
 class HrBeltSaveDialogView : AppCompatDialog,View.OnClickListener {
 
 
-    private var onSportSaveClick : OnItemClickListener ?= null
+    //是否是有效数据
+    private var isValid = true
 
-    fun setOnSportSaveClickListener(onclick : OnItemClickListener){
-        this.onSportSaveClick = onclick
+    private var onCommBackListener : OnCommBackDataListener ?= null
+
+
+    fun setOnSportSaveClickListener(onclick : OnCommBackDataListener){
+        this.onCommBackListener = onclick
     }
 
     constructor(context: Context) : super (context){
@@ -45,12 +51,25 @@ class HrBeltSaveDialogView : AppCompatDialog,View.OnClickListener {
     }
 
 
+    //是否是有效数据
+    fun setIsValidHeart(valid : Boolean){
+        noValidDataTv.visibility = if(valid) View.GONE else View.VISIBLE
+        //取消按钮，无有效数据不显示
+        dialogSportSaveCancelBtn.visibility = if(valid) View.VISIBLE else View.GONE
+        isValid = valid
+        dialogSportSaveBtn.text = if(valid) context.resources.getString(R.string.string_save) else context.resources.getString(R.string.string_cancel)
+        dialogEndInputNameEdit.visibility = if(valid) View.VISIBLE else View.GONE
+    }
+
 
     //设置平均、最大、最小心率
-    fun setHeartValue(avg : Int,max : Int,min : Int){
-        dialogEndAvgHr.text = getTargetType(avg.toString(),"bpm")
-        dialogEndMaxHr.text = getTargetType(max.toString(),"bpm")
-        dialogEndMinHr.text = getTargetType(min.toString(),"bpm")
+    fun setHeartValue(avg : Int,sportTime : String,kcal : Int){
+        //平均心率
+        dialogEndAvgHr.text = getTargetType(if(avg == 0)"--" else avg.toString(),"bpm")
+        //运动时长
+        dialogEndMaxHr.text = sportTime
+        //运动消耗
+        dialogEndMinHr.text = getTargetType(if(kcal == 0) "--" else kcal.toString(),"kcal")
     }
 
     override fun onClick(p0: View?) {
@@ -58,7 +77,41 @@ class HrBeltSaveDialogView : AppCompatDialog,View.OnClickListener {
         when (id){
             //保存
             R.id.dialogSportSaveBtn->{
-                onSportSaveClick?.onIteClick(0x01)
+                if(!isValid){
+                    dismiss()
+                    return
+                }
+                //是否是中文
+                val isChinese = LanguageUtils.isChinese()
+                val inputName = dialogEndInputNameEdit.text
+                if(!BikeUtils.isEmpty(inputName.toString()) && isChinese){
+                    //长度
+                    val chineseLength = inputName.toString().length
+                    if(chineseLength>10){
+                        ToastUtils.show("长度太长!")
+                        return
+                    }
+                    val lt = arrayOf(inputName.toString())
+                    onCommBackListener?.onStrDataBack(*lt)
+                    return
+                }
+
+                if(!BikeUtils.isEmpty(inputName.toString()) && !isChinese){
+
+                    //长度
+                    val chineseLength = inputName.toString().length
+                    if(chineseLength>20){
+                        ToastUtils.show("长度太长!")
+                        return
+                    }
+                    val lt = arrayOf(inputName.toString())
+                    onCommBackListener?.onStrDataBack(*lt)
+                    return
+                }
+
+
+                val lt = arrayOf(inputName.toString())
+                onCommBackListener?.onStrDataBack(*lt)
             }
 
             //取消
@@ -69,17 +122,6 @@ class HrBeltSaveDialogView : AppCompatDialog,View.OnClickListener {
 
     }
 
-
-
-    //保存运动数据，先判断是否有输入运动名称
-    private fun saveSportData(){
-        val inputName = dialogEndInputNameEdit.text.toString()
-        if(BikeUtils.isEmpty(inputName)){
-            return
-        }
-
-
-    }
 
 
     /**

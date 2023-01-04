@@ -5,10 +5,12 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.bonlala.fitalent.R;
 import com.bonlala.fitalent.emu.ConnStatus;
+import com.bonlala.fitalent.emu.DeviceType;
 import com.hjq.shape.view.ShapeTextView;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -18,17 +20,23 @@ import timber.log.Timber;
  * 首页设备连接状态
  * Created by Admin
  * Date 2022/9/26
+ * @author Admin
  */
 public class HomeDeviceStatusView extends LinearLayout {
 
-    //添加设备的布局，已接连接过不显示
+    /**添加设备的布局，已接连接过不显示**/
     private LinearLayout emptyLayout;
-    //连接记录的布局，展示连接状态
+    /**连接记录的布局，展示连接状态**/
     private ConstraintLayout statusLayout;
 
-    //设备名称
+    /**
+     * 右侧设备图片
+     */
+    private ImageView homeDeviceTopImgView;
+
+    /**设备名称**/
     private TextView homeDeviceNameTv;
-    //连接状态
+    /**连接状态**/
     private ShapeTextView homeDeviceStatusTv;
 
 
@@ -55,11 +63,29 @@ public class HomeDeviceStatusView extends LinearLayout {
 
         homeDeviceNameTv = view.findViewById(R.id.homeDeviceNameTv);
         homeDeviceStatusTv = view.findViewById(R.id.homeDeviceStatusTv);
+        homeDeviceTopImgView = view.findViewById(R.id.homeDeviceTopImgView);
     }
 
 
+    /**
+     * 设置右侧设备类型的图片
+     */
+    public void setRightImgView(int deviceType){
+        int resource = 0;
+        //560B
+        if(deviceType == DeviceType.DEVICE_W560B){
+            resource = R.mipmap.ic_home_top_device_img;
+        }
 
-    //设置是否连接过
+        //心率带
+        if(deviceType == DeviceType.DEVICE_561){
+            resource = R.mipmap.ic_home_hr_blet_top_img;
+        }
+        homeDeviceTopImgView.setImageResource(resource);
+    }
+
+
+    /**设置是否连接过**/
     public void setIsConnRecord(boolean hasRecord,String bleName){
         if(emptyLayout == null || statusLayout == null)
             return;
@@ -71,7 +97,7 @@ public class HomeDeviceStatusView extends LinearLayout {
         invalidate();
     }
 
-    //设置显示的状态
+    /**设置显示的状态**/
     public void setHomeConnStatus(ConnStatus connStatus){
         if(homeDeviceStatusTv == null)
             return;
@@ -96,7 +122,7 @@ public class HomeDeviceStatusView extends LinearLayout {
     }
 
 
-    //是否可以点击,连接状态下不可以点击
+    /**是否可以点击,连接状态下不可以点击**/
     public void setCanClickStatus(boolean isConnected,OnStatusViewClick onStatusViewClick){
         if(homeDeviceStatusTv == null)
             return;

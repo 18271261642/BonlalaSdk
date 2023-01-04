@@ -103,28 +103,30 @@
                 android:layout_margin="@dimen/dp_5"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.bonlala.fitalent.view.NaviTxt
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/string_avg_hr"
-                    android:textColor="#ffeb7f4c"
+                    android:textColor="#FFEB7F4C"
                     android:textSize="14sp" />
 
-                <TextView
+                <com.bonlala.fitalent.view.NaviTxt
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/string_max_hr"
-                    android:textColor="#ffeb7f4c"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:textColor="#FFDF2D38"
                     android:textSize="14sp" />
 
-                <TextView
+                <com.bonlala.fitalent.view.NaviTxt
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/string_min_hr"
-                    android:textColor="#ffeb7f4c"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:textColor="#FF7FD66C"
                     android:textSize="14sp" />
 
 
@@ -136,7 +138,7 @@
                 android:layout_margin="@dimen/dp_5"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.bonlala.fitalent.view.NaviTxt
                     android:id="@+id/hrBeltAvgHrTv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -145,21 +147,23 @@
                     android:textColor="@color/black"
                     android:textSize="30sp" />
 
-                <TextView
+                <com.bonlala.fitalent.view.NaviTxt
                     android:id="@+id/hrBeltMaxHrTv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="--"
+                    android:layout_marginStart="@dimen/dp_10"
                     android:textColor="@color/black"
                     android:textSize="30sp" />
 
-                <TextView
+                <com.bonlala.fitalent.view.NaviTxt
                     android:id="@+id/hrBeltMinHrTv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="--"
+                    android:layout_marginLeft="@dimen/dp_15"
                     android:textColor="@color/black"
                     android:textSize="30sp" />
 
@@ -185,6 +189,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/groupTypeNameTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ordinary timing"
@@ -200,7 +205,8 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="@dimen/dp_5"
                     android:src="@mipmap/ic_hr_belt_kcal_img" />
 
 
@@ -208,16 +214,18 @@
                     android:id="@+id/hrBeltExerciseKcal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="-- "
+                    android:layout_gravity="bottom"
+                    android:gravity="bottom"
+                    android:text="--"
                     android:textColor="#ff2f2f33"
                     android:textSize="22sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
+                    android:layout_gravity="center|bottom"
                     android:text="kcal"
+                    android:gravity="center"
                     android:textColor="#ff2f2f33"
                     android:textSize="14sp" />
 

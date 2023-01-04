@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Heart rate zone"
+        android:text="@string/string_hr_zone"
         android:textColor="#ff141418"
         android:textSize="28sp"
         android:padding="@dimen/dp_5"/>
@@ -27,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:bar_leftText="@string/string_firmware"
+        android:visibility="gone"
         app:bar_leftTextSize="18sp"
         android:layout_marginStart="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_10"

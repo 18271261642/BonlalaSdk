@@ -3,6 +3,7 @@ package com.bonlala.fitalent.viewmodel
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.bonlala.fitalent.emu.DeviceType
 import com.bonlala.fitalent.http.api.PlaySpinApi
 import com.bonlala.fitalent.utils.GsonUtils
 import com.hjq.http.EasyHttp
@@ -22,11 +23,17 @@ class GuideViewModel : ViewModel() {
 
 
 
+    fun getDeviceName(type: Int) : String{
+        if(type == DeviceType.DEVICE_561){
+            return "W561B"
+        }
+        return "W560B"
+    }
 
 
 
-    fun getDevicePlay(lifecycleOwner: LifecycleOwner){
-        EasyHttp.get(lifecycleOwner).api(PlaySpinApi().setDeviceType("W560B")).request(object : OnHttpListener<String>{
+    fun getDevicePlay(lifecycleOwner: LifecycleOwner,type : Int){
+        EasyHttp.get(lifecycleOwner).api(PlaySpinApi().setDeviceType(getDeviceName(type))).request(object : OnHttpListener<String>{
             override fun onSucceed(result: String?) {
                 val jsonObject = JSONObject(result)
                 if(jsonObject.getString("code") == "200"){

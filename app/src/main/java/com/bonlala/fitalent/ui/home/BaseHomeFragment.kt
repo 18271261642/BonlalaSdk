@@ -46,7 +46,6 @@ class BaseHomeFragment : TitleBarFragment<HomeActivity>() {
         fragmentTransaction?.replace(R.id.baseFragmentLayout,if(type == DeviceType.DEVICE_561) HrBeltHomeFragment().getInstance() else HomeFragment().newInstance())
         fragmentTransaction?.commit()
 
-
     }
 
 

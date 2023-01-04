@@ -6,8 +6,16 @@
     <string name="title_notifications">mine</string>
 
 
+    <string name="string_end_sport">End exercise</string>
+    <string name="string_reconn">Reconnection</string>
+    <string name="string_hr_sport_reconn">Device disconnected\nPlease Reconnection or End exercise</string>
+
+
+    <string name="string_bind">Bind</string>
+    <string name="string_hr_no_saved">No valid heart rate detected\nDo not save this activity record</string>
+    <string name="string_hr_belt_common">Common</string>
     <string name="string_hr_belt_customize">Custom name</string>
-    <string name="string_hr_blet_group">分组计时</string>
+    <string name="string_hr_blet_group">Group timing</string>
     <string name="string_hr_belt_countdown">Countdown</string>
     <string name="string_hr_belt_normal">Conventional</string>
     <string name="string_current_group">当前组数:</string>
@@ -113,7 +121,7 @@
     <string name="string_daily_avg">Daily avg:</string>
     <string name="string_systolic_pressure">systolic pressure</string>
     <string name="string_diastolic_pressure">diastolic pressure</string>
-    <string name="string_exercise_record">Sports record</string>
+    <string name="string_exercise_record">Exercise</string>
     <string name="string_exercise_time">Exercise Time</string>
     <string name="string_operate_guide">Operate guide</string>
     <string name="string_not_bond_device">Not bond device</string>
@@ -255,7 +263,7 @@
     <string name="string_number_month">%1$d月</string>
 
     <string name="string_spo2">Oxygenation</string>
-    <string name="string_bp">Blood pressure</string>
+    <string name="string_bp">BP</string>
     <string name="string_heart">Heart rate</string>
     <string name="string_sleep">Sleep</string>
     <string name="string_no_data">No Data</string>

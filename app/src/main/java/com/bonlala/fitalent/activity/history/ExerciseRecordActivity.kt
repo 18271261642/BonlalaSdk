@@ -19,6 +19,7 @@ import com.bonlala.fitalent.emu.W560BExerciseType
 import com.bonlala.fitalent.utils.BikeUtils
 import com.bonlala.fitalent.utils.CalculateUtils
 import com.bonlala.fitalent.utils.MmkvUtils
+import com.bonlala.fitalent.utils.SpannableUtils
 import com.bonlala.fitalent.viewmodel.ExerciseViewModel
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_sport_record_layout.*
@@ -59,8 +60,10 @@ class ExerciseRecordActivity : AppActivity(){
         //是否是心率带
         val isHrBelt = DBManager.getBindDeviceType() == DeviceType.DEVICE_561
         hrBeltHrLayout.visibility = if(isHrBelt) View.VISIBLE else View.GONE
+        val rightDrawable = if(isHrBelt) null else resources.getDrawable(R.mipmap.ic_sport_filter)
+        titleBar?.rightIcon = rightDrawable
 
-
+        recordKmLayout.visibility = if(isHrBelt) View.INVISIBLE else View.VISIBLE
     }
 
 
@@ -147,10 +150,14 @@ class ExerciseRecordActivity : AppActivity(){
         adapter?.data = ArrayList<ExerciseShowBean>()
         exerciseRy.visibility = View.GONE
 
-        if(exerciseType == -1 || exerciseType == W560BExerciseType.TYPE_WALK || exerciseType == W560BExerciseType.TYPE_RUN){
-            recordKmLayout.visibility = View.VISIBLE
-        }else{
-            recordKmLayout.visibility = View.INVISIBLE
+        //是否是心率带
+        val isHrBelt = DBManager.getBindDeviceType() == DeviceType.DEVICE_561
+        if(!isHrBelt){
+            if(exerciseType == -1 || exerciseType == W560BExerciseType.TYPE_WALK || exerciseType == W560BExerciseType.TYPE_RUN){
+                recordKmLayout.visibility = View.VISIBLE
+            }else{
+                recordKmLayout.visibility = View.INVISIBLE
+            }
         }
     }
 
@@ -160,10 +167,8 @@ class ExerciseRecordActivity : AppActivity(){
         var distance = 0
         var kcal = 0
 
-        //计算心率带最大最小平均心率
-        var hrBeltMaxHr = 0
-        var hrBeltMinHr = 0
-        var hrBeltAvgHr = 0
+
+        val heartList = mutableListOf<Int>()
 
         var count = 0
         list.forEach { it ->
@@ -172,6 +177,13 @@ class ExerciseRecordActivity : AppActivity(){
                 distance += it.distance
                 kcal += it.kcal
                 count++
+
+                //心率集合
+                val hrList = it.hrList
+                if(hrList != null){
+                    heartList.addAll(hrList)
+                }
+
             }
         }
 
@@ -181,14 +193,33 @@ class ExerciseRecordActivity : AppActivity(){
         val kmStr = if(isKm) disStr.toString() else CalculateUtils.kmToMiValue(disStr).toString()
         exerciseTotalKmTv.text = getTargetType(kmStr,if(isKm) "km" else "mi")
 
-        exerciseTotalTimeTv.text = getTargetType(BikeUtils.formatMinuteNoHour(totalTime/60,this),"")
+//        val hourArray = BikeUtils.formatHourAndMinuteArray(totalTime/60)
+        val spann = SpannableUtils.getTargetType((totalTime/60).toString(),resources.getString(R.string.string_minute))
+
+        exerciseTotalTimeTv.text = spann
         exerciseTotalTimesTv.text = getTargetType(count.toString(),resources.getString(R.string.string_times))
         exerciseTotalKcalTv.text = getTargetType(kcal.toString(),resources.getString(R.string.string_kcal))
 
-        if(exerciseType == -1 || exerciseType == W560BExerciseType.TYPE_WALK || exerciseType == W560BExerciseType.TYPE_RUN){
-            recordKmLayout.visibility = View.VISIBLE
-        }else{
-            recordKmLayout.visibility = View.INVISIBLE
+
+        //计算心率带最大最小平均心率
+        val isZero = heartList.size == 0
+        val hrBeltMaxHr = if(isZero) "--" else heartList.maxOf { it }.toInt()
+        val hrBeltMinHr = if(isZero) "--" else heartList.minOf { it }.toInt()
+        val hrBeltAvgHr = if(isZero) "--" else heartList.average().toInt()
+
+        hrBeltRecordAvgHrTv.text = SpannableUtils.getTargetType(hrBeltAvgHr.toString(),"bpm")
+        hrBeltRecordMaxHrTv.text = SpannableUtils.getTargetType(hrBeltMaxHr.toString(),"bpm")
+        hrBeltRecordMinHrTv.text = SpannableUtils.getTargetType(hrBeltMinHr.toString(),"bpm")
+
+        //是否是心率带
+        val isHrBelt = DBManager.getBindDeviceType() == DeviceType.DEVICE_561
+        if(!isHrBelt){
+            if(exerciseType == -1 || exerciseType == W560BExerciseType.TYPE_WALK || exerciseType == W560BExerciseType.TYPE_RUN){
+                recordKmLayout.visibility = View.VISIBLE
+            }else{
+                recordKmLayout.visibility = View.INVISIBLE
+            }
         }
+
     }
 }

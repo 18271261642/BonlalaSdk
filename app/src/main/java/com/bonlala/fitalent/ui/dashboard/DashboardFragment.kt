@@ -1,11 +1,9 @@
 package com.bonlala.fitalent.ui.dashboard
 
 
-import android.Manifest
+
 import android.annotation.SuppressLint
 import android.content.*
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.provider.Settings
@@ -26,19 +24,14 @@ import com.bonlala.fitalent.HomeActivity
 import com.bonlala.fitalent.MainActivity
 import com.bonlala.fitalent.R
 import com.bonlala.fitalent.activity.*
-import com.bonlala.fitalent.bean.HrBeltGroupBean
-import com.bonlala.fitalent.ble.DataOperateManager
 import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.db.model.DeviceSetModel
 import com.bonlala.fitalent.dialog.HelpDialogView
 import com.bonlala.fitalent.dialog.SelectDialogView
 import com.bonlala.fitalent.emu.ConnStatus
 import com.bonlala.fitalent.emu.DeviceType
-import com.bonlala.fitalent.listeners.OnItemClickListener
 import com.bonlala.fitalent.utils.*
 import com.google.gson.Gson
-import com.hjq.permissions.XXPermissions
-import com.hjq.toast.ToastUtils
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_dashboard.menuFirmwareBar
 import kotlinx.android.synthetic.main.item_device_top_layout.*
@@ -199,6 +192,9 @@ import timber.log.Timber
 
     override fun onResume() {
         super.onResume()
+
+        Timber.e("-------onResume=")
+
         showConnStatus()
     }
 
@@ -247,9 +243,27 @@ import timber.log.Timber
         hrBeltMenuLayout.visibility = if(deviceType ==DeviceType.DEVICE_561) View.VISIBLE else View.GONE
         //560B
         watchMenuLayout.visibility = if(deviceType == DeviceType.DEVICE_W560B) View.VISIBLE else View.GONE
+        //类型图片展示
+        deviceSetTypeImgView.setImageResource(if(deviceType == DeviceType.DEVICE_561) R.mipmap.ic_set_device_561b else R.mipmap.ic_device_top_img)
+
+        //心率带不显示电量
+        deviceSetBatteryLayout.visibility = if(deviceType == DeviceType.DEVICE_561) View.GONE else View.VISIBLE
+
+
+        //用户选择的最大心率
+        val maxHr =  MmkvUtils.getMaxUserHeartValue()
+        Timber.e("--------最大心率="+maxHr)
+//        maxHr = HeartRateConvertUtils.getUserMaxHt()
+        rangView.setUserMaxHeart(maxHr)
+
+        viewModel.batteryStr.observe(this){
+            setBatteryTv.text = "$it%"
+            batteryView.power = it
+        }
+
+        //读取电量
+        viewModel.getDeviceBattery(bleOperateManager!!)
     }
-
-
 
 
     //显示连接的状态
@@ -439,9 +453,11 @@ import timber.log.Timber
     }
 
 
+    //展示帮助的弹窗
     private fun showHelpDialog(){
         val helpDialog = HelpDialogView(attachActivity, com.bonlala.base.R.style.BaseDialogTheme)
         helpDialog.show()
+//        helpDialog.setIsShowGuid(DBManager.getBindDeviceType() == DeviceType.DEVICE_W560B)
         helpDialog.setOnCommClickListener { position ->
             helpDialog.dismiss()
             if (position == 0) {
@@ -513,7 +529,9 @@ import timber.log.Timber
                 MmkvUtils.saveConnDeviceName("")
 
                 bleOperateManager?.disConnYakDevice()
-
+                val intent = Intent()
+                intent.action = BleConstant.BLE_CONNECTED_ACTION
+                context?.sendBroadcast(intent)
                 showConnStatus()
 
             }
@@ -678,7 +696,7 @@ import timber.log.Timber
 
     override fun initView() {
 
-        rangView.setUserMaxHeart(180)
+//        rangView.setUserMaxHeart(180)
 
 
         appsMsgCheckView.setLeftTitle(resources.getString(R.string.string_message_notify))
@@ -772,7 +790,6 @@ import timber.log.Timber
 
         Timber.e("-----ooo-"+isOpen+" ")
         appsMsgCheckView.setCheckStatus(isOpen)
-
 
     }
 

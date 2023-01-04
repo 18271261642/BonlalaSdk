@@ -1,24 +1,26 @@
 package com.bonlala.fitalent
 
 import android.Manifest
+import android.app.Activity
+import android.bluetooth.BluetoothAdapter
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.blala.blalable.AppUtils
 import com.blala.blalable.BleConstant
-import com.blala.blalable.BleOperateManager
 import com.bonlala.action.ActivityManager
 import com.bonlala.action.AppActivity
 import com.bonlala.action.AppFragment
@@ -34,11 +36,11 @@ import com.bonlala.fitalent.emu.ConnStatus
 import com.bonlala.fitalent.emu.DeviceType
 import com.bonlala.fitalent.http.api.AppVersionApi
 import com.bonlala.fitalent.ui.dashboard.DashboardFragment
-import com.bonlala.fitalent.ui.home.BaseHomeFragment
 import com.bonlala.fitalent.ui.home.HomeFragment
 import com.bonlala.fitalent.ui.home.HrBeltHomeFragment
 import com.bonlala.fitalent.ui.notifications.NotificationsFragment
 import com.bonlala.fitalent.utils.BikeUtils
+import com.bonlala.fitalent.utils.BonlalaUtils
 import com.bonlala.fitalent.utils.MmkvUtils
 import com.bonlala.fitalent.viewmodel.HomeActivityViewModel
 import com.hjq.permissions.OnPermissionCallback
@@ -111,6 +113,8 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
         homeConnStateImgView.setOnClickListener {
             showConnTimeOutDialog()
         }
+
+        mPagerAdapter = FragmentPagerAdapter(this)
     }
 
 
@@ -120,14 +124,7 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
         checkDeviceTypeFragment()
 
         onNewIntent(intent)
-        val mac = MmkvUtils.getConnDeviceMac()
-        if (!BikeUtils.isEmpty(mac)) {
-            onNavigationItemSelected(0)
-            switchFragment(0)
-        } else {
-            onNavigationItemSelected(1)
-            switchFragment(1)
-        }
+
 
         autoConnDevice()
 
@@ -139,8 +136,11 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
     //显示不同的设备类型fragment
     fun checkDeviceTypeFragment(){
         val type = DBManager.getBindDeviceType()
+
+        mPagerAdapter?.clearFragment()
+
         Timber.e("------deviceType="+type)
-        mPagerAdapter = FragmentPagerAdapter(this)
+
         if(type == DeviceType.DEVICE_561){
             mPagerAdapter?.addFragment(HrBeltHomeFragment().getInstance())
         }else{
@@ -151,6 +151,20 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
 
         mPagerAdapter?.addFragment(NotificationsFragment().getInstance())
         mViewPager?.adapter = mPagerAdapter
+
+        //判断是否绑定过设备，绑定过设备默认展示首页，未绑定展示设备页面
+        val mac = MmkvUtils.getConnDeviceMac()
+        if (!BikeUtils.isEmpty(mac)) {
+            onNavigationItemSelected(0)
+            switchFragment(0)
+        } else {
+            onNavigationItemSelected(1)
+            switchFragment(1)
+        }
+
+
+
+
     }
 
 
@@ -159,14 +173,20 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
 
         Timber.e("-------homeActivityResult="+requestCode+" "+resultCode)
 
-        checkDeviceTypeFragment()
+        //判断是否是打开了蓝牙
+        if(requestCode == 1001){
+            autoConnDevice()
+        }else{
+            checkDeviceTypeFragment()
+        }
+
     }
 
 
 
     //验证设备的版本
     private fun verticalDeviceVersion() {
-        viewModel.getAppVersion(this)
+
         viewModel.isShowDfuAlert.observe(this) {
             if (it == true) {
                 showDeviceDfuDialog()
@@ -184,6 +204,7 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
         viewModel.notConnDescUrl.observe(this){
             noConnDescUrl = it
         }
+        viewModel.getAppVersion(this)
         viewModel.getNotConnUrl(this)
     }
 
@@ -191,15 +212,26 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
     public fun autoConnDevice() {
         try {
             val mac = MmkvUtils.getConnDeviceMac()
-            Timber.e("----重新连接了=" + mac)
+            Timber.e("----重新连接了=" + mac+" "+BaseApplication.getInstance().connStatus)
             if (!BikeUtils.isEmpty(mac)) {
 
                 if (BaseApplication.getInstance().connStatus == ConnStatus.NOT_CONNECTED || BaseApplication.getInstance().connStatus == ConnStatus.CONNECTING) {
-                    if (XXPermissions.isGranted(
-                            this@HomeActivity,
-                            Manifest.permission.ACCESS_FINE_LOCATION
-                        )
-                    ) {
+
+                    val isLocalPermission = ActivityCompat.checkSelfPermission(this@HomeActivity,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED
+                    Timber.e("-----权限是否打开了="+isLocalPermission)
+                    //判断权限是否打开
+                    if (!isLocalPermission)
+                     {
+                        //判断蓝牙是否打开，没有打开提醒打开蓝牙
+                        //判断蓝牙是否打开
+                        val isOpenBle = BonlalaUtils.isOpenBlue(this@HomeActivity)
+                        Timber.e("-------isOpenBle="+isOpenBle)
+                        if(!isOpenBle){
+                            openBluetooth(this)
+                            return
+                        }
+
+                         Timber.e("----isOpenBleisOpenBle-----")
                         val service = BaseApplication.getInstance().connStatusService
                         service?.autoConnDevice(mac, false)
 
@@ -373,7 +405,6 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
                 }else{
                     isShowConnImg = false
                 }
-
                 showNotConnImg(!isConn)
             }
         }
@@ -394,6 +425,11 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
     override fun onResume() {
         super.onResume()
 
+        Timber.e("------")
+        if(BaseApplication.getInstance().isNeedReloadPage){
+            BaseApplication.getInstance().isNeedReloadPage = false
+            checkDeviceTypeFragment()
+        }
 
     }
 
@@ -423,4 +459,47 @@ class HomeActivity : AppActivity(), NavigationAdapter.OnNavigationListener {
     fun setVisibilityBottomMenu(isShow : Boolean){
         mNavigationView?.visibility = if(isShow) View.VISIBLE else View.GONE
     }
+
+    override fun isDestroyed(): Boolean {
+        Timber.e("----isDestroyed---=")
+        return super.isDestroyed()
+    }
+
+    //打开蓝牙
+    fun openBluetooth(activity: Activity) {
+
+        val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+        val isEnable = bluetoothAdapter.isEnabled
+        Timber.e("-------蓝牙="+(bluetoothAdapter.isEnabled))
+        if (bluetoothAdapter != null && !isEnable) {
+            val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+            Timber.e("--------111111111111")
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.BLUETOOTH_CONNECT
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                Timber.e("--------22222")
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    XXPermissions.with(activity).permission(Manifest.permission.BLUETOOTH_CONNECT)
+                        .request { permissions, all -> }
+                }else{
+                    startActivityForResult(enableBtIntent,1001)
+                }
+
+                return
+            }
+
+            startActivityForResult(enableBtIntent,1001)
+        }
+
+    }
+
 }

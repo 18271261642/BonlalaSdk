@@ -371,7 +371,7 @@ public class LineRecChartPractiseView extends View {
         //画左边的Y轴text
         drawLeftYAxis(canvas);
         //画X轴的text
-        drawXAxisText(canvas);
+//        drawXAxisText(canvas);
 
         //画线形图
         drawLines(canvas);
@@ -446,6 +446,8 @@ public class LineRecChartPractiseView extends View {
             String text = yList.get(i - 1);
             canvas.drawText(text, 0 + DisplayUtils.dip2px(mContext, 30) / 2 - textPaint.measureText(text) / 2, startY + textPaint.measureText("0") - 10, textPaint);
         }
+
+        canvas.drawText("0",DisplayUtils.dip2px(mContext, 30) / 2 - textPaint.measureText("0") / 2,mStartY,textPaint);
     }
 
 

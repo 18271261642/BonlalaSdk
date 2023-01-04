@@ -5,8 +5,16 @@
     <string name="string_metric">公制</string>
     <string name="string_imperial">英制</string>
 
+
+    <string name="string_end_sport">结束运动</string>
+    <string name="string_reconn">重连</string>
+    <string name="string_hr_sport_reconn">设备已断开连接\n选择重连或结束运动</string>
+
+    <string name="string_bind">绑定</string>
+    <string name="string_hr_no_saved">未检测到有效心率\n不保存改运动数据</string>
+    <string name="string_hr_belt_common">常规</string>
     <string name="string_hr_belt_customize">自定义名称</string>
-    <string name="string_hr_blet_group">分组计时</string>
+    <string name="string_hr_blet_group">分组倒计时</string>
     <string name="string_hr_belt_countdown">倒计时</string>
     <string name="string_hr_belt_normal">普通计时</string>
     <string name="string_current_group">当前组数:</string>

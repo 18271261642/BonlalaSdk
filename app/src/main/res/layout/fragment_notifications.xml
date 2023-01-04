@@ -212,18 +212,6 @@
 
 
 
-        <com.hjq.shape.view.ShapeView
-            android:layout_width="@dimen/dp_70"
-            android:layout_height="@dimen/dp_70"
-            app:shape_radius="@dimen/dp_40"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:shape_solidColor="@color/btn_color"/>
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -53,6 +53,10 @@ public class MmkvUtils {
     private static final String CONN_ERROR_DESC_KEY = "conn_error_desc";
 
 
+    /**用户的最大心率，选择后保存，未选择默认根据性别和年龄计算**/
+    private static final String USER_MAX_HR_KEY = "user_max_hr";
+
+
     private static MMKV mmkv;
 
     public static void initMkv(){
@@ -269,5 +273,19 @@ public class MmkvUtils {
      */
     public static String getConnErrorDesc(){
         return (String) getSaveParams(CONN_ERROR_DESC_KEY,null);
+    }
+
+
+    /**
+     * 获取用户最大的心率
+     * @return 最大心率
+     */
+    public static int getMaxUserHeartValue(){
+        return (int) getSaveParams(USER_MAX_HR_KEY,180);
+    }
+
+    /**保存用户最大心率**/
+    public static void saveUserMaxHeart(int heart){
+        setSaveObjParams(USER_MAX_HR_KEY,heart);
     }
 }
