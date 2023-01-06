@@ -40,6 +40,12 @@ public class HomeDeviceStatusView extends LinearLayout {
     private ShapeTextView homeDeviceStatusTv;
 
 
+    private  OnStatusViewClick onStatusViewClick;
+
+    public void setOnStatusViewClick(OnStatusViewClick onStatusViewClick) {
+        this.onStatusViewClick = onStatusViewClick;
+    }
+
     public HomeDeviceStatusView(Context context) {
         super(context);
         initViews(context);
@@ -64,6 +70,15 @@ public class HomeDeviceStatusView extends LinearLayout {
         homeDeviceNameTv = view.findViewById(R.id.homeDeviceNameTv);
         homeDeviceStatusTv = view.findViewById(R.id.homeDeviceStatusTv);
         homeDeviceTopImgView = view.findViewById(R.id.homeDeviceTopImgView);
+
+
+        homeDeviceStatusTv.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(onStatusViewClick != null)
+                    onStatusViewClick.onStatusClick();
+            }
+        });
     }
 
 

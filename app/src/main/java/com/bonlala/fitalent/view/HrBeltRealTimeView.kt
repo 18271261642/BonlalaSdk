@@ -22,10 +22,7 @@ import com.bonlala.fitalent.R
 import com.bonlala.fitalent.bean.HrBeltGroupBean
 import com.bonlala.fitalent.db.DBManager
 import com.bonlala.fitalent.db.model.ExerciseModel
-import com.bonlala.fitalent.dialog.CountDownTimerView
-import com.bonlala.fitalent.dialog.HeightSelectDialog
-import com.bonlala.fitalent.dialog.HrBeltModelSelectView
-import com.bonlala.fitalent.dialog.HrBeltSaveDialogView
+import com.bonlala.fitalent.dialog.*
 import com.bonlala.fitalent.emu.CountDownStatus
 import com.bonlala.fitalent.emu.DbType
 import com.bonlala.fitalent.emu.MediaPlayerType
@@ -44,6 +41,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.text.DecimalFormat
+import kotlin.math.roundToInt
 
 /**
  * 心率带的实时心率view
@@ -192,6 +190,11 @@ class HrBeltRealTimeView : LinearLayout {
     //开始3秒倒计时
     private fun startToCountDown(code : Int,time : Int){
 
+        //将心率清零
+        hrBeltMaxHrTv.text = "--"
+        hrBeltMinHrTv.text = "--"
+        hrBeltAvgHrTv.text = "--"
+
         val dialog = CountDownTimerView(context, com.bonlala.base.R.style.BaseDialogTheme)
         dialog.show()
         dialog.setCancelable(false)
@@ -250,11 +253,6 @@ class HrBeltRealTimeView : LinearLayout {
         hrBeltContentLayout?.visibility = View.GONE
         hrBeltStartTv?.visibility = View.VISIBLE
 
-//        handlers.postDelayed({
-//            mediaPlayerUtils?.initMediaPlayer(context,MediaPlayerType.AUDIO_SPORT_END)
-//            mediaPlayerUtils?.startPlay()
-//        }, 1500)
-
         isAutoFinishSport = false
     }
 
@@ -262,7 +260,7 @@ class HrBeltRealTimeView : LinearLayout {
 
     //当心率为0是，将柱状图清零，显示--
     fun setZeroRealChart(){
-        homeRealHtView.clearData()
+//        homeRealHtView.clearData()
         itemHomeRealHrValue.text = "--"
         itemRealHrPercentageTv.text = "--"
         itemRealHrPercentageTv.setTextColor(context.resources.getColor(R.color.hr_color_1))
@@ -684,7 +682,7 @@ class HrBeltRealTimeView : LinearLayout {
      */
     fun showAlertIsSave(avg : Int,sportTime : String,kcal : Int,exercise : ExerciseModel,onItemClickListener: OnItemClickListener){
 
-        val isValid = avg != 0 && kcal != 0
+        val isValid = avg != 0
 
         val isSaveDialog = HrBeltSaveDialogView(context, com.bonlala.base.R.style.BaseDialogTheme)
         isSaveDialog.show()
@@ -722,6 +720,7 @@ class HrBeltRealTimeView : LinearLayout {
         val displayMetrics = resources.displayMetrics
 //        layoutParams?.height = displayMetrics.heightPixels
 //        layoutParams?.gravity = Gravity.TOP
+        layoutParams?.horizontalMargin = 15f
         layoutParams?.y = 0
         layoutParams?.width = displayMetrics.widthPixels
         window?.attributes = layoutParams
@@ -770,7 +769,49 @@ class HrBeltRealTimeView : LinearLayout {
 
     //设置显示的卡路里
     private fun setSportKcal(kcal : Float){
-        hrBeltExerciseKcal?.text = decimalFormat.format(kcal)
+        val zeroKcal = kcal.roundToInt()
+        hrBeltExerciseKcal?.text = zeroKcal.toString()
     }
 
+    private var reconnDialog : HrBletDisconnDialog?= null
+
+    ////设置断开连接的弹窗，询问是保存或结束运动
+     fun reconnectOrEndDialog(onItemClickListener: OnItemClickListener){
+        if(reconnDialog == null){
+            reconnDialog = HrBletDisconnDialog(context, com.bonlala.base.R.style.BaseDialogTheme)
+        }
+        reconnDialog!!.show()
+        reconnDialog!!.setCancelable(false)
+        reconnDialog!!.setOnSportSaveClickListener(object : OnItemClickListener{
+            override fun onIteClick(position: Int) {
+
+                if(position == 0x00){   //结束运动
+                    reconnDialog!!.dismiss()
+                    isAutoFinishSport = true
+                    if(countDownStatus == CountDownStatus.FORWARD_STATUS){
+                        completeSport()
+                    }
+
+                    if(countDownStatus == CountDownStatus.GROUP_STATUS){
+                        cancelGroupCountDown()
+                    }
+
+                    if(countDownStatus == CountDownStatus.COUNTDOWN_STATUS){
+                        stopCountDown()
+                    }
+                }
+
+                if(position == 0x01){   //重连
+                    reconnDialog!!.dismiss()
+                    onItemClickListener.onIteClick(0x00)
+                }
+            }
+        })
+    }
+
+
+
+    fun sportReconnectOrEnd(){
+
+    }
 }

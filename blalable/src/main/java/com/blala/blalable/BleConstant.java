@@ -51,18 +51,18 @@ public class BleConstant {
 
 
     /**W560b服务UUID**/
-    public UUID SERVICE_UUID = UUID.fromString("7658fd00-878a-4350-a93e-da553e719ed0");
+    public final UUID SERVICE_UUID = UUID.fromString("7658fd00-878a-4350-a93e-da553e719ed0");
 
     /**命令发送特征uuid**/
-    public UUID WRITE_UUID = UUID.fromString("7658fd01-878a-4350-a93e-da553e719ed0");
+    public final UUID WRITE_UUID = UUID.fromString("7658fd01-878a-4350-a93e-da553e719ed0");
     /**实时返回数据到的UUID**/
-    public UUID REAL_TIME_UUID = UUID.fromString("7658fd04-878a-4350-a93e-da553e719ed0");
+    public final UUID REAL_TIME_UUID = UUID.fromString("7658fd04-878a-4350-a93e-da553e719ed0");
     /**写入数据返回指令的UUID**/
-    public UUID READ_UUID = UUID.fromString("7658fd02-878a-4350-a93e-da553e719ed0");
+    public final UUID READ_UUID = UUID.fromString("7658fd02-878a-4350-a93e-da553e719ed0");
     /**存储数据返回**/
-    public UUID SAVE_DATA_SEND_UUID = UUID.fromString("7658fd03-878a-4350-a93e-da553e719ed0");
+    public final UUID SAVE_DATA_SEND_UUID = UUID.fromString("7658fd03-878a-4350-a93e-da553e719ed0");
     /**表盘接收**/
-    public UUID WATCH_FACE_UUID = UUID.fromString("7658fd05-878a-4350-a93e-da553e719ed0");
+    public final UUID WATCH_FACE_UUID = UUID.fromString("7658fd05-878a-4350-a93e-da553e719ed0");
 
 
     /**电量的serviceUUID，主动读取**/

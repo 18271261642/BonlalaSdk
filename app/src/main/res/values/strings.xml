@@ -19,7 +19,7 @@
     <string name="string_hr_belt_countdown">Countdown</string>
     <string name="string_hr_belt_normal">Conventional</string>
     <string name="string_current_group">当前组数:</string>
-    <string name="string_resting">resting:</string>
+    <string name="string_resting">resting</string>
     <string name="string_group">group</string>
     <string name="string_next">next</string>
     <string name="string_start">start</string>
@@ -101,7 +101,7 @@
 
 
     <string name="string_min_hr">Min HR:</string>
-    <string name="string_max_hr">MaxHR:</string>
+    <string name="string_max_hr">Max HR:</string>
     <string name="string_bp_normal_rang">Normal:Systolic 90~139 mmHg / Diastolic 60~89 mmHg</string>
     <string name="string_height_bp_rang">Hypertension:≥140mmHg</string>
     <string name="string_low_bp_rang">Hypotension:&lt;59mmHg</string>

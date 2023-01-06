@@ -35,6 +35,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_10"
                     android:text="--"
+                    android:textAllCaps="false"
                     android:textColor="@color/hr_color_1"
                     android:textSize="68sp" />
 
@@ -138,18 +139,20 @@
                 android:layout_margin="@dimen/dp_5"
                 android:orientation="horizontal">
 
-                <com.bonlala.fitalent.view.NaviTxt
+                <TextView
                     android:id="@+id/hrBeltAvgHrTv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="--"
+                    android:textAllCaps="false"
                     android:textColor="@color/black"
                     android:textSize="30sp" />
 
-                <com.bonlala.fitalent.view.NaviTxt
+                <TextView
                     android:id="@+id/hrBeltMaxHrTv"
                     android:layout_width="0dp"
+                    android:textAllCaps="false"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="--"
@@ -157,11 +160,12 @@
                     android:textColor="@color/black"
                     android:textSize="30sp" />
 
-                <com.bonlala.fitalent.view.NaviTxt
+                <TextView
                     android:id="@+id/hrBeltMinHrTv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textAllCaps="false"
                     android:text="--"
                     android:layout_marginLeft="@dimen/dp_15"
                     android:textColor="@color/black"
@@ -267,7 +271,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/hrBeltBtnLayout"
-                android:layout_marginBottom="@dimen/dp_15"
+
                 android:layout_width="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -308,6 +312,15 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="长按结束"
+                android:textColor="#ff858585"
+                android:textSize="14sp"
+                android:layout_marginBottom="@dimen/dp_15"
+                android:layout_gravity="center"/>
 
 
         </LinearLayout>

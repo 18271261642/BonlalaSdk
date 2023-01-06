@@ -34,6 +34,7 @@ import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.bumptech.glide.request.RequestOptions
 import com.google.gson.Gson
 import com.hjq.permissions.XXPermissions
+import com.hjq.toast.ToastUtils
 import com.inuker.bluetooth.library.search.SearchResult
 import com.inuker.bluetooth.library.search.response.SearchResponse
 import kotlinx.android.synthetic.main.activity_main.*
@@ -52,19 +53,29 @@ class MainActivity : AppActivity() ,OnItemClickListener{
     //用于去重的list
     private var repeatList : MutableList<String> ?= null
 
-    private var handler = BleHandler()
 
 
     //搜索不到的指引url
     var scanUrl : String ?= null
 
-    private class BleHandler() : Handler(Looper.getMainLooper()){
+    private var handlers : Handler = object :Handler(Looper.getMainLooper()){
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
             if(msg.what == 0x00){
                 BaseApplication.getInstance().bleOperate.stopScanDevice()
             }
+            if(msg.what == 0x01){   //连接超时
+                connTimeOut()
+            }
         }
+    }
+
+
+    private fun connTimeOut(){
+       hideDialog()
+        ToastUtils.show(resources.getString(R.string.string_conn_timeout)+" "+resources.getString(R.string.string_reconnect))
+        BaseApplication.getInstance().bleOperate.stopScanDevice()
+        verifyScanFun()
     }
 
 
@@ -205,7 +216,7 @@ class MainActivity : AppActivity() ,OnItemClickListener{
     }
 
     override fun onIteClick(position: Int) {
-        handler.sendEmptyMessage(0x00)
+        handlers.sendEmptyMessage(0x00)
 
         val bleMac = listData?.get(position)?.bluetoothDevice?.address
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
@@ -221,9 +232,10 @@ class MainActivity : AppActivity() ,OnItemClickListener{
         val bleName =  listData?.get(position)?.bluetoothDevice?.name
 
         showDialog(resources.getString(R.string.string_conning))
+        handlers.sendEmptyMessageDelayed(0x01,15 * 1000)
         BaseApplication.getInstance().connStatusService.connDeviceBack(bleName,bleMac
         ) { mac, status ->
-
+            handlers.removeMessages(0x01)
             //连接成功
             BaseApplication.getInstance().connBleName = bleName
             BaseApplication.getInstance().connStatus = ConnStatus.CONNECTED

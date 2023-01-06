@@ -18,7 +18,7 @@
     <string name="string_hr_belt_countdown">倒计时</string>
     <string name="string_hr_belt_normal">普通计时</string>
     <string name="string_current_group">当前组数:</string>
-    <string name="string_resting">休息中:</string>
+    <string name="string_resting">休息中</string>
     <string name="string_group">组</string>
     <string name="string_next">下一步</string>
     <string name="string_start">开始</string>

@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:text="@string/string_end_sport"
         android:textColor="#ff3f3f3f"
+        android:textAllCaps="false"
         android:textSize="20sp"
         android:layout_margin="@dimen/dp_10"
         android:layout_gravity="center"/>
@@ -24,6 +25,7 @@
     <com.bonlala.fitalent.view.NaviTxt
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAllCaps="false"
         android:layout_margin="@dimen/dp_5"
         android:text="@string/string_hr_sport_reconn"
         android:textColor="#ff3f3f3f"
@@ -49,6 +51,7 @@
             android:layout_weight="1"
             android:layout_gravity="center"
             android:gravity="center"
+            android:textAllCaps="false"
             android:layout_height="wrap_content"
             android:text="@string/string_end_sport"
             android:textColor="#ff2f2f33"
@@ -62,6 +65,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:padding="@dimen/dp_8"
+            android:textAllCaps="false"
             android:layout_gravity="center"
             android:gravity="center"
             android:textColor="#ff22fc7a"

@@ -56,7 +56,7 @@ public class FileUtils {
                  * 第二个参数：压缩率
                  * 第三个参数：压缩到指定位置
                  */
-                boolean compress = b.compress(Bitmap.CompressFormat.PNG, 90, fos);
+                boolean compress = b.compress(Bitmap.CompressFormat.PNG, 100, fos);
                 if (compress) {
                 //    Toast.makeText(CompressImageActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
                     //通知图库更新

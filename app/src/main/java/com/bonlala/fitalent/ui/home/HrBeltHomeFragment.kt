@@ -121,6 +121,7 @@ class HrBeltHomeFragment : TitleBarFragment<HomeActivity>(){
         hrBeltRealTimeView?.setOnStartEndListener(object : OnStartOrEndListener{
             //开始
             override fun startOrEndStatus(isStart: Boolean) {
+                Timber.e("------开始运动")
                 isStartSport = true
                 recordExerciseHrList.clear()
                 //将柱状图的数据清0
@@ -210,28 +211,22 @@ class HrBeltHomeFragment : TitleBarFragment<HomeActivity>(){
         }
 
 
-        //连接状态不可点击
-        if(BaseApplication.getInstance().connStatus == ConnStatus.CONNECTED){
-            return
-        }
 
-        homeDeviceStatusView?.setCanClickStatus(BaseApplication.getInstance().connStatus == ConnStatus.CONNECTED,object : HomeDeviceStatusView.OnStatusViewClick{
-            override fun onStatusClick() {
-                val userMac = DBManager.getBindMac()
-                if(BikeUtils.isEmpty(userMac)){
-                    startActivity(MainActivity::class.java)
-                    return
-                }
-                if(BaseApplication.getInstance().connStatus == ConnStatus.CONNECTED || BaseApplication.getInstance().connStatus == ConnStatus.IS_SYNC_DATA){
-
-                    return
-                }
-
-                BaseApplication.getInstance().connStatus = ConnStatus.CONNECTING
-                attachActivity.autoConnDevice()
-                homeDeviceStatusView?.setHomeConnStatus(ConnStatus.CONNECTING)
+        homeDeviceStatusView?.setOnStatusViewClick {
+            val userMac = DBManager.getBindMac()
+            if(BikeUtils.isEmpty(userMac)){
+                startActivity(MainActivity::class.java)
+                return@setOnStatusViewClick
             }
-        })
+            if(BaseApplication.getInstance().connStatus == ConnStatus.CONNECTED ){
+
+                return@setOnStatusViewClick
+            }
+
+            BaseApplication.getInstance().connStatus = ConnStatus.CONNECTING
+            attachActivity.autoConnDevice()
+            homeDeviceStatusView?.setHomeConnStatus(ConnStatus.CONNECTING)
+        }
 
     }
 
@@ -267,6 +262,7 @@ class HrBeltHomeFragment : TitleBarFragment<HomeActivity>(){
             return
         }
         realTimeHrList.add(ht)
+        Timber.e("-----isStartSport="+isStartSport)
         if(isStartSport){
             recordExerciseHrList.add(ht)
         }
@@ -375,10 +371,13 @@ class HrBeltHomeFragment : TitleBarFragment<HomeActivity>(){
             //连接状态
             if (action == BleConstant.BLE_CONNECTED_ACTION || action == BleConstant.BLE_DIS_CONNECT_ACTION || action == BleConstant.BLE_SCAN_COMPLETE_ACTION){
 
+                val isConn = BaseApplication.getInstance().connStatus == ConnStatus.NOT_CONNECTED//BaseApplication.getInstance().connStatus == ConnStatus.CONNECTED || BaseApplication.getInstance().connStatus ==ConnStatus.IS_SYNC_DATA || BaseApplication.getInstance().connStatus == ConnStatus.CONNECTING
+                Timber.e("----------状态="+BaseApplication.getInstance().connStatus+" "+isConn)
+                if(isConn ){
+                    if(hrBeltRealTimeView?.getCountDownStatus() != CountDownStatus.DEFAULT_STATUS){
+                        showReconnDialog()
+                    }
 
-                val isConn = BaseApplication.getInstance().connStatus == ConnStatus.CONNECTED || BaseApplication.getInstance().connStatus ==ConnStatus.IS_SYNC_DATA
-                if(!isConn ){
-                    showReconnDialog()
                 }
 
                 showDeviceStatus()
@@ -387,24 +386,11 @@ class HrBeltHomeFragment : TitleBarFragment<HomeActivity>(){
 
     }
 
-    var reconnDialog : HrBletDisconnDialog ?= null
-
-    //展示重连的弹窗
+    //重连
     private fun showReconnDialog(){
-        if(reconnDialog == null){
-            reconnDialog = HrBletDisconnDialog(attachActivity, com.bonlala.base.R.style.BaseDialogTheme)
-        }
-        reconnDialog!!.show()
-        reconnDialog!!.setOnSportSaveClickListener(object : OnItemClickListener{
+        hrBeltRealTimeView?.reconnectOrEndDialog(object : OnItemClickListener{
             override fun onIteClick(position: Int) {
-
-                if(position == 0x00){   //结束运动
-                    reconnDialog!!.dismiss()
-                }
-
-                if(position == 0x01){   //重连
-
-                }
+                attachActivity.autoConnDevice()
             }
         })
     }

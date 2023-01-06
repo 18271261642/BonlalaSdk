@@ -687,6 +687,8 @@ public class DBManager {
        eb.setDeviceMac(mac);
        eb.setSaveTime(System.currentTimeMillis());
 
+       Timber.e("---------心率长度="+(eb.getHrList() == null ? "心率为空" : eb.getHrList().size()));
+
        ExerciseModel exerciseModel = getExerciseByTime(userId,mac,startTime);
        boolean isSave = false;
        if(exerciseModel == null){
